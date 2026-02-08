@@ -1,12 +1,33 @@
 {{ 'custom-styles.css' | asset_url | stylesheet_tag }}
 
 <div class="custom-cta-strip" style="background-color: {{ section.settings.bg_color }};">
-  <div class="custom-section-wrapper custom-cta-strip__container">
-    <div class="custom-cta-strip__hamburger mobile-only">
-      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <div id="custom-cta-strip-container" class="custom-section-wrapper custom-cta-strip__container">
+    <div id="custom-cta-toggle" class="custom-cta-strip__hamburger mobile-only">
+      <!-- Hamburger Icon -->
+      <svg
+        class="icon-hamburger"
+        width="24"
+        height="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+      >
         <path d="M3 12H21" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
         <path d="M3 6H21" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
         <path d="M3 18H21" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      <!-- Close Icon -->
+      <svg
+        class="icon-close"
+        width="24"
+        height="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+        style="display: none;"
+      >
+        <path d="M18 6L6 18" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M6 6L18 18" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
       </svg>
     </div>
 
