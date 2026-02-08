@@ -448,16 +448,14 @@
 
     /* Fix for Cutoff Mini Popup on Mobile */
     .custom-mini-popup {
-        /* Reset Fixed Positioning */
         left: 50% !important;
+        top: 50% !important;
         right: auto !important;
-        transform: translateX(-50%) !important;
-        top: auto !important;
-        bottom: 120% !important;
-        /* Force above the hotspot */
+        bottom: auto !important;
+        transform: translate(-50%, -50%) !important;
         margin: 0 !important;
         width: 180px;
-        /* Slightly smaller on mobile */
+        z-index: 20;
     }
 
     /* Ensure arrow points down to hotspot if we move popup above */
