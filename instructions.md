@@ -1,0 +1,3 @@
+Public url to view figma design: "https://www.figma.com/proto/p0OuoQgeetLtfOdrKFYWiM/Test-for-Candidates?node-id=3-2483&t=fac1sOboIJlEe4qm-0&scaling=scale-down-width&content-scaling=fixed&page-id=0%3A1&starting-point-node-id=1%3A1588"
+
+First go through the exact requirements mentioned in @exercise.md and create a implementation plan ask what is required from my side including credients if you need. or ask any quesitions you have before generating anything which can save you time and mine.
