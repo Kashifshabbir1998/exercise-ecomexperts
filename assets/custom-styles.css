@@ -445,6 +445,23 @@
     .custom-popup-image {
         width: 100px;
     }
+
+    /* Fix for Cutoff Mini Popup on Mobile */
+    .custom-mini-popup {
+        /* Reset Fixed Positioning */
+        left: 50% !important;
+        right: auto !important;
+        transform: translateX(-50%) !important;
+        top: auto !important;
+        bottom: 120% !important;
+        /* Force above the hotspot */
+        margin: 0 !important;
+        width: 180px;
+        /* Slightly smaller on mobile */
+    }
+
+    /* Ensure arrow points down to hotspot if we move popup above */
+    /* Optional: We can hide the default arrow logic if needed, or just keep it simple */
 }
 
 .custom-cta-strip {
