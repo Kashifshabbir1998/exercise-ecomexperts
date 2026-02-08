@@ -483,3 +483,76 @@
         height: 300px;
     }
 }
+
+/* 
+  ---------------------------
+  CUSTOM CTA STRIP 
+  ---------------------------
+*/
+.custom-cta-strip {
+    width: 100%;
+    padding: 20px 0;
+    border-top: 1px solid #e0e0e0;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.custom-cta-strip__container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.custom-cta-strip__brand {
+    font-size: 1.5rem;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: #000;
+}
+
+.custom-cta-strip__text {
+    font-size: 1rem;
+    color: #333;
+    text-align: center;
+    flex: 1;
+    /* Take up available space */
+}
+
+.custom-cta-btn {
+    display: inline-flex;
+    align-items: center;
+    padding: 12px 24px;
+    background-color: #fff952;
+    /* Yellow from screenshot */
+    color: #000;
+    text-decoration: none;
+    font-weight: 600;
+    text-transform: uppercase;
+    transition: all 0.3s ease;
+    font-size: 0.9rem;
+}
+
+.custom-cta-btn::after {
+    content: '→';
+    margin-left: 10px;
+    display: inline-block;
+    transition: transform 0.3s ease;
+}
+
+.custom-cta-btn:hover {
+    background-color: #ffe600;
+    /* Darker yellow on hover */
+}
+
+.custom-cta-btn:hover::after {
+    transform: translateX(5px);
+}
+
+/* Mobile Responsiveness for CTA */
+@media (max-width: 768px) {
+    .custom-cta-strip__container {
+        flex-direction: column;
+        gap: 15px;
+        text-align: center;
+    }
+}
