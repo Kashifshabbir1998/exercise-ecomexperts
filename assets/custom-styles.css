@@ -156,11 +156,6 @@
     transform: scale(1.1);
 }
 
-/* 
-  ---------------------------
-  POPUP MODAL 
-  ---------------------------
-*/
 .custom-popup-modal {
     position: fixed;
     top: 0;
@@ -195,23 +190,18 @@
     position: relative;
     background: #fff;
     width: 400px;
-    /* Narrow Card Width */
     max-width: 90%;
     display: flex;
     flex-direction: column;
-    /* Stack Top and Bottom */
     box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
     border-radius: 0;
-    /* Sharp edges as per screenshot */
     padding: 40px 20px 20px 20px;
-    /* Top padding for close button space */
 }
 
 .custom-popup-close {
     position: absolute;
     top: 15px;
     right: 15px;
-    /* Right aligned */
     left: auto;
     background: transparent;
     border: none;
@@ -230,7 +220,6 @@
     stroke: #000;
 }
 
-/* Internal Layout */
 .custom-popup-body {
     display: flex;
     flex-direction: column;
@@ -283,7 +272,6 @@
     margin: 0;
 }
 
-/* Form Area */
 .custom-popup-form-wrapper {
     width: 100%;
 }
@@ -300,7 +288,6 @@
     font-weight: 400;
 }
 
-/* Color Options (Split Box) */
 .custom-variant-options-grid {
     display: flex;
     border: 1px solid #000;
@@ -317,7 +304,6 @@
     font-size: 1rem;
     color: #000;
     position: relative;
-    /* Separator */
     border-left: 1px solid #000;
 }
 
@@ -326,11 +312,9 @@
 }
 
 .custom-variant-option-btn.selected {
-    /* Design decision: Bold text for selected */
     font-weight: 600;
 }
 
-/* Size Select */
 .custom-variant-select {
     width: 100%;
     padding: 12px;
@@ -339,14 +323,12 @@
     font-size: 1rem;
     appearance: none;
     background-color: #fff;
-    /* Custom Arrow */
     background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
     background-repeat: no-repeat;
     background-position: right 15px center;
     background-size: 16px;
 }
 
-/* Add to Cart Button */
 .custom-popup-add-to-cart {
     width: 100%;
     background: #000;
@@ -366,7 +348,6 @@
 .custom-popup-add-to-cart span {
     flex: 1;
     text-align: center;
-    /* Offset icon width to truly center text? Or just center */
     text-align: center;
 }
 
@@ -378,17 +359,11 @@
     opacity: 0.9;
 }
 
-/* 
-  ---------------------------
-  MINI POPUP (Quick View) 
-  ---------------------------
-*/
 .custom-mini-popup {
     position: absolute;
     top: 30%;
     left: calc(20% + 40px);
     width: 200px;
-    /* Keep mini popup small */
     background: #fff;
     padding: 10px;
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
@@ -457,7 +432,6 @@
     color: #555;
 }
 
-/* Mobile Adjustments - Ensure Card fits */
 @media (max-width: 450px) {
     .custom-popup-content {
         width: 95%;
@@ -536,6 +510,10 @@
 }
 
 @media (max-width: 768px) {
+    .custom-product-grid {
+        grid-template-columns: 1fr !important;
+    }
+
     .custom-cta-strip__container {
         display: grid;
         grid-template-columns: 1fr auto 1fr;
