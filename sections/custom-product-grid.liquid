@@ -80,20 +80,32 @@
       </button>
 
       <div class="custom-popup-body">
-        <div class="custom-popup-image">
-          <img id="popup-product-image" src="" alt="">
+        <!-- Top Section: Image + Basic Info -->
+        <div class="custom-popup-top">
+          <div class="custom-popup-image">
+            <img id="popup-product-image" src="" alt="">
+          </div>
+          <div class="custom-popup-header-info">
+            <h3 id="popup-product-title"></h3>
+            <div id="popup-product-price" class="price"></div>
+            <div id="popup-product-description" class="rte"></div>
+          </div>
         </div>
-        <div class="custom-popup-details">
-          <h3 id="popup-product-title"></h3>
-          <div id="popup-product-price" class="price"></div>
-          <div id="popup-product-description" class="rte"></div>
 
+        <!-- Bottom Section: form -->
+        <div class="custom-popup-form-wrapper">
           <form id="popup-product-form">
             <input type="hidden" name="id" id="popup-variant-id">
 
             <div id="popup-variants-container"></div>
 
-            <button type="submit" class="custom-popup-add-to-cart">ADD TO CART</button>
+            <button type="submit" class="custom-popup-add-to-cart">
+              <span>ADD TO CART</span>
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M5 12H19" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M12 5L19 12L12 19" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </button>
           </form>
         </div>
       </div>
