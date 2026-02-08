@@ -223,7 +223,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   form.addEventListener('submit', async (e) => {
     e.preventDefault();
-    const submitBtn = form.querySelector('button[type="submit']');
+    const submitBtn = form.querySelector('button[type="submit"]');
     submitBtn.textContent = 'Adding...';
     submitBtn.disabled = true;
 
