@@ -569,6 +569,7 @@
     .custom-cta-strip__hamburger {
         display: flex;
         justify-content: flex-start;
+        padding-left: 20px;
     }
 
     .custom-cta-strip__brand {

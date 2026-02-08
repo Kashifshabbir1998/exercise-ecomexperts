@@ -1,0 +1,70 @@
+{% schema %}
+{
+  "name": "Custom Text Strip",
+  "tag": "section",
+  "class": "custom-text-strip-section",
+  "settings": [
+    {
+      "type": "richtext",
+      "id": "text_content",
+      "label": "Text Content",
+      "default": "<p>SUSTAINABLE, ETHICALLY MADE CLOTHES IN SIZES XXS TO 6XL</p>"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background Color",
+      "default": "#f4f4f4"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text Color",
+      "default": "#000000"
+    },
+    {
+      "type": "range",
+      "id": "padding_y",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "label": "Vertical Padding",
+      "default": 10
+    }
+  ],
+  "presets": [
+    {
+      "name": "Custom Text Strip"
+    }
+  ]
+}
+{% endschema %}
+
+<style>
+  .custom-text-strip-{{ section.id }} {
+    background-color: {{ section.settings.bg_color }};
+    color: {{ section.settings.text_color }};
+    padding: {{ section.settings.padding_y }}px 20px;
+    text-align: center;
+    width: 100%;
+  }
+
+  .custom-text-strip-{{ section.id }} p {
+    margin: 0;
+    font-size: 0.9rem;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+  }
+
+  @media (max-width: 768px) {
+      .custom-text-strip-{{ section.id }} p {
+          font-size: 0.8rem;
+      }
+  }
+</style>
+
+<div class="custom-text-strip-{{ section.id }}">
+  {{ section.settings.text_content }}
+</div>
