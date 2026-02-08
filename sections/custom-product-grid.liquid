@@ -2,7 +2,6 @@
 <script src="{{ 'custom-logic.js' | asset_url }}" defer="defer"></script>
 
 <div class="custom-product-grid-wrapper">
-  {% comment %} Product Grid {% endcomment %}
   <div class="custom-product-grid">
     {%- for block in section.blocks -%}
       {%- assign product_handle = block.settings.product -%}
@@ -27,14 +26,11 @@
               </svg>
             </button>
 
-            {% comment %} Mini Popup (Quick View) {% endcomment %}
             {%- assign hotspot_x = block.settings.hotspot_x -%}
             {%- assign hotspot_y = block.settings.hotspot_y -%}
             {%- if hotspot_x > 50 -%}
-              {%- comment %} Position to the LEFT of the hotspot {%- endcomment %}
               {%- capture popup_style -%}right: calc({{ 100 | minus: hotspot_x }}% + 40px); top: {{ hotspot_y }}%; transform-origin: center right;{%- endcapture -%}
             {%- else -%}
-              {%- comment %} Position to the RIGHT of the hotspot {%- endcomment %}
               {%- capture popup_style -%}left: calc({{ hotspot_x }}% + 40px); top: {{ hotspot_y }}%; transform-origin: center left;{%- endcapture -%}
             {%- endif -%}
 
@@ -74,7 +70,6 @@
     {%- endfor -%}
   </div>
 
-  {% comment %} Popup Modal Structure {% endcomment %}
   <div id="product-popup-modal" class="custom-popup-modal" aria-hidden="true">
     <div class="custom-popup-overlay"></div>
     <div class="custom-popup-content">
@@ -105,7 +100,6 @@
     </div>
   </div>
 
-  {% comment %} Hidden Settings for JS {% endcomment %}
   <div
     id="custom-grid-settings"
     data-soft-winter-jacket-product-id="{{ section.settings.soft_winter_jacket_product.id | default: '10250843947297' }}"
