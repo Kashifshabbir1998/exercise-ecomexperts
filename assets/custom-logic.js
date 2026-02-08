@@ -19,16 +19,21 @@ document.addEventListener('DOMContentLoaded', () => {
       e.stopPropagation(); // Prevent bubbling
       e.preventDefault();
 
-      // Close any other open mini popups
+      // Close any other open mini popups AND reset their hotspots
       document.querySelectorAll('.custom-mini-popup').forEach(p => {
         p.style.display = 'none';
         p.setAttribute('aria-hidden', 'true');
+        // Find sibling hotspot and show it
+        const siblingHotspot = p.closest('.custom-product-item')?.querySelector('.custom-product-item__hotspot');
+        if (siblingHotspot) siblingHotspot.style.display = 'flex';
       });
 
       const productWrapper = btn.closest('.custom-product-item');
       const miniPopup = productWrapper.querySelector('.custom-mini-popup');
 
       if (miniPopup) {
+        // Toggle: Hide Button, Show Popup
+        btn.style.display = 'none';
         miniPopup.style.display = 'flex';
         miniPopup.setAttribute('aria-hidden', 'false');
 
@@ -55,6 +60,7 @@ document.addEventListener('DOMContentLoaded', () => {
           }
           // Close mini popup after opening full
           miniPopup.style.display = 'none';
+          btn.style.display = 'flex'; // Show button again
         };
 
         // Close button logic for mini popup
@@ -63,6 +69,7 @@ document.addEventListener('DOMContentLoaded', () => {
           miniClose.onclick = (eva) => {
             eva.stopPropagation();
             miniPopup.style.display = 'none';
+            btn.style.display = 'flex'; // Show button again
           };
         }
       }
@@ -72,7 +79,12 @@ document.addEventListener('DOMContentLoaded', () => {
   // Close mini popups if clicked elsewhere
   document.addEventListener('click', (e) => {
     if (!e.target.closest('.custom-mini-popup') && !e.target.closest('.custom-product-item__hotspot')) {
-      document.querySelectorAll('.custom-mini-popup').forEach(p => p.style.display = 'none');
+      document.querySelectorAll('.custom-mini-popup').forEach(p => {
+        p.style.display = 'none';
+        // Reset hotspot
+        const siblingHotspot = p.closest('.custom-product-item')?.querySelector('.custom-product-item__hotspot');
+        if (siblingHotspot) siblingHotspot.style.display = 'flex';
+      });
     }
   });
 
