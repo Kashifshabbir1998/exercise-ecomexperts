@@ -1,0 +1,336 @@
+/* Custom Styles for Tisso Vison Test */
+
+/* General Reset / Utilities */
+.custom-section-wrapper {
+    max-width: 1440px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+/* 
+  ---------------------------
+  CUSTOM BANNER SECTION 
+  ---------------------------
+*/
+.custom-banner {
+    position: relative;
+    width: 100%;
+    min-height: 600px;
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.custom-banner__content {
+    max-width: 600px;
+    padding: 40px;
+    z-index: 2;
+}
+
+.custom-banner__title {
+    font-size: 4rem;
+    font-weight: 700;
+    margin-bottom: 20px;
+    line-height: 1.1;
+    color: #000;
+}
+
+.custom-banner__text {
+    font-size: 1.25rem;
+    margin-bottom: 30px;
+    line-height: 1.5;
+    color: #333;
+}
+
+/* Button & Animation */
+.custom-banner__btn {
+    display: inline-block;
+    padding: 15px 30px;
+    background-color: #000;
+    color: #fff;
+    text-decoration: none;
+    font-weight: 600;
+    text-transform: uppercase;
+    transition: all 0.3s ease;
+    border: 1px solid #000;
+    position: relative;
+    overflow: hidden;
+}
+
+.custom-banner__btn:hover {
+    background-color: transparent;
+    color: #000;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.custom-banner__btn::after {
+    content: '→';
+    margin-left: 10px;
+    display: inline-block;
+    transition: transform 0.3s ease;
+}
+
+.custom-banner__btn:hover::after {
+    transform: translateX(5px);
+}
+
+/* Highlighting Logic - Handled via CSS variables or specific classes if needed */
+.highlight-text {
+    font-weight: bold;
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 768px) {
+    .custom-banner {
+        min-height: 400px;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+    }
+
+    .custom-banner__content {
+        background: rgba(255, 255, 255, 0.9);
+        /* legibility on mobile */
+        padding: 30px;
+        border-radius: 8px;
+        margin: 20px;
+    }
+
+    .custom-banner__title {
+        font-size: 2.5rem;
+    }
+}
+
+/* 
+  ---------------------------
+  CUSTOM PRODUCT GRID 
+  ---------------------------
+*/
+.custom-product-grid-wrapper {
+    max-width: 1440px;
+    margin: 60px auto;
+    padding: 0 20px;
+}
+
+.custom-product-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+}
+
+.custom-product-item {
+    position: relative;
+    overflow: hidden;
+}
+
+.custom-product-item__image-wrapper {
+    position: relative;
+    width: 100%;
+    padding-bottom: 120%;
+    /* Aspect Ratio */
+}
+
+.custom-product-item__image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* Hotspot */
+.custom-product-item__hotspot {
+    position: absolute;
+    top: 30%;
+    /* Default position, or randomized in JS? Figma shows fixed spots approx. */
+    right: 20%;
+    width: 32px;
+    height: 32px;
+    background: #fff;
+    border-radius: 50%;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+    transition: transform 0.2s;
+    color: #000;
+}
+
+.custom-product-item__hotspot:hover {
+    transform: scale(1.1);
+}
+
+/* 
+  ---------------------------
+  POPUP MODAL 
+  ---------------------------
+*/
+.custom-popup-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease;
+}
+
+.custom-popup-modal.is-visible {
+    opacity: 1;
+    visibility: visible;
+}
+
+.custom-popup-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(2px);
+}
+
+.custom-popup-content {
+    position: relative;
+    background: #fff;
+    width: 800px;
+    max-width: 90%;
+    display: flex;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+    border-radius: 4px;
+    /* Figma looks sharp? Keep minimal */
+    overflow: hidden;
+}
+
+.custom-popup-close {
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    /* Figma shows X on top left of image or content? Actually top right of image on Figma screenshot? */
+    background: #fff;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    border: 1px solid #ddd;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 10;
+}
+
+.custom-popup-body {
+    display: flex;
+    width: 100%;
+}
+
+.custom-popup-image {
+    width: 50%;
+    background: #f4f4f4;
+}
+
+.custom-popup-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.custom-popup-details {
+    width: 50%;
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.custom-popup-details h3 {
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+    font-weight: 500;
+}
+
+.custom-popup-details .price {
+    font-size: 1.25rem;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+.custom-popup-details .rte {
+    font-size: 0.9rem;
+    margin-bottom: 30px;
+    color: #666;
+    line-height: 1.6;
+}
+
+.custom-variant-select-wrapper {
+    margin-bottom: 15px;
+}
+
+.custom-variant-select-wrapper label {
+    display: block;
+    margin-bottom: 5px;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.custom-variant-select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 0;
+}
+
+.custom-popup-add-to-cart {
+    width: 100%;
+    background: #000;
+    color: #fff;
+    border: none;
+    padding: 15px;
+    text-transform: uppercase;
+    font-weight: 600;
+    cursor: pointer;
+    margin-top: 20px;
+    transition: opacity 0.3s;
+}
+
+.custom-popup-add-to-cart:hover {
+    opacity: 0.8;
+}
+
+/* Mobile Responsiveness for Grid & Popup */
+@media (max-width: 768px) {
+    .custom-product-grid {
+        grid-template-columns: 1fr;
+        /* 1 col on mobile */
+    }
+
+    .custom-popup-content {
+        flex-direction: column;
+        max-height: 90vh;
+        /* scrollable if needed */
+        overflow-y: auto;
+    }
+
+    .custom-popup-image,
+    .custom-popup-details {
+        width: 100%;
+    }
+
+    .custom-popup-image {
+        height: 300px;
+    }
+}

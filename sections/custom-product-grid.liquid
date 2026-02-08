@@ -1,0 +1,121 @@
+{{ 'custom-styles.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'custom-logic.js' | asset_url }}" defer="defer"></script>
+
+<div class="custom-product-grid-wrapper">
+  {% comment %} Product Grid {% endcomment %}
+  <div class="custom-product-grid">
+    {%- for block in section.blocks -%}
+      {%- assign product = block.settings.product -%}
+      <div class="custom-product-item" {{ block.shopify_attributes }}>
+        {%- if product != blank -%}
+          <div class="custom-product-item__image-wrapper">
+            <img 
+              src="{{ product.featured_image | image_url: width: 800 }}" 
+              alt="{{ product.title }}" 
+              class="custom-product-item__image"
+              loading="lazy"
+            >
+            <button 
+              class="custom-product-item__hotspot" 
+              data-product-handle="{{ product.handle }}"
+              aria-label="View {{ product.title }}"
+            >
+             <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6 0V12M0 6H12" stroke="currentColor" stroke-width="2"/></svg>
+            </button>
+            <script type="application/json" class="product-data-json">
+              {{ product | json }}
+            </script>
+          </div>
+        {%- else -%}
+          <div class="custom-product-item__placeholder">
+            {{ 'product-1' | placeholder_svg_tag }}
+             <button class="custom-product-item__hotspot">
+               <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6 0V12M0 6H12" stroke="currentColor" stroke-width="2"/></svg>
+             </button>
+          </div>
+        {%- endif -%}
+      </div>
+    {%- endfor -%}
+  </div>
+
+  {% comment %} Popup Modal Structure {% endcomment %}
+  <div id="product-popup-modal" class="custom-popup-modal" aria-hidden="true">
+    <div class="custom-popup-overlay"></div>
+    <div class="custom-popup-content">
+      <button class="custom-popup-close" aria-label="Close">
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1 1L13 13M1 13L13 1" stroke="currentColor" stroke-width="2"/></svg>
+      </button>
+      
+      <div class="custom-popup-body">
+        <div class="custom-popup-image">
+           <img id="popup-product-image" src="" alt="">
+        </div>
+        <div class="custom-popup-details">
+           <h3 id="popup-product-title"></h3>
+           <div id="popup-product-price" class="price"></div>
+           <div id="popup-product-description" class="rte"></div>
+           
+           <form id="popup-product-form">
+             <input type="hidden" name="id" id="popup-variant-id">
+             
+             <div id="popup-variants-container"></div>
+             
+             <button type="submit" class="custom-popup-add-to-cart">
+               ADD TO CART
+             </button>
+           </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  {% comment %} Hidden Settings for JS {% endcomment %}
+  <div id="custom-grid-settings" 
+    data-soft-winter-jacket-product-id="{{ section.settings.soft_winter_jacket_product.id | default: '10250843947297' }}"
+    data-soft-winter-jacket-variant-id="{{ section.settings.soft_winter_jacket_product.first_available_variant.id }}"
+    style="display: none;">
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Custom Product Grid",
+  "tag": "section",
+  "class": "section",
+  "max_blocks": 6,
+  "settings": [
+     {
+       "type": "product",
+       "id": "soft_winter_jacket_product",
+       "label": "Soft Winter Jacket Product",
+       "info": "Select the product to be automatically added when specific conditions are met."
+     }
+  ],
+  "blocks": [
+    {
+      "type": "product_block",
+      "name": "Product",
+      "settings": [
+        {
+          "type": "product",
+          "id": "product",
+          "label": "Product"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Custom Product Grid",
+      "blocks": [
+        { "type": "product_block" },
+        { "type": "product_block" },
+        { "type": "product_block" },
+        { "type": "product_block" },
+        { "type": "product_block" },
+        { "type": "product_block" }
+      ]
+    }
+  ]
+}
+{% endschema %}
