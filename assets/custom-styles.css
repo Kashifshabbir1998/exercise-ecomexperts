@@ -3,7 +3,6 @@
 /* General Reset / Utilities */
 .custom-section-wrapper {
     max-width: 1440px;
-    margin: 0 auto;
     padding: 0 20px;
 }
 
@@ -549,10 +548,36 @@
 }
 
 /* Mobile Responsiveness for CTA */
+.custom-cta-strip__hamburger {
+    display: none;
+}
+
 @media (max-width: 768px) {
     .custom-cta-strip__container {
-        flex-direction: column;
-        gap: 15px;
+        display: grid;
+        grid-template-columns: 1fr auto 1fr;
+        /* Left (Hamburger), Center (Brand), Right (Empty) */
+        align-items: center;
+        gap: 0;
         text-align: center;
+        padding: 10px 0;
+    }
+
+    .custom-cta-strip__hamburger {
+        display: flex;
+        justify-content: flex-start;
+    }
+
+    .custom-cta-strip__brand {
+        grid-column: 2;
+        /* Center */
+        font-size: 1.25rem;
+        /* Slightly smaller on mobile */
+    }
+
+    /* Hide Text and Button on Mobile as per screenshot */
+    .custom-cta-strip__text,
+    .custom-cta-strip__action {
+        display: none;
     }
 }
