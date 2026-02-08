@@ -352,4 +352,29 @@ document.addEventListener('DOMContentLoaded', () => {
     return await response.json();
   }
 
+
+  // --------------------------------------------------------
+  // CTA Strip Mobile Toggle
+  // --------------------------------------------------------
+  const ctaToggle = document.getElementById('custom-cta-toggle');
+  const ctaContainer = document.getElementById('custom-cta-strip-container');
+
+  if (ctaToggle && ctaContainer) {
+    ctaToggle.addEventListener('click', () => {
+      ctaContainer.classList.toggle('is-expanded');
+
+      // Toggle Icons
+      const iconHamburger = ctaToggle.querySelector('.icon-hamburger');
+      const iconClose = ctaToggle.querySelector('.icon-close');
+
+      if (ctaContainer.classList.contains('is-expanded')) {
+        if (iconHamburger) iconHamburger.style.display = 'none';
+        if (iconClose) iconClose.style.display = 'block';
+      } else {
+        if (iconHamburger) iconHamburger.style.display = 'block';
+        if (iconClose) iconClose.style.display = 'none';
+      }
+    });
+  }
+
 });
