@@ -28,11 +28,17 @@
             </button>
 
             {% comment %} Mini Popup (Quick View) {% endcomment %}
-            <div
-              class="custom-mini-popup"
-              aria-hidden="true"
-              style="display: none; top: {{ block.settings.hotspot_y }}%; left: calc({{ block.settings.hotspot_x }}% + 40px);"
-            >
+            {%- assign hotspot_x = block.settings.hotspot_x -%}
+            {%- assign hotspot_y = block.settings.hotspot_y -%}
+            {%- if hotspot_x > 50 -%}
+              {%- comment %} Position to the LEFT of the hotspot {%- endcomment %}
+              {%- capture popup_style -%}right: calc({{ 100 | minus: hotspot_x }}% + 40px); top: {{ hotspot_y }}%; transform-origin: center right;{%- endcapture -%}
+            {%- else -%}
+              {%- comment %} Position to the RIGHT of the hotspot {%- endcomment %}
+              {%- capture popup_style -%}left: calc({{ hotspot_x }}% + 40px); top: {{ hotspot_y }}%; transform-origin: center left;{%- endcapture -%}
+            {%- endif -%}
+
+            <div class="custom-mini-popup" aria-hidden="true" style="display: none; {{ popup_style }}">
               <button class="custom-mini-popup__close" aria-label="Close">
                 <svg width="10" height="10" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <path d="M1 1L13 13M1 13L13 1" stroke="currentColor" stroke-width="2"/>
