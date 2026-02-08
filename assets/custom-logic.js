@@ -13,41 +13,69 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // --- POPUP LOGIC ---
 
+  // Hotspot Click -> Show Mini Popup
   document.querySelectorAll('.custom-product-item__hotspot').forEach(btn => {
     btn.addEventListener('click', (e) => {
+      e.stopPropagation(); // Prevent bubbling
       e.preventDefault();
+
+      // Close any other open mini popups
+      document.querySelectorAll('.custom-mini-popup').forEach(p => {
+        p.style.display = 'none';
+        p.setAttribute('aria-hidden', 'true');
+      });
+
       const productWrapper = btn.closest('.custom-product-item');
-      if (!productWrapper) return;
+      const miniPopup = productWrapper.querySelector('.custom-mini-popup');
 
-      const scriptTag = productWrapper.querySelector('.product-data-json');
-      if (!scriptTag) return;
+      if (miniPopup) {
+        miniPopup.style.display = 'flex';
+        miniPopup.setAttribute('aria-hidden', 'false');
 
-      let productData;
-      try {
-        productData = JSON.parse(scriptTag.textContent);
-      } catch (e) {
-        console.error('Invalid JSON data', e);
-        return;
-      }
+        // Setup click to open full modal
+        // We might need to attach the data to the mini popup for easy access
+        // Or just grab it again from the wrapper
+        miniPopup.onclick = (evt) => {
+          if (evt.target.closest('.custom-mini-popup__close')) return; // ignore close button
 
-      // Robust check: If productData is just a string (handle) or missing variants, fetch it.
-      if (typeof productData === 'string' || !productData.variants) {
-        const handle = typeof productData === 'string' ? productData : productWrapper.querySelector('.custom-product-item__hotspot').dataset.productHandle;
-        console.log('Product data incomplete, fetching from API for handle:', handle);
+          const scriptTag = productWrapper.querySelector('.product-data-json');
+          // ... same fetch/parse logic ... 
 
-        if (handle) {
-          fetch(window.Shopify.routes.root + 'products/' + handle + '.js')
-            .then(res => res.json())
-            .then(fetchedProduct => {
-              openModal(fetchedProduct);
-            })
-            .catch(err => console.error('Failed to fetch product data:', err));
+          let productData;
+          try { productData = JSON.parse(scriptTag.textContent); } catch (ex) { }
+
+          if (typeof productData === 'string' || !productData.variants) {
+            const handle = typeof productData === 'string' ? productData : btn.dataset.productHandle;
+            if (handle) {
+              fetch(window.Shopify.routes.root + 'products/' + handle + '.js')
+                .then(r => r.json()).then(d => openModal(d));
+            }
+          } else {
+            openModal(productData);
+          }
+          // Close mini popup after opening full
+          miniPopup.style.display = 'none';
+        };
+
+        // Close button logic for mini popup
+        const miniClose = miniPopup.querySelector('.custom-mini-popup__close');
+        if (miniClose) {
+          miniClose.onclick = (eva) => {
+            eva.stopPropagation();
+            miniPopup.style.display = 'none';
+          };
         }
-      } else {
-        openModal(productData);
       }
     });
   });
+
+  // Close mini popups if clicked elsewhere
+  document.addEventListener('click', (e) => {
+    if (!e.target.closest('.custom-mini-popup') && !e.target.closest('.custom-product-item__hotspot')) {
+      document.querySelectorAll('.custom-mini-popup').forEach(p => p.style.display = 'none');
+    }
+  });
+
 
   function openModal(product) {
     if (!product || !product.variants) {
@@ -55,26 +83,23 @@ document.addEventListener('DOMContentLoaded', () => {
       return;
     }
     document.getElementById('popup-product-title').textContent = product.title;
-    document.getElementById('popup-product-description').innerHTML = product.description; // Description is HTML
+    document.getElementById('popup-product-description').innerHTML = product.description;
     document.getElementById('popup-product-image').src = product.featured_image;
     document.getElementById('popup-product-image').alt = product.title;
 
-    // Format Price
-    // Simple formatter, for production use Shopify.formatMoney or similar if available, 
-    // but here we just divide by 100 for basic display
+    // Price
     const price = (product.price / 100).toFixed(2);
-    document.getElementById('popup-product-price').textContent = `€${price}`; // Hardcoding currency symbol for this test based on Figma
+    document.getElementById('popup-product-price').textContent = `€${price}`;
 
-    // Render Variants
     renderVariants(product);
 
-    // Set initial variant ID
+    // Initial ID
     const firstVariant = product.variants[0];
     document.getElementById('popup-variant-id').value = firstVariant.id;
 
     modal.classList.add('is-visible');
     modal.setAttribute('aria-hidden', 'false');
-    document.body.style.overflow = 'hidden'; // Prevent background scrolling
+    document.body.style.overflow = 'hidden';
   }
 
   function closeModal() {
@@ -96,7 +121,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (product.variants.length > 0) {
       product.options.forEach((option, index) => {
-        // Some products might have title "Title" and option "Default Title" if no variants.
         if (option === 'Title' && product.variants[0].option1 === 'Default Title') return;
 
         const selectWrapper = document.createElement('div');
@@ -106,9 +130,8 @@ document.addEventListener('DOMContentLoaded', () => {
         label.textContent = option;
         selectWrapper.appendChild(label);
 
-        const select = document.createElement('select');
-        select.classList.add('custom-variant-select');
-        select.dataset.optionIndex = index;
+        // Check if option is "Color" -> Use Buttons
+        const isColor = option.toLowerCase() === 'color';
 
         // Get unique values
         const values = [];
@@ -117,30 +140,72 @@ document.addEventListener('DOMContentLoaded', () => {
           if (!values.includes(val)) values.push(val);
         });
 
-        values.forEach(val => {
-          const opt = document.createElement('option');
-          opt.value = val;
-          opt.textContent = val;
-          select.appendChild(opt);
-        });
+        if (isColor) {
+          const grid = document.createElement('div');
+          grid.classList.add('custom-variant-options-grid');
 
-        // Listen for change
-        select.addEventListener('change', () => updateSelectedVariant(product));
+          values.forEach(val => {
+            const btn = document.createElement('button');
+            btn.type = 'button';
+            btn.classList.add('custom-variant-option-btn');
+            if (values.indexOf(val) === 0) btn.classList.add('selected'); // Select first default
+            btn.textContent = val;
+            btn.dataset.value = val;
+            btn.dataset.optionIndex = index;
 
-        selectWrapper.appendChild(select);
+            btn.onclick = () => {
+              // Deselect siblings
+              grid.querySelectorAll('.custom-variant-option-btn').forEach(b => b.classList.remove('selected'));
+              btn.classList.add('selected');
+              updateSelectedVariant(product);
+            };
+
+            grid.appendChild(btn);
+          });
+          selectWrapper.appendChild(grid);
+        } else {
+          // Standard Select for Size etc.
+          const select = document.createElement('select');
+          select.classList.add('custom-variant-select');
+          select.dataset.optionIndex = index;
+
+          values.forEach(val => {
+            const opt = document.createElement('option');
+            opt.value = val;
+            opt.textContent = val;
+            select.appendChild(opt);
+          });
+
+          select.addEventListener('change', () => updateSelectedVariant(product));
+          selectWrapper.appendChild(select);
+        }
+
         variantsContainer.appendChild(selectWrapper);
       });
     }
   }
 
   function updateSelectedVariant(product) {
-    // Gather current selections
-    const selects = variantsContainer.querySelectorAll('select');
-    const currentOptions = Array.from(selects).map(s => s.value);
+    // Gather current selections from BOTH selects and buttons
+    const currentOptions = [];
+
+    // Since options are ordered by index, we need to grab them in order
+    const optionWrappers = variantsContainer.querySelectorAll('.custom-variant-select-wrapper');
+
+    optionWrappers.forEach(wrapper => {
+      const select = wrapper.querySelector('select');
+      const buttons = wrapper.querySelector('.custom-variant-options-grid');
+
+      if (select) {
+        currentOptions.push(select.value);
+      } else if (buttons) {
+        const selectedBtn = buttons.querySelector('.custom-variant-option-btn.selected');
+        if (selectedBtn) currentOptions.push(selectedBtn.dataset.value);
+      }
+    });
 
     // Find matching variant
     const variant = product.variants.find(v => {
-      // v.options is an array of strings like ["Small", "Red"]
       return v.options.every((opt, i) => opt === currentOptions[i]);
     });
 
@@ -158,22 +223,27 @@ document.addEventListener('DOMContentLoaded', () => {
 
   form.addEventListener('submit', async (e) => {
     e.preventDefault();
-    const submitBtn = form.querySelector('button[type="submit"]');
+    const submitBtn = form.querySelector('button[type="submit']');
     submitBtn.textContent = 'Adding...';
     submitBtn.disabled = true;
 
     const variantId = document.getElementById('popup-variant-id').value;
 
     // Check for "Black" and "Medium" logic
-    // We can check the selected options in the DOM
-    const selects = variantsContainer.querySelectorAll('select');
     let isBlack = false;
     let isMedium = false;
 
-    selects.forEach(select => {
-      const val = select.value.toLowerCase();
-      if (val === 'black') isBlack = true;
-      if (val === 'medium') isMedium = true;
+    // Scan all selected values options (both selects and buttons)
+    const optionWrappers = variantsContainer.querySelectorAll('.custom-variant-select-wrapper');
+    optionWrappers.forEach(wrapper => {
+      let val = '';
+      const select = wrapper.querySelector('select');
+      const buttons = wrapper.querySelector('.custom-variant-options-grid');
+      if (select) val = select.value;
+      else if (buttons) val = buttons.querySelector('.selected')?.dataset.value || '';
+
+      if (val.toLowerCase() === 'black') isBlack = true;
+      if (val.toLowerCase() === 'medium') isMedium = true;
     });
 
     try {
