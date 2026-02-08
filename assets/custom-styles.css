@@ -253,20 +253,20 @@
 }
 
 .custom-popup-header-info h3 {
-    font-size: 1.1rem;
+    font-size: 2rem;
     margin: 0 0 10px 0;
     font-weight: 400;
     line-height: 1.2;
 }
 
 .custom-popup-header-info .price {
-    font-size: 1.1rem;
+    font-size: 1.2rem;
     margin-bottom: 10px;
     color: #000;
 }
 
 .custom-popup-header-info .rte {
-    font-size: 0.8rem;
+    font-size: 1rem;
     color: #333;
     line-height: 1.4;
     margin: 0;
@@ -421,14 +421,14 @@
 }
 
 .custom-mini-popup__title {
-    font-size: 0.9rem;
+    font-size: 1.2rem;
     margin: 0 0 5px;
     font-weight: 500;
     line-height: 1.2;
 }
 
 .custom-mini-popup__price {
-    font-size: 0.9rem;
+    font-size: 1.2rem;
     color: #555;
 }
 
@@ -484,7 +484,7 @@
 }
 
 .custom-cta-strip__text {
-    font-size: 1rem;
+    font-size: 1.5rem;
     color: #333;
     text-align: center;
     flex: 1;
@@ -500,7 +500,7 @@
     font-weight: 600;
     text-transform: uppercase;
     transition: all 0.3s ease;
-    font-size: 0.9rem;
+    font-size: 1.3rem;
 }
 
 .custom-cta-btn::after {
