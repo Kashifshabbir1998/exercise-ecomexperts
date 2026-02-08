@@ -29,7 +29,13 @@
 
 /* Modifier class for center alignment */
 .custom-banner.text-center {
-    justify-content: center;
+    justify-content: center !important;
+    text-align: center;
+}
+
+/* Ensure vertical alignment is always center */
+.custom-banner {
+    align-items: center !important;
 }
 
 .custom-banner__content {

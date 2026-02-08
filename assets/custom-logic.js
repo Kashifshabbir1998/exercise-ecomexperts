@@ -22,12 +22,38 @@ document.addEventListener('DOMContentLoaded', () => {
       const scriptTag = productWrapper.querySelector('.product-data-json');
       if (!scriptTag) return;
 
-      const product = JSON.parse(scriptTag.textContent);
-      openModal(product);
+      let productData;
+      try {
+        productData = JSON.parse(scriptTag.textContent);
+      } catch (e) {
+        console.error('Invalid JSON data', e);
+        return;
+      }
+
+      // Robust check: If productData is just a string (handle) or missing variants, fetch it.
+      if (typeof productData === 'string' || !productData.variants) {
+        const handle = typeof productData === 'string' ? productData : productWrapper.querySelector('.custom-product-item__hotspot').dataset.productHandle;
+        console.log('Product data incomplete, fetching from API for handle:', handle);
+
+        if (handle) {
+          fetch(window.Shopify.routes.root + 'products/' + handle + '.js')
+            .then(res => res.json())
+            .then(fetchedProduct => {
+              openModal(fetchedProduct);
+            })
+            .catch(err => console.error('Failed to fetch product data:', err));
+        }
+      } else {
+        openModal(productData);
+      }
     });
   });
 
   function openModal(product) {
+    if (!product || !product.variants) {
+      console.error('openModal called with invalid product:', product);
+      return;
+    }
     document.getElementById('popup-product-title').textContent = product.title;
     document.getElementById('popup-product-description').innerHTML = product.description; // Description is HTML
     document.getElementById('popup-product-image').src = product.featured_image;
