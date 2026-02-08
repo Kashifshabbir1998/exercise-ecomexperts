@@ -588,40 +588,48 @@
     .custom-cta-strip__container.is-expanded {
         display: flex;
         flex-wrap: wrap;
-        /* Allow content to wrap */
-        justify-content: space-between;
+        justify-content: center;
+        /* Center everything */
         padding-bottom: 30px;
     }
 
     .custom-cta-strip__container.is-expanded .custom-cta-strip__hamburger {
-        flex: 0 0 50px;
+        flex: 0 0 40px;
         /* Fixed width for icon */
+        padding-left: 10px;
+        /* Add left space as requested */
     }
 
     .custom-cta-strip__container.is-expanded .custom-cta-strip__brand {
         flex: 1;
-        /* Take remaining space */
         text-align: center;
-        padding-right: 50px;
-        /* Balance the hamburger width to keep truly centered */
+        /* To keep it visually centered with a left icon, we might need to offset or just rely on flex */
+        padding-right: 40px;
+        /* Balance the left icon width */
     }
 
     .custom-cta-strip__container.is-expanded .custom-cta-strip__text {
         display: block;
         width: 100%;
-        margin: 30px 0 20px 0;
+        /* Force new line */
+        margin: 40px 0 20px 0;
+        /* Spacing from header */
         font-size: 1.1rem;
-        padding: 0 10px;
+        padding: 0 20px;
+        order: 3;
     }
 
     .custom-cta-strip__container.is-expanded .custom-cta-strip__action {
         display: block;
         width: 100%;
-        padding: 0 10px;
+        /* Force new line */
+        padding: 0 20px;
+        order: 4;
     }
 
     .custom-cta-strip__container.is-expanded .custom-cta-btn {
         width: 100%;
         justify-content: center;
+        background-color: #fff952;
     }
 }
