@@ -35,7 +35,7 @@
 
 /* Ensure vertical alignment is always center */
 .custom-banner {
-    align-items: center !important;
+    align-items: flex-end !important;
 }
 
 .custom-banner__content {

@@ -1,0 +1,63 @@
+{{ 'custom-styles.css' | asset_url | stylesheet_tag }}
+
+<div class="custom-cta-strip" style="background-color: {{ section.settings.bg_color }};">
+  <div class="custom-section-wrapper custom-cta-strip__container">
+    <div class="custom-cta-strip__brand">
+      {{ section.settings.brand_text }}
+    </div>
+
+    <div class="custom-cta-strip__text">
+      {{ section.settings.center_text }}
+    </div>
+
+    <div class="custom-cta-strip__action">
+      <a href="{{ section.settings.btn_link }}" class="custom-cta-btn">
+        {{ section.settings.btn_label }}
+      </a>
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Custom CTA Strip",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background Color",
+      "default": "#f4f4f4"
+    },
+    {
+      "type": "text",
+      "id": "brand_text",
+      "label": "Brand Text",
+      "default": "TISSO VISON"
+    },
+    {
+      "type": "text",
+      "id": "center_text",
+      "label": "Center Text",
+      "default": "Find the ideal gift for your loved ones."
+    },
+    {
+      "type": "text",
+      "id": "btn_label",
+      "label": "Button Label",
+      "default": "CHOOSE GIFT"
+    },
+    {
+      "type": "url",
+      "id": "btn_link",
+      "label": "Button Link"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Custom CTA Strip"
+    }
+  ]
+}
+{% endschema %}
