@@ -4,12 +4,12 @@ document.addEventListener('DOMContentLoaded', () => {
   const closeBtn = modal.querySelector('.custom-popup-close');
   const form = document.getElementById('popup-product-form');
   const variantsContainer = document.getElementById('popup-variants-container');
-  
+
   const softWinterJacketSettings = document.getElementById('custom-grid-settings');
   // Fallback to the ID provided by user if liquid didn't output one (e.g. product not selected in customizer yet)
   // But wait, if they didn't select it in customizer, we need a way to get the ID. 
   // We will assume the user selects it or we use the fallback logic in search.
-  const bonusProductVariantId = softWinterJacketSettings.dataset.softWinterJacketVariantId; 
+  const bonusProductVariantId = softWinterJacketSettings.dataset.softWinterJacketVariantId;
 
   // --- POPUP LOGIC ---
 
@@ -18,7 +18,7 @@ document.addEventListener('DOMContentLoaded', () => {
       e.preventDefault();
       const productWrapper = btn.closest('.custom-product-item');
       if (!productWrapper) return;
-      
+
       const scriptTag = productWrapper.querySelector('.product-data-json');
       if (!scriptTag) return;
 
@@ -32,7 +32,7 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('popup-product-description').innerHTML = product.description; // Description is HTML
     document.getElementById('popup-product-image').src = product.featured_image;
     document.getElementById('popup-product-image').alt = product.title;
-    
+
     // Format Price
     // Simple formatter, for production use Shopify.formatMoney or similar if available, 
     // but here we just divide by 100 for basic display
@@ -66,11 +66,11 @@ document.addEventListener('DOMContentLoaded', () => {
     if (product.variants.length > 1) {
       // Create a select dropdown or radio buttons. Figma shows simple info.
       // Let's create dropdowns for options.
-      
+
       product.options.forEach((option, index) => {
         const selectWrapper = document.createElement('div');
         selectWrapper.classList.add('custom-variant-select-wrapper');
-        
+
         const label = document.createElement('label');
         label.textContent = option;
         selectWrapper.appendChild(label);
@@ -78,13 +78,13 @@ document.addEventListener('DOMContentLoaded', () => {
         const select = document.createElement('select');
         select.classList.add('custom-variant-select');
         select.dataset.optionIndex = index; // 0, 1, 2
-        
+
         // derived from product.variants to find unique values for this option
         // BUT product.options is just names ["Size", "Color"].
         // product.variants has "option1", "option2", etc.
-        
+
         const values = [...new Set(product.variants.map(v => v.options[index]))];
-        
+
         values.forEach(val => {
           const opt = document.createElement('option');
           opt.value = val;
@@ -99,7 +99,7 @@ document.addEventListener('DOMContentLoaded', () => {
         variantsContainer.appendChild(selectWrapper);
       });
     } else {
-        // Single variant, no selectors needed usually, but logic handles hidden input
+      // Single variant, no selectors needed usually, but logic handles hidden input
     }
   }
 
@@ -107,7 +107,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Gather current selections
     const selects = variantsContainer.querySelectorAll('select');
     const currentOptions = Array.from(selects).map(s => s.value);
-    
+
     // Find matching variant
     const variant = product.variants.find(v => {
       // v.options is an array of strings like ["Small", "Red"]
@@ -115,11 +115,11 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     if (variant) {
-       document.getElementById('popup-variant-id').value = variant.id;
-       document.getElementById('popup-product-price').textContent = `€${(variant.price / 100).toFixed(2)}`;
-       if(variant.featured_image) {
-         document.getElementById('popup-product-image').src = variant.featured_image.src;
-       }
+      document.getElementById('popup-variant-id').value = variant.id;
+      document.getElementById('popup-product-price').textContent = `€${(variant.price / 100).toFixed(2)}`;
+      if (variant.featured_image) {
+        document.getElementById('popup-product-image').src = variant.featured_image.src;
+      }
     }
   }
 
@@ -133,7 +133,7 @@ document.addEventListener('DOMContentLoaded', () => {
     submitBtn.disabled = true;
 
     const variantId = document.getElementById('popup-variant-id').value;
-    
+
     // Check for "Black" and "Medium" logic
     // We can check the selected options in the DOM
     const selects = variantsContainer.querySelectorAll('select');
@@ -141,9 +141,9 @@ document.addEventListener('DOMContentLoaded', () => {
     let isMedium = false;
 
     selects.forEach(select => {
-       const val = select.value.toLowerCase();
-       if (val === 'black') isBlack = true;
-       if (val === 'medium') isMedium = true;
+      const val = select.value.toLowerCase();
+      if (val === 'black') isBlack = true;
+      if (val === 'medium') isMedium = true;
     });
 
     try {
@@ -152,14 +152,36 @@ document.addEventListener('DOMContentLoaded', () => {
 
       // 2. Bonus Logic
       if (isBlack && isMedium) {
-         // Need to add Soft Winter Jacket
-         // Check if we have a variant ID for it
-         if (bonusProductVariantId) {
-            await addToCart(bonusProductVariantId);
-            console.log('Bonus product added!');
-         } else {
-            console.warn('Soft Winter Jacket variant ID not found. Make sure to select the product in Customizer.');
-         }
+        console.log('Bonus condition met: Black & Medium selected.');
+
+        let variantIdToAdd = bonusProductVariantId;
+
+        // If we don't have the ID from settings, try to find it via API
+        if (!variantIdToAdd) {
+          try {
+            console.log('Searching for Soft Winter Jacket...');
+            const searchRes = await fetch(window.Shopify.routes.root + 'search/suggest.json?q=Soft%20Winter%20Jacket&resources[type]=product');
+            const searchData = await searchRes.json();
+
+            const product = searchData.resources.results.products[0];
+            if (product) {
+              // Fetch full product data to get variant ID, usually .js endpoint works
+              const productRes = await fetch(product.url + '.js');
+              const productData = await productRes.json();
+              variantIdToAdd = productData.variants[0].id;
+              console.log('Found Soft Winter Jacket Variant ID:', variantIdToAdd);
+            }
+          } catch (err) {
+            console.error('Failed to find Soft Winter Jacket dynamically:', err);
+          }
+        }
+
+        if (variantIdToAdd) {
+          await addToCart(variantIdToAdd);
+          console.log('Bonus product added!');
+        } else {
+          console.warn('Soft Winter Jacket variant ID not found. Helper search also failed.');
+        }
       }
 
       // 3. Update Cart / Open Drawer (Dawn specific)
@@ -170,10 +192,10 @@ document.addEventListener('DOMContentLoaded', () => {
       // Dawn usually updates automatically if we use the right routes? 
       // Actually standard Dawn custom additions might not trigger drawer unless we use their pubsub.
       // We'll try to trigger a refresh of the cart bubble at least.
-      
+
       // Refresh page or cart
-      window.location.href = '/cart'; 
-      
+      window.location.href = '/cart';
+
     } catch (err) {
       console.error(err);
       alert('Error adding to cart');
