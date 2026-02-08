@@ -23,6 +23,16 @@
         "button_link": ""
       }
     },
+    "custom_text_strip_WFcPNX": {
+      "type": "custom-text-strip",
+      "name": "Custom Text Strip",
+      "settings": {
+        "text_content": "<p>SUSTAINABLE, ETHICALLY MADE CLOTHES IN SIZES XXS TO 6XL</p>",
+        "bg_color": "#f4f4f4",
+        "text_color": "#000000",
+        "padding_y": 10
+      }
+    },
     "custom_product_grid_mCGMKY": {
       "type": "custom-product-grid",
       "blocks": {
@@ -86,16 +96,6 @@
       "name": "Custom Product Grid",
       "settings": {
         "soft_winter_jacket_product": ""
-      }
-    },
-    "custom_text_strip_WFcPNX": {
-      "type": "custom-text-strip",
-      "name": "Custom Text Strip",
-      "settings": {
-        "text_content": "<p>SUSTAINABLE, ETHICALLY MADE CLOTHES IN SIZES XXS TO 6XL</p>",
-        "bg_color": "#f4f4f4",
-        "text_color": "#000000",
-        "padding_y": 10
       }
     }
   },
