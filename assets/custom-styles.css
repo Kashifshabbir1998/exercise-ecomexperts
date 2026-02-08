@@ -18,10 +18,18 @@
     min-height: 600px;
     display: flex;
     align-items: center;
+    /* Vertically Center */
+    justify-content: flex-start;
+    /* Default Left */
     overflow: hidden;
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
+}
+
+/* Modifier class for center alignment */
+.custom-banner.text-center {
+    justify-content: center;
 }
 
 .custom-banner__content {

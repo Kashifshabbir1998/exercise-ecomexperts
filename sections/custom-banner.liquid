@@ -1,9 +1,14 @@
 {{ 'custom-styles.css' | asset_url | stylesheet_tag }}
 
-<div class="custom-banner" style="background-image: url('{{ section.settings.bg_image | image_url: width: 2000 }}'); background-color: {{ section.settings.bg_color }};">
+<div
+  class="custom-banner {% if section.settings.content_alignment == 'center' %}text-center{% endif %}"
+  style="background-image: url('{{ section.settings.bg_image | image_url: width: 2000 }}'); background-color: {{ section.settings.bg_color }};"
+>
   <div class="custom-section-wrapper">
-    <div class="custom-banner__content" style="{% if section.settings.content_alignment == 'center' %}margin: 0 auto; text-align: center;{% endif %}">
-      
+    <div
+      class="custom-banner__content"
+      style="{% if section.settings.content_alignment == 'center' %}margin: 0 auto; text-align: center;{% endif %}"
+    >
       {%- if section.settings.header_text != blank -%}
         <h2 class="custom-banner__title">{{ section.settings.header_text }}</h2>
       {%- endif -%}
@@ -25,8 +30,8 @@
 
 <style>
   /* Applied dynamically to handle user selected highlight color */
-  .custom-banner__text strong, 
-  .custom-banner__text em, 
+  .custom-banner__text strong,
+  .custom-banner__text em,
   .custom-banner__text span[style*="color"] {
     color: {{ section.settings.highlight_text_color }} !important;
   }

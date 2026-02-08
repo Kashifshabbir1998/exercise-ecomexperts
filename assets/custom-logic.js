@@ -46,13 +46,15 @@ document.addEventListener('DOMContentLoaded', () => {
     const firstVariant = product.variants[0];
     document.getElementById('popup-variant-id').value = firstVariant.id;
 
-    modal.setAttribute('aria-hidden', 'false');
     modal.classList.add('is-visible');
+    modal.setAttribute('aria-hidden', 'false');
+    document.body.style.overflow = 'hidden'; // Prevent background scrolling
   }
 
   function closeModal() {
-    modal.setAttribute('aria-hidden', 'true');
     modal.classList.remove('is-visible');
+    modal.setAttribute('aria-hidden', 'true');
+    document.body.style.overflow = '';
   }
 
   overlay.addEventListener('click', closeModal);
@@ -63,11 +65,14 @@ document.addEventListener('DOMContentLoaded', () => {
   function renderVariants(product) {
     variantsContainer.innerHTML = '';
 
-    if (product.variants.length > 1) {
-      // Create a select dropdown or radio buttons. Figma shows simple info.
-      // Let's create dropdowns for options.
+    // Debug
+    console.log('Rendering variants for', product.title);
 
+    if (product.variants.length > 0) {
       product.options.forEach((option, index) => {
+        // Some products might have title "Title" and option "Default Title" if no variants.
+        if (option === 'Title' && product.variants[0].option1 === 'Default Title') return;
+
         const selectWrapper = document.createElement('div');
         selectWrapper.classList.add('custom-variant-select-wrapper');
 
@@ -77,13 +82,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const select = document.createElement('select');
         select.classList.add('custom-variant-select');
-        select.dataset.optionIndex = index; // 0, 1, 2
+        select.dataset.optionIndex = index;
 
-        // derived from product.variants to find unique values for this option
-        // BUT product.options is just names ["Size", "Color"].
-        // product.variants has "option1", "option2", etc.
-
-        const values = [...new Set(product.variants.map(v => v.options[index]))];
+        // Get unique values
+        const values = [];
+        product.variants.forEach(v => {
+          const val = v.options[index];
+          if (!values.includes(val)) values.push(val);
+        });
 
         values.forEach(val => {
           const opt = document.createElement('option');
@@ -98,8 +104,6 @@ document.addEventListener('DOMContentLoaded', () => {
         selectWrapper.appendChild(select);
         variantsContainer.appendChild(selectWrapper);
       });
-    } else {
-      // Single variant, no selectors needed usually, but logic handles hidden input
     }
   }
 
@@ -214,15 +218,29 @@ document.addEventListener('DOMContentLoaded', () => {
       }]
     };
 
-    const response = await fetch(window.Shopify.routes.root + 'cart/add.js', {
+    // Fallback if window.Shopify.routes is not defined (sometimes happens in development themes or basic setups)
+    const root = window.Shopify && window.Shopify.routes && window.Shopify.routes.root ? window.Shopify.routes.root : '/';
+    const url = root + 'cart/add.js';
+
+    // Remove double slashes if any (e.g. //cart/add.js)
+    const cleanUrl = url.replace('//', '/');
+
+    console.log('Adding to cart:', cleanUrl, formData);
+
+    const response = await fetch(cleanUrl, {
       method: 'POST',
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
       },
       body: JSON.stringify(formData)
     });
 
-    if (!response.ok) throw new Error('Failed to add to cart');
+    if (!response.ok) {
+      const text = await response.text();
+      console.error('Add to cart failed:', text);
+      throw new Error('Failed to add to cart: ' + response.statusText);
+    }
     return await response.json();
   }
 
