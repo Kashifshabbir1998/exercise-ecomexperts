@@ -13,6 +13,7 @@
       "type": "custom-banner",
       "name": "Custom Banner",
       "settings": {
+        "bg_image": "shopify://shop_images/desktop-banner-img.png",
         "bg_color": "#f4f4f4",
         "header_text": "The Gift Guide",
         "sub_text": "<p>Discover Joy: Your Ultimate Holiday Gift Destination.</p>",
