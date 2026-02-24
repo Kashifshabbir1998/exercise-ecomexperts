@@ -1,89 +1,867 @@
-{{ 'custom-styles.css' | asset_url | stylesheet_tag }}
+{% comment %}
+  custom-miracle-balm.liquid
+  Purpose: A highly converting custom responsive section matching the "10 reasons" design.
+  Compatible with Shopify 2.0 (Dawn Theme).
+{% endcomment %}
 
-<div class="custom-cta-strip" style="background-color: {{ section.settings.bg_color }};">
-  <div id="custom-cta-strip-container" class="custom-section-wrapper custom-cta-strip__container">
-    <div id="custom-cta-toggle" class="custom-cta-strip__hamburger mobile-only">
-      <svg
-        class="icon-hamburger"
-        width="24"
-        height="24"
-        viewBox="0 0 24 24"
-        fill="none"
-        xmlns="http://www.w3.org/2000/svg"
-      >
-        <path d="M3 12H21" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-        <path d="M3 6H21" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-        <path d="M3 18H21" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-      </svg>
-      <svg
-        class="icon-close"
-        width="24"
-        height="24"
-        viewBox="0 0 24 24"
-        fill="none"
-        xmlns="http://www.w3.org/2000/svg"
-        style="display: none;"
-      >
-        <path d="M18 6L6 18" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-        <path d="M6 6L18 18" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-      </svg>
-    </div>
+{% style %}
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400&display=swap');
 
-    <div class="custom-cta-strip__brand">
-      {{ section.settings.brand_text }}
-    </div>
+  #shopify-section-{{ section.id }} {
+      --color-black: {{ section.settings.color_black | default: '#000000' }};
+      --color-white: {{ section.settings.color_white | default: '#ffffff' }};
+      --color-pink: {{ section.settings.color_pink | default: '#eb2663' }};
+      --color-text-body: {{ section.settings.color_text_body | default: '#4a4a4a' }};
+      --color-text-light: {{ section.settings.color_text_light | default: '#767676' }};
+      --color-number: {{ section.settings.color_number | default: '#ebebeb' }};
+      --color-image-bg: {{ section.settings.color_image_bg | default: '#f4f4f4' }};
+      --color-border: {{ section.settings.color_border | default: '#f0f0f0' }};
 
-    <div class="custom-cta-strip__text">
-      {{ section.settings.center_text }}
-    </div>
+      --font-serif: 'Playfair Display', serif;
+      --font-sans: 'Inter', sans-serif;
 
-    <div class="custom-cta-strip__action">
-      <a href="{{ section.settings.btn_link }}" class="custom-cta-btn">
-        {{ section.settings.btn_label }}
-      </a>
-    </div>
-  </div>
+      --spacing-xs: 8px;
+      --spacing-sm: 16px;
+      --spacing-md: 24px;
+      --spacing-lg: 40px;
+      --spacing-xl: 80px;
+      --spacing-xxl: 120px;
+
+      --container-max-width: 960px;
+  }
+
+  /* Media Queries for Root Variables */
+  @media screen and (max-width: 768px) {
+      #shopify-section-{{ section.id }} {
+          --spacing-xxl: 80px;
+          --spacing-xl: 50px;
+      }
+  }
+
+  .miracle-balm-wrapper {
+      font-family: var(--font-sans);
+      color: var(--color-text-body);
+      line-height: 1.6;
+      background-color: var(--color-white);
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      overflow: hidden;
+  }
+
+  .miracle-balm-wrapper img {
+      max-width: 100%;
+      height: auto;
+      display: block;
+  }
+
+  .miracle-balm-wrapper a {
+      text-decoration: none;
+      color: inherit;
+  }
+
+  /* Typography */
+  .miracle-balm-wrapper h1,
+  .miracle-balm-wrapper h2,
+  .miracle-balm-wrapper h3,
+  .miracle-balm-wrapper h4,
+  .miracle-balm-wrapper .serif-text {
+      font-family: var(--font-serif);
+      color: var(--color-black);
+      font-weight: 400;
+      margin-top: 0;
+  }
+
+  .miracle-balm-wrapper .eyebrow {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      color: var(--color-pink);
+      font-weight: 600;
+      margin-bottom: var(--spacing-sm);
+      display: block;
+  }
+
+  .miracle-balm-wrapper .heading-1 {
+      font-size: 42px;
+      line-height: 1.2;
+      margin-bottom: var(--spacing-md);
+  }
+
+  .miracle-balm-wrapper .heading-2 {
+      font-size: 28px;
+      line-height: 1.3;
+      margin-bottom: var(--spacing-sm);
+  }
+
+  .miracle-balm-wrapper .body-large {
+      font-size: 18px;
+      line-height: 1.6;
+      color: var(--color-text-light);
+  }
+
+  .miracle-balm-wrapper .body-large p {
+      margin: 0;
+  }
+
+  .miracle-balm-wrapper .body-regular,
+  .miracle-balm-wrapper .body-regular p {
+      font-size: 15px;
+      line-height: 1.7;
+      margin-bottom: 0;
+  }
+
+  .miracle-balm-wrapper .body-regular strong,
+  .miracle-balm-wrapper .body-regular b {
+      font-weight: 600;
+      color: var(--color-black);
+  }
+
+  /* Layout */
+  .miracle-balm-wrapper .container {
+      max-width: var(--container-max-width);
+      margin: 0 auto;
+      padding: 0 var(--spacing-md);
+  }
+
+  /* Buttons Component */
+  .miracle-balm-wrapper .btn {
+      display: inline-block;
+      background-color: var(--color-black);
+      color: var(--color-white);
+      padding: 16px 40px;
+      font-size: 12px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      border: 1px solid var(--color-black);
+      transition: background-color 0.3s ease, color 0.3s ease;
+      cursor: pointer;
+  }
+
+  .miracle-balm-wrapper .btn:hover {
+      background-color: transparent;
+      color: var(--color-black);
+  }
+
+  .miracle-balm-wrapper .btn--white {
+      background-color: var(--color-white);
+      color: var(--color-black);
+      border-color: var(--color-white);
+  }
+
+  .miracle-balm-wrapper .btn--white:hover {
+      background-color: transparent;
+      color: var(--color-white);
+  }
+
+  /* Stars Component */
+  .miracle-balm-wrapper .stars-container {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      margin-bottom: var(--spacing-lg);
+      font-size: 14px;
+      color: var(--color-text-light);
+  }
+
+  .miracle-balm-wrapper .stars {
+      color: var(--color-black);
+      font-size: 16px;
+      letter-spacing: 2px;
+  }
+
+  /* Hero Section */
+  .miracle-balm-wrapper .hero-section {
+      text-align: center;
+      padding: var(--spacing-xxl) 0;
+      border-bottom: 1px solid var(--color-border);
+  }
+
+  .miracle-balm-wrapper .hero-section .heading-1 {
+      max-width: 800px;
+      margin-left: auto;
+      margin-right: auto;
+  }
+
+  .miracle-balm-wrapper .hero-section .body-large {
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+      margin-bottom: var(--spacing-md);
+  }
+
+  /* Feature Row Section */
+  .miracle-balm-wrapper .feature-list {
+      padding: var(--spacing-lg) 0;
+  }
+
+  .miracle-balm-wrapper .feature-row {
+      display: flex;
+      align-items: center;
+      padding: var(--spacing-xl) 0;
+      border-bottom: 1px solid var(--color-border);
+      gap: 60px;
+  }
+
+  .miracle-balm-wrapper .feature-list .feature-row:last-child {
+      border-bottom: none;
+  }
+
+  .miracle-balm-wrapper .feature-image-wrapper {
+      flex: 1;
+      background-color: var(--color-image-bg);
+      padding: 40px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 480px;
+  }
+
+  .miracle-balm-wrapper .feature-image-wrapper img {
+      width: 100%;
+      max-width: 320px;
+      object-fit: contain;
+      filter: drop-shadow(0px 30px 40px rgba(0, 0, 0, 0.1));
+  }
+
+  .miracle-balm-wrapper .feature-image-wrapper svg.placeholder-svg {
+      width: 100%;
+      height: 100%;
+      max-width: 320px;
+      fill: #ccc;
+  }
+
+  .miracle-balm-wrapper .feature-text-wrapper {
+      flex: 1;
+      padding-right: 40px;
+  }
+
+  .miracle-balm-wrapper .feature-number {
+      font-family: var(--font-serif);
+      font-size: 80px;
+      color: var(--color-number);
+      line-height: 1;
+      letter-spacing: -2px;
+  }
+
+  /* Testimonial Section */
+  .miracle-balm-wrapper .testimonial-section {
+      padding: var(--spacing-xl) 0;
+      text-align: center;
+      border-top: 1px solid var(--color-border);
+      border-bottom: 1px solid var(--color-border);
+  }
+
+  .miracle-balm-wrapper .testimonial-quote {
+      max-width: 700px;
+      margin: 0 auto;
+  }
+
+  .miracle-balm-wrapper .testimonial-quote .stars {
+      margin-bottom: var(--spacing-md);
+      display: block;
+  }
+
+  .miracle-balm-wrapper .testimonial-quote blockquote {
+      font-family: var(--font-serif);
+      font-size: 26px;
+      line-height: 1.4;
+      color: var(--color-black);
+      font-style: italic;
+      margin: 0 0 var(--spacing-md) 0;
+  }
+
+  .miracle-balm-wrapper .testimonial-author {
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      color: var(--color-text-light);
+  }
+
+  /* Mid CTA Banner */
+  .miracle-balm-wrapper .mid-cta-banner {
+      background-color: var(--color-black);
+      color: var(--color-white);
+      text-align: center;
+      padding: var(--spacing-xl) 20px;
+  }
+
+  .miracle-balm-wrapper .mid-cta-banner h2 {
+      color: var(--color-white);
+      font-size: 32px;
+      margin-bottom: var(--spacing-xs);
+  }
+
+  .miracle-balm-wrapper .mid-cta-banner p {
+      color: #aaaaaa;
+      margin: 0 0 var(--spacing-lg) 0;
+      font-size: 15px;
+  }
+
+  /* Bottom CTA Section */
+  .miracle-balm-wrapper .bottom-cta-section {
+      text-align: center;
+      padding: var(--spacing-xxl) 0;
+  }
+
+  .miracle-balm-wrapper .bottom-cta-section .heading-1 {
+      max-width: 700px;
+      margin-left: auto;
+      margin-right: auto;
+  }
+
+  .miracle-balm-wrapper .bottom-cta-section .body-regular {
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+      margin-bottom: var(--spacing-lg);
+      color: var(--color-text-light);
+  }
+
+  .miracle-balm-wrapper .benefits-row {
+      display: flex;
+      justify-content: center;
+      gap: 24px;
+      margin-top: var(--spacing-lg);
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      color: var(--color-text-light);
+      flex-wrap: wrap;
+  }
+
+  /* Media Queries */
+  @media screen and (max-width: 768px) {
+      .miracle-balm-wrapper .heading-1 {
+          font-size: 32px;
+      }
+
+      .miracle-balm-wrapper .heading-2 {
+          font-size: 24px;
+      }
+
+      .miracle-balm-wrapper .body-large {
+          font-size: 16px;
+      }
+
+      .miracle-balm-wrapper .feature-row {
+          flex-direction: column;
+          gap: var(--spacing-lg);
+          padding: var(--spacing-lg) 0;
+      }
+
+      .miracle-balm-wrapper .feature-image-wrapper {
+          width: 100%;
+          min-height: 340px;
+          padding: 30px;
+      }
+
+      .miracle-balm-wrapper .feature-text-wrapper {
+          padding-right: 0;
+          width: 100%;
+      }
+
+      .miracle-balm-wrapper .feature-number {
+          font-size: 64px;
+          margin-bottom: -10px;
+      }
+
+      .miracle-balm-wrapper .testimonial-quote blockquote {
+          font-size: 22px;
+      }
+
+      .miracle-balm-wrapper .mid-cta-banner h2 {
+          font-size: 26px;
+      }
+
+      .miracle-balm-wrapper .benefits-row {
+          gap: 16px;
+      }
+  }
+{% endstyle %}
+
+<div class="miracle-balm-wrapper">
+  {% for block in section.blocks %}
+    {%- case block.type -%}
+      {%- when 'hero' -%}
+        <section class="hero-section" {{ block.shopify_attributes }}>
+          <div class="container">
+            {% if block.settings.eyebrow != blank %}
+              <span class="eyebrow">{{ block.settings.eyebrow | escape }}</span>
+            {% endif %}
+
+            {% if block.settings.heading != blank %}
+              <h1 class="heading-1">{{ block.settings.heading | escape }}</h1>
+            {% endif %}
+
+            {% if block.settings.text != blank %}
+              <div class="body-large">{{ block.settings.text }}</div>
+            {% endif %}
+
+            {% if block.settings.show_reviews %}
+              <div class="stars-container">
+                <span class="stars">★★★★★</span>
+                <span>{{ block.settings.reviews_text | escape }}</span>
+              </div>
+            {% endif %}
+
+            {% if block.settings.button_label != blank %}
+              <a href="{{ block.settings.button_link | default: '#' }}" class="btn">
+                {{- block.settings.button_label | escape -}}
+              </a>
+            {% endif %}
+          </div>
+        </section>
+
+      {%- when 'feature' -%}
+        {% assign is_first_feature = false %}
+        {% assign is_last_feature = false %}
+
+        {% if forloop.first %}
+          {% assign is_first_feature = true %}
+        {% else %}
+          {% assign prev_index = forloop.index0 | minus: 1 %}
+          {% if section.blocks[prev_index].type != 'feature' %}
+            {% assign is_first_feature = true %}
+          {% endif %}
+        {% endif %}
+
+        {% if forloop.last %}
+          {% assign is_last_feature = true %}
+        {% else %}
+          {% assign next_index = forloop.index0 | plus: 1 %}
+          {% if section.blocks[next_index].type != 'feature' %}
+            {% assign is_last_feature = true %}
+          {% endif %}
+        {% endif %}
+
+        {% if is_first_feature %}
+          <section class="feature-list">
+            <div class="container">
+        {% endif %}
+
+        <div class="feature-row" {{ block.shopify_attributes }}>
+          <div class="feature-image-wrapper">
+            {% if block.settings.image != blank %}
+              {{
+                block.settings.image
+                | image_url: width: 640
+                | image_tag: loading: 'lazy', alt: block.settings.image.alt
+                | escape
+              }}
+            {% else %}
+              {{ 'product-1' | placeholder_svg_tag: 'placeholder-svg' }}
+            {% endif %}
+          </div>
+          <div class="feature-text-wrapper">
+            {% if block.settings.number != blank %}
+              <div class="feature-number">{{ block.settings.number | escape }}</div>
+            {% endif %}
+            <h2 class="heading-2">{{ block.settings.heading | escape }}</h2>
+            <div class="body-regular">{{ block.settings.text }}</div>
+          </div>
+        </div>
+
+        {% if is_last_feature %}
+          </div>
+          </section>
+        {% endif %}
+
+      {%- when 'testimonial' -%}
+        <section class="testimonial-section" {{ block.shopify_attributes }}>
+          <div class="container">
+            <div class="testimonial-quote">
+              <span class="stars">★★★★★</span>
+              <blockquote>"{{ block.settings.quote | escape }}"</blockquote>
+              {% if block.settings.author != blank %}
+                <div class="testimonial-author">— {{ block.settings.author | escape }}</div>
+              {% endif %}
+            </div>
+          </div>
+        </section>
+
+      {%- when 'mid_cta' -%}
+        <section class="mid-cta-banner" {{ block.shopify_attributes }}>
+          <div class="container">
+            <h2>{{ block.settings.heading | escape }}</h2>
+            <p>{{ block.settings.text | escape }}</p>
+            {% if block.settings.button_label != blank %}
+              <a href="{{ block.settings.button_link | default: '#' }}" class="btn btn--white">
+                {{- block.settings.button_label | escape -}}
+              </a>
+            {% endif %}
+          </div>
+        </section>
+
+      {%- when 'bottom_cta' -%}
+        <section class="bottom-cta-section" {{ block.shopify_attributes }}>
+          <div class="container">
+            {% if block.settings.eyebrow != blank %}
+              <span class="eyebrow">{{ block.settings.eyebrow | escape }}</span>
+            {% endif %}
+
+            <h2 class="heading-1">{{ block.settings.heading | escape }}</h2>
+
+            <div class="body-regular">{{ block.settings.text }}</div>
+
+            {% if block.settings.button_label != blank %}
+              <a href="{{ block.settings.button_link | default: '#' }}" class="btn">
+                {{- block.settings.button_label | escape -}}
+              </a>
+            {% endif %}
+
+            <div class="benefits-row">
+              {% if block.settings.benefit_1 != blank -%}
+                <span>{{ block.settings.benefit_1 | escape }}</span>
+              {%- endif %}
+              {% if block.settings.benefit_2 != blank -%}
+                <span>{{ block.settings.benefit_2 | escape }}</span>
+              {%- endif %}
+              {% if block.settings.benefit_3 != blank -%}
+                <span>{{ block.settings.benefit_3 | escape }}</span>
+              {%- endif %}
+            </div>
+          </div>
+        </section>
+    {%- endcase -%}
+  {% endfor %}
 </div>
 
 {% schema %}
 {
-  "name": "Custom CTA Strip",
-  "tag": "section",
+  "name": "10 Reasons Presentation",
   "class": "section",
+  "max_blocks": 50,
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  },
   "settings": [
     {
       "type": "color",
-      "id": "bg_color",
-      "label": "Background Color",
+      "id": "color_black",
+      "label": "Primary/Black",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "id": "color_white",
+      "label": "Background/White",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "color_pink",
+      "label": "Accent Pink",
+      "default": "#eb2663"
+    },
+    {
+      "type": "color",
+      "id": "color_text_body",
+      "label": "Body Text",
+      "default": "#4a4a4a"
+    },
+    {
+      "type": "color",
+      "id": "color_text_light",
+      "label": "Light Text",
+      "default": "#767676"
+    },
+    {
+      "type": "color",
+      "id": "color_number",
+      "label": "Large Numbers",
+      "default": "#ebebeb"
+    },
+    {
+      "type": "color",
+      "id": "color_image_bg",
+      "label": "Image Background",
       "default": "#f4f4f4"
     },
     {
-      "type": "text",
-      "id": "brand_text",
-      "label": "Brand Text",
-      "default": "TISSO VISON"
+      "type": "color",
+      "id": "color_border",
+      "label": "Border Color",
+      "default": "#f0f0f0"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "hero",
+      "name": "Hero Cover",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "text",
+          "id": "eyebrow",
+          "label": "Eyebrow Text",
+          "default": "Miracle Balm"
+        },
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "Heading",
+          "default": "10 reasons executives are replacing their entire makeup bag with this $38 balm"
+        },
+        {
+          "type": "richtext",
+          "id": "text",
+          "label": "Body text",
+          "default": "<p>One product. 30 seconds. Boardroom-ready every time. Created by Bobbi Brown for people who don't have time for a 12-step routine.</p>"
+        },
+        {
+          "type": "checkbox",
+          "id": "show_reviews",
+          "label": "Show Review Stars",
+          "default": true
+        },
+        {
+          "type": "text",
+          "id": "reviews_text",
+          "label": "Reviews Text",
+          "default": "75,000+ verified reviews"
+        },
+        {
+          "type": "text",
+          "id": "button_label",
+          "label": "Button Label",
+          "default": "Find My Shade"
+        },
+        {
+          "type": "url",
+          "id": "button_link",
+          "label": "Button Link"
+        }
+      ]
     },
     {
-      "type": "text",
-      "id": "center_text",
-      "label": "Center Text",
-      "default": "Find the ideal gift for your loved ones."
+      "type": "feature",
+      "name": "Feature Statement",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Product Image"
+        },
+        {
+          "type": "text",
+          "id": "number",
+          "label": "Large Number",
+          "default": "01"
+        },
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "Heading",
+          "default": "One product replaces five"
+        },
+        {
+          "type": "richtext",
+          "id": "text",
+          "label": "Body Text & Highlights",
+          "default": "<p>Blush. Bronzer. Highlighter. Lip tint. Moisturizer. Miracle Balm does the work of your entire makeup bag in a single compact. <strong>One tin. Five functions. Done.</strong></p>"
+        }
+      ]
     },
     {
-      "type": "text",
-      "id": "btn_label",
-      "label": "Button Label",
-      "default": "CHOOSE GIFT"
+      "type": "testimonial",
+      "name": "Testimonial Break",
+      "settings": [
+        {
+          "type": "textarea",
+          "id": "quote",
+          "label": "Quote",
+          "default": "I'm a lawyer with back-to-back court days. This is the only product I use. I look polished in 20 seconds flat."
+        },
+        {
+          "type": "text",
+          "id": "author",
+          "label": "Author Title",
+          "default": "Verified Buyer"
+        }
+      ]
     },
     {
-      "type": "url",
-      "id": "btn_link",
-      "label": "Button Link"
+      "type": "mid_cta",
+      "name": "Mid CTA Banner",
+      "settings": [
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "Heading",
+          "default": "Still reading? That's 6 reasons in."
+        },
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Subtext",
+          "default": "Most people add to cart by reason 4."
+        },
+        {
+          "type": "text",
+          "id": "button_label",
+          "label": "Button Label",
+          "default": "Find My Shade"
+        },
+        {
+          "type": "url",
+          "id": "button_link",
+          "label": "Button Link"
+        }
+      ]
+    },
+    {
+      "type": "bottom_cta",
+      "name": "Bottom Call To Action",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "text",
+          "id": "eyebrow",
+          "label": "Eyebrow Text",
+          "default": "Miracle Balm"
+        },
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "Heading",
+          "default": "Your most efficient beauty decision"
+        },
+        {
+          "type": "richtext",
+          "id": "text",
+          "label": "Body Text",
+          "default": "<p>One product. Clean ingredients. 30 seconds. Join 75,000+ people who simplified their routine and never looked back.</p>"
+        },
+        {
+          "type": "text",
+          "id": "button_label",
+          "label": "Button Label",
+          "default": "Find My Shade"
+        },
+        {
+          "type": "url",
+          "id": "button_link",
+          "label": "Button Link"
+        },
+        {
+          "type": "text",
+          "id": "benefit_1",
+          "label": "Benefit 1",
+          "default": "Free Shipping"
+        },
+        {
+          "type": "text",
+          "id": "benefit_2",
+          "label": "Benefit 2",
+          "default": "Clean Ingredients"
+        },
+        {
+          "type": "text",
+          "id": "benefit_3",
+          "label": "Benefit 3",
+          "default": "75,000+ Reviews"
+        }
+      ]
     }
   ],
   "presets": [
     {
-      "name": "Custom CTA Strip"
+      "name": "10 Reasons Presentation",
+      "category": "Promotional",
+      "blocks": [
+        { "type": "hero" },
+        {
+          "type": "feature",
+          "settings": {
+            "number": "01",
+            "heading": "One product replaces five",
+            "text": "<p>Miracle Balm does the work of your entire makeup bag in a single compact. Less clutter on your vanity, fewer decisions before your 7 AM call. <strong>One tin. Five functions. Done.</strong></p>"
+          }
+        },
+        {
+          "type": "feature",
+          "settings": {
+            "number": "02",
+            "heading": "30-second application",
+            "text": "<p>You don't need brushes, sponges, or a tutorial. Tap it on with your fingers in the elevator, between Zoom calls, or in the back of an Uber. <strong>Your calendar is packed. Your routine shouldn't be.</strong></p>"
+          }
+        },
+        {
+          "type": "feature",
+          "settings": {
+            "number": "03",
+            "heading": "Created by Bobbi Brown",
+            "text": "<p>The woman who built a billion-dollar beauty empire. Who defined the \"no-makeup makeup\" look. <strong>Jones Road is Bobbi Brown's life's work — distilled into clean, high-performance products.</strong></p>"
+          }
+        },
+        { "type": "testimonial" },
+        {
+          "type": "feature",
+          "settings": {
+            "number": "04",
+            "heading": "Clean ingredients you'd actually want on your skin",
+            "text": "<p>Jojoba oil. Argan oil. Sea Buckthorn. Vitamin E. Beeswax. You can read every ingredient on the label. <strong>Non-comedogenic and dermatologist-friendly.</strong></p>"
+          }
+        },
+        {
+          "type": "feature",
+          "settings": {
+            "number": "05",
+            "heading": "Looks like great skin, not makeup",
+            "text": "<p>The light-reflecting formula melts into skin for a natural, healthy glow. No shimmer. No glitter. <strong>They'll just think you look annoyingly well-rested.</strong></p>"
+          }
+        },
+        {
+          "type": "feature",
+          "settings": {
+            "number": "06",
+            "heading": "75,000+ five-star reviews",
+            "text": "<p>This isn't a niche discovery. It's a phenomenon. Miracle Balm has been reviewed over 75,000 times with a 4.3-star average. <strong>When 75,000 people agree on something, it's worth paying attention.</strong></p>"
+          }
+        },
+        { "type": "mid_cta" },
+        {
+          "type": "feature",
+          "settings": {
+            "number": "07",
+            "heading": "Travels anywhere",
+            "text": "<p>TSA-friendly. No spills. No caps to lose. Toss it in your carry-on, your desk drawer, or your gym bag. <strong>The tin is smaller than your AirPods case</strong> and holds up at 35,000 feet.</p>"
+          }
+        },
+        {
+          "type": "feature",
+          "settings": {
+            "number": "08",
+            "heading": "Works on every skin tone",
+            "text": "<p>13 shades. Whether you're fair-skinned in the corner office or deep-toned closing deals on the trading floor, <strong>there's a shade that looks like it was custom-mixed for you.</strong></p>"
+          }
+        },
+        {
+          "type": "testimonial",
+          "settings": {
+            "quote": "I travel 3 weeks a month. Miracle Balm is the one beauty product I never leave behind. It replaced everything else."
+          }
+        },
+        {
+          "type": "feature",
+          "settings": {
+            "number": "09",
+            "heading": "No learning curve",
+            "text": "<p>Open the tin. Tap your fingers on the balm. Blend onto cheeks, lips, or wherever you want a healthy flush. <strong>That's it. Three steps. No YouTube tutorial required.</strong></p>"
+          }
+        },
+        {
+          "type": "feature",
+          "settings": {
+            "number": "10",
+            "heading": "$38 replaces $200+ in products",
+            "text": "<p>A blush ($34). A bronzer ($38). A highlighter ($42). A lip tint ($28). A tinted moisturizer ($52). That's $194. <strong>Miracle Balm does all of it for $38.</strong> You didn't get where you are by overspending on redundancy.</p>"
+          }
+        },
+        { "type": "bottom_cta" }
+      ]
     }
   ]
 }
