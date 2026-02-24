@@ -1,6 +1,6 @@
 {% comment %}
   custom-miracle-balm.liquid
-  Purpose: A highly converting custom responsive section matching the "10 reasons" design. 
+  Purpose: A highly converting custom responsive section matching the "10 reasons" design.
   Compatible with Shopify 2.0 (Dawn Theme).
 {% endcomment %}
 
@@ -224,7 +224,7 @@
       object-fit: contain;
       filter: drop-shadow(0px 30px 40px rgba(0, 0, 0, 0.1));
   }
-  
+
   .miracle-balm-wrapper .feature-image-wrapper svg.placeholder-svg {
       width: 100%;
       height: 100%;
@@ -386,36 +386,38 @@
     {%- case block.type -%}
       {%- when 'hero' -%}
         <section class="hero-section" {{ block.shopify_attributes }}>
-            <div class="container">
-                {% if block.settings.eyebrow != blank %}
-                  <span class="eyebrow">{{ block.settings.eyebrow | escape }}</span>
-                {% endif %}
-                
-                {% if block.settings.heading != blank %}
-                  <h1 class="heading-1">{{ block.settings.heading | escape }}</h1>
-                {% endif %}
-                
-                {% if block.settings.text != blank %}
-                  <div class="body-large">{{ block.settings.text }}</div>
-                {% endif %}
-                
-                {% if block.settings.show_reviews %}
-                  <div class="stars-container">
-                      <span class="stars">★★★★★</span>
-                      <span>{{ block.settings.reviews_text | escape }}</span>
-                  </div>
-                {% endif %}
-                
-                {% if block.settings.button_label != blank %}
-                  <a href="{{ block.settings.button_link | default: '#' }}" class="btn">{{ block.settings.button_label | escape }}</a>
-                {% endif %}
-            </div>
+          <div class="container">
+            {% if block.settings.eyebrow != blank %}
+              <span class="eyebrow">{{ block.settings.eyebrow | escape }}</span>
+            {% endif %}
+
+            {% if block.settings.heading != blank %}
+              <h1 class="heading-1">{{ block.settings.heading | escape }}</h1>
+            {% endif %}
+
+            {% if block.settings.text != blank %}
+              <div class="body-large">{{ block.settings.text }}</div>
+            {% endif %}
+
+            {% if block.settings.show_reviews %}
+              <div class="stars-container">
+                <span class="stars">★★★★★</span>
+                <span>{{ block.settings.reviews_text | escape }}</span>
+              </div>
+            {% endif %}
+
+            {% if block.settings.button_label != blank %}
+              <a href="{{ block.settings.button_link | default: '#' }}" class="btn">
+                {{- block.settings.button_label | escape -}}
+              </a>
+            {% endif %}
+          </div>
         </section>
 
       {%- when 'feature' -%}
         {% assign is_first_feature = false %}
         {% assign is_last_feature = false %}
-        
+
         {% if forloop.first %}
           {% assign is_first_feature = true %}
         {% else %}
@@ -424,7 +426,7 @@
             {% assign is_first_feature = true %}
           {% endif %}
         {% endif %}
-        
+
         {% if forloop.last %}
           {% assign is_last_feature = true %}
         {% else %}
@@ -435,79 +437,93 @@
         {% endif %}
 
         {% if is_first_feature %}
-        <section class="feature-list">
+          <section class="feature-list">
             <div class="container">
         {% endif %}
 
-                <div class="feature-row" {{ block.shopify_attributes }}>
-                    <div class="feature-image-wrapper">
-                        {% if block.settings.image != blank %}
-                          {{ block.settings.image | image_url: width: 640 | image_tag: loading: 'lazy', alt: block.settings.image.alt | escape }}
-                        {% else %}
-                          {{ 'product-1' | placeholder_svg_tag: 'placeholder-svg' }}
-                        {% endif %}
-                    </div>
-                    <div class="feature-text-wrapper">
-                        {% if block.settings.number != blank %}
-                          <div class="feature-number">{{ block.settings.number | escape }}</div>
-                        {% endif %}
-                        <h2 class="heading-2">{{ block.settings.heading | escape }}</h2>
-                        <div class="body-regular">{{ block.settings.text }}</div>
-                    </div>
-                </div>
+        <div class="feature-row" {{ block.shopify_attributes }}>
+          <div class="feature-image-wrapper">
+            {% if block.settings.image != blank %}
+              {{
+                block.settings.image
+                | image_url: width: 640
+                | image_tag: loading: 'lazy', alt: block.settings.image.alt
+                | escape
+              }}
+            {% else %}
+              {{ 'product-1' | placeholder_svg_tag: 'placeholder-svg' }}
+            {% endif %}
+          </div>
+          <div class="feature-text-wrapper">
+            {% if block.settings.number != blank %}
+              <div class="feature-number">{{ block.settings.number | escape }}</div>
+            {% endif %}
+            <h2 class="heading-2">{{ block.settings.heading | escape }}</h2>
+            <div class="body-regular">{{ block.settings.text }}</div>
+          </div>
+        </div>
 
         {% if is_last_feature %}
-            </div>
-        </section>
+          </div>
+          </section>
         {% endif %}
 
       {%- when 'testimonial' -%}
         <section class="testimonial-section" {{ block.shopify_attributes }}>
-            <div class="container">
-                <div class="testimonial-quote">
-                    <span class="stars">★★★★★</span>
-                    <blockquote>"{{ block.settings.quote | escape }}"</blockquote>
-                    {% if block.settings.author != blank %}
-                      <div class="testimonial-author">— {{ block.settings.author | escape }}</div>
-                    {% endif %}
-                </div>
+          <div class="container">
+            <div class="testimonial-quote">
+              <span class="stars">★★★★★</span>
+              <blockquote>"{{ block.settings.quote | escape }}"</blockquote>
+              {% if block.settings.author != blank %}
+                <div class="testimonial-author">— {{ block.settings.author | escape }}</div>
+              {% endif %}
             </div>
+          </div>
         </section>
 
       {%- when 'mid_cta' -%}
         <section class="mid-cta-banner" {{ block.shopify_attributes }}>
-            <div class="container">
-                <h2>{{ block.settings.heading | escape }}</h2>
-                <p>{{ block.settings.text | escape }}</p>
-                {% if block.settings.button_label != blank %}
-                  <a href="{{ block.settings.button_link | default: '#' }}" class="btn btn--white">{{ block.settings.button_label | escape }}</a>
-                {% endif %}
-            </div>
+          <div class="container">
+            <h2>{{ block.settings.heading | escape }}</h2>
+            <p>{{ block.settings.text | escape }}</p>
+            {% if block.settings.button_label != blank %}
+              <a href="{{ block.settings.button_link | default: '#' }}" class="btn btn--white">
+                {{- block.settings.button_label | escape -}}
+              </a>
+            {% endif %}
+          </div>
         </section>
 
       {%- when 'bottom_cta' -%}
         <section class="bottom-cta-section" {{ block.shopify_attributes }}>
-            <div class="container">
-                {% if block.settings.eyebrow != blank %}
-                  <span class="eyebrow">{{ block.settings.eyebrow | escape }}</span>
-                {% endif %}
-                
-                <h2 class="heading-1">{{ block.settings.heading | escape }}</h2>
-                
-                <div class="body-regular">{{ block.settings.text }}</div>
+          <div class="container">
+            {% if block.settings.eyebrow != blank %}
+              <span class="eyebrow">{{ block.settings.eyebrow | escape }}</span>
+            {% endif %}
 
-                {% if block.settings.button_label != blank %}
-                  <a href="{{ block.settings.button_link | default: '#' }}" class="btn">{{ block.settings.button_label | escape }}</a>
-                {% endif %}
+            <h2 class="heading-1">{{ block.settings.heading | escape }}</h2>
 
-                <div class="benefits-row">
-                    {% if block.settings.benefit_1 != blank %}<span>{{ block.settings.benefit_1 | escape }}</span>{% endif %}
-                    {% if block.settings.benefit_2 != blank %}<span>{{ block.settings.benefit_2 | escape }}</span>{% endif %}
-                    {% if block.settings.benefit_3 != blank %}<span>{{ block.settings.benefit_3 | escape }}</span>{% endif %}
-                </div>
+            <div class="body-regular">{{ block.settings.text }}</div>
+
+            {% if block.settings.button_label != blank %}
+              <a href="{{ block.settings.button_link | default: '#' }}" class="btn">
+                {{- block.settings.button_label | escape -}}
+              </a>
+            {% endif %}
+
+            <div class="benefits-row">
+              {% if block.settings.benefit_1 != blank -%}
+                <span>{{ block.settings.benefit_1 | escape }}</span>
+              {%- endif %}
+              {% if block.settings.benefit_2 != blank -%}
+                <span>{{ block.settings.benefit_2 | escape }}</span>
+              {%- endif %}
+              {% if block.settings.benefit_3 != blank -%}
+                <span>{{ block.settings.benefit_3 | escape }}</span>
+              {%- endif %}
             </div>
+          </div>
         </section>
-
     {%- endcase -%}
   {% endfor %}
 </div>
@@ -515,6 +531,10 @@
 {% schema %}
 {
   "name": "10 Reasons Presentation",
+  "class": "section",
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  },
   "settings": [
     {
       "type": "color",
@@ -750,93 +770,93 @@
       "name": "10 Reasons Presentation",
       "blocks": [
         { "type": "hero" },
-        { 
-          "type": "feature", 
-          "settings": { 
-            "number": "01", 
+        {
+          "type": "feature",
+          "settings": {
+            "number": "01",
             "heading": "One product replaces five",
             "text": "<p>Miracle Balm does the work of your entire makeup bag in a single compact. Less clutter on your vanity, fewer decisions before your 7 AM call. <strong>One tin. Five functions. Done.</strong></p>"
-          } 
-        },
-        { 
-          "type": "feature", 
-          "settings": { 
-            "number": "02", 
-            "heading": "30-second application",
-            "text": "<p>You don't need brushes, sponges, or a tutorial. Tap it on with your fingers in the elevator, between Zoom calls, or in the back of an Uber. <strong>Your calendar is packed. Your routine shouldn't be.</strong></p>"
-          } 
-        },
-        { 
-          "type": "feature", 
-          "settings": { 
-            "number": "03", 
-            "heading": "Created by Bobbi Brown",
-            "text": "<p>The woman who built a billion-dollar beauty empire. Who defined the \"no-makeup makeup\" look. <strong>Jones Road is Bobbi Brown's life's work — distilled into clean, high-performance products.</strong></p>"
-          } 
-        },
-        { "type": "testimonial" },
-        { 
-          "type": "feature", 
-          "settings": { 
-            "number": "04", 
-            "heading": "Clean ingredients you'd actually want on your skin",
-            "text": "<p>Jojoba oil. Argan oil. Sea Buckthorn. Vitamin E. Beeswax. You can read every ingredient on the label. <strong>Non-comedogenic and dermatologist-friendly.</strong></p>"
-          } 
-        },
-        { 
-          "type": "feature", 
-          "settings": { 
-            "number": "05", 
-            "heading": "Looks like great skin, not makeup",
-            "text": "<p>The light-reflecting formula melts into skin for a natural, healthy glow. No shimmer. No glitter. <strong>They'll just think you look annoyingly well-rested.</strong></p>"
-          } 
-        },
-        { 
-          "type": "feature", 
-          "settings": { 
-            "number": "06", 
-            "heading": "75,000+ five-star reviews",
-            "text": "<p>This isn't a niche discovery. It's a phenomenon. Miracle Balm has been reviewed over 75,000 times with a 4.3-star average. <strong>When 75,000 people agree on something, it's worth paying attention.</strong></p>"
-          } 
-        },
-        { "type": "mid_cta" },
-        { 
-          "type": "feature", 
-          "settings": { 
-            "number": "07", 
-            "heading": "Travels anywhere",
-            "text": "<p>TSA-friendly. No spills. No caps to lose. Toss it in your carry-on, your desk drawer, or your gym bag. <strong>The tin is smaller than your AirPods case</strong> and holds up at 35,000 feet.</p>"
-          } 
-        },
-        { 
-          "type": "feature", 
-          "settings": { 
-            "number": "08", 
-            "heading": "Works on every skin tone",
-            "text": "<p>13 shades. Whether you're fair-skinned in the corner office or deep-toned closing deals on the trading floor, <strong>there's a shade that looks like it was custom-mixed for you.</strong></p>"
-          } 
-        },
-        { 
-          "type": "testimonial",
-          "settings": {
-              "quote": "I travel 3 weeks a month. Miracle Balm is the one beauty product I never leave behind. It replaced everything else."
           }
         },
-        { 
-          "type": "feature", 
-          "settings": { 
-            "number": "09", 
+        {
+          "type": "feature",
+          "settings": {
+            "number": "02",
+            "heading": "30-second application",
+            "text": "<p>You don't need brushes, sponges, or a tutorial. Tap it on with your fingers in the elevator, between Zoom calls, or in the back of an Uber. <strong>Your calendar is packed. Your routine shouldn't be.</strong></p>"
+          }
+        },
+        {
+          "type": "feature",
+          "settings": {
+            "number": "03",
+            "heading": "Created by Bobbi Brown",
+            "text": "<p>The woman who built a billion-dollar beauty empire. Who defined the \"no-makeup makeup\" look. <strong>Jones Road is Bobbi Brown's life's work — distilled into clean, high-performance products.</strong></p>"
+          }
+        },
+        { "type": "testimonial" },
+        {
+          "type": "feature",
+          "settings": {
+            "number": "04",
+            "heading": "Clean ingredients you'd actually want on your skin",
+            "text": "<p>Jojoba oil. Argan oil. Sea Buckthorn. Vitamin E. Beeswax. You can read every ingredient on the label. <strong>Non-comedogenic and dermatologist-friendly.</strong></p>"
+          }
+        },
+        {
+          "type": "feature",
+          "settings": {
+            "number": "05",
+            "heading": "Looks like great skin, not makeup",
+            "text": "<p>The light-reflecting formula melts into skin for a natural, healthy glow. No shimmer. No glitter. <strong>They'll just think you look annoyingly well-rested.</strong></p>"
+          }
+        },
+        {
+          "type": "feature",
+          "settings": {
+            "number": "06",
+            "heading": "75,000+ five-star reviews",
+            "text": "<p>This isn't a niche discovery. It's a phenomenon. Miracle Balm has been reviewed over 75,000 times with a 4.3-star average. <strong>When 75,000 people agree on something, it's worth paying attention.</strong></p>"
+          }
+        },
+        { "type": "mid_cta" },
+        {
+          "type": "feature",
+          "settings": {
+            "number": "07",
+            "heading": "Travels anywhere",
+            "text": "<p>TSA-friendly. No spills. No caps to lose. Toss it in your carry-on, your desk drawer, or your gym bag. <strong>The tin is smaller than your AirPods case</strong> and holds up at 35,000 feet.</p>"
+          }
+        },
+        {
+          "type": "feature",
+          "settings": {
+            "number": "08",
+            "heading": "Works on every skin tone",
+            "text": "<p>13 shades. Whether you're fair-skinned in the corner office or deep-toned closing deals on the trading floor, <strong>there's a shade that looks like it was custom-mixed for you.</strong></p>"
+          }
+        },
+        {
+          "type": "testimonial",
+          "settings": {
+            "quote": "I travel 3 weeks a month. Miracle Balm is the one beauty product I never leave behind. It replaced everything else."
+          }
+        },
+        {
+          "type": "feature",
+          "settings": {
+            "number": "09",
             "heading": "No learning curve",
             "text": "<p>Open the tin. Tap your fingers on the balm. Blend onto cheeks, lips, or wherever you want a healthy flush. <strong>That's it. Three steps. No YouTube tutorial required.</strong></p>"
-          } 
+          }
         },
-        { 
-          "type": "feature", 
-          "settings": { 
-            "number": "10", 
+        {
+          "type": "feature",
+          "settings": {
+            "number": "10",
             "heading": "$38 replaces $200+ in products",
             "text": "<p>A blush ($34). A bronzer ($38). A highlighter ($42). A lip tint ($28). A tinted moisturizer ($52). That's $194. <strong>Miracle Balm does all of it for $38.</strong> You didn't get where you are by overspending on redundancy.</p>"
-          } 
+          }
         },
         { "type": "bottom_cta" }
       ]
