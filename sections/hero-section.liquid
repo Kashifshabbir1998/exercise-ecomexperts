@@ -139,7 +139,7 @@
   z-index: 2;
   position: relative;
   flex: 1;
-  gap: 100px;
+  gap: 60px;
 }
 
 .custom-hero-text-col {
@@ -428,7 +428,7 @@
     <div class="custom-hero-top-content">
        <div class="custom-hero-text-col">
           <h1 class="custom-hero-title">{{ section.settings.title }}</h1>
-          <p class="custom-hero-subtitle">{{ section.settings.subtitle | newline_to_br }}</p>
+          <p class="custom-hero-subtitle">{{ section.settings.subtitle }}</p>
         <div class="custom-hero-action-container">
           <a href="{{ section.settings.button_link | default: '#' }}" class="custom-hero-btn">{{ section.settings.button_text }}</a>
           
