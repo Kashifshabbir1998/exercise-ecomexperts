@@ -84,6 +84,8 @@
         { "type": "product" },
         { "type": "product" },
         { "type": "product" },
+        { "type": "product" },
+        { "type": "product" },
         { "type": "product" }
       ]
     }
@@ -190,11 +192,18 @@
   transition: transform 0.3s ease;
 }
 
+.custom-hero-action-container {
+  display: flex;
+  align-items: center;
+  position: relative;
+  margin-top: 10px;
+}
+
 .custom-hero-path {
-  position: absolute;
-  left: 360px;
-  top: 240px;
   width: 320px;
+  flex-shrink: 0;
+  margin-left: 10px;
+  transform: translateY(20px);
   z-index: 2;
   pointer-events: none;
 }
@@ -405,14 +414,15 @@
        <div class="custom-hero-text-col">
           <h1 class="custom-hero-title">{{ section.settings.title }}</h1>
           <p class="custom-hero-subtitle">{{ section.settings.subtitle | newline_to_br }}</p>
+        <div class="custom-hero-action-container">
           <a href="{{ section.settings.button_link | default: '#' }}" class="custom-hero-btn">{{ section.settings.button_text }}</a>
-       </div>
-       
-       {% if section.settings.decorative_path %}
-          <img src="{{ section.settings.decorative_path | image_url: width: 400 }}" alt="Path" class="custom-hero-path">
-       {% else %}
-          <img src="{{ 'paperplane.svg' | asset_url }}" alt="Path" class="custom-hero-path">
-       {% endif %}
+          
+          {% if section.settings.decorative_path %}
+             <img src="{{ section.settings.decorative_path | image_url: width: 400 }}" alt="Path" class="custom-hero-path">
+          {% else %}
+             <img src="{{ 'paperplane.svg' | asset_url }}" alt="Path" class="custom-hero-path">
+          {% endif %}
+        </div>
        
        {% if section.settings.main_image %}
           <img src="{{ section.settings.main_image | image_url: width: 600 }}" alt="Main image" class="custom-hero-main-img">
@@ -499,9 +509,8 @@
                  </div>
                {% endfor %}
              {% else %}
-               <!-- No blocks added: render exactly 7 slides to match the 7 dots exactly if they want -->
-               <!-- The screenshot shows 4 in view, 7 dots means 7 slides (if single slide scroll) -->
-               {% for i in (1..7) %}
+               <!-- No blocks added: render exactly 6 slides to match the 6 default slides -->
+               {% for i in (1..6) %}
                  <div class="swiper-slide">
                    <a href="#" class="custom-product-card">
                      <div class="custom-product-img-wrapper">
