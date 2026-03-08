@@ -11,6 +11,7 @@
   "sections": {
     "custom_banner_PbmMTg": {
       "type": "custom-banner",
+      "disabled": true,
       "name": "Custom Banner",
       "settings": {
         "bg_image": "shopify://shop_images/desktop-banner-img.png",
@@ -25,6 +26,7 @@
     },
     "custom_text_strip_WFcPNX": {
       "type": "custom-text-strip",
+      "disabled": true,
       "name": "Custom Text Strip",
       "settings": {
         "text_content": "<p>SUSTAINABLE, ETHICALLY MADE CLOTHES IN SIZES XXS TO 6XL</p>",
@@ -93,6 +95,7 @@
         "product_block_qBKTwV",
         "product_block_Rcarcn"
       ],
+      "disabled": true,
       "name": "Custom Product Grid",
       "settings": {
         "soft_winter_jacket_product": ""
@@ -101,15 +104,6 @@
     "hero_section_UKyb4j": {
       "type": "hero-section",
       "blocks": {
-        "product_cB4EXV": {
-          "type": "product",
-          "settings": {
-            "product": "black-leather-bag",
-            "custom_title": "",
-            "custom_price": "$310",
-            "custom_compare_price": "$310"
-          }
-        },
         "product_pbTVmF": {
           "type": "product",
           "settings": {
@@ -148,7 +142,6 @@
         }
       },
       "block_order": [
-        "product_cB4EXV",
         "product_pbTVmF",
         "product_HHNBGU",
         "product_8RFt4P",
