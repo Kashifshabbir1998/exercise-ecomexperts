@@ -150,7 +150,9 @@
         "title": "Cutting Edge Beauty Tools",
         "subtitle": "Innovative, Sleek,\nTransformative Solutions.",
         "button_text": "Shop Now",
-        "button_link": ""
+        "button_link": "",
+        "main_image": "shopify://shop_images/dryer.png",
+        "decorative_path": "shopify://shop_images/paperplane.svg"
       }
     }
   },
