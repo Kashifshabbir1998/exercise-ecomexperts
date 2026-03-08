@@ -137,7 +137,7 @@
   padding: 80px 100px 0 100px;
   z-index: 2;
   position: relative;
-  height: 400px;
+  flex: 1;
 }
 
 .custom-hero-text-col {
@@ -217,23 +217,25 @@
 .custom-product-card {
   background: #fff;
   border-radius: 8px;
-  padding: 15px 15px 20px 15px;
+  padding: 15px 20px;
   display: flex;
-  flex-direction: column;
-  height: 100%;
+  flex-direction: row;
+  align-items: center;
+  height: 120px;
   box-sizing: border-box;
   text-decoration: none !important;
   color: #000;
+  position: relative;
 }
 
 .custom-product-img-wrapper {
-  background: #fff;
-  border-radius: 8px;
-  height: 110px;
+  width: 70px;
+  height: 70px;
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-bottom: 20px;
+  margin-right: 15px;
+  flex-shrink: 0;
 }
 
 .custom-product-img-wrapper img {
@@ -242,17 +244,17 @@
   object-fit: contain;
 }
 
-.custom-product-bottom {
+.custom-product-info {
   display: flex;
-  justify-content: space-between;
-  align-items: flex-end;
-  margin-top: auto;
+  flex-direction: column;
+  justify-content: center;
+  flex: 1;
 }
 
 .custom-product-text {
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: 2px;
 }
 
 .custom-product-title {
@@ -260,29 +262,37 @@
   font-weight: 500;
   color: #000;
   margin: 0;
+  line-height: 1.2;
 }
 
 .custom-product-price-row {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 8px;
+  margin-top: 2px;
 }
 
 .custom-price {
-  font-size: 20px;
+  font-size: 18px;
   font-weight: 600;
   color: #000;
 }
 
 .custom-compare-price {
-  font-size: 14px;
+  font-size: 12px;
   color: #888;
   text-decoration: line-through;
 }
 
+.custom-product-action {
+  position: absolute;
+  bottom: 15px;
+  right: 15px;
+}
+
 .custom-product-action img {
-  width: 28px;
-  height: 28px;
+  width: 24px;
+  height: 24px;
   transition: transform 0.2s;
 }
 .custom-product-card:hover .custom-product-action img {
@@ -471,7 +481,7 @@
                      <div class="custom-product-img-wrapper">
                         <img src="{{ img_src }}" alt="{{ p_title | escape }}">
                      </div>
-                     <div class="custom-product-bottom">
+                     <div class="custom-product-info">
                        <div class="custom-product-text">
                          <h3 class="custom-product-title">{{ p_title }}</h3>
                          <div class="custom-product-price-row">
@@ -501,7 +511,7 @@
                         {% elsif rem == 3 %}<img src="{{ 'photoframe.png' | asset_url }}" alt="Photo Frame">
                         {% else %}<img src="{{ 'light.png' | asset_url }}" alt="Light">{% endif %}
                      </div>
-                     <div class="custom-product-bottom">
+                     <div class="custom-product-info">
                        <div class="custom-product-text">
                          <h3 class="custom-product-title">
                           {% if rem == 1 %}Key Chain
@@ -529,7 +539,7 @@
   </div>
 </div>
 
-<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 <script>
 document.addEventListener("DOMContentLoaded", function() {
   function initSwiper() {
