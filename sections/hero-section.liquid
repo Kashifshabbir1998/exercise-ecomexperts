@@ -214,6 +214,10 @@
   overflow: visible;
 }
 
+.custom-product-swiper .swiper-slide {
+  height: auto;
+}
+
 .custom-product-card {
   background: #fff;
   border-radius: 8px;
@@ -259,11 +263,16 @@
 }
 
 .custom-product-title {
-  font-size: 15px;
+  font-size: 14px;
   font-weight: 500;
   color: #000;
   margin: 0;
-  line-height: 1.3;
+  line-height: 1.2;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .custom-product-price-row {
