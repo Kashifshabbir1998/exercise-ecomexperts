@@ -1,0 +1,569 @@
+{% schema %}
+{
+  "name": "Custom Hero Slider",
+  "settings": [
+    {
+      "type": "color_background",
+      "id": "background_gradient",
+      "label": "Background Gradient",
+      "default": "linear-gradient(135deg, #403254 0%, #AF3D78 50%, #CE4B91 100%)"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Heading",
+      "default": "Cutting Edge Beauty Tools"
+    },
+    {
+      "type": "textarea",
+      "id": "subtitle",
+      "label": "Subheading",
+      "default": "Innovative, Sleek,\nTransformative Solutions."
+    },
+    {
+      "type": "text",
+      "id": "button_text",
+      "label": "Button Text",
+      "default": "Shop Now"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button Link"
+    },
+    {
+      "type": "image_picker",
+      "id": "main_image",
+      "label": "Main Image"
+    },
+    {
+      "type": "image_picker",
+      "id": "decorative_path",
+      "label": "Decorative Path Image"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "product",
+      "name": "Product Card",
+      "settings": [
+        {
+          "type": "product",
+          "id": "product",
+          "label": "Select Product"
+        },
+        {
+          "type": "image_picker",
+          "id": "custom_image",
+          "label": "Custom Image (Overrides product)"
+        },
+        {
+          "type": "text",
+          "id": "custom_title",
+          "label": "Custom Title (Overrides product)"
+        },
+        {
+          "type": "text",
+          "id": "custom_price",
+          "label": "Custom Price",
+          "info": "E.g. $250"
+        },
+        {
+          "type": "text",
+          "id": "custom_compare_price",
+          "label": "Custom Compare Price",
+          "info": "E.g. $300"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Custom Hero Slider",
+      "blocks": [
+        { "type": "product" },
+        { "type": "product" },
+        { "type": "product" },
+        { "type": "product" }
+      ]
+    }
+  ]
+}
+{% endschema %}
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+<style>
+.custom-hero-section-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  padding: 50px 100px;
+  box-sizing: border-box;
+}
+
+.custom-hero-container {
+  font-family: 'Poppins', sans-serif;
+  width: 100%;
+  max-width: 1229px;
+  height: 672px;
+  border-radius: 22px;
+  background: {{ section.settings.background_gradient }};
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0px 10px 30px rgba(0,0,0,0.1);
+  display: flex;
+  flex-direction: column;
+}
+
+.custom-hero-bg-overlay {
+  position: absolute;
+  top: -100px;
+  right: -50px;
+  width: 700px;
+  height: 700px;
+  background: radial-gradient(circle, rgba(216,77,149,0.8) 0%, transparent 70%);
+  pointer-events: none;
+  border-radius: 50%;
+  z-index: 1;
+}
+
+.custom-hero-top-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 80px 100px 0 100px;
+  z-index: 2;
+  position: relative;
+  height: 400px;
+}
+
+.custom-hero-text-col {
+  color: #fff;
+  max-width: 450px;
+  margin-top: 20px;
+}
+
+.custom-hero-title {
+  font-size: 52px;
+  font-weight: 700;
+  line-height: 1.2;
+  margin: 0 0 15px 0;
+  color: #fff;
+}
+
+.custom-hero-subtitle {
+  font-size: 24px;
+  font-weight: 400;
+  line-height: 1.4;
+  margin: 0 0 40px 0;
+  color: #fff;
+  white-space: pre-line;
+}
+
+.custom-hero-btn {
+  display: inline-block;
+  background: #fff;
+  color: #403254;
+  padding: 14px 40px;
+  border-radius: 6px;
+  font-weight: 600;
+  font-size: 16px;
+  text-decoration: none;
+  transition: opacity 0.3s;
+}
+
+.custom-hero-btn:hover {
+  opacity: 0.9;
+}
+
+.custom-hero-main-img {
+  position: absolute;
+  right: 60px;
+  top: 60px;
+  width: 400px;
+  height: 400px;
+  object-fit: contain;
+  z-index: 2;
+  transition: transform 0.3s ease;
+}
+
+.custom-hero-path {
+  position: absolute;
+  left: 360px;
+  top: 240px;
+  width: 320px;
+  z-index: 2;
+  pointer-events: none;
+}
+
+.custom-hero-bottom-slider {
+  margin-top: auto;
+  padding: 0 100px 40px 100px;
+  z-index: 2;
+  position: relative;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.custom-product-swiper {
+  width: 100%;
+  padding-bottom: 40px !important;
+  overflow: visible;
+}
+
+.custom-product-card {
+  background: #fff;
+  border-radius: 8px;
+  padding: 15px 15px 20px 15px;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  box-sizing: border-box;
+  text-decoration: none !important;
+  color: #000;
+}
+
+.custom-product-img-wrapper {
+  background: #fff;
+  border-radius: 8px;
+  height: 110px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.custom-product-img-wrapper img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+}
+
+.custom-product-bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-top: auto;
+}
+
+.custom-product-text {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.custom-product-title {
+  font-size: 14px;
+  font-weight: 500;
+  color: #000;
+  margin: 0;
+}
+
+.custom-product-price-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.custom-price {
+  font-size: 20px;
+  font-weight: 600;
+  color: #000;
+}
+
+.custom-compare-price {
+  font-size: 14px;
+  color: #888;
+  text-decoration: line-through;
+}
+
+.custom-product-action img {
+  width: 28px;
+  height: 28px;
+  transition: transform 0.2s;
+}
+.custom-product-card:hover .custom-product-action img {
+  transform: translateX(3px);
+}
+
+.custom-hero-prev {
+  position: absolute;
+  top: 50%;
+  left: 20px;
+  transform: translateY(-50%);
+  width: 40px;
+  height: 40px;
+  z-index: 10;
+  cursor: pointer;
+}
+
+.custom-hero-next {
+  position: absolute;
+  top: 50%;
+  right: 20px;
+  transform: translateY(-50%);
+  width: 40px;
+  height: 40px;
+  z-index: 10;
+  cursor: pointer;
+}
+
+.custom-hero-prev img, .custom-hero-next img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.custom-hero-pagination {
+  bottom: 0px !important;
+}
+
+.custom-hero-pagination .swiper-pagination-bullet {
+  width: 10px;
+  height: 10px;
+  background: #fff;
+  border-radius: 2px;
+  transform: rotate(45deg);
+  opacity: 0.5;
+  margin: 0 8px !important;
+  transition: all 0.3s ease;
+}
+
+.custom-hero-pagination .swiper-pagination-bullet-active {
+  opacity: 1;
+  background: #FF7043;
+}
+
+@media (max-width: 1024px) {
+  .custom-hero-section-wrapper {
+    padding: 20px;
+  }
+  .custom-hero-container {
+    height: auto;
+    padding-bottom: 20px;
+  }
+  .custom-hero-top-content {
+    flex-direction: column;
+    text-align: center;
+    height: auto;
+    padding: 60px 40px 0 40px;
+    align-items: center;
+  }
+  .custom-hero-main-img {
+    position: static;
+    margin-top: 40px;
+    width: 300px;
+    height: 300px;
+  }
+  .custom-hero-path {
+    display: none;
+  }
+  .custom-hero-bottom-slider {
+    padding: 0 40px 20px 40px;
+    margin-top: 40px;
+  }
+}
+
+@media (max-width: 768px) {
+  .custom-hero-btn {
+    margin-bottom: 20px;
+  }
+  .custom-hero-title {
+    font-size: 36px;
+  }
+  .custom-hero-subtitle {
+    font-size: 18px;
+  }
+}
+</style>
+
+<div class="custom-hero-section-wrapper">
+  <div class="custom-hero-container">
+    <div class="custom-hero-bg-overlay"></div>
+    
+    <div class="custom-hero-prev">
+      <img src="{{ 'slider-arrow-left.png' | asset_url }}" alt="Prev">
+    </div>
+    <div class="custom-hero-next">
+      <img src="{{ 'slider-arrow-right.png' | asset_url }}" alt="Next">
+    </div>
+
+    <div class="custom-hero-top-content">
+       <div class="custom-hero-text-col">
+          <h1 class="custom-hero-title">{{ section.settings.title }}</h1>
+          <p class="custom-hero-subtitle">{{ section.settings.subtitle | newline_to_br }}</p>
+          <a href="{{ section.settings.button_link | default: '#' }}" class="custom-hero-btn">{{ section.settings.button_text }}</a>
+       </div>
+       
+       {% if section.settings.decorative_path %}
+          <img src="{{ section.settings.decorative_path | image_url: width: 400 }}" alt="Path" class="custom-hero-path">
+       {% else %}
+          <img src="{{ 'paperplane.svg' | asset_url }}" alt="Path" class="custom-hero-path">
+       {% endif %}
+       
+       {% if section.settings.main_image %}
+          <img src="{{ section.settings.main_image | image_url: width: 600 }}" alt="Main image" class="custom-hero-main-img">
+       {% else %}
+          <img src="{{ 'dryer.png' | asset_url }}" alt="Main image" class="custom-hero-main-img">
+       {% endif %}
+    </div>
+
+    <div class="custom-hero-bottom-slider">
+       <div class="swiper custom-product-swiper">
+          <div class="swiper-wrapper">
+             {% if section.blocks.size > 0 %}
+               <!-- Loop through blocks -->
+               {% for block in section.blocks %}
+                 {% assign product = block.settings.product %}
+                 
+                 <!-- Set fallbacks for empty blocks -->
+                 {% assign img_src = '' %}
+                 {% assign p_title = '' %}
+                 {% assign p_price = '' %}
+                 {% assign p_compare = '' %}
+                 
+                 {% if block.settings.custom_image %}
+                   {% assign img_src = block.settings.custom_image | image_url: width: 400 %}
+                 {% elsif product != blank and product.featured_image %}
+                   {% assign img_src = product.featured_image | image_url: width: 400 %}
+                 {% else %}
+                   <!-- Default placeholder based on index -->
+                   {% assign rem = forloop.index0 | modulo: 4 %}
+                   {% if rem == 0 %}{% assign img_src = 'key-chain.png' | asset_url %}
+                   {% elsif rem == 1 %}{% assign img_src = 'dumbell.png' | asset_url %}
+                   {% elsif rem == 2 %}{% assign img_src = 'photoframe.png' | asset_url %}
+                   {% else %}{% assign img_src = 'light.png' | asset_url %}{% endif %}
+                 {% endif %}
+                 
+                 {% if block.settings.custom_title != blank %}
+                   {% assign p_title = block.settings.custom_title %}
+                 {% elsif product != blank %}
+                   {% assign p_title = product.title %}
+                 {% else %}
+                   {% assign rem = forloop.index0 | modulo: 4 %}
+                   {% if rem == 0 %}{% assign p_title = 'Key Chain' %}
+                   {% elsif rem == 1 %}{% assign p_title = 'Weight Dumbbles' %}
+                   {% elsif rem == 2 %}{% assign p_title = 'Photo Frame' %}
+                   {% else %}{% assign p_title = 'Light' %}{% endif %}
+                 {% endif %}
+                 
+                 {% if block.settings.custom_price != blank %}
+                   {% assign p_price = block.settings.custom_price %}
+                 {% elsif product != blank %}
+                   {% assign p_price = product.price | money %}
+                 {% else %}
+                   {% assign p_price = '$250' %}
+                 {% endif %}
+                 
+                 {% if block.settings.custom_compare_price != blank %}
+                   {% assign p_compare = block.settings.custom_compare_price %}
+                 {% elsif product != blank and product.compare_at_price > product.price %}
+                   {% assign p_compare = product.compare_at_price | money %}
+                 {% else %}
+                   {% assign p_compare = '$300' %}
+                 {% endif %}
+                 
+                 <div class="swiper-slide" {{ block.shopify_attributes }}>
+                   <a href="{{ product.url | default: '#' }}" class="custom-product-card">
+                     <div class="custom-product-img-wrapper">
+                        <img src="{{ img_src }}" alt="{{ p_title | escape }}">
+                     </div>
+                     <div class="custom-product-bottom">
+                       <div class="custom-product-text">
+                         <h3 class="custom-product-title">{{ p_title }}</h3>
+                         <div class="custom-product-price-row">
+                           <span class="custom-price">{{ p_price }}</span>
+                           {% if p_compare != blank %}
+                             <span class="custom-compare-price">{{ p_compare }}</span>
+                           {% endif %}
+                         </div>
+                       </div>
+                       <div class="custom-product-action">
+                         <img src="{{ 'arrow-black.svg' | asset_url }}" alt="Go">
+                       </div>
+                     </div>
+                   </a>
+                 </div>
+               {% endfor %}
+             {% else %}
+               <!-- No blocks added: render exactly 7 slides to match the 7 dots exactly if they want -->
+               <!-- The screenshot shows 4 in view, 7 dots means 7 slides (if single slide scroll) -->
+               {% for i in (1..7) %}
+                 <div class="swiper-slide">
+                   <a href="#" class="custom-product-card">
+                     <div class="custom-product-img-wrapper">
+                        {% assign rem = i | modulo: 4 %}
+                        {% if rem == 1 %}<img src="{{ 'key-chain.png' | asset_url }}" alt="Key Chain">
+                        {% elsif rem == 2 %}<img src="{{ 'dumbell.png' | asset_url }}" alt="Weight Dumbbles">
+                        {% elsif rem == 3 %}<img src="{{ 'photoframe.png' | asset_url }}" alt="Photo Frame">
+                        {% else %}<img src="{{ 'light.png' | asset_url }}" alt="Light">{% endif %}
+                     </div>
+                     <div class="custom-product-bottom">
+                       <div class="custom-product-text">
+                         <h3 class="custom-product-title">
+                          {% if rem == 1 %}Key Chain
+                          {% elsif rem == 2 %}Weight Dumbbles
+                          {% elsif rem == 3 %}Photo Frame
+                          {% else %}Light{% endif %}
+                         </h3>
+                         <div class="custom-product-price-row">
+                           <span class="custom-price">$250</span>
+                           <span class="custom-compare-price">$300</span>
+                         </div>
+                       </div>
+                       <div class="custom-product-action">
+                         <img src="{{ 'arrow-black.svg' | asset_url }}" alt="Go">
+                       </div>
+                     </div>
+                   </a>
+                 </div>
+               {% endfor %}
+             {% endif %}
+          </div>
+          <div class="swiper-pagination custom-hero-pagination"></div>
+       </div>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+  function initSwiper() {
+    if (typeof Swiper !== 'undefined') {
+      new Swiper('.custom-product-swiper', {
+        slidesPerView: 1,
+        spaceBetween: 20,
+        navigation: {
+          nextEl: '.custom-hero-next',
+          prevEl: '.custom-hero-prev',
+        },
+        pagination: {
+          el: '.custom-hero-pagination',
+          clickable: true,
+        },
+        breakpoints: {
+          640: {
+            slidesPerView: 2,
+            spaceBetween: 20,
+          },
+          900: {
+            slidesPerView: 3,
+            spaceBetween: 20,
+          },
+          1100: {
+            slidesPerView: 4,
+            spaceBetween: 30,
+          }
+        }
+      });
+    } else {
+      setTimeout(initSwiper, 100);
+    }
+  }
+  initSwiper();
+});
+</script>
