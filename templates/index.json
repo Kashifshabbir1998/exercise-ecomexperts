@@ -97,11 +97,67 @@
       "settings": {
         "soft_winter_jacket_product": ""
       }
+    },
+    "hero_section_UKyb4j": {
+      "type": "hero-section",
+      "blocks": {
+        "product_pbTVmF": {
+          "type": "product",
+          "settings": {
+            "product": "",
+            "custom_title": "",
+            "custom_price": "",
+            "custom_compare_price": ""
+          }
+        },
+        "product_HHNBGU": {
+          "type": "product",
+          "settings": {
+            "product": "",
+            "custom_title": "",
+            "custom_price": "",
+            "custom_compare_price": ""
+          }
+        },
+        "product_8RFt4P": {
+          "type": "product",
+          "settings": {
+            "product": "",
+            "custom_title": "",
+            "custom_price": "",
+            "custom_compare_price": ""
+          }
+        },
+        "product_46zQxK": {
+          "type": "product",
+          "settings": {
+            "product": "",
+            "custom_title": "",
+            "custom_price": "",
+            "custom_compare_price": ""
+          }
+        }
+      },
+      "block_order": [
+        "product_pbTVmF",
+        "product_HHNBGU",
+        "product_8RFt4P",
+        "product_46zQxK"
+      ],
+      "name": "Custom Hero Slider",
+      "settings": {
+        "background_gradient": "linear-gradient(135deg, rgba(64, 50, 84, 1), rgba(175, 61, 120, 1) 50%, rgba(206, 75, 145, 1) 100%)",
+        "title": "Cutting Edge Beauty Tools",
+        "subtitle": "Innovative, Sleek,\nTransformative Solutions.",
+        "button_text": "Shop Now",
+        "button_link": ""
+      }
     }
   },
   "order": [
     "custom_banner_PbmMTg",
     "custom_text_strip_WFcPNX",
-    "custom_product_grid_mCGMKY"
+    "custom_product_grid_mCGMKY",
+    "hero_section_UKyb4j"
   ]
 }
