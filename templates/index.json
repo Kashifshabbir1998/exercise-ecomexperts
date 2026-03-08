@@ -101,6 +101,15 @@
     "hero_section_UKyb4j": {
       "type": "hero-section",
       "blocks": {
+        "product_cB4EXV": {
+          "type": "product",
+          "settings": {
+            "product": "black-leather-bag",
+            "custom_title": "",
+            "custom_price": "310",
+            "custom_compare_price": "310"
+          }
+        },
         "product_pbTVmF": {
           "type": "product",
           "settings": {
@@ -139,6 +148,7 @@
         }
       },
       "block_order": [
+        "product_cB4EXV",
         "product_pbTVmF",
         "product_HHNBGU",
         "product_8RFt4P",
