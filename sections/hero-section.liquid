@@ -108,7 +108,7 @@
   font-family: 'Poppins', sans-serif;
   width: 100%;
   max-width: 1229px;
-  height: 672px;
+  {% comment %} height: 672px; {% endcomment %}
   border-radius: 22px;
   background: {{ section.settings.background_gradient }};
   position: relative;
@@ -132,12 +132,14 @@
 
 .custom-hero-top-content {
   display: flex;
+  flex-direction: column;
   justify-content: space-between;
   align-items: flex-start;
   padding: 80px 100px 0 100px;
   z-index: 2;
   position: relative;
   flex: 1;
+  gap: 100px;
 }
 
 .custom-hero-text-col {
