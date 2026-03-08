@@ -139,13 +139,23 @@
             "custom_price": "",
             "custom_compare_price": ""
           }
+        },
+        "product_chtyrc": {
+          "type": "product",
+          "settings": {
+            "product": "black-leather-bag",
+            "custom_title": "",
+            "custom_price": "$250",
+            "custom_compare_price": "$250"
+          }
         }
       },
       "block_order": [
         "product_pbTVmF",
         "product_HHNBGU",
         "product_8RFt4P",
-        "product_46zQxK"
+        "product_46zQxK",
+        "product_chtyrc"
       ],
       "name": "Custom Hero Slider",
       "settings": {
