@@ -1,0 +1,154 @@
+{%- comment -%}
+  Snippet: hero-section.liquid
+  Required variables:
+    - section             {Object}  — the section object (for IDs and all settings)
+    - badge_text          {String}  — service tags badge text
+    - hero_headline_line1 {String}  — headline line 1 (white)
+    - hero_headline_line2 {String}  — headline line 2 (accent/purple)
+    - hero_headline_line3 {String}  — headline line 3 (white)
+    - hero_subheading     {String}  — subheading paragraph
+    - hero_cta_primary_label   {String} — primary CTA button text
+    - hero_cta_primary_url     {String} — primary CTA button URL
+    - hero_cta_secondary_label {String} — secondary CTA button text
+    - hero_cta_secondary_url   {String} — secondary CTA button URL
+    - stat1_value         {String}  — stat 1 value
+    - stat1_label         {String}  — stat 1 label
+    - stat2_value         {String}  — stat 2 value
+    - stat2_label         {String}  — stat 2 label
+    - stat2_has_star      {Boolean} — stat 2 show star icon
+    - stat3_value         {String}  — stat 3 value
+    - stat3_label         {String}  — stat 3 label
+    - stat4_value         {String}  — stat 4 value
+    - stat4_label         {String}  — stat 4 label
+    - slide_current       {String}  — current slide number display
+    - slide_total         {String}  — total slides display
+    - scroll_label        {String}  — scroll indicator text
+{%- endcomment -%}
+
+<section
+  class="tes1122__hero"
+  id="hero-{{ section.id }}"
+  aria-label="{{ hero_headline_line1 }} {{ hero_headline_line2 }} {{ hero_headline_line3 }}"
+>
+
+  <!-- Dot Grid Background Pattern -->
+  <div class="tes1122__hero-dotgrid" aria-hidden="true"></div>
+
+  <!-- Hero Inner Layout -->
+  <div class="tes1122__hero-inner">
+
+    <!-- Left Column: Content -->
+    <div class="tes1122__hero-content">
+
+      <!-- Service Tags Badge -->
+      {% render 'hero-badge',
+        badge_text: badge_text
+      %}
+
+      <!-- Hero Headline -->
+      <h1 class="tes1122__hero-headline">
+        {% unless hero_headline_line1 == blank %}
+          <span class="tes1122__hero-headline--white">{{ hero_headline_line1 }}</span>
+        {% endunless %}
+        {% unless hero_headline_line2 == blank %}
+          <span class="tes1122__hero-headline--purple">{{ hero_headline_line2 }}</span>
+        {% endunless %}
+        {% unless hero_headline_line3 == blank %}
+          <span class="tes1122__hero-headline--white">{{ hero_headline_line3 }}</span>
+        {% endunless %}
+      </h1>
+
+      <!-- Hero Subheading -->
+      {% unless hero_subheading == blank %}
+        <p class="tes1122__hero-subheading">{{ hero_subheading }}</p>
+      {% endunless %}
+
+      <!-- CTA Buttons -->
+      <div class="tes1122__hero-ctas">
+        {% unless hero_cta_primary_label == blank %}
+          <a
+            href="{{ hero_cta_primary_url }}"
+            class="tes1122__btn tes1122__btn--primary"
+            aria-label="{{ hero_cta_primary_label }}"
+          >
+            {{ hero_cta_primary_label }}
+          </a>
+        {% endunless %}
+
+        {% unless hero_cta_secondary_label == blank %}
+          <a
+            href="{{ hero_cta_secondary_url }}"
+            class="tes1122__btn tes1122__btn--outline"
+            aria-label="{{ hero_cta_secondary_label }}"
+          >
+            {{ hero_cta_secondary_label }} →
+          </a>
+        {% endunless %}
+      </div>
+
+      <!-- Stats Bar -->
+      {% render 'stats-bar',
+        stat1_value: stat1_value,
+        stat1_label: stat1_label,
+        stat2_value: stat2_value,
+        stat2_label: stat2_label,
+        stat2_has_star: stat2_has_star,
+        stat3_value: stat3_value,
+        stat3_label: stat3_label,
+        stat4_value: stat4_value,
+        stat4_label: stat4_label
+      %}
+
+    </div>
+    <!-- /Left Column -->
+
+    <!-- Right Column: Decorative Radar Graphic -->
+    <div class="tes1122__hero-graphic" aria-hidden="true">
+      <!-- Radar rings -->
+      <div class="tes1122__radar">
+        <div class="tes1122__radar-ring tes1122__radar-ring--outer"></div>
+        <div class="tes1122__radar-ring tes1122__radar-ring--mid"></div>
+        <div class="tes1122__radar-ring tes1122__radar-ring--inner"></div>
+        <!-- Crosshair lines -->
+        <div class="tes1122__radar-crosshair tes1122__radar-crosshair--h"></div>
+        <div class="tes1122__radar-crosshair tes1122__radar-crosshair--v"></div>
+        <!-- Glow center -->
+        <div class="tes1122__radar-glow"></div>
+        <!-- Center logo mark -->
+        <div class="tes1122__radar-logo" aria-label="{{ 'sections.tes1122.radar_logo_label' | t }}">
+          <svg width="80" height="60" viewBox="0 0 80 60" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <!-- Left bracket -->
+            <path d="M20 8 L8 8 L8 52 L20 52" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+            <!-- Right bracket -->
+            <path d="M60 8 L72 8 L72 52 L60 52" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+            <!-- Center dot -->
+            <circle cx="40" cy="30" r="6" fill="white"/>
+          </svg>
+        </div>
+      </div>
+    </div>
+    <!-- /Right Column -->
+
+  </div>
+  <!-- /Hero Inner -->
+
+  <!-- Slide Counter (bottom-left) -->
+  <div class="tes1122__hero-counter" aria-label="{{ 'sections.tes1122.slide_counter_label' | t }}">
+    {% unless slide_current == blank %}
+      <span class="tes1122__hero-counter-current">{{ slide_current }}</span>
+    {% endunless %}
+    <span class="tes1122__hero-counter-sep" aria-hidden="true"> / </span>
+    {% unless slide_total == blank %}
+      <span class="tes1122__hero-counter-total">{{ slide_total }}</span>
+    {% endunless %}
+  </div>
+
+  <!-- Scroll Indicator (bottom-right) -->
+  <div class="tes1122__hero-scroll" aria-label="{{ 'sections.tes1122.scroll_label' | t }}">
+    {% unless scroll_label == blank %}
+      <span class="tes1122__hero-scroll-text">{{ scroll_label }}</span>
+    {% endunless %}
+    <span class="tes1122__hero-scroll-arrow" aria-hidden="true"> →</span>
+  </div>
+
+</section>
