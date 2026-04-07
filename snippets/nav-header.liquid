@@ -1,0 +1,186 @@
+{%- comment -%}
+  Snippet: nav-header.liquid
+  Required variables:
+    - section         {Object} — the section object
+    - nav_link_1_label {String} — label for nav link 1
+    - nav_link_1_url   {String} — URL for nav link 1
+    - nav_link_2_label {String} — label for nav link 2
+    - nav_link_2_url   {String} — URL for nav link 2
+    - nav_link_3_label {String} — label for nav link 3
+    - nav_link_3_url   {String} — URL for nav link 3
+    - nav_link_4_label {String} — label for nav link 4
+    - nav_link_4_url   {String} — URL for nav link 4
+    - nav_link_5_label {String} — label for nav link 5
+    - nav_link_5_url   {String} — URL for nav link 5
+    - nav_link_6_label {String} — label for nav link 6
+    - nav_link_6_url   {String} — URL for nav link 6
+    - cta_label        {String} — CTA button label
+    - cta_url          {String} — CTA button URL
+{%- endcomment -%}
+
+<header class="tes1122__nav" role="banner">
+  <div class="tes1122__nav-inner">
+
+    <!-- Logo / Brand -->
+    <a
+      href="{{ routes.root_url }}"
+      class="tes1122__nav-logo"
+      aria-label="{{ 'sections.tes1122.nav_logo_label' | t }}"
+    >
+      <svg class="tes1122__nav-logo-icon" width="32" height="24" viewBox="0 0 80 60" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <path d="M20 8 L8 8 L8 52 L20 52" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+        <path d="M60 8 L72 8 L72 52 L60 52" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+        <circle cx="40" cy="30" r="6" fill="white"/>
+      </svg>
+      <span class="tes1122__nav-logo-text">Alvex<span class="tes1122__nav-logo-text--accent">.</span></span>
+    </a>
+
+    <!-- Primary Navigation Links -->
+    <nav class="tes1122__nav-links" role="navigation" aria-label="{{ 'sections.tes1122.nav_aria_label' | t }}">
+
+      {% unless nav_link_1_label == blank %}
+        <a
+          href="{{ nav_link_1_url }}"
+          class="tes1122__nav-link"
+          aria-label="{{ nav_link_1_label }}"
+        >{{ nav_link_1_label }}</a>
+      {% endunless %}
+
+      {% unless nav_link_2_label == blank %}
+        <a
+          href="{{ nav_link_2_url }}"
+          class="tes1122__nav-link"
+          aria-label="{{ nav_link_2_label }}"
+        >{{ nav_link_2_label }}</a>
+      {% endunless %}
+
+      {% unless nav_link_3_label == blank %}
+        <a
+          href="{{ nav_link_3_url }}"
+          class="tes1122__nav-link"
+          aria-label="{{ nav_link_3_label }}"
+        >{{ nav_link_3_label }}</a>
+      {% endunless %}
+
+      {% unless nav_link_4_label == blank %}
+        <a
+          href="{{ nav_link_4_url }}"
+          class="tes1122__nav-link"
+          aria-label="{{ nav_link_4_label }}"
+        >{{ nav_link_4_label }}</a>
+      {% endunless %}
+
+      {% unless nav_link_5_label == blank %}
+        <a
+          href="{{ nav_link_5_url }}"
+          class="tes1122__nav-link"
+          aria-label="{{ nav_link_5_label }}"
+        >{{ nav_link_5_label }}</a>
+      {% endunless %}
+
+      {% unless nav_link_6_label == blank %}
+        <a
+          href="{{ nav_link_6_url }}"
+          class="tes1122__nav-link"
+          aria-label="{{ nav_link_6_label }}"
+        >{{ nav_link_6_label }}</a>
+      {% endunless %}
+
+    </nav>
+
+    <!-- Nav Actions: CTA + Mobile Toggle -->
+    <div class="tes1122__nav-actions">
+
+      {% unless cta_label == blank %}
+        <a
+          href="{{ cta_url }}"
+          class="tes1122__btn tes1122__btn--primary tes1122__nav-cta"
+          aria-label="{{ cta_label }}"
+        >{{ cta_label }}</a>
+      {% endunless %}
+
+      <!-- Mobile Hamburger Toggle -->
+      <button
+        class="tes1122__nav-toggle"
+        aria-label="{{ 'sections.tes1122.nav_toggle_label' | t }}"
+        aria-expanded="false"
+        aria-controls="tes1122-mobile-nav-{{ section.id }}"
+        type="button"
+      >
+        <span class="tes1122__nav-toggle-bar" aria-hidden="true"></span>
+        <span class="tes1122__nav-toggle-bar" aria-hidden="true"></span>
+        <span class="tes1122__nav-toggle-bar" aria-hidden="true"></span>
+      </button>
+
+    </div>
+
+  </div>
+
+  <!-- Mobile Navigation Drawer -->
+  <div
+    class="tes1122__nav-mobile"
+    id="tes1122-mobile-nav-{{ section.id }}"
+    aria-hidden="true"
+    role="navigation"
+    aria-label="{{ 'sections.tes1122.nav_mobile_aria_label' | t }}"
+  >
+
+    {% unless nav_link_1_label == blank %}
+      <a
+        href="{{ nav_link_1_url }}"
+        class="tes1122__nav-mobile-link"
+        aria-label="{{ nav_link_1_label }}"
+      >{{ nav_link_1_label }}</a>
+    {% endunless %}
+
+    {% unless nav_link_2_label == blank %}
+      <a
+        href="{{ nav_link_2_url }}"
+        class="tes1122__nav-mobile-link"
+        aria-label="{{ nav_link_2_label }}"
+      >{{ nav_link_2_label }}</a>
+    {% endunless %}
+
+    {% unless nav_link_3_label == blank %}
+      <a
+        href="{{ nav_link_3_url }}"
+        class="tes1122__nav-mobile-link"
+        aria-label="{{ nav_link_3_label }}"
+      >{{ nav_link_3_label }}</a>
+    {% endunless %}
+
+    {% unless nav_link_4_label == blank %}
+      <a
+        href="{{ nav_link_4_url }}"
+        class="tes1122__nav-mobile-link"
+        aria-label="{{ nav_link_4_label }}"
+      >{{ nav_link_4_label }}</a>
+    {% endunless %}
+
+    {% unless nav_link_5_label == blank %}
+      <a
+        href="{{ nav_link_5_url }}"
+        class="tes1122__nav-mobile-link"
+        aria-label="{{ nav_link_5_label }}"
+      >{{ nav_link_5_label }}</a>
+    {% endunless %}
+
+    {% unless nav_link_6_label == blank %}
+      <a
+        href="{{ nav_link_6_url }}"
+        class="tes1122__nav-mobile-link"
+        aria-label="{{ nav_link_6_label }}"
+      >{{ nav_link_6_label }}</a>
+    {% endunless %}
+
+    {% unless cta_label == blank %}
+      <a
+        href="{{ cta_url }}"
+        class="tes1122__btn tes1122__btn--primary tes1122__nav-mobile-cta"
+        aria-label="{{ cta_label }}"
+      >{{ cta_label }}</a>
+    {% endunless %}
+
+  </div>
+
+</header>
