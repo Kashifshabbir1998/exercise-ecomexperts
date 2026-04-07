@@ -1,0 +1,58 @@
+{%- comment -%}
+  Snippet: stats-bar.liquid
+  Required variables:
+    - stat1_value     {String}  — e.g. "20+"
+    - stat1_label     {String}  — e.g. "Projects"
+    - stat2_value     {String}  — e.g. "5"
+    - stat2_label     {String}  — e.g. "Rating"
+    - stat2_has_star  {Boolean} — whether to show a star icon next to stat 2
+    - stat3_value     {String}  — e.g. "5+"
+    - stat3_label     {String}  — e.g. "Countries"
+    - stat4_value     {String}  — e.g. "48h"
+    - stat4_label     {String}  — e.g. "Response"
+{%- endcomment -%}
+
+<div class="tes1122__stats" aria-label="{{ 'sections.tes1122.stats_label' | t }}">
+
+  {% unless stat1_value == blank %}
+    <div class="tes1122__stat">
+      <span class="tes1122__stat-value">{{ stat1_value }}</span>
+      {% unless stat1_label == blank %}
+        <span class="tes1122__stat-label">{{ stat1_label }}</span>
+      {% endunless %}
+    </div>
+  {% endunless %}
+
+  {% unless stat2_value == blank %}
+    <div class="tes1122__stat">
+      <span class="tes1122__stat-value">
+        {{ stat2_value }}
+        {% if stat2_has_star %}
+          <span class="tes1122__stat-star" aria-label="{{ 'sections.tes1122.star_label' | t }}">★</span>
+        {% endif %}
+      </span>
+      {% unless stat2_label == blank %}
+        <span class="tes1122__stat-label">{{ stat2_label }}</span>
+      {% endunless %}
+    </div>
+  {% endunless %}
+
+  {% unless stat3_value == blank %}
+    <div class="tes1122__stat">
+      <span class="tes1122__stat-value">{{ stat3_value }}</span>
+      {% unless stat3_label == blank %}
+        <span class="tes1122__stat-label">{{ stat3_label }}</span>
+      {% endunless %}
+    </div>
+  {% endunless %}
+
+  {% unless stat4_value == blank %}
+    <div class="tes1122__stat">
+      <span class="tes1122__stat-value">{{ stat4_value }}</span>
+      {% unless stat4_label == blank %}
+        <span class="tes1122__stat-label">{{ stat4_label }}</span>
+      {% endunless %}
+    </div>
+  {% endunless %}
+
+</div>
