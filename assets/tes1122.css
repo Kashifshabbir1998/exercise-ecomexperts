@@ -509,7 +509,7 @@
 /* ============================================================
    SNIPPET STYLES — stats-bar (rendered via snippet)
    ============================================================ */
-.tes1122__stats-bar {
+.tes1122__stats {
   display: flex;
   flex-direction: row;
   align-items: flex-start;
