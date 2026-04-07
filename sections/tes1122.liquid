@@ -1,0 +1,417 @@
+{{ 'tes1122.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'tes1122.js' | asset_url }}" defer></script>
+
+<!-- Google Fonts: Space Grotesk + Inter -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+<!-- tes1122 Landing Page Wrapper -->
+<div class="tes1122" id="tes1122-{{ section.id }}">
+
+  <!-- ============================================================
+       NAVIGATION HEADER
+       ============================================================ -->
+  {% render 'nav-header',
+    section: section,
+    nav_link_1_label: section.settings.nav_link_1_label,
+    nav_link_1_url: section.settings.nav_link_1_url,
+    nav_link_2_label: section.settings.nav_link_2_label,
+    nav_link_2_url: section.settings.nav_link_2_url,
+    nav_link_3_label: section.settings.nav_link_3_label,
+    nav_link_3_url: section.settings.nav_link_3_url,
+    nav_link_4_label: section.settings.nav_link_4_label,
+    nav_link_4_url: section.settings.nav_link_4_url,
+    nav_link_5_label: section.settings.nav_link_5_label,
+    nav_link_5_url: section.settings.nav_link_5_url,
+    nav_link_6_label: section.settings.nav_link_6_label,
+    nav_link_6_url: section.settings.nav_link_6_url,
+    cta_label: section.settings.nav_cta_label,
+    cta_url: section.settings.nav_cta_url
+  %}
+
+  <!-- ============================================================
+       HERO SECTION
+       ============================================================ -->
+  <section class="tes1122__hero" id="hero-{{ section.id }}" aria-label="{{ section.settings.hero_headline_line1 }} {{ section.settings.hero_headline_line2 }} {{ section.settings.hero_headline_line3 }}">
+
+    <!-- Dot Grid Background Pattern -->
+    <div class="tes1122__hero-dotgrid" aria-hidden="true"></div>
+
+    <!-- Hero Inner Layout -->
+    <div class="tes1122__hero-inner">
+
+      <!-- Left Column: Content -->
+      <div class="tes1122__hero-content">
+
+        <!-- Service Tags Badge -->
+        {% render 'hero-badge',
+          badge_text: section.settings.badge_text
+        %}
+
+        <!-- Hero Headline -->
+        <h1 class="tes1122__hero-headline">
+          <span class="tes1122__hero-headline--white">{{ section.settings.hero_headline_line1 }}</span>
+          <span class="tes1122__hero-headline--purple">{{ section.settings.hero_headline_line2 }}</span>
+          <span class="tes1122__hero-headline--white">{{ section.settings.hero_headline_line3 }}</span>
+        </h1>
+
+        <!-- Hero Subheading -->
+        {% unless section.settings.hero_subheading == blank %}
+          <p class="tes1122__hero-subheading">{{ section.settings.hero_subheading }}</p>
+        {% endunless %}
+
+        <!-- CTA Buttons -->
+        <div class="tes1122__hero-ctas">
+          {% unless section.settings.hero_cta_primary_label == blank %}
+            <a
+              href="{{ section.settings.hero_cta_primary_url }}"
+              class="tes1122__btn tes1122__btn--primary"
+              aria-label="{{ section.settings.hero_cta_primary_label }}"
+            >
+              {{ section.settings.hero_cta_primary_label }}
+            </a>
+          {% endunless %}
+
+          {% unless section.settings.hero_cta_secondary_label == blank %}
+            <a
+              href="{{ section.settings.hero_cta_secondary_url }}"
+              class="tes1122__btn tes1122__btn--outline"
+              aria-label="{{ section.settings.hero_cta_secondary_label }}"
+            >
+              {{ section.settings.hero_cta_secondary_label }} →
+            </a>
+          {% endunless %}
+        </div>
+
+        <!-- Stats Bar -->
+        {% render 'stats-bar',
+          stat1_value: section.settings.stat1_value,
+          stat1_label: section.settings.stat1_label,
+          stat2_value: section.settings.stat2_value,
+          stat2_label: section.settings.stat2_label,
+          stat2_has_star: section.settings.stat2_has_star,
+          stat3_value: section.settings.stat3_value,
+          stat3_label: section.settings.stat3_label,
+          stat4_value: section.settings.stat4_value,
+          stat4_label: section.settings.stat4_label
+        %}
+
+      </div>
+      <!-- /Left Column -->
+
+      <!-- Right Column: Decorative Radar Graphic -->
+      <div class="tes1122__hero-graphic" aria-hidden="true">
+        <!-- Radar rings -->
+        <div class="tes1122__radar">
+          <div class="tes1122__radar-ring tes1122__radar-ring--outer"></div>
+          <div class="tes1122__radar-ring tes1122__radar-ring--mid"></div>
+          <div class="tes1122__radar-ring tes1122__radar-ring--inner"></div>
+          <!-- Crosshair lines -->
+          <div class="tes1122__radar-crosshair tes1122__radar-crosshair--h"></div>
+          <div class="tes1122__radar-crosshair tes1122__radar-crosshair--v"></div>
+          <!-- Glow center -->
+          <div class="tes1122__radar-glow"></div>
+          <!-- Center logo mark -->
+          <div class="tes1122__radar-logo" aria-label="Alvex Studio logo mark">
+            <svg width="80" height="60" viewBox="0 0 80 60" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <!-- Left bracket -->
+              <path d="M20 8 L8 8 L8 52 L20 52" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+              <!-- Right bracket -->
+              <path d="M60 8 L72 8 L72 52 L60 52" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+              <!-- Center dot -->
+              <circle cx="40" cy="30" r="6" fill="white"/>
+            </svg>
+          </div>
+        </div>
+      </div>
+      <!-- /Right Column -->
+
+    </div>
+    <!-- /Hero Inner -->
+
+    <!-- Slide Counter (bottom-left) -->
+    <div class="tes1122__hero-counter" aria-label="{{ 'sections.tes1122.slide_counter_label' | t }}">
+      <span class="tes1122__hero-counter-current">{{ section.settings.slide_current }}</span>
+      <span class="tes1122__hero-counter-sep"> / </span>
+      <span class="tes1122__hero-counter-total">{{ section.settings.slide_total }}</span>
+    </div>
+
+    <!-- Scroll Indicator (bottom-right) -->
+    <div class="tes1122__hero-scroll" aria-label="{{ 'sections.tes1122.scroll_label' | t }}">
+      <span class="tes1122__hero-scroll-text">{{ section.settings.scroll_label }}</span>
+      <span class="tes1122__hero-scroll-arrow" aria-hidden="true"> →</span>
+    </div>
+
+  </section>
+  <!-- /Hero Section -->
+
+</div>
+<!-- /tes1122 Landing Page Wrapper -->
+
+{% schema %}
+{
+  "name": "Alvex Hero Landing",
+  "tag": "div",
+  "class": "tes1122-section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Navigation"
+    },
+    {
+      "type": "text",
+      "id": "nav_link_1_label",
+      "label": "Nav Link 1 Label",
+      "default": "Home"
+    },
+    {
+      "type": "url",
+      "id": "nav_link_1_url",
+      "label": "Nav Link 1 URL"
+    },
+    {
+      "type": "text",
+      "id": "nav_link_2_label",
+      "label": "Nav Link 2 Label",
+      "default": "Services"
+    },
+    {
+      "type": "url",
+      "id": "nav_link_2_url",
+      "label": "Nav Link 2 URL"
+    },
+    {
+      "type": "text",
+      "id": "nav_link_3_label",
+      "label": "Nav Link 3 Label",
+      "default": "Work"
+    },
+    {
+      "type": "url",
+      "id": "nav_link_3_url",
+      "label": "Nav Link 3 URL"
+    },
+    {
+      "type": "text",
+      "id": "nav_link_4_label",
+      "label": "Nav Link 4 Label",
+      "default": "Process"
+    },
+    {
+      "type": "url",
+      "id": "nav_link_4_url",
+      "label": "Nav Link 4 URL"
+    },
+    {
+      "type": "text",
+      "id": "nav_link_5_label",
+      "label": "Nav Link 5 Label",
+      "default": "Pricing"
+    },
+    {
+      "type": "url",
+      "id": "nav_link_5_url",
+      "label": "Nav Link 5 URL"
+    },
+    {
+      "type": "text",
+      "id": "nav_link_6_label",
+      "label": "Nav Link 6 Label",
+      "default": "Contact"
+    },
+    {
+      "type": "url",
+      "id": "nav_link_6_url",
+      "label": "Nav Link 6 URL"
+    },
+    {
+      "type": "text",
+      "id": "nav_cta_label",
+      "label": "Nav CTA Button Label",
+      "default": "Start a project"
+    },
+    {
+      "type": "url",
+      "id": "nav_cta_url",
+      "label": "Nav CTA Button URL"
+    },
+    {
+      "type": "header",
+      "content": "Hero — Badge"
+    },
+    {
+      "type": "text",
+      "id": "badge_text",
+      "label": "Service Badge Text",
+      "default": "SHOPIFY · WORDPRESS · CUSTOM BUILDS"
+    },
+    {
+      "type": "header",
+      "content": "Hero — Headline"
+    },
+    {
+      "type": "text",
+      "id": "hero_headline_line1",
+      "label": "Headline Line 1 (white)",
+      "default": "Your vision."
+    },
+    {
+      "type": "text",
+      "id": "hero_headline_line2",
+      "label": "Headline Line 2 (purple)",
+      "default": "Precisely"
+    },
+    {
+      "type": "text",
+      "id": "hero_headline_line3",
+      "label": "Headline Line 3 (white)",
+      "default": "built."
+    },
+    {
+      "type": "textarea",
+      "id": "hero_subheading",
+      "label": "Hero Subheading",
+      "default": "Premium web development for founders and brands serious about growth. Based in Lahore — working globally."
+    },
+    {
+      "type": "header",
+      "content": "Hero — CTA Buttons"
+    },
+    {
+      "type": "text",
+      "id": "hero_cta_primary_label",
+      "label": "Primary CTA Label",
+      "default": "Start a project"
+    },
+    {
+      "type": "url",
+      "id": "hero_cta_primary_url",
+      "label": "Primary CTA URL"
+    },
+    {
+      "type": "text",
+      "id": "hero_cta_secondary_label",
+      "label": "Secondary CTA Label",
+      "default": "View our work"
+    },
+    {
+      "type": "url",
+      "id": "hero_cta_secondary_url",
+      "label": "Secondary CTA URL"
+    },
+    {
+      "type": "header",
+      "content": "Hero — Stats"
+    },
+    {
+      "type": "text",
+      "id": "stat1_value",
+      "label": "Stat 1 Value",
+      "default": "20+"
+    },
+    {
+      "type": "text",
+      "id": "stat1_label",
+      "label": "Stat 1 Label",
+      "default": "Projects"
+    },
+    {
+      "type": "text",
+      "id": "stat2_value",
+      "label": "Stat 2 Value",
+      "default": "5"
+    },
+    {
+      "type": "text",
+      "id": "stat2_label",
+      "label": "Stat 2 Label",
+      "default": "Rating"
+    },
+    {
+      "type": "checkbox",
+      "id": "stat2_has_star",
+      "label": "Stat 2 Show Star Icon",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "stat3_value",
+      "label": "Stat 3 Value",
+      "default": "5+"
+    },
+    {
+      "type": "text",
+      "id": "stat3_label",
+      "label": "Stat 3 Label",
+      "default": "Countries"
+    },
+    {
+      "type": "text",
+      "id": "stat4_value",
+      "label": "Stat 4 Value",
+      "default": "48h"
+    },
+    {
+      "type": "text",
+      "id": "stat4_label",
+      "label": "Stat 4 Label",
+      "default": "Response"
+    },
+    {
+      "type": "header",
+      "content": "Hero — Slide Counter & Scroll"
+    },
+    {
+      "type": "text",
+      "id": "slide_current",
+      "label": "Current Slide Number",
+      "default": "01"
+    },
+    {
+      "type": "text",
+      "id": "slide_total",
+      "label": "Total Slides",
+      "default": "07"
+    },
+    {
+      "type": "text",
+      "id": "scroll_label",
+      "label": "Scroll Indicator Label",
+      "default": "SCROLL"
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "color_bg",
+      "label": "Page Background Color",
+      "default": "#0d0a1a"
+    },
+    {
+      "type": "color",
+      "id": "color_accent",
+      "label": "Accent Purple Color",
+      "default": "#7c3aed"
+    },
+    {
+      "type": "color",
+      "id": "color_text",
+      "label": "Body Text Color",
+      "default": "#a89fc2"
+    }
+  ],
+  "blocks": [],
+  "presets": [
+    {
+      "name": "Alvex Hero Landing",
+      "category": "Custom"
+    }
+  ],
+  "enabled_on": {
+    "templates": ["*"]
+  }
+}
+{% endschema %}
