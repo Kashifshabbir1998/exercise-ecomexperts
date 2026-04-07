@@ -15,9 +15,54 @@
         "padding_top": 28,
         "padding_bottom": 28
       }
+    },
+    "tes1122_mKBxCY": {
+      "type": "tes1122",
+      "name": "Alvex Hero Landing",
+      "settings": {
+        "nav_link_1_label": "Home",
+        "nav_link_1_url": "",
+        "nav_link_2_label": "Services",
+        "nav_link_2_url": "",
+        "nav_link_3_label": "Work",
+        "nav_link_3_url": "",
+        "nav_link_4_label": "Process",
+        "nav_link_4_url": "",
+        "nav_link_5_label": "Pricing",
+        "nav_link_5_url": "",
+        "nav_link_6_label": "Contact",
+        "nav_link_6_url": "",
+        "nav_cta_label": "Start a project",
+        "nav_cta_url": "",
+        "badge_text": "SHOPIFY · WORDPRESS · CUSTOM BUILDS",
+        "hero_headline_line1": "Your vision.",
+        "hero_headline_line2": "Precisely",
+        "hero_headline_line3": "built.",
+        "hero_subheading": "Premium web development for founders and brands serious about growth. Based in Lahore — working globally.",
+        "hero_cta_primary_label": "Start a project",
+        "hero_cta_primary_url": "",
+        "hero_cta_secondary_label": "View our work",
+        "hero_cta_secondary_url": "",
+        "stat1_value": "20+",
+        "stat1_label": "Projects",
+        "stat2_value": "5",
+        "stat2_label": "Rating",
+        "stat2_has_star": true,
+        "stat3_value": "5+",
+        "stat3_label": "Countries",
+        "stat4_value": "48h",
+        "stat4_label": "Response",
+        "slide_current": "01",
+        "slide_total": "07",
+        "scroll_label": "SCROLL",
+        "color_bg": "#0d0a1a",
+        "color_accent": "#7c3aed",
+        "color_text": "#a89fc2"
+      }
     }
   },
   "order": [
-    "main"
+    "main",
+    "tes1122_mKBxCY"
   ]
 }

@@ -169,12 +169,10 @@
         "decorative_path": "shopify://shop_images/paperplane.svg"
       }
     },
-    "test_CLiPpA": {
-      "type": "test",
-      "name": "t:sections.teeeee.presets.name",
+    "tes1122_qc4CxL": {
+      "type": "tes1122",
+      "name": "Alvex Hero Landing",
       "settings": {
-        "logo_text": "Alvex",
-        "logo_subtext": "STUDIO",
         "nav_link_1_label": "Home",
         "nav_link_1_url": "",
         "nav_link_2_label": "Services",
@@ -186,31 +184,33 @@
         "nav_link_5_label": "Pricing",
         "nav_link_5_url": "",
         "nav_link_6_label": "Contact",
-        "nav_link_6_url": "shopify://products/longsleeve-cotton-top",
+        "nav_link_6_url": "",
         "nav_cta_label": "Start a project",
-        "nav_cta_url": "shopify://policies/privacy-policy",
+        "nav_cta_url": "",
         "badge_text": "SHOPIFY · WORDPRESS · CUSTOM BUILDS",
-        "headline_line1": "Your vision.",
-        "headline_line2": "Precisely",
-        "headline_line3": "built.",
-        "subheadline": "Premium web development for founders and brands serious about growth. Based in Lahore — working globally.",
-        "primary_cta_label": "Start a project",
-        "primary_cta_url": "",
-        "secondary_cta_label": "View our work",
-        "secondary_cta_url": "shopify://blogs/news",
+        "hero_headline_line1": "Your vision.",
+        "hero_headline_line2": "Precisely",
+        "hero_headline_line3": "built.",
+        "hero_subheading": "Premium web development for founders and brands serious about growth. Based in Lahore — working globally.",
+        "hero_cta_primary_label": "Start a project",
+        "hero_cta_primary_url": "",
+        "hero_cta_secondary_label": "View our work",
+        "hero_cta_secondary_url": "",
         "stat1_value": "20+",
         "stat1_label": "Projects",
-        "stat2_value": "5★",
+        "stat2_value": "5",
         "stat2_label": "Rating",
+        "stat2_has_star": true,
         "stat3_value": "5+",
         "stat3_label": "Countries",
         "stat4_value": "48h",
         "stat4_label": "Response",
-        "slide_counter": "01 / 07",
-        "color_bg": "#0d0b1a",
-        "color_accent": "#7b2fbe",
-        "color_text": "#ffffff",
-        "color_muted": "#9090a8"
+        "slide_current": "01",
+        "slide_total": "07",
+        "scroll_label": "SCROLL",
+        "color_bg": "#0d0a1a",
+        "color_accent": "#7c3aed",
+        "color_text": "#a89fc2"
       }
     }
   },
@@ -219,6 +219,6 @@
     "custom_text_strip_WFcPNX",
     "custom_product_grid_mCGMKY",
     "hero_section_UKyb4j",
-    "test_CLiPpA"
+    "tes1122_qc4CxL"
   ]
 }
