@@ -1,0 +1,12 @@
+{
+  "sections": {
+    "main": {
+      "type": "tes1122",
+      "disabled": false,
+      "settings": {}
+    }
+  },
+  "order": [
+    "main"
+  ]
+}
