@@ -663,7 +663,171 @@
   transform: translateY(0) !important;
 }
     </style>
-<script src="{{ 'qqqq.js' | asset_url }}" defer></script>
+{% comment %} <script src="{{ 'qqqq.js' | asset_url }}" defer></script> {% endcomment %}
+ <script>
+    // ============================================================
+// qqqq.js — Stimulus Controller for Alvex Hero Section
+// Handles: mobile menu toggle, cursor dot, radar pulse,
+// and entrance scroll-reveal animations
+// ============================================================
+
+(function () {
+  'use strict';
+
+  // Wait for Stimulus application to be ready (Dawn initialises it)
+  function initController() {
+    if (!window.Stimulus) return;
+
+    // Guard against duplicate registration
+    try {
+      const existing = window.Stimulus.router.modulesByIdentifier.get('qqqq-hero');
+      if (existing) return;
+    } catch (e) {
+      // router API may vary — safe to continue
+    }
+
+    class QqqqHeroController extends window.Controller {
+
+      // ── Connect ──────────────────────────────────────────
+      connect() {
+        this._triggerEntranceAnimations();
+        this._setupCursorDot();
+        this._setupRadarPulse();
+      }
+
+      // ── Mobile Menu Toggle ───────────────────────────────
+      toggleMobileMenu() {
+        const sectionId = this.element.id.replace('qqqq-', '');
+        const menu      = document.getElementById('qqqq-mobile-menu-' + sectionId);
+        const hamburger = this.element.querySelector('.qqqq__nav-hamburger');
+        if (!menu || !hamburger) return;
+
+        const isOpen = menu.classList.contains('qqqq__mobile-menu--open');
+
+        if (isOpen) {
+          menu.classList.remove('qqqq__mobile-menu--open');
+          hamburger.setAttribute('aria-expanded', 'false');
+          menu.setAttribute('aria-hidden', 'true');
+        } else {
+          menu.classList.add('qqqq__mobile-menu--open');
+          hamburger.setAttribute('aria-expanded', 'true');
+          menu.setAttribute('aria-hidden', 'false');
+        }
+      }
+
+      // ── Entrance Animations ──────────────────────────────
+      // Staggers fade-in + slide-up on page load for hero elements
+      _triggerEntranceAnimations() {
+        const targets = this.element.querySelectorAll(
+          '.qqqq__badge, .qqqq__headline, .qqqq__subheadline, .qqqq__cta-group, .qqqq__stats'
+        );
+        if (!targets.length) return;
+
+        // Small delay so CSS transition is applied before class flip
+        setTimeout(() => {
+          targets.forEach((el, i) => {
+            setTimeout(() => {
+              el.classList.add('qqqq--revealed');
+            }, i * 110);
+          });
+        }, 80);
+      }
+
+      // ── Custom Cursor Dot ────────────────────────────────
+      // Smooth lagging purple dot that follows the mouse inside the hero
+      _setupCursorDot() {
+        const hero = this.element.querySelector('.qqqq__hero');
+        if (!hero) return;
+
+        // Create dot element
+        const dot = document.createElement('div');
+        dot.className = 'qqqq__cursor-dot';
+        dot.setAttribute('aria-hidden', 'true');
+        hero.appendChild(dot);
+
+        let mouseX = 0, mouseY = 0;
+        let dotX   = 0, dotY   = 0;
+        let raf    = null;
+
+        const moveDot = () => {
+          dotX += (mouseX - dotX) * 0.12;
+          dotY += (mouseY - dotY) * 0.12;
+          dot.style.transform = `translate(${dotX}px, ${dotY}px)`;
+          raf = requestAnimationFrame(moveDot);
+        };
+
+        hero.addEventListener('mousemove', (e) => {
+          const rect = hero.getBoundingClientRect();
+          mouseX = e.clientX - rect.left;
+          mouseY = e.clientY - rect.top;
+          if (!raf) raf = requestAnimationFrame(moveDot);
+        });
+
+        hero.addEventListener('mouseenter', () => {
+          dot.style.opacity = '1';
+        });
+
+        hero.addEventListener('mouseleave', () => {
+          dot.style.opacity = '0';
+          if (raf) { cancelAnimationFrame(raf); raf = null; }
+        });
+      }
+
+      // ── Radar Pulse ──────────────────────────────────────
+      // Gently pulses the center glow orb of the radar SVG
+      _setupRadarPulse() {
+        const hero     = this.element.querySelector('.qqqq__hero');
+        const glowEl   = this.element.querySelector('.qqqq__radar-glow');
+        if (!hero || !glowEl) return;
+
+        let scale   = 1;
+        let growing = true;
+
+        const pulse = () => {
+          if (growing) {
+            scale += 0.0015;
+            if (scale >= 1.12) growing = false;
+          } else {
+            scale -= 0.0015;
+            if (scale <= 0.88) growing = true;
+          }
+          glowEl.style.transform = `scale(${scale})`;
+          requestAnimationFrame(pulse);
+        };
+
+        requestAnimationFrame(pulse);
+      }
+
+      // ── Disconnect ───────────────────────────────────────
+      disconnect() {
+        // Nothing persistent to clean up
+      }
+    }
+
+    // Register the controller
+    if (window.Stimulus && typeof window.Stimulus.register === 'function') {
+      window.Stimulus.register('qqqq-hero', QqqqHeroController);
+    }
+  }
+
+  // Try immediately; fall back to DOMContentLoaded
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initController);
+  } else {
+    // Stimulus may still be loading — retry a few times
+    let attempts = 0;
+    const tryInit = () => {
+      if (window.Stimulus) {
+        initController();
+      } else if (attempts < 20) {
+        attempts++;
+        setTimeout(tryInit, 100);
+      }
+    };
+    tryInit();
+  }
+})();
+ </script>
 
 <!-- Google Fonts: Space Grotesk -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
