@@ -157,6 +157,7 @@
         "product_46zQxK",
         "product_chtyrc"
       ],
+      "disabled": true,
       "name": "Custom Hero Slider",
       "settings": {
         "background_gradient": "linear-gradient(135deg, rgba(64, 50, 84, 1), rgba(175, 61, 120, 1) 50%, rgba(206, 75, 145, 1) 100%)",
@@ -167,12 +168,83 @@
         "main_image": "shopify://shop_images/dryer.png",
         "decorative_path": "shopify://shop_images/paperplane.svg"
       }
+    },
+    "test_CLiPpA": {
+      "type": "test",
+      "blocks": {
+        "service_twY4YV": {
+          "type": "service",
+          "settings": {
+            "title": "Ricerca",
+            "description": "<p>Breve descrizione del servizio.</p>",
+            "button_text": "SCOPRI I PROGETTI IN CORSO",
+            "button_link": ""
+          }
+        },
+        "service_8DiR9f": {
+          "type": "service",
+          "settings": {
+            "title": "Ricerca",
+            "description": "<p>Breve descrizione del servizio.</p>",
+            "button_text": "SCOPRI I PROGETTI IN CORSO",
+            "button_link": ""
+          }
+        },
+        "service_kApMcL": {
+          "type": "service",
+          "settings": {
+            "title": "Ricerca",
+            "description": "<p>Breve descrizione del servizio.</p>",
+            "button_text": "SCOPRI I PROGETTI IN CORSO",
+            "button_link": ""
+          }
+        }
+      },
+      "block_order": [
+        "service_twY4YV",
+        "service_8DiR9f",
+        "service_kApMcL"
+      ],
+      "name": "t:sections.teeeee.presets.name",
+      "settings": {
+        "hero_color_scheme": "",
+        "hero_text_color": "#ffffff",
+        "hero_video_enable": false,
+        "hero_video_url": "",
+        "hero_overlay_opacity": 40,
+        "hero_heading": "<p>_ Ricerca scientifica, sviluppo per il futuro.</p>",
+        "hero_button_text": "SCOPRI DI PIÙ",
+        "hero_button_link": "",
+        "about_color_scheme": "",
+        "about_heading": "<p>Un impegno reale per qualità, sostenibilità e progresso scientifico.</p>",
+        "about_text": "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>",
+        "about_button_text": "L'ISTITUTO",
+        "about_button_link": "",
+        "news_color_scheme": "",
+        "news_heading": "<p>_ News, eventi e progetti sempre aggiornati.</p>",
+        "news_blog": "",
+        "news_limit": 3,
+        "news_view_all_text": "VAI A TUTTE LE NEWS",
+        "news_view_all_link": "",
+        "services_color_scheme": "",
+        "services_heading": "<p>_ Ricerca, formazione e servizi: un ecosistema che crea valore.</p>",
+        "video_color_scheme": "",
+        "video_overlay_opacity": 40,
+        "video_heading": "<p>Lorem Ipsum is simply dummy the printing.</p>",
+        "video_url": "",
+        "video_button_text": "GUARDA IL VIDEO",
+        "contact_color_scheme": "",
+        "contact_heading": "<p>Contatta l'Istituto per informazioni, tecniche o collaborazioni.</p>",
+        "contact_button_text": "CONTATTACI",
+        "contact_button_link": ""
+      }
     }
   },
   "order": [
     "custom_banner_PbmMTg",
     "custom_text_strip_WFcPNX",
     "custom_product_grid_mCGMKY",
-    "hero_section_UKyb4j"
+    "hero_section_UKyb4j",
+    "test_CLiPpA"
   ]
 }
