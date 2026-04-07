@@ -1,3 +1,12 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin language editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "general": {
     "password_page": {
@@ -527,5 +536,24 @@
       "send_on": "YYYY-MM-DD",
       "send_on_label": "Send on (optional)"
     }
+  },
+  "sections": {
+    "llll": {
+      "heading": "Alvex Hero Landing",
+      "nav_aria": "Main navigation",
+      "mobile_nav_aria": "Mobile navigation",
+      "menu_open": "Open menu",
+      "menu_close": "Close menu",
+      "stats_aria": "Key statistics",
+      "slide_counter_aria": "Slide counter",
+      "scroll_text": "SCROLL",
+      "scroll_label": "Scroll down"
+    }
+  },
+  "general": {
+    "accessibility": {
+      "home": "Home"
+    }
   }
+
 }
