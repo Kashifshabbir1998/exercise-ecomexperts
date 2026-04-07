@@ -768,7 +768,109 @@ body.nav-open {
   border-radius: 4px;
 }
 </style>
-<script src="{{ 'llll.js' | asset_url }}" defer></script>
+<script>
+    // Alvex Studio — llll.js
+(function () {
+  'use strict';
+
+  // ── Floating Cursor Dot ─────────────────────────────────────────────────
+  const cursorDot = document.querySelector('.site-header__float-dot');
+  if (cursorDot && window.matchMedia('(min-width: 750px)').matches) {
+    let mouseX = window.innerWidth / 2;
+    let mouseY = 34;
+    let curX = mouseX;
+    let curY = mouseY;
+
+    document.addEventListener('mousemove', function (e) {
+      mouseX = e.clientX;
+      mouseY = e.clientY;
+    });
+
+    (function animateDot() {
+      curX += (mouseX - curX) * 0.12;
+      curY += (mouseY - curY) * 0.12;
+      cursorDot.style.transform = 'translate(' + curX + 'px, ' + curY + 'px) translate(-50%, -50%)';
+      requestAnimationFrame(animateDot);
+    })();
+  }
+
+  // ── Mobile Nav Toggle ──────────────────────────────────────────────────
+  const hamburger = document.querySelector('.site-header__hamburger');
+  const mobileNavs = document.querySelectorAll('.site-header__mobile-nav');
+
+  if (hamburger && mobileNavs.length) {
+    hamburger.addEventListener('click', function () {
+      const isOpen = this.getAttribute('aria-expanded') === 'true';
+      this.setAttribute('aria-expanded', String(!isOpen));
+      mobileNavs.forEach(function (nav) {
+        nav.setAttribute('aria-hidden', String(isOpen));
+        nav.classList.toggle('is-open', !isOpen);
+      });
+      document.body.classList.toggle('nav-open', !isOpen);
+    });
+  }
+
+  // ── Hero Entrance Animations ───────────────────────────────────────────
+  function initHeroAnimations() {
+    var elements = document.querySelectorAll(
+      '.hero-badge, .hero__headline, .hero__body, .hero__ctas, .stats-bar, .hero__decoration'
+    );
+    elements.forEach(function (el, index) {
+      el.style.opacity = '0';
+      el.style.transform = 'translateY(22px)';
+      el.style.transition =
+        'opacity 0.7s ease ' + index * 0.11 + 's, transform 0.7s ease ' + index * 0.11 + 's';
+    });
+    requestAnimationFrame(function () {
+      requestAnimationFrame(function () {
+        elements.forEach(function (el) {
+          el.style.opacity = '1';
+          el.style.transform = 'translateY(0)';
+        });
+      });
+    });
+  }
+
+  // ── Decorative Glow Pulse ──────────────────────────────────────────────
+  function initGlowPulse() {
+    var glow = document.querySelector('.hero__center-glow');
+    if (!glow) return;
+    var scale = 1;
+    var dir = 1;
+    var frame = 0;
+    (function pulse() {
+      frame++;
+      if (frame % 2 === 0) {
+        scale += dir * 0.0025;
+        if (scale > 1.07) dir = -1;
+        if (scale < 0.93) dir = 1;
+        glow.style.transform = 'translate(-50%, -50%) scale(' + scale + ')';
+      }
+      requestAnimationFrame(pulse);
+    })();
+  }
+
+  // ── Scroll Indicator Fade ──────────────────────────────────────────────
+  function initScrollFade() {
+    var scrollEl = document.querySelector('.hero__scroll-indicator');
+    var counterEl = document.querySelector('.hero__slide-counter');
+    if (!scrollEl && !counterEl) return;
+    window.addEventListener('scroll', function () {
+      var opacity = Math.max(0, 1 - window.scrollY / 180);
+      if (scrollEl) scrollEl.style.opacity = opacity;
+      if (counterEl) counterEl.style.opacity = opacity;
+    }, { passive: true });
+  }
+
+  // ── Init ───────────────────────────────────────────────────────────────
+  document.addEventListener('DOMContentLoaded', function () {
+    initHeroAnimations();
+    initGlowPulse();
+    initScrollFade();
+  });
+
+})();
+</script>
 
 <!-- Google Fonts: Space Grotesk + Outfit -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
