@@ -1,4 +1,668 @@
-{{ 'qqqq.css' | asset_url | stylesheet_tag }}
+<style>
+    /* ============================================================
+   qqqq.css — Alvex Agency Hero Section Styles
+   ============================================================ */
+
+/* ── Custom Properties ──────────────────────────────────────── */
+:root {
+  --qqqq-bg:           #0D0B1A;
+  --qqqq-bg-2:         #110E22;
+  --qqqq-accent:       #7B2FBE;
+  --qqqq-accent-light: #9B59D6;
+  --qqqq-accent-glow:  rgba(123, 47, 190, 0.35);
+  --qqqq-text:         #FFFFFF;
+  --qqqq-text-muted:   #9090A8;
+  --qqqq-text-dim:     #5A5A72;
+  --qqqq-border:       rgba(255, 255, 255, 0.08);
+  --qqqq-border-accent:rgba(123, 47, 190, 0.50);
+  --qqqq-nav-height:   68px;
+  --qqqq-font:         'Space Grotesk', sans-serif;
+}
+
+/* ── Global Reset for Section ───────────────────────────────── */
+.qqqq-section-wrapper,
+.qqqq {
+  font-family: var(--qqqq-font);
+  background-color: var(--qqqq-bg);
+  color: var(--qqqq-text);
+  margin: 0;
+  padding: 0;
+  position: relative;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.qqqq *,
+.qqqq *::before,
+.qqqq *::after {
+  box-sizing: border-box;
+}
+
+/* ── Responsive Utility Classes ────────────────────────────── */
+/* Mobile-first: hidden-mobile hides on mobile, shows on desktop */
+.qqqq .hidden-mobile {
+  display: none !important;
+}
+
+.qqqq .hidden-desktop {
+  display: flex !important;
+}
+
+@media (min-width: 750px) {
+  .qqqq .hidden-mobile {
+    display: flex !important;
+  }
+  .qqqq .hidden-desktop {
+    display: none !important;
+  }
+}
+
+/* ============================================================
+   NAVIGATION
+   ============================================================ */
+.qqqq__nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  z-index: 1000;
+  background: rgba(13, 11, 26, 0.90);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border-bottom: 1px solid var(--qqqq-border);
+  display: flex;
+  flex-direction: column;
+}
+
+.qqqq__nav-inner {
+  width: 100%;
+  max-width: 1360px;
+  margin: 0 auto;
+  padding: 0 24px;
+  height: var(--qqqq-nav-height);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+/* ── Logo ───────────────────────────────────────────────────── */
+.qqqq__nav-logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+  flex-shrink: 0;
+}
+
+.qqqq__nav-logo:focus-visible {
+  outline: 2px solid var(--qqqq-accent-light);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+.qqqq__nav-logo-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.qqqq__nav-logo-text {
+  display: flex;
+  flex-direction: column;
+  line-height: 1;
+}
+
+.qqqq__nav-logo-brand {
+  font-family: var(--qqqq-font);
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--qqqq-text);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.qqqq__nav-logo-sub {
+  font-family: var(--qqqq-font);
+  font-size: 9px;
+  font-weight: 400;
+  color: var(--qqqq-text-muted);
+  letter-spacing: 0.20em;
+  text-transform: uppercase;
+  margin-top: 2px;
+}
+
+/* ── Desktop Nav Links ─────────────────────────────────────── */
+.qqqq__nav-links {
+  flex: 1;
+  justify-content: center;
+  align-items: center;
+}
+
+.qqqq__nav-list {
+  display: flex;
+  align-items: center;
+  gap: 34px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.qqqq__nav-item {
+  position: relative;
+}
+
+.qqqq__nav-link {
+  font-family: var(--qqqq-font);
+  font-size: 14px;
+  font-weight: 400;
+  color: rgba(255, 255, 255, 0.72);
+  text-decoration: none;
+  letter-spacing: 0.01em;
+  transition: color 0.2s ease;
+  padding-bottom: 2px;
+}
+
+.qqqq__nav-link:hover {
+  color: var(--qqqq-text);
+}
+
+.qqqq__nav-link:focus-visible {
+  outline: 2px solid var(--qqqq-accent-light);
+  outline-offset: 3px;
+  border-radius: 3px;
+}
+
+/* Active nav item */
+.qqqq__nav-item--active .qqqq__nav-link {
+  color: var(--qqqq-text);
+  text-decoration: underline;
+  text-underline-offset: 5px;
+  text-decoration-thickness: 1px;
+}
+
+/* ── Nav CTA Button ─────────────────────────────────────────── */
+.qqqq__nav-cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--qqqq-accent);
+  color: var(--qqqq-text);
+  text-decoration: none;
+  font-family: var(--qqqq-font);
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  padding: 10px 22px;
+  border-radius: 6px;
+  transition: background-color 0.22s ease, box-shadow 0.22s ease;
+  white-space: nowrap;
+  flex-shrink: 0;
+  border: 1px solid var(--qqqq-accent);
+}
+
+.qqqq__nav-cta:hover {
+  background-color: var(--qqqq-accent-light);
+  border-color: var(--qqqq-accent-light);
+  box-shadow: 0 0 22px var(--qqqq-accent-glow);
+}
+
+.qqqq__nav-cta:focus-visible {
+  outline: 2px solid var(--qqqq-accent-light);
+  outline-offset: 3px;
+  border-radius: 6px;
+}
+
+/* ── Hamburger Button ───────────────────────────────────────── */
+.qqqq__nav-hamburger {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  background: transparent;
+  border: none;
+  padding: 8px;
+  cursor: pointer;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+}
+
+.qqqq__nav-hamburger:focus-visible {
+  outline: 2px solid var(--qqqq-accent-light);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+.qqqq__hamburger-line {
+  display: block;
+  width: 24px;
+  height: 2px;
+  background-color: var(--qqqq-text);
+  border-radius: 2px;
+  transition: all 0.28s ease;
+}
+
+/* ── Mobile Menu Drawer ─────────────────────────────────────── */
+.qqqq__mobile-menu {
+  background: var(--qqqq-bg-2);
+  border-top: 1px solid var(--qqqq-border);
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.38s ease;
+  width: 100%;
+  /* Override hidden-desktop: only hide on desktop, drawer logic is JS */
+  flex-direction: column !important;
+}
+
+.qqqq__mobile-menu--open {
+  max-height: 520px;
+}
+
+.qqqq__mobile-nav-list {
+  list-style: none;
+  margin: 0;
+  padding: 16px 24px 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.qqqq__mobile-nav-list li {
+  border-bottom: 1px solid var(--qqqq-border);
+}
+
+.qqqq__mobile-nav-list li:last-child {
+  border-bottom: none;
+}
+
+.qqqq__mobile-nav-link {
+  display: block;
+  font-family: var(--qqqq-font);
+  font-size: 16px;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.80);
+  text-decoration: none;
+  padding: 14px 0;
+  transition: color 0.2s ease;
+}
+
+.qqqq__mobile-nav-link:hover {
+  color: var(--qqqq-text);
+}
+
+.qqqq__mobile-nav-link:focus-visible {
+  outline: 2px solid var(--qqqq-accent-light);
+  outline-offset: 2px;
+  border-radius: 3px;
+}
+
+.qqqq__mobile-cta {
+  margin-top: 16px;
+  width: 100%;
+  justify-content: center;
+}
+
+/* ============================================================
+   HERO SECTION
+   ============================================================ */
+.qqqq__hero {
+  position: relative;
+  min-height: 100vh;
+  padding-top: var(--qqqq-nav-height);
+  background-color: var(--qqqq-bg);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+/* ── Dot Grid Background ────────────────────────────────────── */
+.qqqq__dot-grid {
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(rgba(255, 255, 255, 0.09) 1px, transparent 1px);
+  background-size: 28px 28px;
+  z-index: 0;
+  pointer-events: none;
+}
+
+/* ── Purple Ambient Glow ─────────────────────────────────────── */
+.qqqq__bg-glow {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 65% 60% at 78% 52%, rgba(123, 47, 190, 0.20) 0%, transparent 68%),
+    radial-gradient(ellipse 45% 45% at 18% 42%, rgba(80, 20, 140, 0.13) 0%, transparent 68%);
+  z-index: 1;
+  pointer-events: none;
+}
+
+/* ── Hero Inner Layout ──────────────────────────────────────── */
+.qqqq__hero-inner {
+  position: relative;
+  z-index: 2;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  max-width: 1360px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 56px 24px 110px;
+  gap: 40px;
+}
+
+@media (min-width: 750px) {
+  .qqqq__hero-inner {
+    flex-direction: row;
+    align-items: center;
+    padding: 80px 60px 130px;
+    gap: 0;
+  }
+}
+
+/* ── Left Content Column ─────────────────────────────────────── */
+.qqqq__hero-content {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 26px;
+  width: 100%;
+}
+
+@media (min-width: 750px) {
+  .qqqq__hero-content {
+    flex: 0 0 53%;
+    max-width: 53%;
+  }
+}
+
+/* ── Badge ───────────────────────────────────────────────────── */
+.qqqq__badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  border: 1px solid var(--qqqq-border-accent);
+  border-radius: 100px;
+  padding: 7px 16px 7px 14px;
+  background: rgba(123, 47, 190, 0.09);
+  /* Entrance animation start state */
+  opacity: 0;
+  transform: translateY(18px);
+  transition: opacity 0.55s ease, transform 0.55s ease;
+}
+
+.qqqq__badge-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background-color: var(--qqqq-accent);
+  flex-shrink: 0;
+  box-shadow: 0 0 8px var(--qqqq-accent-glow);
+}
+
+.qqqq__badge-text {
+  font-family: var(--qqqq-font);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.13em;
+  color: rgba(255, 255, 255, 0.82);
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+/* ── Headline ─────────────────────────────────────────────────── */
+.qqqq__headline {
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  opacity: 0;
+  transform: translateY(22px);
+  transition: opacity 0.55s ease 0.11s, transform 0.55s ease 0.11s;
+}
+
+.qqqq__headline-white,
+.qqqq__headline-purple {
+  display: block;
+  font-family: var(--qqqq-font);
+  font-weight: 700;
+  font-size: clamp(50px, 6.8vw, 88px);
+  letter-spacing: -0.025em;
+  line-height: 1.04;
+}
+
+.qqqq__headline-white {
+  color: var(--qqqq-text);
+}
+
+.qqqq__headline-purple {
+  color: var(--qqqq-accent-light);
+}
+
+/* ── Subheadline ──────────────────────────────────────────────── */
+.qqqq__subheadline {
+  font-family: var(--qqqq-font);
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.68;
+  color: var(--qqqq-text-muted);
+  margin: 0;
+  max-width: 430px;
+  opacity: 0;
+  transform: translateY(18px);
+  transition: opacity 0.55s ease 0.22s, transform 0.55s ease 0.22s;
+}
+
+@media (min-width: 750px) {
+  .qqqq__subheadline {
+    font-size: 17px;
+  }
+}
+
+/* ── CTA Button Group ────────────────────────────────────────── */
+.qqqq__cta-group {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex-wrap: wrap;
+  opacity: 0;
+  transform: translateY(18px);
+  transition: opacity 0.55s ease 0.33s, transform 0.55s ease 0.33s;
+}
+
+/* ── Buttons ─────────────────────────────────────────────────── */
+.qqqq__btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--qqqq-font);
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  text-decoration: none;
+  border-radius: 8px;
+  padding: 13px 28px;
+  transition: background-color 0.22s ease, border-color 0.22s ease, box-shadow 0.22s ease;
+  cursor: pointer;
+  white-space: nowrap;
+  border: 1px solid transparent;
+}
+
+.qqqq__btn:focus-visible {
+  outline: 2px solid var(--qqqq-accent-light);
+  outline-offset: 3px;
+  border-radius: 8px;
+}
+
+.qqqq__btn--primary {
+  background-color: var(--qqqq-accent);
+  color: var(--qqqq-text);
+  border-color: var(--qqqq-accent);
+}
+
+.qqqq__btn--primary:hover {
+  background-color: var(--qqqq-accent-light);
+  border-color: var(--qqqq-accent-light);
+  box-shadow: 0 0 26px var(--qqqq-accent-glow);
+}
+
+.qqqq__btn--secondary {
+  background-color: transparent;
+  color: var(--qqqq-text);
+  border-color: rgba(255, 255, 255, 0.24);
+}
+
+.qqqq__btn--secondary:hover {
+  border-color: rgba(255, 255, 255, 0.52);
+  background-color: rgba(255, 255, 255, 0.05);
+}
+
+/* ── Stats Bar ───────────────────────────────────────────────── */
+.qqqq__stats {
+  display: flex;
+  align-items: flex-start;
+  gap: 30px;
+  flex-wrap: wrap;
+  margin-top: 8px;
+  opacity: 0;
+  transform: translateY(18px);
+  transition: opacity 0.55s ease 0.44s, transform 0.55s ease 0.44s;
+}
+
+.qqqq__stat {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.qqqq__stat-value {
+  font-family: var(--qqqq-font);
+  font-size: clamp(24px, 2.8vw, 34px);
+  font-weight: 700;
+  color: var(--qqqq-text);
+  letter-spacing: -0.02em;
+  line-height: 1;
+}
+
+.qqqq__stat-label {
+  font-family: var(--qqqq-font);
+  font-size: 11px;
+  font-weight: 400;
+  color: var(--qqqq-text-muted);
+  letter-spacing: 0.07em;
+  text-transform: capitalize;
+}
+
+/* ── Divider between stats ───────────────────────────────────── */
+.qqqq__stat + .qqqq__stat {
+  padding-left: 30px;
+  border-left: 1px solid var(--qqqq-border);
+}
+
+/* ── Right Graphic Column ─────────────────────────────────────── */
+.qqqq__hero-graphic {
+  display: none;
+}
+
+@media (min-width: 750px) {
+  .qqqq__hero-graphic {
+    display: flex;
+    flex: 0 0 47%;
+    max-width: 47%;
+    align-items: center;
+    justify-content: center;
+  }
+}
+
+/* ── Radar Wrapper ───────────────────────────────────────────── */
+.qqqq__radar-wrapper {
+  position: relative;
+  width: 100%;
+  max-width: 600px;
+  aspect-ratio: 1 / 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.qqqq__radar-glow {
+  position: absolute;
+  inset: 5%;
+  background: radial-gradient(
+    circle at 50% 50%,
+    rgba(123, 47, 190, 0.30) 0%,
+    rgba(123, 47, 190, 0.10) 45%,
+    transparent 70%
+  );
+  border-radius: 50%;
+  pointer-events: none;
+  transform-origin: center;
+  will-change: transform;
+}
+
+.qqqq__radar-svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+  position: relative;
+  z-index: 1;
+}
+
+/* ── Bottom Bar ──────────────────────────────────────────────── */
+.qqqq__bottom-bar {
+  position: absolute;
+  bottom: 28px;
+  left: 0;
+  right: 0;
+  max-width: 1360px;
+  margin: 0 auto;
+  padding: 0 60px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  z-index: 3;
+  pointer-events: none;
+}
+
+.qqqq__slide-counter,
+.qqqq__scroll-indicator {
+  font-family: var(--qqqq-font);
+  font-size: 11px;
+  font-weight: 400;
+  color: var(--qqqq-text-dim);
+  letter-spacing: 0.10em;
+  text-transform: uppercase;
+}
+
+/* ── Custom Cursor Dot ───────────────────────────────────────── */
+.qqqq__cursor-dot {
+  position: absolute;
+  width: 13px;
+  height: 13px;
+  border-radius: 50%;
+  background-color: var(--qqqq-accent);
+  pointer-events: none;
+  z-index: 10;
+  top: 0;
+  left: 0;
+  transform: translate(0, 0);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  box-shadow: 0 0 14px var(--qqqq-accent-glow), 0 0 4px var(--qqqq-accent);
+  will-change: transform;
+}
+
+/* ── Scroll Reveal — Revealed State ──────────────────────────── */
+/* JS adds .qqqq--revealed to trigger the transition */
+.qqqq--revealed {
+  opacity: 1 !important;
+  transform: translateY(0) !important;
+}
+    </style>
 <script src="{{ 'qqqq.js' | asset_url }}" defer></script>
 
 <!-- Google Fonts: Space Grotesk -->
