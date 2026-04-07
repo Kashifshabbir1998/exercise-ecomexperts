@@ -1,0 +1,510 @@
+{% comment %}
+  Section: Teeee Homepage
+  Description: This section provides a comprehensive homepage layout including hero, about, news, services, video, and contact call-to-action areas.
+{% endcomment %}
+
+<link rel="stylesheet" href="{{ 'swiper-bundle.min.css' | asset_url }}" media="print" onload="this.media='all'">
+<noscript><link rel="stylesheet" href="{{ 'swiper-bundle.min.css' | asset_url }}"></noscript>
+
+<style>
+  .section-teeeee__hero-content {
+    --text-color: {{ section.settings.hero_text_color.rgb }};
+  }
+  .section-teeeee__hero-overlay {
+    background-color: rgba(0,0,0,{{ section.settings.hero_overlay_opacity | divided_by: 100.0 }});
+  }
+  .section-teeeee__video-overlay {
+    background-color: rgba(0,0,0,{{ section.settings.video_overlay_opacity | divided_by: 100.0 }});
+  }
+</style>
+
+<div class="section-teeeee color-{{ section.settings.hero_color_scheme }}" data-section-id="{{ section.id }}">
+  {# Hero Section #}
+  <section class="section-teeeee__hero gradient">
+    <div class="section-teeeee__hero-background">
+      {% if section.settings.hero_video_enable and section.settings.hero_video_url != blank %}
+        <video class="section-teeeee__hero-video" autoplay loop muted playsinline poster="{{ section.settings.hero_image | image_url: width: 1920 }}">
+          <source src="{{ section.settings.hero_video_url }}" type="video/mp4">
+          <!-- PLACEHOLDER: Add other video formats for broader browser support if needed -->
+        </video>
+      {% elsif section.settings.hero_image != blank %}
+        {{ section.settings.hero_image | image_url: width: 1920 | image_tag: loading: 'eager', class: 'section-teeeee__hero-image', alt: section.settings.hero_image.alt | default: section.settings.hero_heading | strip_html }}
+      {% else %}
+        <div class="section-teeeee__hero-placeholder">
+          {{ 'lifestyle-1' | placeholder_svg_tag: 'placeholder-svg' }}
+        </div>
+      {% endif %}
+      <div class="section-teeeee__hero-overlay"></div>
+    </div>
+    <div class="section-teeeee__hero-content page-width">
+      {% if section.settings.hero_heading != blank %}
+        <h1 class="section-teeeee__hero-heading">{{ section.settings.hero_heading }}</h1>
+      {% endif %}
+      {% if section.settings.hero_button_text != blank and section.settings.hero_button_link != blank %}
+        <a href="{{ section.settings.hero_button_link }}" class="button button--primary">
+          {{ section.settings.hero_button_text }}
+        </a>
+      {% endif %}
+    </div>
+  </section>
+
+  {# About Section #}
+  <section class="section-teeeee__about color-{{ section.settings.about_color_scheme }} gradient">
+    <div class="page-width section-teeeee__about-wrapper">
+      {% if section.settings.about_heading != blank %}
+        <h2 class="section-teeeee__about-heading">{{ section.settings.about_heading }}</h2>
+      {% endif %}
+      {% if section.settings.about_text != blank %}
+        <div class="section-teeeee__about-text rte">
+          {{ section.settings.about_text }}
+        </div>
+      {% endif %}
+      {% if section.settings.about_button_text != blank and section.settings.about_button_link != blank %}
+        <a href="{{ section.settings.about_button_link }}" class="button button--secondary">
+          {{ section.settings.about_button_text }}
+        </a>
+      {% endif %}
+    </div>
+  </section>
+
+  {# News & Events Section #}
+  <section class="section-teeeee__news color-{{ section.settings.news_color_scheme }} gradient">
+    <div class="page-width">
+      <div class="section-teeeee__news-header">
+        {% if section.settings.news_heading != blank %}
+          <h2 class="section-teeeee__news-heading">{{ section.settings.news_heading }}</h2>
+        {% endif %}
+        {% if section.settings.news_view_all_text != blank and section.settings.news_view_all_link != blank %}
+          <a href="{{ section.settings.news_view_all_link }}" class="button button--tertiary hidden-mobile">
+            {{ section.settings.news_view_all_text }}
+          </a>
+        {% endif %}
+      </div>
+
+      {% assign blog = blogs[section.settings.news_blog] %}
+      {% if blog != blank and blog.articles.size > 0 %}
+        <teeeee-news-slider class="section-teeeee__news-slider-wrapper">
+          <div class="swiper" id="swiper-{{ section.id }}">
+            <div class="swiper-wrapper">
+              {% for article in blog.articles limit: section.settings.news_limit %}
+                <div class="swiper-slide section-teeeee__news-card">
+                  <a href="{{ article.url }}" class="section-teeeee__news-card-link">
+                    {% if article.image != blank %}
+                      {{ article.image | image_url: width: 400 | image_tag: loading: 'lazy', class: 'section-teeeee__news-card-image', alt: article.image.alt | default: article.title }}
+                    {% else %}
+                      <div class="section-teeeee__news-card-image-placeholder">
+                        {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
+                      </div>
+                    {% endif %}
+                    <div class="section-teeeee__news-card-content">
+                      <span class="section-teeeee__news-card-date">{{ article.published_at | time_tag: format: 'date' }}</span>
+                      <h3 class="section-teeeee__news-card-title">{{ article.title }}</h3>
+                      <span class="section-teeeee__news-card-read-more">
+                        {{ 'sections.teeeee.news.read_more' | t }}
+                        <svg aria-hidden="true" focusable="false" role="presentation" class="icon icon-arrow" viewBox="0 0 10 10">
+                          <path d="M2.375 1.25L6.125 5L2.375 8.75" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                      </span>
+                    </div>
+                  </a>
+                </div>
+              {% endfor %}
+            </div>
+          </div>
+          <div class="swiper-button-prev">
+            <svg aria-hidden="true" focusable="false" role="presentation" class="icon icon-arrow" viewBox="0 0 10 10">
+              <path d="M2.375 1.25L6.125 5L2.375 8.75" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+          <div class="swiper-button-next">
+            <svg aria-hidden="true" focusable="false" role="presentation" class="icon icon-arrow" viewBox="0 0 10 10">
+              <path d="M2.375 1.25L6.125 5L2.375 8.75" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+        </teeeee-news-slider>
+      {% else %}
+        <div class="section-teeeee__news-empty">
+          <p>{{ 'sections.teeeee.news.no_articles' | t }}</p>
+          {% if shop.blogs.size == 0 %}
+            <p>{{ 'sections.teeeee.news.no_blogs_info' | t }}</p>
+          {% endif %}
+        </div>
+      {% endif %}
+
+      {% if section.settings.news_view_all_text != blank and section.settings.news_view_all_link != blank %}
+        <div class="section-teeeee__news-view-all-mobile hidden-desktop">
+          <a href="{{ section.settings.news_view_all_link }}" class="button button--tertiary">
+            {{ section.settings.news_view_all_text }}
+          </a>
+        </div>
+      {% endif %}
+    </div>
+  </section>
+
+  {# Services & Offerings Section #}
+  <section class="section-teeeee__services color-{{ section.settings.services_color_scheme }} gradient">
+    <div class="page-width">
+      {% if section.settings.services_heading != blank %}
+        <h2 class="section-teeeee__services-heading">{{ section.settings.services_heading }}</h2>
+      {% endif %}
+
+      {% if section.blocks.size > 0 %}
+        <div class="section-teeeee__services-grid">
+          {% for block in section.blocks %}
+            <div class="section-teeeee__service-card" {{ block.shopify_attributes }}>
+              {% if block.settings.image != blank %}
+                {{ block.settings.image | image_url: width: 400 | image_tag: loading: 'lazy', class: 'section-teeeee__service-card-image', alt: block.settings.image.alt | default: block.settings.title }}
+              {% else %}
+                <div class="section-teeeee__service-card-image-placeholder">
+                  {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
+                </div>
+              {% endif %}
+              <div class="section-teeeee__service-card-content">
+                {% if block.settings.title != blank %}
+                  <h3 class="section-teeeee__service-card-title">{{ block.settings.title }}</h3>
+                {% endif %}
+                {% if block.settings.description != blank %}
+                  <div class="section-teeeee__service-card-description rte">
+                    {{ block.settings.description }}
+                  </div>
+                {% endif %}
+                {% if block.settings.button_text != blank and block.settings.button_link != blank %}
+                  <a href="{{ block.settings.button_link }}" class="button button--link">
+                    {{ block.settings.button_text }}
+                    <svg aria-hidden="true" focusable="false" role="presentation" class="icon icon-arrow" viewBox="0 0 10 10">
+                      <path d="M2.375 1.25L6.125 5L2.375 8.75" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                  </a>
+                {% endif %}
+              </div>
+            </div>
+          {% endfor %}
+        </div>
+      {% else %}
+        <div class="section-teeeee__services-empty">
+          <p>{{ 'sections.teeeee.services.no_blocks' | t }}</p>
+        </div>
+      {% endif %}
+    </div>
+  </section>
+
+  {# Video Section #}
+  <section class="section-teeeee__video color-{{ section.settings.video_color_scheme }} gradient">
+    <div class="section-teeeee__video-background">
+      {% if section.settings.video_background_image != blank %}
+        {{ section.settings.video_background_image | image_url: width: 1920 | image_tag: loading: 'lazy', class: 'section-teeeee__video-image', alt: section.settings.video_background_image.alt | default: section.settings.video_heading | strip_html }}
+      {% else %}
+        <div class="section-teeeee__video-placeholder">
+          {{ 'lifestyle-2' | placeholder_svg_tag: 'placeholder-svg' }}
+        </div>
+      {% endif %}
+      <div class="section-teeeee__video-overlay"></div>
+    </div>
+    <div class="section-teeeee__video-content page-width">
+      {% if section.settings.video_heading != blank %}
+        <h2 class="section-teeeee__video-heading">{{ section.settings.video_heading }}</h2>
+      {% endif %}
+      {% if section.settings.video_url != blank %}
+        <a href="{{ section.settings.video_url }}" class="button button--play" aria-label="{{ 'sections.teeeee.video.play_video_label' | t }}">
+          <svg aria-hidden="true" focusable="false" role="presentation" class="icon icon-play" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M8 5V19L19 12L8 5Z" fill="currentColor"/>
+          </svg>
+          {% if section.settings.video_button_text != blank %}
+            <span>{{ section.settings.video_button_text }}</span>
+          {% endif %}
+        </a>
+      {% endif %}
+    </div>
+  </section>
+
+  {# Contact Call to Action Section #}
+  <section class="section-teeeee__contact color-{{ section.settings.contact_color_scheme }} gradient">
+    <div class="page-width section-teeeee__contact-wrapper">
+      {% if section.settings.contact_heading != blank %}
+        <h2 class="section-teeeee__contact-heading">{{ section.settings.contact_heading }}</h2>
+      {% endif %}
+      {% if section.settings.contact_button_text != blank and section.settings.contact_button_link != blank %}
+        <a href="{{ section.settings.contact_button_link }}" class="button button--primary">
+          {{ section.settings.contact_button_text }}
+        </a>
+      {% endif %}
+    </div>
+  </section>
+</div>
+
+{% schema %}
+{
+  "name": "t:sections.teeeee.name",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "t:sections.teeeee.settings.hero_header.content"
+    },
+    {
+      "type": "color_scheme",
+      "id": "hero_color_scheme",
+      "label": "t:sections.teeeee.settings.color_scheme.label",
+      "default": "background-1"
+    },
+    {
+      "type": "color",
+      "id": "hero_text_color",
+      "label": "t:sections.teeeee.settings.hero_text_color.label",
+      "default": "#ffffff"
+    },
+    {
+      "type": "image_picker",
+      "id": "hero_image",
+      "label": "t:sections.teeeee.settings.hero_image.label"
+    },
+    {
+      "type": "checkbox",
+      "id": "hero_video_enable",
+      "label": "t:sections.teeeee.settings.hero_video_enable.label",
+      "default": false
+    },
+    {
+      "type": "url",
+      "id": "hero_video_url",
+      "label": "t:sections.teeeee.settings.hero_video_url.label",
+      "info": "t:sections.teeeee.settings.hero_video_url.info"
+    },
+    {
+      "type": "range",
+      "id": "hero_overlay_opacity",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "%",
+      "label": "t:sections.teeeee.settings.hero_overlay_opacity.label",
+      "default": 40
+    },
+    {
+      "type": "richtext",
+      "id": "hero_heading",
+      "label": "t:sections.teeeee.settings.hero_heading.label",
+      "default": "<p>_ Ricerca scientifica, sviluppo per il futuro.</p>"
+    },
+    {
+      "type": "text",
+      "id": "hero_button_text",
+      "label": "t:sections.teeeee.settings.hero_button_text.label",
+      "default": "SCOPRI DI PIÙ"
+    },
+    {
+      "type": "url",
+      "id": "hero_button_link",
+      "label": "t:sections.teeeee.settings.hero_button_link.label"
+    },
+    {
+      "type": "header",
+      "content": "t:sections.teeeee.settings.about_header.content"
+    },
+    {
+      "type": "color_scheme",
+      "id": "about_color_scheme",
+      "label": "t:sections.teeeee.settings.color_scheme.label",
+      "default": "background-2"
+    },
+    {
+      "type": "richtext",
+      "id": "about_heading",
+      "label": "t:sections.teeeee.settings.about_heading.label",
+      "default": "<p>Un impegno reale per qualità, sostenibilità e progresso scientifico.</p>"
+    },
+    {
+      "type": "richtext",
+      "id": "about_text",
+      "label": "t:sections.teeeee.settings.about_text.label",
+      "default": "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>"
+    },
+    {
+      "type": "text",
+      "id": "about_button_text",
+      "label": "t:sections.teeeee.settings.about_button_text.label",
+      "default": "L'ISTITUTO"
+    },
+    {
+      "type": "url",
+      "id": "about_button_link",
+      "label": "t:sections.teeeee.settings.about_button_link.label"
+    },
+    {
+      "type": "header",
+      "content": "t:sections.teeeee.settings.news_header.content"
+    },
+    {
+      "type": "color_scheme",
+      "id": "news_color_scheme",
+      "label": "t:sections.teeeee.settings.color_scheme.label",
+      "default": "background-1"
+    },
+    {
+      "type": "richtext",
+      "id": "news_heading",
+      "label": "t:sections.teeeee.settings.news_heading.label",
+      "default": "<p>_ News, eventi e progetti sempre aggiornati.</p>"
+    },
+    {
+      "type": "blog",
+      "id": "news_blog",
+      "label": "t:sections.teeeee.settings.news_blog.label"
+    },
+    {
+      "type": "range",
+      "id": "news_limit",
+      "min": 1,
+      "max": 10,
+      "step": 1,
+      "label": "t:sections.teeeee.settings.news_limit.label",
+      "default": 3
+    },
+    {
+      "type": "text",
+      "id": "news_view_all_text",
+      "label": "t:sections.teeeee.settings.news_view_all_text.label",
+      "default": "VAI A TUTTE LE NEWS"
+    },
+    {
+      "type": "url",
+      "id": "news_view_all_link",
+      "label": "t:sections.teeeee.settings.news_view_all_link.label"
+    },
+    {
+      "type": "header",
+      "content": "t:sections.teeeee.settings.services_header.content"
+    },
+    {
+      "type": "color_scheme",
+      "id": "services_color_scheme",
+      "label": "t:sections.teeeee.settings.color_scheme.label",
+      "default": "background-2"
+    },
+    {
+      "type": "richtext",
+      "id": "services_heading",
+      "label": "t:sections.teeeee.settings.services_heading.label",
+      "default": "<p>_ Ricerca, formazione e servizi: un ecosistema che crea valore.</p>"
+    },
+    {
+      "type": "header",
+      "content": "t:sections.teeeee.settings.video_header.content"
+    },
+    {
+      "type": "color_scheme",
+      "id": "video_color_scheme",
+      "label": "t:sections.teeeee.settings.color_scheme.label",
+      "default": "background-1"
+    },
+    {
+      "type": "image_picker",
+      "id": "video_background_image",
+      "label": "t:sections.teeeee.settings.video_background_image.label"
+    },
+    {
+      "type": "range",
+      "id": "video_overlay_opacity",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "%",
+      "label": "t:sections.teeeee.settings.video_overlay_opacity.label",
+      "default": 40
+    },
+    {
+      "type": "richtext",
+      "id": "video_heading",
+      "label": "t:sections.teeeee.settings.video_heading.label",
+      "default": "<p>Lorem Ipsum is simply dummy the printing.</p>"
+    },
+    {
+      "type": "url",
+      "id": "video_url",
+      "label": "t:sections.teeeee.settings.video_url.label",
+      "info": "t:sections.teeeee.settings.video_url.info"
+    },
+    {
+      "type": "text",
+      "id": "video_button_text",
+      "label": "t:sections.teeeee.settings.video_button_text.label",
+      "default": "GUARDA IL VIDEO"
+    },
+    {
+      "type": "header",
+      "content": "t:sections.teeeee.settings.contact_header.content"
+    },
+    {
+      "type": "color_scheme",
+      "id": "contact_color_scheme",
+      "label": "t:sections.teeeee.settings.color_scheme.label",
+      "default": "background-2"
+    },
+    {
+      "type": "richtext",
+      "id": "contact_heading",
+      "label": "t:sections.teeeee.settings.contact_heading.label",
+      "default": "<p>Contatta l'Istituto per informazioni, tecniche o collaborazioni.</p>"
+    },
+    {
+      "type": "text",
+      "id": "contact_button_text",
+      "label": "t:sections.teeeee.settings.contact_button_text.label",
+      "default": "CONTATTACI"
+    },
+    {
+      "type": "url",
+      "id": "contact_button_link",
+      "label": "t:sections.teeeee.settings.contact_button_link.label"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "service",
+      "name": "t:sections.teeeee.blocks.service.name",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "t:sections.teeeee.blocks.service.settings.image.label"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "t:sections.teeeee.blocks.service.settings.title.label",
+          "default": "Ricerca"
+        },
+        {
+          "type": "richtext",
+          "id": "description",
+          "label": "t:sections.teeeee.blocks.service.settings.description.label",
+          "default": "<p>Breve descrizione del servizio.</p>"
+        },
+        {
+          "type": "text",
+          "id": "button_text",
+          "label": "t:sections.teeeee.blocks.service.settings.button_text.label",
+          "default": "SCOPRI I PROGETTI IN CORSO"
+        },
+        {
+          "type": "url",
+          "id": "button_link",
+          "label": "t:sections.teeeee.blocks.service.settings.button_link.label"
+        }
+      ]
+    }
+  ],
+  "max_blocks": 3,
+  "presets": [
+    {
+      "name": "t:sections.teeeee.presets.name",
+      "blocks": [
+        { "type": "service" },
+        { "type": "service" },
+        { "type": "service" }
+      ]
+    }
+  ]
+}
+{% endschema %}
