@@ -171,77 +171,46 @@
     },
     "test_CLiPpA": {
       "type": "test",
-      "blocks": {
-        "service_twY4YV": {
-          "type": "service",
-          "settings": {
-            "image": "shopify://shop_images/striped-blouse-fashion_925x_1a1ff947-7950-4779-91a0-6583c619c0e5.jpg",
-            "title": "Ricerca",
-            "description": "<p>Breve descrizione del servizio.</p>",
-            "button_text": "SCOPRI I PROGETTI IN CORSO",
-            "button_link": ""
-          }
-        },
-        "service_8DiR9f": {
-          "type": "service",
-          "settings": {
-            "image": "shopify://shop_images/city-woman-fashion_925x_2x_e91139c3-68ff-49da-98c9-5a56a049fb30.jpg",
-            "title": "Ricerca",
-            "description": "<p>Breve descrizione del servizio.</p>",
-            "button_text": "SCOPRI I PROGETTI IN CORSO",
-            "button_link": ""
-          }
-        },
-        "service_kApMcL": {
-          "type": "service",
-          "settings": {
-            "image": "shopify://shop_images/leather-jacket-and-tea_925x_2490cde1-7e61-4151-9a65-de8a763bc701.jpg",
-            "title": "Ricerca",
-            "description": "<p>Breve descrizione del servizio.</p>",
-            "button_text": "SCOPRI I PROGETTI IN CORSO",
-            "button_link": ""
-          }
-        }
-      },
-      "block_order": [
-        "service_twY4YV",
-        "service_8DiR9f",
-        "service_kApMcL"
-      ],
       "name": "t:sections.teeeee.presets.name",
       "settings": {
-        "hero_color_scheme": "scheme-1",
-        "hero_text_color": "#334fb4",
-        "hero_image": "shopify://shop_images/desktop-banner-img.png",
-        "hero_video_enable": false,
-        "hero_video_url": "shopify://blogs/news",
-        "hero_overlay_opacity": 40,
-        "hero_heading": "<p>_ Ricerca scientifica, sviluppo per il futuro.</p>",
-        "hero_button_text": "SCOPRI DI PIÙ",
-        "hero_button_link": "shopify://blogs/news",
-        "about_color_scheme": "",
-        "about_heading": "<p>Un impegno reale per qualità, sostenibilità e progresso scientifico.</p>",
-        "about_text": "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>",
-        "about_button_text": "L'ISTITUTO",
-        "about_button_link": "shopify://blogs/news",
-        "news_color_scheme": "",
-        "news_heading": "<p>_ News, eventi e progetti sempre aggiornati.</p>",
-        "news_blog": "news",
-        "news_limit": 3,
-        "news_view_all_text": "VAI A TUTTE LE NEWS",
-        "news_view_all_link": "shopify://products/led-high-tops",
-        "services_color_scheme": "",
-        "services_heading": "<p>_ Ricerca, formazione e servizi: un ecosistema che crea valore.</p>",
-        "video_color_scheme": "",
-        "video_background_image": "shopify://shop_images/city-woman-fashion_925x_2x_e91139c3-68ff-49da-98c9-5a56a049fb30.jpg",
-        "video_overlay_opacity": 40,
-        "video_heading": "<p>Lorem Ipsum is simply dummy the printing.</p>",
-        "video_url": "shopify://blogs/news",
-        "video_button_text": "GUARDA IL VIDEO",
-        "contact_color_scheme": "",
-        "contact_heading": "<p>Contatta l'Istituto per informazioni, tecniche o collaborazioni.</p>",
-        "contact_button_text": "CONTATTACI",
-        "contact_button_link": "shopify://pages/contact"
+        "logo_text": "Alvex",
+        "logo_subtext": "STUDIO",
+        "nav_link_1_label": "Home",
+        "nav_link_1_url": "",
+        "nav_link_2_label": "Services",
+        "nav_link_2_url": "",
+        "nav_link_3_label": "Work",
+        "nav_link_3_url": "",
+        "nav_link_4_label": "Process",
+        "nav_link_4_url": "",
+        "nav_link_5_label": "Pricing",
+        "nav_link_5_url": "",
+        "nav_link_6_label": "Contact",
+        "nav_link_6_url": "",
+        "nav_cta_label": "Start a project",
+        "nav_cta_url": "",
+        "badge_text": "SHOPIFY · WORDPRESS · CUSTOM BUILDS",
+        "headline_line1": "Your vision.",
+        "headline_line2": "Precisely",
+        "headline_line3": "built.",
+        "subheadline": "Premium web development for founders and brands serious about growth. Based in Lahore — working globally.",
+        "primary_cta_label": "Start a project",
+        "primary_cta_url": "",
+        "secondary_cta_label": "View our work",
+        "secondary_cta_url": "",
+        "stat1_value": "20+",
+        "stat1_label": "Projects",
+        "stat2_value": "5★",
+        "stat2_label": "Rating",
+        "stat3_value": "5+",
+        "stat3_label": "Countries",
+        "stat4_value": "48h",
+        "stat4_label": "Response",
+        "slide_counter": "01 / 07",
+        "color_bg": "#0d0b1a",
+        "color_accent": "#7b2fbe",
+        "color_text": "#ffffff",
+        "color_muted": "#9090a8"
       }
     }
   },
