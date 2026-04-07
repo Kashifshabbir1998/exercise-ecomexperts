@@ -1,0 +1,12 @@
+{%- comment -%}
+  Snippet: hero-badge.liquid
+  Required variables:
+    - badge_text {String} — comma/dot-separated service tag text
+{%- endcomment -%}
+
+{% unless badge_text == blank %}
+  <div class="tes1122__hero-badge" aria-label="{{ badge_text }}">
+    <span class="tes1122__hero-badge-dot" aria-hidden="true"></span>
+    <span class="tes1122__hero-badge-text">{{ badge_text }}</span>
+  </div>
+{% endunless %}
