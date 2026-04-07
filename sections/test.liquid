@@ -1,1143 +1,239 @@
-<style>
-    /* ============================================================
-   qqqq.css — Alvex Agency Hero Section Styles
-   ============================================================ */
+{{ 'llll.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'llll.js' | asset_url }}" defer></script>
 
-/* ── Custom Properties ──────────────────────────────────────── */
-:root {
-  --qqqq-bg:           #0D0B1A;
-  --qqqq-bg-2:         #110E22;
-  --qqqq-accent:       #7B2FBE;
-  --qqqq-accent-light: #9B59D6;
-  --qqqq-accent-glow:  rgba(123, 47, 190, 0.35);
-  --qqqq-text:         #FFFFFF;
-  --qqqq-text-muted:   #9090A8;
-  --qqqq-text-dim:     #5A5A72;
-  --qqqq-border:       rgba(255, 255, 255, 0.08);
-  --qqqq-border-accent:rgba(123, 47, 190, 0.50);
-  --qqqq-nav-height:   68px;
-  --qqqq-font:         'Space Grotesk', sans-serif;
-}
-
-/* ── Global Reset for Section ───────────────────────────────── */
-.qqqq-section-wrapper,
-.qqqq {
-  font-family: var(--qqqq-font);
-  background-color: var(--qqqq-bg);
-  color: var(--qqqq-text);
-  margin: 0;
-  padding: 0;
-  position: relative;
-  width: 100%;
-  box-sizing: border-box;
-}
-
-.qqqq *,
-.qqqq *::before,
-.qqqq *::after {
-  box-sizing: border-box;
-}
-
-/* ── Responsive Utility Classes ────────────────────────────── */
-/* Mobile-first: hidden-mobile hides on mobile, shows on desktop */
-.qqqq .hidden-mobile {
-  display: none !important;
-}
-
-.qqqq .hidden-desktop {
-  display: flex !important;
-}
-
-@media (min-width: 750px) {
-  .qqqq .hidden-mobile {
-    display: flex !important;
-  }
-  .qqqq .hidden-desktop {
-    display: none !important;
-  }
-}
-
-/* ============================================================
-   NAVIGATION
-   ============================================================ */
-.qqqq__nav {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  width: 100%;
-  z-index: 1000;
-  background: rgba(13, 11, 26, 0.90);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
-  border-bottom: 1px solid var(--qqqq-border);
-  display: flex;
-  flex-direction: column;
-}
-
-.qqqq__nav-inner {
-  width: 100%;
-  max-width: 1360px;
-  margin: 0 auto;
-  padding: 0 24px;
-  height: var(--qqqq-nav-height);
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 12px;
-}
-
-/* ── Logo ───────────────────────────────────────────────────── */
-.qqqq__nav-logo {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  text-decoration: none;
-  flex-shrink: 0;
-}
-
-.qqqq__nav-logo:focus-visible {
-  outline: 2px solid var(--qqqq-accent-light);
-  outline-offset: 3px;
-  border-radius: 4px;
-}
-
-.qqqq__nav-logo-icon {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-}
-
-.qqqq__nav-logo-text {
-  display: flex;
-  flex-direction: column;
-  line-height: 1;
-}
-
-.qqqq__nav-logo-brand {
-  font-family: var(--qqqq-font);
-  font-size: 16px;
-  font-weight: 700;
-  color: var(--qqqq-text);
-  letter-spacing: 0.05em;
-  text-transform: uppercase;
-}
-
-.qqqq__nav-logo-sub {
-  font-family: var(--qqqq-font);
-  font-size: 9px;
-  font-weight: 400;
-  color: var(--qqqq-text-muted);
-  letter-spacing: 0.20em;
-  text-transform: uppercase;
-  margin-top: 2px;
-}
-
-/* ── Desktop Nav Links ─────────────────────────────────────── */
-.qqqq__nav-links {
-  flex: 1;
-  justify-content: center;
-  align-items: center;
-}
-
-.qqqq__nav-list {
-  display: flex;
-  align-items: center;
-  gap: 34px;
-  list-style: none;
-  margin: 0;
-  padding: 0;
-}
-
-.qqqq__nav-item {
-  position: relative;
-}
-
-.qqqq__nav-link {
-  font-family: var(--qqqq-font);
-  font-size: 14px;
-  font-weight: 400;
-  color: rgba(255, 255, 255, 0.72);
-  text-decoration: none;
-  letter-spacing: 0.01em;
-  transition: color 0.2s ease;
-  padding-bottom: 2px;
-}
-
-.qqqq__nav-link:hover {
-  color: var(--qqqq-text);
-}
-
-.qqqq__nav-link:focus-visible {
-  outline: 2px solid var(--qqqq-accent-light);
-  outline-offset: 3px;
-  border-radius: 3px;
-}
-
-/* Active nav item */
-.qqqq__nav-item--active .qqqq__nav-link {
-  color: var(--qqqq-text);
-  text-decoration: underline;
-  text-underline-offset: 5px;
-  text-decoration-thickness: 1px;
-}
-
-/* ── Nav CTA Button ─────────────────────────────────────────── */
-.qqqq__nav-cta {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  background-color: var(--qqqq-accent);
-  color: var(--qqqq-text);
-  text-decoration: none;
-  font-family: var(--qqqq-font);
-  font-size: 14px;
-  font-weight: 600;
-  letter-spacing: 0.02em;
-  padding: 10px 22px;
-  border-radius: 6px;
-  transition: background-color 0.22s ease, box-shadow 0.22s ease;
-  white-space: nowrap;
-  flex-shrink: 0;
-  border: 1px solid var(--qqqq-accent);
-}
-
-.qqqq__nav-cta:hover {
-  background-color: var(--qqqq-accent-light);
-  border-color: var(--qqqq-accent-light);
-  box-shadow: 0 0 22px var(--qqqq-accent-glow);
-}
-
-.qqqq__nav-cta:focus-visible {
-  outline: 2px solid var(--qqqq-accent-light);
-  outline-offset: 3px;
-  border-radius: 6px;
-}
-
-/* ── Hamburger Button ───────────────────────────────────────── */
-.qqqq__nav-hamburger {
-  display: flex;
-  flex-direction: column;
-  gap: 5px;
-  background: transparent;
-  border: none;
-  padding: 8px;
-  cursor: pointer;
-  flex-shrink: 0;
-  align-items: center;
-  justify-content: center;
-}
-
-.qqqq__nav-hamburger:focus-visible {
-  outline: 2px solid var(--qqqq-accent-light);
-  outline-offset: 3px;
-  border-radius: 4px;
-}
-
-.qqqq__hamburger-line {
-  display: block;
-  width: 24px;
-  height: 2px;
-  background-color: var(--qqqq-text);
-  border-radius: 2px;
-  transition: all 0.28s ease;
-}
-
-/* ── Mobile Menu Drawer ─────────────────────────────────────── */
-.qqqq__mobile-menu {
-  background: var(--qqqq-bg-2);
-  border-top: 1px solid var(--qqqq-border);
-  max-height: 0;
-  overflow: hidden;
-  transition: max-height 0.38s ease;
-  width: 100%;
-  /* Override hidden-desktop: only hide on desktop, drawer logic is JS */
-  flex-direction: column !important;
-}
-
-.qqqq__mobile-menu--open {
-  max-height: 520px;
-}
-
-.qqqq__mobile-nav-list {
-  list-style: none;
-  margin: 0;
-  padding: 16px 24px 28px;
-  display: flex;
-  flex-direction: column;
-  gap: 0;
-}
-
-.qqqq__mobile-nav-list li {
-  border-bottom: 1px solid var(--qqqq-border);
-}
-
-.qqqq__mobile-nav-list li:last-child {
-  border-bottom: none;
-}
-
-.qqqq__mobile-nav-link {
-  display: block;
-  font-family: var(--qqqq-font);
-  font-size: 16px;
-  font-weight: 500;
-  color: rgba(255, 255, 255, 0.80);
-  text-decoration: none;
-  padding: 14px 0;
-  transition: color 0.2s ease;
-}
-
-.qqqq__mobile-nav-link:hover {
-  color: var(--qqqq-text);
-}
-
-.qqqq__mobile-nav-link:focus-visible {
-  outline: 2px solid var(--qqqq-accent-light);
-  outline-offset: 2px;
-  border-radius: 3px;
-}
-
-.qqqq__mobile-cta {
-  margin-top: 16px;
-  width: 100%;
-  justify-content: center;
-}
-
-/* ============================================================
-   HERO SECTION
-   ============================================================ */
-.qqqq__hero {
-  position: relative;
-  min-height: 100vh;
-  padding-top: var(--qqqq-nav-height);
-  background-color: var(--qqqq-bg);
-  display: flex;
-  flex-direction: column;
-  overflow: hidden;
-}
-
-/* ── Dot Grid Background ────────────────────────────────────── */
-.qqqq__dot-grid {
-  position: absolute;
-  inset: 0;
-  background-image: radial-gradient(rgba(255, 255, 255, 0.09) 1px, transparent 1px);
-  background-size: 28px 28px;
-  z-index: 0;
-  pointer-events: none;
-}
-
-/* ── Purple Ambient Glow ─────────────────────────────────────── */
-.qqqq__bg-glow {
-  position: absolute;
-  inset: 0;
-  background:
-    radial-gradient(ellipse 65% 60% at 78% 52%, rgba(123, 47, 190, 0.20) 0%, transparent 68%),
-    radial-gradient(ellipse 45% 45% at 18% 42%, rgba(80, 20, 140, 0.13) 0%, transparent 68%);
-  z-index: 1;
-  pointer-events: none;
-}
-
-/* ── Hero Inner Layout ──────────────────────────────────────── */
-.qqqq__hero-inner {
-  position: relative;
-  z-index: 2;
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  justify-content: center;
-  max-width: 1360px;
-  width: 100%;
-  margin: 0 auto;
-  padding: 56px 24px 110px;
-  gap: 40px;
-}
-
-@media (min-width: 750px) {
-  .qqqq__hero-inner {
-    flex-direction: row;
-    align-items: center;
-    padding: 80px 60px 130px;
-    gap: 0;
-  }
-}
-
-/* ── Left Content Column ─────────────────────────────────────── */
-.qqqq__hero-content {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 26px;
-  width: 100%;
-}
-
-@media (min-width: 750px) {
-  .qqqq__hero-content {
-    flex: 0 0 53%;
-    max-width: 53%;
-  }
-}
-
-/* ── Badge ───────────────────────────────────────────────────── */
-.qqqq__badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 9px;
-  border: 1px solid var(--qqqq-border-accent);
-  border-radius: 100px;
-  padding: 7px 16px 7px 14px;
-  background: rgba(123, 47, 190, 0.09);
-  /* Entrance animation start state */
-  {% comment %} opacity: 0; {% endcomment %}
-  transform: translateY(18px);
-  transition: opacity 0.55s ease, transform 0.55s ease;
-}
-
-.qqqq__badge-dot {
-  width: 7px;
-  height: 7px;
-  border-radius: 50%;
-  background-color: var(--qqqq-accent);
-  flex-shrink: 0;
-  box-shadow: 0 0 8px var(--qqqq-accent-glow);
-}
-
-.qqqq__badge-text {
-  font-family: var(--qqqq-font);
-  font-size: 11px;
-  font-weight: 600;
-  letter-spacing: 0.13em;
-  color: rgba(255, 255, 255, 0.82);
-  text-transform: uppercase;
-  white-space: nowrap;
-}
-
-/* ── Headline ─────────────────────────────────────────────────── */
-.qqqq__headline {
-  margin: 0;
-  padding: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-  {% comment %} opacity: 0; {% endcomment %}
-  transform: translateY(22px);
-  transition: opacity 0.55s ease 0.11s, transform 0.55s ease 0.11s;
-}
-
-.qqqq__headline-white,
-.qqqq__headline-purple {
-  display: block;
-  font-family: var(--qqqq-font);
-  font-weight: 700;
-  font-size: clamp(50px, 6.8vw, 88px);
-  letter-spacing: -0.025em;
-  line-height: 1.04;
-}
-
-.qqqq__headline-white {
-  color: var(--qqqq-text);
-}
-
-.qqqq__headline-purple {
-  color: var(--qqqq-accent-light);
-}
-
-/* ── Subheadline ──────────────────────────────────────────────── */
-.qqqq__subheadline {
-  font-family: var(--qqqq-font);
-  font-size: 16px;
-  font-weight: 400;
-  line-height: 1.68;
-  color: var(--qqqq-text-muted);
-  margin: 0;
-  max-width: 430px;
-  {% comment %} opacity: 0; {% endcomment %}
-  transform: translateY(18px);
-  transition: opacity 0.55s ease 0.22s, transform 0.55s ease 0.22s;
-}
-
-@media (min-width: 750px) {
-  .qqqq__subheadline {
-    font-size: 17px;
-  }
-}
-
-/* ── CTA Button Group ────────────────────────────────────────── */
-.qqqq__cta-group {
-  display: flex;
-  align-items: center;
-  gap: 14px;
-  flex-wrap: wrap;
-  {% comment %} opacity: 0; {% endcomment %}
-  transform: translateY(18px);
-  transition: opacity 0.55s ease 0.33s, transform 0.55s ease 0.33s;
-}
-
-/* ── Buttons ─────────────────────────────────────────────────── */
-.qqqq__btn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  font-family: var(--qqqq-font);
-  font-size: 15px;
-  font-weight: 600;
-  letter-spacing: 0.02em;
-  text-decoration: none;
-  border-radius: 8px;
-  padding: 13px 28px;
-  transition: background-color 0.22s ease, border-color 0.22s ease, box-shadow 0.22s ease;
-  cursor: pointer;
-  white-space: nowrap;
-  border: 1px solid transparent;
-}
-
-.qqqq__btn:focus-visible {
-  outline: 2px solid var(--qqqq-accent-light);
-  outline-offset: 3px;
-  border-radius: 8px;
-}
-
-.qqqq__btn--primary {
-  background-color: var(--qqqq-accent);
-  color: var(--qqqq-text);
-  border-color: var(--qqqq-accent);
-}
-
-.qqqq__btn--primary:hover {
-  background-color: var(--qqqq-accent-light);
-  border-color: var(--qqqq-accent-light);
-  box-shadow: 0 0 26px var(--qqqq-accent-glow);
-}
-
-.qqqq__btn--secondary {
-  background-color: transparent;
-  color: var(--qqqq-text);
-  border-color: rgba(255, 255, 255, 0.24);
-}
-
-.qqqq__btn--secondary:hover {
-  border-color: rgba(255, 255, 255, 0.52);
-  background-color: rgba(255, 255, 255, 0.05);
-}
-
-/* ── Stats Bar ───────────────────────────────────────────────── */
-.qqqq__stats {
-  display: flex;
-  align-items: flex-start;
-  gap: 30px;
-  flex-wrap: wrap;
-  margin-top: 8px;
-  {% comment %} opacity: 0; {% endcomment %}
-  transform: translateY(18px);
-  transition: opacity 0.55s ease 0.44s, transform 0.55s ease 0.44s;
-}
-
-.qqqq__stat {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-}
-
-.qqqq__stat-value {
-  font-family: var(--qqqq-font);
-  font-size: clamp(24px, 2.8vw, 34px);
-  font-weight: 700;
-  color: var(--qqqq-text);
-  letter-spacing: -0.02em;
-  line-height: 1;
-}
-
-.qqqq__stat-label {
-  font-family: var(--qqqq-font);
-  font-size: 11px;
-  font-weight: 400;
-  color: var(--qqqq-text-muted);
-  letter-spacing: 0.07em;
-  text-transform: capitalize;
-}
-
-/* ── Divider between stats ───────────────────────────────────── */
-.qqqq__stat + .qqqq__stat {
-  padding-left: 30px;
-  border-left: 1px solid var(--qqqq-border);
-}
-
-/* ── Right Graphic Column ─────────────────────────────────────── */
-.qqqq__hero-graphic {
-  display: none;
-}
-
-@media (min-width: 750px) {
-  .qqqq__hero-graphic {
-    display: flex;
-    flex: 0 0 47%;
-    max-width: 47%;
-    align-items: center;
-    justify-content: center;
-  }
-}
-
-/* ── Radar Wrapper ───────────────────────────────────────────── */
-.qqqq__radar-wrapper {
-  position: relative;
-  width: 100%;
-  max-width: 600px;
-  aspect-ratio: 1 / 1;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.qqqq__radar-glow {
-  position: absolute;
-  inset: 5%;
-  background: radial-gradient(
-    circle at 50% 50%,
-    rgba(123, 47, 190, 0.30) 0%,
-    rgba(123, 47, 190, 0.10) 45%,
-    transparent 70%
-  );
-  border-radius: 50%;
-  pointer-events: none;
-  transform-origin: center;
-  will-change: transform;
-}
-
-.qqqq__radar-svg {
-  width: 100%;
-  height: 100%;
-  display: block;
-  position: relative;
-  z-index: 1;
-}
-
-/* ── Bottom Bar ──────────────────────────────────────────────── */
-.qqqq__bottom-bar {
-  position: absolute;
-  bottom: 28px;
-  left: 0;
-  right: 0;
-  max-width: 1360px;
-  margin: 0 auto;
-  padding: 0 60px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  z-index: 3;
-  pointer-events: none;
-}
-
-.qqqq__slide-counter,
-.qqqq__scroll-indicator {
-  font-family: var(--qqqq-font);
-  font-size: 11px;
-  font-weight: 400;
-  color: var(--qqqq-text-dim);
-  letter-spacing: 0.10em;
-  text-transform: uppercase;
-}
-
-/* ── Custom Cursor Dot ───────────────────────────────────────── */
-.qqqq__cursor-dot {
-  position: absolute;
-  width: 13px;
-  height: 13px;
-  border-radius: 50%;
-  background-color: var(--qqqq-accent);
-  pointer-events: none;
-  z-index: 10;
-  top: 0;
-  left: 0;
-  transform: translate(0, 0);
-  opacity: 0;
-  transition: opacity 0.3s ease;
-  box-shadow: 0 0 14px var(--qqqq-accent-glow), 0 0 4px var(--qqqq-accent);
-  will-change: transform;
-}
-
-/* ── Scroll Reveal — Revealed State ──────────────────────────── */
-/* JS adds .qqqq--revealed to trigger the transition */
-.qqqq--revealed {
-  opacity: 1 !important;
-  transform: translateY(0) !important;
-}
-    </style>
-{% comment %} <script src="{{ 'qqqq.js' | asset_url }}" defer></script> {% endcomment %}
- <script>
-    // ============================================================
-// qqqq.js — Stimulus Controller for Alvex Hero Section
-// Handles: mobile menu toggle, cursor dot, radar pulse,
-// and entrance scroll-reveal animations
-// ============================================================
-
-(function () {
-  'use strict';
-
-  // Wait for Stimulus application to be ready (Dawn initialises it)
-  function initController() {
-    if (!window.Stimulus) return;
-
-    // Guard against duplicate registration
-    try {
-      const existing = window.Stimulus.router.modulesByIdentifier.get('qqqq-hero');
-      if (existing) return;
-    } catch (e) {
-      // router API may vary — safe to continue
-    }
-
-    class QqqqHeroController extends window.Controller {
-
-      // ── Connect ──────────────────────────────────────────
-      connect() {
-        this._triggerEntranceAnimations();
-        this._setupCursorDot();
-        this._setupRadarPulse();
-      }
-
-      // ── Mobile Menu Toggle ───────────────────────────────
-      toggleMobileMenu() {
-        const sectionId = this.element.id.replace('qqqq-', '');
-        const menu      = document.getElementById('qqqq-mobile-menu-' + sectionId);
-        const hamburger = this.element.querySelector('.qqqq__nav-hamburger');
-        if (!menu || !hamburger) return;
-
-        const isOpen = menu.classList.contains('qqqq__mobile-menu--open');
-
-        if (isOpen) {
-          menu.classList.remove('qqqq__mobile-menu--open');
-          hamburger.setAttribute('aria-expanded', 'false');
-          menu.setAttribute('aria-hidden', 'true');
-        } else {
-          menu.classList.add('qqqq__mobile-menu--open');
-          hamburger.setAttribute('aria-expanded', 'true');
-          menu.setAttribute('aria-hidden', 'false');
-        }
-      }
-
-      // ── Entrance Animations ──────────────────────────────
-      // Staggers fade-in + slide-up on page load for hero elements
-      _triggerEntranceAnimations() {
-        const targets = this.element.querySelectorAll(
-          '.qqqq__badge, .qqqq__headline, .qqqq__subheadline, .qqqq__cta-group, .qqqq__stats'
-        );
-        if (!targets.length) return;
-
-        // Small delay so CSS transition is applied before class flip
-        setTimeout(() => {
-          targets.forEach((el, i) => {
-            setTimeout(() => {
-              el.classList.add('qqqq--revealed');
-            }, i * 110);
-          });
-        }, 80);
-      }
-
-      // ── Custom Cursor Dot ────────────────────────────────
-      // Smooth lagging purple dot that follows the mouse inside the hero
-      _setupCursorDot() {
-        const hero = this.element.querySelector('.qqqq__hero');
-        if (!hero) return;
-
-        // Create dot element
-        const dot = document.createElement('div');
-        dot.className = 'qqqq__cursor-dot';
-        dot.setAttribute('aria-hidden', 'true');
-        hero.appendChild(dot);
-
-        let mouseX = 0, mouseY = 0;
-        let dotX   = 0, dotY   = 0;
-        let raf    = null;
-
-        const moveDot = () => {
-          dotX += (mouseX - dotX) * 0.12;
-          dotY += (mouseY - dotY) * 0.12;
-          dot.style.transform = `translate(${dotX}px, ${dotY}px)`;
-          raf = requestAnimationFrame(moveDot);
-        };
-
-        hero.addEventListener('mousemove', (e) => {
-          const rect = hero.getBoundingClientRect();
-          mouseX = e.clientX - rect.left;
-          mouseY = e.clientY - rect.top;
-          if (!raf) raf = requestAnimationFrame(moveDot);
-        });
-
-        hero.addEventListener('mouseenter', () => {
-          dot.style.opacity = '1';
-        });
-
-        hero.addEventListener('mouseleave', () => {
-          dot.style.opacity = '0';
-          if (raf) { cancelAnimationFrame(raf); raf = null; }
-        });
-      }
-
-      // ── Radar Pulse ──────────────────────────────────────
-      // Gently pulses the center glow orb of the radar SVG
-      _setupRadarPulse() {
-        const hero     = this.element.querySelector('.qqqq__hero');
-        const glowEl   = this.element.querySelector('.qqqq__radar-glow');
-        if (!hero || !glowEl) return;
-
-        let scale   = 1;
-        let growing = true;
-
-        const pulse = () => {
-          if (growing) {
-            scale += 0.0015;
-            if (scale >= 1.12) growing = false;
-          } else {
-            scale -= 0.0015;
-            if (scale <= 0.88) growing = true;
-          }
-          glowEl.style.transform = `scale(${scale})`;
-          requestAnimationFrame(pulse);
-        };
-
-        requestAnimationFrame(pulse);
-      }
-
-      // ── Disconnect ───────────────────────────────────────
-      disconnect() {
-        // Nothing persistent to clean up
-      }
-    }
-
-    // Register the controller
-    if (window.Stimulus && typeof window.Stimulus.register === 'function') {
-      window.Stimulus.register('qqqq-hero', QqqqHeroController);
-    }
-  }
-
-  // Try immediately; fall back to DOMContentLoaded
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initController);
-  } else {
-    // Stimulus may still be loading — retry a few times
-    let attempts = 0;
-    const tryInit = () => {
-      if (window.Stimulus) {
-        initController();
-      } else if (attempts < 20) {
-        attempts++;
-        setTimeout(tryInit, 100);
-      }
-    };
-    tryInit();
-  }
-})();
- </script>
-
-<!-- Google Fonts: Space Grotesk -->
+<!-- Google Fonts: Space Grotesk + Outfit -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
-<!-- Main Section Wrapper -->
-<div class="qqqq" id="qqqq-{{ section.id }}" data-controller="qqqq-hero">
+<!-- Site Header — inline -->
+<header class="site-header" role="banner" id="site-header-{{ section.id }}">
+  <div class="site-header__inner">
 
-  <!-- ============================================================
-       NAVIGATION HEADER (inline)
-       ============================================================ -->
-  <header class="qqqq__nav" role="banner">
-    <div class="qqqq__nav-inner">
+    <!-- Logo -->
+    <a href="{{ shop.url }}" class="site-header__logo" aria-label="{{ section.settings.logo_text }} {{ section.settings.logo_subtext }}">
+      <span class="site-header__logo-icon" aria-hidden="true">
+        <span class="site-header__logo-bracket">[</span>
+        <span class="site-header__logo-dot-wrap"><span class="site-header__logo-dot"></span></span>
+        <span class="site-header__logo-bracket">]</span>
+      </span>
+      <span class="site-header__logo-text-wrap">
+        <span class="site-header__logo-name">{{ section.settings.logo_text }}</span>
+        <span class="site-header__logo-sub">{{ section.settings.logo_subtext }}</span>
+      </span>
+    </a>
 
-      <!-- Logo -->
-      <a href="{{ shop.url }}" class="qqqq__nav-logo" aria-label="{{ section.settings.logo_text }} {{ section.settings.logo_subtext }}">
-        <span class="qqqq__nav-logo-icon" aria-hidden="true">
-          <svg width="36" height="36" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <rect x="1" y="1" width="34" height="34" rx="2" stroke="#FFFFFF" stroke-width="1.5"/>
-            <circle cx="18" cy="18" r="5" fill="#7B2FBE"/>
-            <circle cx="18" cy="18" r="2" fill="#FFFFFF"/>
-            <line x1="4" y1="18" x2="12" y2="18" stroke="#FFFFFF" stroke-width="1.5"/>
-            <line x1="24" y1="18" x2="32" y2="18" stroke="#FFFFFF" stroke-width="1.5"/>
-          </svg>
-        </span>
-        <span class="qqqq__nav-logo-text">
-          <span class="qqqq__nav-logo-brand">{{ section.settings.logo_text }}</span>
-          <span class="qqqq__nav-logo-sub">{{ section.settings.logo_subtext }}</span>
-        </span>
-      </a>
+    <!-- Desktop Navigation -->
+    <nav class="site-header__nav hidden-mobile" role="navigation" aria-label="{{ 'sections.llll.nav_aria' | t }}">
+      <ul class="site-header__nav-list" role="list">
+        <li class="site-header__nav-item">
+          <a href="{{ section.settings.nav_link1_url }}" class="site-header__nav-link site-header__nav-link--active" aria-current="page">{{ section.settings.nav_link1_label }}</a>
+        </li>
+        <li class="site-header__nav-item">
+          <a href="{{ section.settings.nav_link2_url }}" class="site-header__nav-link">{{ section.settings.nav_link2_label }}</a>
+        </li>
+        <li class="site-header__nav-item">
+          <a href="{{ section.settings.nav_link3_url }}" class="site-header__nav-link">{{ section.settings.nav_link3_label }}</a>
+        </li>
+        <li class="site-header__nav-item">
+          <a href="{{ section.settings.nav_link4_url }}" class="site-header__nav-link">{{ section.settings.nav_link4_label }}</a>
+        </li>
+        <li class="site-header__nav-item">
+          <a href="{{ section.settings.nav_link5_url }}" class="site-header__nav-link">{{ section.settings.nav_link5_label }}</a>
+        </li>
+        <li class="site-header__nav-item">
+          <a href="{{ section.settings.nav_link6_url }}" class="site-header__nav-link">{{ section.settings.nav_link6_label }}</a>
+        </li>
+      </ul>
+    </nav>
 
-      <!-- Desktop Navigation Links -->
-      <nav class="qqqq__nav-links hidden-mobile" aria-label="{{ 'sections.qqqq.nav_aria_label' | t }}">
-        <ul class="qqqq__nav-list" role="list">
-          {%- if section.settings.nav_link_1_label != blank -%}
-            <li class="qqqq__nav-item qqqq__nav-item--active">
-              <a href="{{ section.settings.nav_link_1_url }}" class="qqqq__nav-link">{{ section.settings.nav_link_1_label }}</a>
-            </li>
-          {%- endif -%}
-          {%- if section.settings.nav_link_2_label != blank -%}
-            <li class="qqqq__nav-item">
-              <a href="{{ section.settings.nav_link_2_url }}" class="qqqq__nav-link">{{ section.settings.nav_link_2_label }}</a>
-            </li>
-          {%- endif -%}
-          {%- if section.settings.nav_link_3_label != blank -%}
-            <li class="qqqq__nav-item">
-              <a href="{{ section.settings.nav_link_3_url }}" class="qqqq__nav-link">{{ section.settings.nav_link_3_label }}</a>
-            </li>
-          {%- endif -%}
-          {%- if section.settings.nav_link_4_label != blank -%}
-            <li class="qqqq__nav-item">
-              <a href="{{ section.settings.nav_link_4_url }}" class="qqqq__nav-link">{{ section.settings.nav_link_4_label }}</a>
-            </li>
-          {%- endif -%}
-          {%- if section.settings.nav_link_5_label != blank -%}
-            <li class="qqqq__nav-item">
-              <a href="{{ section.settings.nav_link_5_url }}" class="qqqq__nav-link">{{ section.settings.nav_link_5_label }}</a>
-            </li>
-          {%- endif -%}
-          {%- if section.settings.nav_link_6_label != blank -%}
-            <li class="qqqq__nav-item">
-              <a href="{{ section.settings.nav_link_6_url }}" class="qqqq__nav-link">{{ section.settings.nav_link_6_label }}</a>
-            </li>
-          {%- endif -%}
-        </ul>
-      </nav>
+    <!-- Decorative floating cursor dot (desktop only) -->
+    <div class="site-header__float-dot hidden-mobile" aria-hidden="true"></div>
 
-      <!-- Nav CTA Button (desktop) -->
-      {%- unless section.settings.nav_cta_label == blank -%}
-        <a href="{{ section.settings.nav_cta_url }}"
-           class="qqqq__nav-cta hidden-mobile"
-           aria-label="{{ section.settings.nav_cta_label }}">
-          {{ section.settings.nav_cta_label }}
-        </a>
-      {%- endunless -%}
+    <!-- Desktop CTA -->
+    {% unless section.settings.nav_cta_label == blank %}
+    <a href="{{ section.settings.nav_cta_url }}"
+       class="site-header__cta hidden-mobile"
+       aria-label="{{ section.settings.nav_cta_label }}">
+      {{ section.settings.nav_cta_label }}
+    </a>
+    {% endunless %}
 
-      <!-- Mobile Hamburger -->
-      <button type="button"
-              class="qqqq__nav-hamburger hidden-desktop"
-              aria-label="{{ 'sections.qqqq.mobile_menu_label' | t }}"
-              aria-expanded="false"
-              aria-controls="qqqq-mobile-menu-{{ section.id }}"
-              data-action="click->qqqq-hero#toggleMobileMenu">
-        <span class="qqqq__hamburger-line"></span>
-        <span class="qqqq__hamburger-line"></span>
-        <span class="qqqq__hamburger-line"></span>
-      </button>
+    <!-- Mobile hamburger -->
+    <button type="button"
+            class="site-header__hamburger hidden-desktop"
+            aria-label="{{ 'sections.llll.menu_open' | t }}"
+            aria-expanded="false"
+            aria-controls="mobile-nav-{{ section.id }}">
+      <span class="site-header__hamburger-bar"></span>
+      <span class="site-header__hamburger-bar"></span>
+      <span class="site-header__hamburger-bar"></span>
+    </button>
 
-    </div>
+  </div>
 
-    <!-- Mobile Menu Drawer -->
-    <div class="qqqq__mobile-menu hidden-desktop"
-         id="qqqq-mobile-menu-{{ section.id }}"
-         aria-hidden="true">
-      <nav aria-label="{{ 'sections.qqqq.mobile_nav_aria_label' | t }}">
-        <ul class="qqqq__mobile-nav-list" role="list">
-          {%- if section.settings.nav_link_1_label != blank -%}
-            <li><a href="{{ section.settings.nav_link_1_url }}" class="qqqq__mobile-nav-link">{{ section.settings.nav_link_1_label }}</a></li>
-          {%- endif -%}
-          {%- if section.settings.nav_link_2_label != blank -%}
-            <li><a href="{{ section.settings.nav_link_2_url }}" class="qqqq__mobile-nav-link">{{ section.settings.nav_link_2_label }}</a></li>
-          {%- endif -%}
-          {%- if section.settings.nav_link_3_label != blank -%}
-            <li><a href="{{ section.settings.nav_link_3_url }}" class="qqqq__mobile-nav-link">{{ section.settings.nav_link_3_label }}</a></li>
-          {%- endif -%}
-          {%- if section.settings.nav_link_4_label != blank -%}
-            <li><a href="{{ section.settings.nav_link_4_url }}" class="qqqq__mobile-nav-link">{{ section.settings.nav_link_4_label }}</a></li>
-          {%- endif -%}
-          {%- if section.settings.nav_link_5_label != blank -%}
-            <li><a href="{{ section.settings.nav_link_5_url }}" class="qqqq__mobile-nav-link">{{ section.settings.nav_link_5_label }}</a></li>
-          {%- endif -%}
-          {%- if section.settings.nav_link_6_label != blank -%}
-            <li><a href="{{ section.settings.nav_link_6_url }}" class="qqqq__mobile-nav-link">{{ section.settings.nav_link_6_label }}</a></li>
-          {%- endif -%}
-          {%- unless section.settings.nav_cta_label == blank -%}
-            <li>
-              <a href="{{ section.settings.nav_cta_url }}" class="qqqq__btn qqqq__btn--primary qqqq__mobile-cta">
-                {{ section.settings.nav_cta_label }}
-              </a>
-            </li>
-          {%- endunless -%}
-        </ul>
-      </nav>
-    </div>
-  </header>
+  <!-- Mobile Navigation Drawer -->
+  <nav class="site-header__mobile-nav hidden-desktop"
+       id="mobile-nav-{{ section.id }}"
+       role="navigation"
+       aria-label="{{ 'sections.llll.mobile_nav_aria' | t }}"
+       aria-hidden="true">
+    <ul class="site-header__mobile-nav-list" role="list">
+      <li><a href="{{ section.settings.nav_link1_url }}" class="site-header__mobile-nav-link">{{ section.settings.nav_link1_label }}</a></li>
+      <li><a href="{{ section.settings.nav_link2_url }}" class="site-header__mobile-nav-link">{{ section.settings.nav_link2_label }}</a></li>
+      <li><a href="{{ section.settings.nav_link3_url }}" class="site-header__mobile-nav-link">{{ section.settings.nav_link3_label }}</a></li>
+      <li><a href="{{ section.settings.nav_link4_url }}" class="site-header__mobile-nav-link">{{ section.settings.nav_link4_label }}</a></li>
+      <li><a href="{{ section.settings.nav_link5_url }}" class="site-header__mobile-nav-link">{{ section.settings.nav_link5_label }}</a></li>
+      <li><a href="{{ section.settings.nav_link6_url }}" class="site-header__mobile-nav-link">{{ section.settings.nav_link6_label }}</a></li>
+      {% unless section.settings.nav_cta_label == blank %}
+      <li>
+        <a href="{{ section.settings.nav_cta_url }}" class="site-header__mobile-nav-cta">{{ section.settings.nav_cta_label }}</a>
+      </li>
+      {% endunless %}
+    </ul>
+  </nav>
+</header>
 
-  <!-- ============================================================
-       HERO SECTION
-       ============================================================ -->
-  <section class="qqqq__hero" aria-label="{{ 'sections.qqqq.hero_aria_label' | t }}">
+<!-- Main Page Wrapper -->
+<main class="llll-page" id="llll-{{ section.id }}">
 
-    <!-- Dot Grid Background -->
-    <div class="qqqq__dot-grid" aria-hidden="true"></div>
+  <!-- Hero Section -->
+  <section class="hero" id="hero-{{ section.id }}" aria-label="{{ section.settings.hero_aria_label }}">
 
-    <!-- Purple Glow Background -->
-    <div class="qqqq__bg-glow" aria-hidden="true"></div>
+    <!-- Background dot grid texture -->
+    <div class="hero__bg-grid" aria-hidden="true"></div>
 
-    <div class="qqqq__hero-inner">
+    <!-- Radial purple glow overlay -->
+    <div class="hero__glow" aria-hidden="true"></div>
 
-      <!-- ── LEFT CONTENT COLUMN ────────────────────────────── -->
-      <div class="qqqq__hero-content">
+    <div class="hero__inner">
 
-        <!-- Service Tags Badge (inline) -->
-        {%- unless section.settings.badge_text == blank -%}
-          <div class="qqqq__badge" aria-label="{{ section.settings.badge_text }}">
-            <span class="qqqq__badge-dot" aria-hidden="true"></span>
-            <span class="qqqq__badge-text">{{ section.settings.badge_text }}</span>
-          </div>
-        {%- endunless -%}
+      <!-- Left: Content Column -->
+      <div class="hero__content">
 
-        <!-- Hero Headline -->
-        <h1 class="qqqq__headline">
-          {%- unless section.settings.headline_line1 == blank -%}
-            <span class="qqqq__headline-white">{{ section.settings.headline_line1 }}</span>
-          {%- endunless -%}
-          {%- unless section.settings.headline_line2 == blank -%}
-            <span class="qqqq__headline-purple">{{ section.settings.headline_line2 }}</span>
-          {%- endunless -%}
-          {%- unless section.settings.headline_line3 == blank -%}
-            <span class="qqqq__headline-white">{{ section.settings.headline_line3 }}</span>
-          {%- endunless -%}
+        <!-- Hero Badge — inline -->
+        {% unless section.settings.badge_text == blank %}
+        <div class="hero-badge" aria-label="{{ section.settings.badge_text }}">
+          <span class="hero-badge__dot" aria-hidden="true"></span>
+          <span class="hero-badge__text">{{ section.settings.badge_text }}</span>
+        </div>
+        {% endunless %}
+
+        <!-- Headline -->
+        <h1 class="hero__headline">
+          <span class="hero__headline--white">{{ section.settings.headline_line1 }}</span><br>
+          <span class="hero__headline--purple">{{ section.settings.headline_line2 }}</span><br>
+          <span class="hero__headline--white">{{ section.settings.headline_line3 }}</span>
         </h1>
 
-        <!-- Hero Subheadline -->
-        {%- unless section.settings.subheadline == blank -%}
-          <p class="qqqq__subheadline">{{ section.settings.subheadline }}</p>
-        {%- endunless -%}
+        <!-- Body text -->
+        {% unless section.settings.hero_body == blank %}
+        <p class="hero__body">{{ section.settings.hero_body }}</p>
+        {% endunless %}
 
         <!-- CTA Buttons -->
-        <div class="qqqq__cta-group">
-          {%- unless section.settings.primary_cta_label == blank -%}
-            <a href="{{ section.settings.primary_cta_url }}"
-               class="qqqq__btn qqqq__btn--primary"
-               aria-label="{{ section.settings.primary_cta_label }}">
-              {{ section.settings.primary_cta_label }}
-            </a>
-          {%- endunless -%}
-          {%- unless section.settings.secondary_cta_label == blank -%}
-            <a href="{{ section.settings.secondary_cta_url }}"
-               class="qqqq__btn qqqq__btn--secondary"
-               aria-label="{{ section.settings.secondary_cta_label }}">
-              {{ section.settings.secondary_cta_label }} →
-            </a>
-          {%- endunless -%}
+        <div class="hero__ctas">
+          {% unless section.settings.cta_primary_label == blank %}
+          <a href="{{ section.settings.cta_primary_url }}"
+             class="hero__cta hero__cta--primary"
+             aria-label="{{ section.settings.cta_primary_label }}">
+            {{ section.settings.cta_primary_label }}
+          </a>
+          {% endunless %}
+          {% unless section.settings.cta_secondary_label == blank %}
+          <a href="{{ section.settings.cta_secondary_url }}"
+             class="hero__cta hero__cta--secondary"
+             aria-label="{{ section.settings.cta_secondary_label }}">
+            {{ section.settings.cta_secondary_label }} →
+          </a>
+          {% endunless %}
         </div>
 
-        <!-- Stats Bar (inline) -->
-        <div class="qqqq__stats" role="list" aria-label="{{ 'sections.qqqq.stats_aria_label' | t }}">
-          {%- unless section.settings.stat1_value == blank -%}
-            <div class="qqqq__stat" role="listitem">
-              <span class="qqqq__stat-value">{{ section.settings.stat1_value }}</span>
-              <span class="qqqq__stat-label">{{ section.settings.stat1_label }}</span>
-            </div>
-          {%- endunless -%}
-          {%- unless section.settings.stat2_value == blank -%}
-            <div class="qqqq__stat" role="listitem">
-              <span class="qqqq__stat-value">{{ section.settings.stat2_value }}</span>
-              <span class="qqqq__stat-label">{{ section.settings.stat2_label }}</span>
-            </div>
-          {%- endunless -%}
-          {%- unless section.settings.stat3_value == blank -%}
-            <div class="qqqq__stat" role="listitem">
-              <span class="qqqq__stat-value">{{ section.settings.stat3_value }}</span>
-              <span class="qqqq__stat-label">{{ section.settings.stat3_label }}</span>
-            </div>
-          {%- endunless -%}
-          {%- unless section.settings.stat4_value == blank -%}
-            <div class="qqqq__stat" role="listitem">
-              <span class="qqqq__stat-value">{{ section.settings.stat4_value }}</span>
-              <span class="qqqq__stat-label">{{ section.settings.stat4_label }}</span>
-            </div>
-          {%- endunless -%}
+        <!-- Stats Bar — inline -->
+        <div class="stats-bar" role="region" aria-label="{{ 'sections.llll.stats_aria' | t }}">
+          {% unless section.settings.stat1_value == blank %}
+          <div class="stats-bar__item">
+            <span class="stats-bar__value">{{ section.settings.stat1_value }}</span>
+            <span class="stats-bar__label">{{ section.settings.stat1_label }}</span>
+          </div>
+          {% endunless %}
+          {% unless section.settings.stat2_value == blank %}
+          <div class="stats-bar__item">
+            <span class="stats-bar__value">{{ section.settings.stat2_value }}</span>
+            <span class="stats-bar__label">{{ section.settings.stat2_label }}</span>
+          </div>
+          {% endunless %}
+          {% unless section.settings.stat3_value == blank %}
+          <div class="stats-bar__item">
+            <span class="stats-bar__value">{{ section.settings.stat3_value }}</span>
+            <span class="stats-bar__label">{{ section.settings.stat3_label }}</span>
+          </div>
+          {% endunless %}
+          {% unless section.settings.stat4_value == blank %}
+          <div class="stats-bar__item">
+            <span class="stats-bar__value">{{ section.settings.stat4_value }}</span>
+            <span class="stats-bar__label">{{ section.settings.stat4_label }}</span>
+          </div>
+          {% endunless %}
         </div>
 
       </div>
-      <!-- /LEFT CONTENT COLUMN -->
+      <!-- /hero__content -->
 
-      <!-- ── RIGHT DECORATIVE COLUMN — Radar Graphic (inline) ── -->
-      <div class="qqqq__hero-graphic" aria-hidden="true">
-        <div class="qqqq__radar-wrapper">
-
-          <!-- Radial glow behind radar -->
-          <div class="qqqq__radar-glow"></div>
-
-          <!-- SVG Radar / Crosshair Graphic -->
-          <svg class="qqqq__radar-svg" viewBox="0 0 700 700" fill="none" xmlns="http://www.w3.org/2000/svg">
-
-            <!-- Concentric circles -->
-            <circle cx="350" cy="350" r="330" stroke="rgba(255,255,255,0.06)" stroke-width="1"/>
-            <circle cx="350" cy="350" r="270" stroke="rgba(255,255,255,0.07)" stroke-width="1"/>
-            <circle cx="350" cy="350" r="210" stroke="rgba(255,255,255,0.08)" stroke-width="1"/>
-            <circle cx="350" cy="350" r="150" stroke="rgba(255,255,255,0.09)" stroke-width="1"/>
-            <circle cx="350" cy="350" r="90"  stroke="rgba(255,255,255,0.10)" stroke-width="1"/>
-            <circle cx="350" cy="350" r="40"  stroke="rgba(255,255,255,0.12)" stroke-width="1"/>
-
-            <!-- Cross lines -->
-            <line x1="20"  y1="350" x2="680" y2="350" stroke="rgba(255,255,255,0.06)" stroke-width="1"/>
-            <line x1="350" y1="20"  x2="350" y2="680" stroke="rgba(255,255,255,0.06)" stroke-width="1"/>
-
-            <!-- Diagonal lines -->
-            <line x1="116" y1="116" x2="584" y2="584" stroke="rgba(255,255,255,0.04)" stroke-width="1"/>
-            <line x1="584" y1="116" x2="116" y2="584" stroke="rgba(255,255,255,0.04)" stroke-width="1"/>
-
-            <!-- Center glow orb -->
-            <circle cx="350" cy="350" r="60" fill="url(#qqqq-centerGlow-{{ section.id }})"/>
-
-            <!-- Bracket logo at center -->
-            <g transform="translate(306,312)">
-              <rect x="2" y="2" width="84" height="72" rx="3" stroke="rgba(255,255,255,0.9)" stroke-width="2" fill="none"/>
-              <circle cx="44" cy="38" r="14" stroke="rgba(255,255,255,0.9)" stroke-width="2" fill="none"/>
-              <circle cx="44" cy="38" r="5" fill="#7B2FBE"/>
-            </g>
-
-            <!-- Tick marks on outer circle -->
-            <line x1="350" y1="20"  x2="350" y2="38"  stroke="rgba(255,255,255,0.18)" stroke-width="1.5"/>
-            <line x1="350" y1="662" x2="350" y2="680" stroke="rgba(255,255,255,0.18)" stroke-width="1.5"/>
-            <line x1="20"  y1="350" x2="38"  y2="350" stroke="rgba(255,255,255,0.18)" stroke-width="1.5"/>
-            <line x1="662" y1="350" x2="680" y2="350" stroke="rgba(255,255,255,0.18)" stroke-width="1.5"/>
-
-            <!-- Small dot markers on circles -->
-            <circle cx="350" cy="80"  r="3" fill="rgba(123,47,190,0.7)"/>
-            <circle cx="350" cy="620" r="3" fill="rgba(123,47,190,0.7)"/>
-            <circle cx="80"  cy="350" r="3" fill="rgba(123,47,190,0.7)"/>
-            <circle cx="620" cy="350" r="3" fill="rgba(123,47,190,0.7)"/>
-
-            <defs>
-              <radialGradient id="qqqq-centerGlow-{{ section.id }}" cx="50%" cy="50%" r="50%">
-                <stop offset="0%"   stop-color="#7B2FBE" stop-opacity="0.55"/>
-                <stop offset="55%"  stop-color="#7B2FBE" stop-opacity="0.18"/>
-                <stop offset="100%" stop-color="#7B2FBE" stop-opacity="0"/>
-              </radialGradient>
-            </defs>
-
-          </svg>
+      <!-- Right: Decorative Circular Graphic -->
+      <div class="hero__decoration" aria-hidden="true">
+        <div class="hero__circle hero__circle--outer"></div>
+        <div class="hero__circle hero__circle--mid"></div>
+        <div class="hero__circle hero__circle--inner"></div>
+        <div class="hero__crosshair hero__crosshair--h"></div>
+        <div class="hero__crosshair hero__crosshair--v"></div>
+        <div class="hero__center-glow"></div>
+        <!-- Bracket-dot logo mark -->
+        <div class="hero__logo-mark">
+          <span class="hero__logo-bracket hero__logo-bracket--left">[</span>
+          <span class="hero__logo-dot-wrap">
+            <span class="hero__logo-dot"></span>
+          </span>
+          <span class="hero__logo-bracket hero__logo-bracket--right">]</span>
         </div>
       </div>
-      <!-- /RIGHT DECORATIVE COLUMN -->
+      <!-- /hero__decoration -->
 
     </div>
-    <!-- /hero-inner -->
+    <!-- /hero__inner -->
 
-    <!-- Bottom Bar: Slide Counter + Scroll Indicator -->
-    <div class="qqqq__bottom-bar">
-      {%- unless section.settings.slide_counter == blank -%}
-        <span class="qqqq__slide-counter" aria-hidden="true">{{ section.settings.slide_counter }}</span>
-      {%- endunless -%}
-      <span class="qqqq__scroll-indicator" aria-hidden="true">{{ 'sections.qqqq.scroll_label' | t }} →</span>
+    <!-- Slide Counter -->
+    <div class="hero__slide-counter" aria-label="{{ 'sections.llll.slide_counter_aria' | t }}">
+      <span class="hero__slide-current">01</span>
+      <span class="hero__slide-sep"> / </span>
+      <span class="hero__slide-total">07</span>
+    </div>
+
+    <!-- Scroll Indicator -->
+    <div class="hero__scroll-indicator" aria-label="{{ 'sections.llll.scroll_label' | t }}">
+      <span>{{ 'sections.llll.scroll_text' | t }}</span>
+      <span class="hero__scroll-arrow">→</span>
     </div>
 
   </section>
-  <!-- /HERO SECTION -->
+  <!-- /Hero Section -->
 
-</div>
-<!-- /qqqq -->
+</main>
 
 {% schema %}
 {
-  "name": "Alvex Hero",
+  "name": "Alvex Hero Landing",
   "tag": "div",
-  "class": "qqqq-section-wrapper",
+  "class": "llll-section-wrapper",
   "settings": [
     {
       "type": "header",
-      "content": "Navigation"
+      "content": "Header / Navigation"
     },
     {
       "type": "text",
       "id": "logo_text",
-      "label": "Logo Brand Name",
+      "label": "Logo Text",
       "default": "Alvex"
     },
     {
@@ -1147,70 +243,9 @@
       "default": "STUDIO"
     },
     {
-      "type": "text",
-      "id": "nav_link_1_label",
-      "label": "Nav Link 1 Label",
-      "default": "Home"
-    },
-    {
       "type": "url",
-      "id": "nav_link_1_url",
-      "label": "Nav Link 1 URL"
-    },
-    {
-      "type": "text",
-      "id": "nav_link_2_label",
-      "label": "Nav Link 2 Label",
-      "default": "Services"
-    },
-    {
-      "type": "url",
-      "id": "nav_link_2_url",
-      "label": "Nav Link 2 URL"
-    },
-    {
-      "type": "text",
-      "id": "nav_link_3_label",
-      "label": "Nav Link 3 Label",
-      "default": "Work"
-    },
-    {
-      "type": "url",
-      "id": "nav_link_3_url",
-      "label": "Nav Link 3 URL"
-    },
-    {
-      "type": "text",
-      "id": "nav_link_4_label",
-      "label": "Nav Link 4 Label",
-      "default": "Process"
-    },
-    {
-      "type": "url",
-      "id": "nav_link_4_url",
-      "label": "Nav Link 4 URL"
-    },
-    {
-      "type": "text",
-      "id": "nav_link_5_label",
-      "label": "Nav Link 5 Label",
-      "default": "Pricing"
-    },
-    {
-      "type": "url",
-      "id": "nav_link_5_url",
-      "label": "Nav Link 5 URL"
-    },
-    {
-      "type": "text",
-      "id": "nav_link_6_label",
-      "label": "Nav Link 6 Label",
-      "default": "Contact"
-    },
-    {
-      "type": "url",
-      "id": "nav_link_6_url",
-      "label": "Nav Link 6 URL"
+      "id": "nav_cta_url",
+      "label": "Nav CTA Button URL"
     },
     {
       "type": "text",
@@ -1219,51 +254,122 @@
       "default": "Start a project"
     },
     {
+      "type": "header",
+      "content": "Navigation Links"
+    },
+    {
+      "type": "text",
+      "id": "nav_link1_label",
+      "label": "Nav Link 1 Label",
+      "default": "Home"
+    },
+    {
       "type": "url",
-      "id": "nav_cta_url",
-      "label": "Nav CTA Button URL"
+      "id": "nav_link1_url",
+      "label": "Nav Link 1 URL"
+    },
+    {
+      "type": "text",
+      "id": "nav_link2_label",
+      "label": "Nav Link 2 Label",
+      "default": "Services"
+    },
+    {
+      "type": "url",
+      "id": "nav_link2_url",
+      "label": "Nav Link 2 URL"
+    },
+    {
+      "type": "text",
+      "id": "nav_link3_label",
+      "label": "Nav Link 3 Label",
+      "default": "Work"
+    },
+    {
+      "type": "url",
+      "id": "nav_link3_url",
+      "label": "Nav Link 3 URL"
+    },
+    {
+      "type": "text",
+      "id": "nav_link4_label",
+      "label": "Nav Link 4 Label",
+      "default": "Process"
+    },
+    {
+      "type": "url",
+      "id": "nav_link4_url",
+      "label": "Nav Link 4 URL"
+    },
+    {
+      "type": "text",
+      "id": "nav_link5_label",
+      "label": "Nav Link 5 Label",
+      "default": "Pricing"
+    },
+    {
+      "type": "url",
+      "id": "nav_link5_url",
+      "label": "Nav Link 5 URL"
+    },
+    {
+      "type": "text",
+      "id": "nav_link6_label",
+      "label": "Nav Link 6 Label",
+      "default": "Contact"
+    },
+    {
+      "type": "url",
+      "id": "nav_link6_url",
+      "label": "Nav Link 6 URL"
     },
     {
       "type": "header",
-      "content": "Badge"
+      "content": "Hero Badge"
     },
     {
       "type": "text",
       "id": "badge_text",
-      "label": "Service Badge Text",
+      "label": "Badge Text",
       "default": "SHOPIFY · WORDPRESS · CUSTOM BUILDS"
     },
     {
       "type": "header",
-      "content": "Headline"
+      "content": "Hero Headline"
     },
     {
       "type": "text",
       "id": "headline_line1",
-      "label": "Headline Line 1 (white)",
+      "label": "Headline Line 1 (White)",
       "default": "Your vision."
     },
     {
       "type": "text",
       "id": "headline_line2",
-      "label": "Headline Line 2 (purple)",
+      "label": "Headline Line 2 (Purple)",
       "default": "Precisely"
     },
     {
       "type": "text",
       "id": "headline_line3",
-      "label": "Headline Line 3 (white)",
+      "label": "Headline Line 3 (White)",
       "default": "built."
     },
     {
       "type": "header",
-      "content": "Body Copy"
+      "content": "Hero Body"
     },
     {
       "type": "textarea",
-      "id": "subheadline",
-      "label": "Subheadline / Body Copy",
+      "id": "hero_body",
+      "label": "Hero Body Text",
       "default": "Premium web development for founders and brands serious about growth. Based in Lahore — working globally."
+    },
+    {
+      "type": "text",
+      "id": "hero_aria_label",
+      "label": "Hero Section Aria Label",
+      "default": "Hero Section"
     },
     {
       "type": "header",
@@ -1271,29 +377,29 @@
     },
     {
       "type": "text",
-      "id": "primary_cta_label",
+      "id": "cta_primary_label",
       "label": "Primary CTA Label",
       "default": "Start a project"
     },
     {
       "type": "url",
-      "id": "primary_cta_url",
+      "id": "cta_primary_url",
       "label": "Primary CTA URL"
     },
     {
       "type": "text",
-      "id": "secondary_cta_label",
+      "id": "cta_secondary_label",
       "label": "Secondary CTA Label",
       "default": "View our work"
     },
     {
       "type": "url",
-      "id": "secondary_cta_url",
+      "id": "cta_secondary_url",
       "label": "Secondary CTA URL"
     },
     {
       "type": "header",
-      "content": "Stats Bar"
+      "content": "Stats Row"
     },
     {
       "type": "text",
@@ -1345,51 +451,35 @@
     },
     {
       "type": "header",
-      "content": "Bottom Bar"
-    },
-    {
-      "type": "text",
-      "id": "slide_counter",
-      "label": "Slide Counter Text",
-      "default": "01 / 07"
-    },
-    {
-      "type": "header",
       "content": "Colors"
     },
     {
       "type": "color",
       "id": "color_bg",
-      "label": "Background Color",
-      "default": "#0D0B1A"
+      "label": "Page Background",
+      "default": "#0d0618"
     },
     {
       "type": "color",
-      "id": "color_accent",
-      "label": "Accent / Purple Color",
-      "default": "#7B2FBE"
+      "id": "color_purple",
+      "label": "Accent Purple",
+      "default": "#7c3aed"
     },
     {
       "type": "color",
-      "id": "color_text",
-      "label": "Primary Text Color",
-      "default": "#FFFFFF"
-    },
-    {
-      "type": "color",
-      "id": "color_muted",
-      "label": "Muted Text Color",
-      "default": "#9090A8"
+      "id": "color_purple_dark",
+      "label": "Dark Purple",
+      "default": "#4a1772"
     }
   ],
+  "blocks": [],
   "presets": [
     {
-      "name": "Alvex Hero",
-      "category": "Hero"
+      "name": "Alvex Hero Landing"
     }
   ],
   "enabled_on": {
-    "templates": ["index", "page"]
+    "templates": ["page"]
   }
 }
 {% endschema %}
