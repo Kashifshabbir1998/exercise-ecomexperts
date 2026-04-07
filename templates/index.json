@@ -175,6 +175,7 @@
         "service_twY4YV": {
           "type": "service",
           "settings": {
+            "image": "shopify://shop_images/striped-blouse-fashion_925x_1a1ff947-7950-4779-91a0-6583c619c0e5.jpg",
             "title": "Ricerca",
             "description": "<p>Breve descrizione del servizio.</p>",
             "button_text": "SCOPRI I PROGETTI IN CORSO",
@@ -184,6 +185,7 @@
         "service_8DiR9f": {
           "type": "service",
           "settings": {
+            "image": "shopify://shop_images/city-woman-fashion_925x_2x_e91139c3-68ff-49da-98c9-5a56a049fb30.jpg",
             "title": "Ricerca",
             "description": "<p>Breve descrizione del servizio.</p>",
             "button_text": "SCOPRI I PROGETTI IN CORSO",
@@ -193,6 +195,7 @@
         "service_kApMcL": {
           "type": "service",
           "settings": {
+            "image": "shopify://shop_images/leather-jacket-and-tea_925x_2490cde1-7e61-4151-9a65-de8a763bc701.jpg",
             "title": "Ricerca",
             "description": "<p>Breve descrizione del servizio.</p>",
             "button_text": "SCOPRI I PROGETTI IN CORSO",
@@ -207,11 +210,11 @@
       ],
       "name": "t:sections.teeeee.presets.name",
       "settings": {
-        "hero_color_scheme": "",
-        "hero_text_color": "#ffffff",
+        "hero_color_scheme": "scheme-1",
+        "hero_text_color": "#334fb4",
         "hero_image": "shopify://shop_images/desktop-banner-img.png",
         "hero_video_enable": false,
-        "hero_video_url": "",
+        "hero_video_url": "shopify://blogs/news",
         "hero_overlay_opacity": 40,
         "hero_heading": "<p>_ Ricerca scientifica, sviluppo per il futuro.</p>",
         "hero_button_text": "SCOPRI DI PIÙ",
@@ -230,6 +233,7 @@
         "services_color_scheme": "",
         "services_heading": "<p>_ Ricerca, formazione e servizi: un ecosistema che crea valore.</p>",
         "video_color_scheme": "",
+        "video_background_image": "shopify://shop_images/city-woman-fashion_925x_2x_e91139c3-68ff-49da-98c9-5a56a049fb30.jpg",
         "video_overlay_opacity": 40,
         "video_heading": "<p>Lorem Ipsum is simply dummy the printing.</p>",
         "video_url": "shopify://blogs/news",
