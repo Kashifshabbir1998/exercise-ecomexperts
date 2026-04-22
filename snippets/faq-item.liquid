@@ -1,0 +1,36 @@
+{%- comment -%}
+  FAQ Item Snippet
+  Usage: {% render 'faq-item', block: block %}
+  Expected variables:
+    - block: section block of type 'faq_item'
+      - block.settings.faq_question {String}
+      - block.settings.faq_answer   {RichText}
+{%- endcomment -%}
+
+{%- unless block.settings.faq_question == blank -%}
+  <details
+    class="sd-testpage__faq-item"
+    {% if block.shopify_attributes %}{{ block.shopify_attributes }}{% endif %}
+  >
+    <summary class="sd-testpage__faq-question">
+      <span class="sd-testpage__faq-question-text">{{ block.settings.faq_question }}</span>
+      <span class="sd-testpage__faq-icon" aria-hidden="true">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path
+            d="M2 5L8 11L14 5"
+            stroke="currentColor"
+            stroke-width="1.5"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          />
+        </svg>
+      </span>
+    </summary>
+
+    {%- unless block.settings.faq_answer == blank -%}
+      <div class="sd-testpage__faq-answer">
+        {{ block.settings.faq_answer }}
+      </div>
+    {%- endunless -%}
+  </details>
+{%- endunless -%}
