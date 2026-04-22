@@ -1,0 +1,50 @@
+{%- comment -%}
+  Press Logo Bar Snippet
+  Usage: {% render 'press-logo-bar', section: section %}
+  Expected variables:
+    - section: the parent section object; iterates blocks of type 'press_logo'
+      Each press_logo block expects:
+        - block.settings.logo_image {Image}  optional
+        - block.settings.logo_alt   {String} alt text for the image
+        - block.settings.logo_text  {String} text fallback when no image
+    - press_quote: {String} optional pull-quote passed from section settings
+{%- endcomment -%}
+
+<section class="sd-testpage__press-bar" aria-label="{{ 'sections.press_bar.label' | t | default: 'Press mentions' }}">
+  <div class="sd-testpage__press-bar-inner">
+
+    {%- unless press_quote == blank -%}
+      <blockquote class="sd-testpage__press-quote">
+        <p>"{{ press_quote }}"</p>
+      </blockquote>
+    {%- endunless -%}
+
+    <div class="sd-testpage__press-logos" aria-label="{{ 'sections.press_bar.logos_label' | t | default: 'Press outlet logos' }}">
+      {%- for block in section.blocks -%}
+        {%- case block.type -%}
+          {%- when 'press_logo' -%}
+            <div
+              class="sd-testpage__press-logo-item"
+              {{ block.shopify_attributes }}
+            >
+              {%- if block.settings.logo_image != blank -%}
+                {{
+                  block.settings.logo_image
+                  | image_url: width: 200
+                  | image_tag:
+                    class: 'sd-testpage__press-logo-img',
+                    alt: block.settings.logo_alt | default: 'Press logo',
+                    width: 120,
+                    height: 40,
+                    loading: 'lazy'
+                }}
+              {%- elsif block.settings.logo_text != blank -%}
+                <span class="sd-testpage__press-logo-text">{{ block.settings.logo_text }}</span>
+              {%- endif -%}
+            </div>
+        {%- endcase -%}
+      {%- endfor -%}
+    </div>
+
+  </div>
+</section>
