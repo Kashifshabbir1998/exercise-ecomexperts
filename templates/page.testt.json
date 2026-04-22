@@ -211,6 +211,7 @@
         "feature_EpQ4H9",
         "bottom_cta_6FcYtF"
       ],
+      "disabled": true,
       "name": "10 Reasons Presentation",
       "settings": {
         "color_black": "#000000",
@@ -222,11 +223,300 @@
         "color_image_bg": "#f4f4f4",
         "color_border": "#f0f0f0"
       }
+    },
+    "testpage_RRtkLy": {
+      "type": "testpage",
+      "blocks": {
+        "nav_link_93mAkP": {
+          "type": "nav_link",
+          "settings": {
+            "link_label": "About",
+            "link_url": ""
+          }
+        },
+        "nav_link_secondary_KhLxTA": {
+          "type": "nav_link_secondary",
+          "settings": {
+            "link_label": "Shop",
+            "link_url": ""
+          }
+        },
+        "press_logo_tPyh6B": {
+          "type": "press_logo",
+          "settings": {
+            "logo_alt": "Press outlet name",
+            "logo_text": "The New York Times"
+          }
+        },
+        "press_logo_QR74tq": {
+          "type": "press_logo",
+          "settings": {
+            "logo_alt": "Press outlet name",
+            "logo_text": "The New York Times"
+          }
+        },
+        "press_logo_NY7Afn": {
+          "type": "press_logo",
+          "settings": {
+            "logo_alt": "Press outlet name",
+            "logo_text": "The New York Times"
+          }
+        },
+        "how_step_KYtRHA": {
+          "type": "how_step",
+          "settings": {
+            "step_title": "SWIPE",
+            "step_body": "One swipe on cheeks, lips, and wherever you want a little warmth."
+          }
+        },
+        "how_step_9DBj7c": {
+          "type": "how_step",
+          "settings": {
+            "step_title": "SWIPE",
+            "step_body": "One swipe on cheeks, lips, and wherever you want a little warmth."
+          }
+        },
+        "how_step_RTmyAq": {
+          "type": "how_step",
+          "settings": {
+            "step_title": "SWIPE",
+            "step_body": "One swipe on cheeks, lips, and wherever you want a little warmth."
+          }
+        },
+        "split_content_44nnew": {
+          "type": "split_content",
+          "settings": {
+            "split_eyebrow": "",
+            "split_heading": "ON",
+            "split_body": "<p>Swipe it on. That's it. Miracle Balm blends itself into a sheer wash of color that makes your whole face look alive.</p>",
+            "reverse_layout": false,
+            "split_cta_label": "",
+            "split_cta_url": ""
+          }
+        },
+        "split_content_YV8gBA": {
+          "type": "split_content",
+          "settings": {
+            "split_eyebrow": "",
+            "split_heading": "ON",
+            "split_body": "<p>Swipe it on. That's it. Miracle Balm blends itself into a sheer wash of color that makes your whole face look alive.</p>",
+            "reverse_layout": false,
+            "split_cta_label": "",
+            "split_cta_url": ""
+          }
+        },
+        "split_content_NHggcy": {
+          "type": "split_content",
+          "settings": {
+            "split_eyebrow": "",
+            "split_heading": "ON",
+            "split_body": "<p>Swipe it on. That's it. Miracle Balm blends itself into a sheer wash of color that makes your whole face look alive.</p>",
+            "reverse_layout": false,
+            "split_cta_label": "",
+            "split_cta_url": ""
+          }
+        },
+        "split_content_j8jDjN": {
+          "type": "split_content",
+          "settings": {
+            "split_eyebrow": "",
+            "split_heading": "ON",
+            "split_body": "<p>Swipe it on. That's it. Miracle Balm blends itself into a sheer wash of color that makes your whole face look alive.</p>",
+            "reverse_layout": false,
+            "split_cta_label": "",
+            "split_cta_url": ""
+          }
+        },
+        "split_content_DLE3Qc": {
+          "type": "split_content",
+          "settings": {
+            "split_eyebrow": "",
+            "split_heading": "ON",
+            "split_body": "<p>Swipe it on. That's it. Miracle Balm blends itself into a sheer wash of color that makes your whole face look alive.</p>",
+            "reverse_layout": false,
+            "split_cta_label": "",
+            "split_cta_url": ""
+          }
+        },
+        "stat_item_TNqtt8": {
+          "type": "stat_item",
+          "settings": {
+            "stat_number": "75,900+",
+            "stat_label": "5-star reviews"
+          }
+        },
+        "stat_item_GQWbNh": {
+          "type": "stat_item",
+          "settings": {
+            "stat_number": "75,900+",
+            "stat_label": "5-star reviews"
+          }
+        },
+        "stat_item_yjqVAh": {
+          "type": "stat_item",
+          "settings": {
+            "stat_number": "75,900+",
+            "stat_label": "5-star reviews"
+          }
+        },
+        "stat_item_xtnBYz": {
+          "type": "stat_item",
+          "settings": {
+            "stat_number": "75,900+",
+            "stat_label": "5-star reviews"
+          }
+        },
+        "review_card_YRAPx3": {
+          "type": "review_card",
+          "settings": {
+            "review_rating": 5,
+            "review_title": "I stopped wearing foundation!",
+            "review_body": "I have searched for something like this for years. It's the perfect amount of color without looking overdone.",
+            "review_author": "Sarah M."
+          }
+        },
+        "review_card_6tmFrL": {
+          "type": "review_card",
+          "settings": {
+            "review_rating": 5,
+            "review_title": "I stopped wearing foundation!",
+            "review_body": "I have searched for something like this for years. It's the perfect amount of color without looking overdone.",
+            "review_author": "Sarah M."
+          }
+        },
+        "review_card_cLzxaT": {
+          "type": "review_card",
+          "settings": {
+            "review_rating": 5,
+            "review_title": "I stopped wearing foundation!",
+            "review_body": "I have searched for something like this for years. It's the perfect amount of color without looking overdone.",
+            "review_author": "Sarah M."
+          }
+        },
+        "feature_item_zRjkJH": {
+          "type": "feature_item",
+          "settings": {
+            "feature_title": "GOT 2 MINUTES? YOU'RE DONE.",
+            "feature_body": "<p>Swipe it on cheeks, lips, and eyelids. That's your whole face done in under a minute.</p>"
+          }
+        },
+        "feature_item_W4RUBy": {
+          "type": "feature_item",
+          "settings": {
+            "feature_title": "GOT 2 MINUTES? YOU'RE DONE.",
+            "feature_body": "<p>Swipe it on cheeks, lips, and eyelids. That's your whole face done in under a minute.</p>"
+          }
+        },
+        "feature_item_LyEkzr": {
+          "type": "feature_item",
+          "settings": {
+            "feature_title": "GOT 2 MINUTES? YOU'RE DONE.",
+            "feature_body": "<p>Swipe it on cheeks, lips, and eyelids. That's your whole face done in under a minute.</p>"
+          }
+        },
+        "faq_item_ejQmWU": {
+          "type": "faq_item",
+          "settings": {
+            "faq_question": "What's the difference between Miracle Balm and Mini Miracle Balm?",
+            "faq_answer": "<p>Mini Miracle Balm is a smaller, more portable version of our original — same formula, same shades, just easier to take everywhere.</p>"
+          }
+        },
+        "faq_item_YJpFza": {
+          "type": "faq_item",
+          "settings": {
+            "faq_question": "What's the difference between Miracle Balm and Mini Miracle Balm?",
+            "faq_answer": "<p>Mini Miracle Balm is a smaller, more portable version of our original — same formula, same shades, just easier to take everywhere.</p>"
+          }
+        },
+        "faq_item_qyN4nK": {
+          "type": "faq_item",
+          "settings": {
+            "faq_question": "What's the difference between Miracle Balm and Mini Miracle Balm?",
+            "faq_answer": "<p>Mini Miracle Balm is a smaller, more portable version of our original — same formula, same shades, just easier to take everywhere.</p>"
+          }
+        },
+        "faq_item_BjtPcj": {
+          "type": "faq_item",
+          "settings": {
+            "faq_question": "What's the difference between Miracle Balm and Mini Miracle Balm?",
+            "faq_answer": "<p>Mini Miracle Balm is a smaller, more portable version of our original — same formula, same shades, just easier to take everywhere.</p>"
+          }
+        },
+        "faq_item_AiT3pq": {
+          "type": "faq_item",
+          "settings": {
+            "faq_question": "What's the difference between Miracle Balm and Mini Miracle Balm?",
+            "faq_answer": "<p>Mini Miracle Balm is a smaller, more portable version of our original — same formula, same shades, just easier to take everywhere.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "nav_link_93mAkP",
+        "nav_link_secondary_KhLxTA",
+        "press_logo_tPyh6B",
+        "press_logo_QR74tq",
+        "press_logo_NY7Afn",
+        "how_step_KYtRHA",
+        "how_step_9DBj7c",
+        "how_step_RTmyAq",
+        "split_content_44nnew",
+        "split_content_YV8gBA",
+        "split_content_NHggcy",
+        "split_content_j8jDjN",
+        "split_content_DLE3Qc",
+        "stat_item_TNqtt8",
+        "stat_item_GQWbNh",
+        "stat_item_yjqVAh",
+        "stat_item_xtnBYz",
+        "review_card_YRAPx3",
+        "review_card_6tmFrL",
+        "review_card_cLzxaT",
+        "feature_item_zRjkJH",
+        "feature_item_W4RUBy",
+        "feature_item_LyEkzr",
+        "faq_item_ejQmWU",
+        "faq_item_YJpFza",
+        "faq_item_qyN4nK",
+        "faq_item_BjtPcj",
+        "faq_item_AiT3pq"
+      ],
+      "name": "Jones Road Testpage",
+      "settings": {
+        "announcement_text": "Free shipping on orders over $50",
+        "hero_heading": "5 reasons busy women are switching to Mini Miracle Balm",
+        "hero_body": "<p>One product. Cheeks, lips, eyelids. Clean ingredients, luminous finish. Done in under 30 seconds.</p>",
+        "hero_cta_label": "TRY MINI MIRACLE BALM",
+        "hero_cta_url": "",
+        "hero_rating_text": "75,900+ five-star reviews",
+        "press_quote": "Makeup should look like skin — just better. That's what Miracle Balm does.",
+        "intro_heading": "Makeup that respects your time",
+        "intro_body": "<p>When Jones Road says wear anywhere, we're not exaggerating. This is the kind of product that replaces three steps in your routine and makes you look like you — only better.</p>",
+        "how_heading": "How it works",
+        "dark_quote_text": "The kind of makeup people notice as 'you look great' — not 'nice makeup.'",
+        "dark_quote_cta_label": "SHOP MIRACLE BALM",
+        "dark_quote_cta_url": "",
+        "reviews_heading": "What women like you are saying",
+        "features_heading": "This isn't another beauty product you'll forget about.",
+        "features_subheading": "",
+        "product_name": "Mini Miracle Balm",
+        "product_description": "<p>Sheer, buildable pigment in 15 shades for every skin tone. No blending brush required. Melts into skin with luminous color that looks like you — only better.</p>",
+        "product_handle": "",
+        "product_price": "$19",
+        "product_cta_label": "ADD TO CART — $19",
+        "product_cta_url": "",
+        "faq_heading": "Questions? Answers.",
+        "footer_cta_heading": "Stop overcomplicating your mornings",
+        "footer_cta_label": "SHOP MIRACLE BALM",
+        "footer_cta_url": "",
+        "padding_top": 0,
+        "padding_bottom": 0
+      }
     }
   },
   "order": [
     "main",
     "tes1122_mKBxCY",
-    "custom_cta_strip_bcp4ze"
+    "custom_cta_strip_bcp4ze",
+    "testpage_RRtkLy"
   ]
 }
