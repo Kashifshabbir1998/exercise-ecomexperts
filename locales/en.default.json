@@ -537,23 +537,34 @@
       "send_on_label": "Send on (optional)"
     }
   },
+  
   "sections": {
-    "llll": {
-      "heading": "Alvex Hero Landing",
-      "nav_aria": "Main navigation",
-      "mobile_nav_aria": "Mobile navigation",
-      "menu_open": "Open menu",
-      "menu_close": "Close menu",
-      "stats_aria": "Key statistics",
-      "slide_counter_aria": "Slide counter",
-      "scroll_text": "SCROLL",
-      "scroll_label": "Scroll down"
+    "testpage": {
+      "products": {
+        "product": {
+          "add_to_cart": "Add to Cart",
+          "select_shade": "Select Shade"
+        }
+      },
+      "accessibility": {
+        "star_reviews_info": "Star reviews information"
+      },
+      "sections": {
+        "press_bar": {
+          "label": "Press Bar",
+          "logos_label": "Press Logos"
+        },
+        "product_highlight": {
+          "label": "Product Highlight"
+        }
+      }
     }
-  },
+},
   "general": {
     "accessibility": {
       "home": "Home"
     }
-  }
+  },
+  
 
 }
