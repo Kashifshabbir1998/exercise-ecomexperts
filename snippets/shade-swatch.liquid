@@ -1,0 +1,20 @@
+{%- comment -%}
+  Shade Swatch Snippet
+  Usage: {% render 'shade-swatch', variant: variant, forloop: forloop %}
+  Expected variables:
+    - variant:  {Variant} Shopify product variant object
+    - is_first: {Boolean} optional — marks first swatch as active/pressed
+  Notes:
+    - Requires metafield custom.swatch_color (color) on Product Variant
+    - Create metafield definition in Shopify Admin → Settings → Custom data → Variants
+{%- endcomment -%}
+
+<button
+  type="button"
+  class="sd-testpage__swatch{% if is_first %} sd-testpage__swatch--active{% endif %}"
+  data-variant-id="{{ variant.id }}"
+  style="background-color: {{ variant.metafields.custom.swatch_color | default: '#ccb8a8' }};"
+  aria-label="{{ variant.title }}"
+  aria-pressed="{% if is_first %}true{% else %}false{% endif %}"
+  {% unless variant.available %}disabled{% endunless %}
+></button>
