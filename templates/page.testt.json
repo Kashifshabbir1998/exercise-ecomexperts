@@ -11,6 +11,7 @@
   "sections": {
     "main": {
       "type": "main-page",
+      "disabled": true,
       "settings": {
         "padding_top": 28,
         "padding_bottom": 28
@@ -18,6 +19,7 @@
     },
     "tes1122_mKBxCY": {
       "type": "tes1122",
+      "disabled": true,
       "name": "Alvex Hero Landing",
       "settings": {
         "nav_link_1_label": "Home",
@@ -59,10 +61,172 @@
         "color_accent": "#7c3aed",
         "color_text": "#a89fc2"
       }
+    },
+    "custom_cta_strip_bcp4ze": {
+      "type": "custom-cta-strip",
+      "blocks": {
+        "hero_4ih6zq": {
+          "type": "hero",
+          "settings": {
+            "eyebrow": "Miracle Balm",
+            "heading": "10 reasons executives are replacing their entire makeup bag with this $38 balm",
+            "text": "<p>One product. 30 seconds. Boardroom-ready every time. Created by Bobbi Brown for people who don't have time for a 12-step routine.</p>",
+            "show_reviews": true,
+            "reviews_text": "75,000+ verified reviews",
+            "button_label": "Find My Shade",
+            "button_link": ""
+          }
+        },
+        "feature_GxnKwt": {
+          "type": "feature",
+          "settings": {
+            "number": "01",
+            "heading": "One product replaces five",
+            "text": "<p>Miracle Balm does the work of your entire makeup bag in a single compact. Less clutter on your vanity, fewer decisions before your 7 AM call. <strong>One tin. Five functions. Done.</strong></p>"
+          }
+        },
+        "feature_6j6CfA": {
+          "type": "feature",
+          "settings": {
+            "number": "02",
+            "heading": "30-second application",
+            "text": "<p>You don't need brushes, sponges, or a tutorial. Tap it on with your fingers in the elevator, between Zoom calls, or in the back of an Uber. <strong>Your calendar is packed. Your routine shouldn't be.</strong></p>"
+          }
+        },
+        "feature_fLfM4Y": {
+          "type": "feature",
+          "settings": {
+            "number": "03",
+            "heading": "Created by Bobbi Brown",
+            "text": "<p>The woman who built a billion-dollar beauty empire. Who defined the \"no-makeup makeup\" look. <strong>Jones Road is Bobbi Brown's life's work — distilled into clean, high-performance products.</strong></p>"
+          }
+        },
+        "testimonial_JnP8NL": {
+          "type": "testimonial",
+          "settings": {
+            "quote": "I'm a lawyer with back-to-back court days. This is the only product I use. I look polished in 20 seconds flat.",
+            "author": "Verified Buyer"
+          }
+        },
+        "feature_9ecdGT": {
+          "type": "feature",
+          "settings": {
+            "number": "04",
+            "heading": "Clean ingredients you'd actually want on your skin",
+            "text": "<p>Jojoba oil. Argan oil. Sea Buckthorn. Vitamin E. Beeswax. You can read every ingredient on the label. <strong>Non-comedogenic and dermatologist-friendly.</strong></p>"
+          }
+        },
+        "feature_yWnxEa": {
+          "type": "feature",
+          "settings": {
+            "number": "05",
+            "heading": "Looks like great skin, not makeup",
+            "text": "<p>The light-reflecting formula melts into skin for a natural, healthy glow. No shimmer. No glitter. <strong>They'll just think you look annoyingly well-rested.</strong></p>"
+          }
+        },
+        "feature_GQrLxJ": {
+          "type": "feature",
+          "settings": {
+            "number": "06",
+            "heading": "75,000+ five-star reviews",
+            "text": "<p>This isn't a niche discovery. It's a phenomenon. Miracle Balm has been reviewed over 75,000 times with a 4.3-star average. <strong>When 75,000 people agree on something, it's worth paying attention.</strong></p>"
+          }
+        },
+        "mid_cta_m9E9Gz": {
+          "type": "mid_cta",
+          "settings": {
+            "heading": "Still reading? That's 6 reasons in.",
+            "text": "Most people add to cart by reason 4.",
+            "button_label": "Find My Shade",
+            "button_link": ""
+          }
+        },
+        "feature_qtDTee": {
+          "type": "feature",
+          "settings": {
+            "number": "07",
+            "heading": "Travels anywhere",
+            "text": "<p>TSA-friendly. No spills. No caps to lose. Toss it in your carry-on, your desk drawer, or your gym bag. <strong>The tin is smaller than your AirPods case</strong> and holds up at 35,000 feet.</p>"
+          }
+        },
+        "feature_H9C4Rt": {
+          "type": "feature",
+          "settings": {
+            "number": "08",
+            "heading": "Works on every skin tone",
+            "text": "<p>13 shades. Whether you're fair-skinned in the corner office or deep-toned closing deals on the trading floor, <strong>there's a shade that looks like it was custom-mixed for you.</strong></p>"
+          }
+        },
+        "testimonial_43tVcK": {
+          "type": "testimonial",
+          "settings": {
+            "quote": "I travel 3 weeks a month. Miracle Balm is the one beauty product I never leave behind. It replaced everything else.",
+            "author": "Verified Buyer"
+          }
+        },
+        "feature_BEiteN": {
+          "type": "feature",
+          "settings": {
+            "number": "09",
+            "heading": "No learning curve",
+            "text": "<p>Open the tin. Tap your fingers on the balm. Blend onto cheeks, lips, or wherever you want a healthy flush. <strong>That's it. Three steps. No YouTube tutorial required.</strong></p>"
+          }
+        },
+        "feature_EpQ4H9": {
+          "type": "feature",
+          "settings": {
+            "number": "10",
+            "heading": "$38 replaces $200+ in products",
+            "text": "<p>A blush ($34). A bronzer ($38). A highlighter ($42). A lip tint ($28). A tinted moisturizer ($52). That's $194. <strong>Miracle Balm does all of it for $38.</strong> You didn't get where you are by overspending on redundancy.</p>"
+          }
+        },
+        "bottom_cta_6FcYtF": {
+          "type": "bottom_cta",
+          "settings": {
+            "eyebrow": "Miracle Balm",
+            "heading": "Your most efficient beauty decision",
+            "text": "<p>One product. Clean ingredients. 30 seconds. Join 75,000+ people who simplified their routine and never looked back.</p>",
+            "button_label": "Find My Shade",
+            "button_link": "",
+            "benefit_1": "Free Shipping",
+            "benefit_2": "Clean Ingredients",
+            "benefit_3": "75,000+ Reviews"
+          }
+        }
+      },
+      "block_order": [
+        "hero_4ih6zq",
+        "feature_GxnKwt",
+        "feature_6j6CfA",
+        "feature_fLfM4Y",
+        "testimonial_JnP8NL",
+        "feature_9ecdGT",
+        "feature_yWnxEa",
+        "feature_GQrLxJ",
+        "mid_cta_m9E9Gz",
+        "feature_qtDTee",
+        "feature_H9C4Rt",
+        "testimonial_43tVcK",
+        "feature_BEiteN",
+        "feature_EpQ4H9",
+        "bottom_cta_6FcYtF"
+      ],
+      "name": "10 Reasons Presentation",
+      "settings": {
+        "color_black": "#000000",
+        "color_white": "#ffffff",
+        "color_pink": "#eb2663",
+        "color_text_body": "#4a4a4a",
+        "color_text_light": "#767676",
+        "color_number": "#ebebeb",
+        "color_image_bg": "#f4f4f4",
+        "color_border": "#f0f0f0"
+      }
     }
   },
   "order": [
     "main",
-    "tes1122_mKBxCY"
+    "tes1122_mKBxCY",
+    "custom_cta_strip_bcp4ze"
   ]
 }
