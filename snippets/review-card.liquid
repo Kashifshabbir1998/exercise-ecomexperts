@@ -1,0 +1,43 @@
+{%- comment -%}
+  Review Card Snippet
+  Usage: {% render 'review-card', block: block %}
+  Expected variables:
+    - block: section block of type 'review_card'
+      - block.settings.review_rating  {Number} 1–5
+      - block.settings.review_title   {String}
+      - block.settings.review_body    {String}
+      - block.settings.review_author  {String}
+    - swiper_slide: {Boolean} optional — adds 'swiper-slide' class when true
+{%- endcomment -%}
+
+{%- assign star_count = block.settings.review_rating | default: 5 -%}
+
+<article
+  class="sd-testpage__review-card{% if swiper_slide %} swiper-slide{% endif %}"
+  {% if block.shopify_attributes %}{{ block.shopify_attributes }}{% endif %}
+  {% unless swiper_slide %}data-animate{% endunless %}
+>
+  <div
+    class="sd-testpage__review-stars"
+    aria-label="{{ star_count }} {{ 'accessibility.star_reviews_info' | t: rating: star_count, rating_max: 5 | default: 'out of 5 stars' }}"
+  >
+    {%- for i in (1..5) -%}
+      <span
+        class="sd-testpage__review-star{% if i > star_count %} sd-testpage__review-star--empty{% endif %}"
+        aria-hidden="true"
+      >&#9733;</span>
+    {%- endfor -%}
+  </div>
+
+  {%- unless block.settings.review_title == blank -%}
+    <h4 class="sd-testpage__review-title">{{ block.settings.review_title }}</h4>
+  {%- endunless -%}
+
+  {%- unless block.settings.review_body == blank -%}
+    <p class="sd-testpage__review-body">{{ block.settings.review_body }}</p>
+  {%- endunless -%}
+
+  {%- unless block.settings.review_author == blank -%}
+    <cite class="sd-testpage__review-author">— {{ block.settings.review_author }}</cite>
+  {%- endunless -%}
+</article>
