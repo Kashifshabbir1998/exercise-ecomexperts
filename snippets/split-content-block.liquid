@@ -1,0 +1,64 @@
+{%- comment -%}
+  Split Content Block Snippet
+  Usage: {% render 'split-content-block', block: block %}
+  Expected variables:
+    - block: section block of type 'split_content'
+      - block.settings.split_image       {Image}
+      - block.settings.split_eyebrow     {String}
+      - block.settings.split_heading     {String}
+      - block.settings.split_body        {RichText}
+      - block.settings.reverse_layout    {Boolean}
+      - block.settings.split_cta_label   {String}
+      - block.settings.split_cta_url     {URL}
+{%- endcomment -%}
+
+<section
+  class="sd-testpage__split{% if block.settings.reverse_layout %} sd-testpage__split--reversed{% endif %}"
+  aria-label="{{ block.settings.split_heading }}"
+  {% if block.shopify_attributes %}{{ block.shopify_attributes }}{% endif %}
+>
+  <div class="sd-testpage__split-inner">
+
+    <div class="sd-testpage__split-image-col">
+      {%- if block.settings.split_image != blank -%}
+        {{
+          block.settings.split_image
+          | image_url: width: 900
+          | image_tag:
+            class: 'sd-testpage__split-image',
+            alt: block.settings.split_image.alt | default: block.settings.split_heading,
+            width: 600,
+            height: 720,
+            loading: 'lazy'
+        }}
+      {%- else -%}
+        <div class="sd-testpage__split-image-placeholder"><!-- PLACEHOLDER: Upload split content image --></div>
+      {%- endif -%}
+    </div>
+
+    <div class="sd-testpage__split-content-col">
+      {%- unless block.settings.split_eyebrow == blank -%}
+        <span class="sd-testpage__split-eyebrow">{{ block.settings.split_eyebrow }}</span>
+      {%- endunless -%}
+
+      {%- unless block.settings.split_heading == blank -%}
+        <h2 class="sd-testpage__split-heading">{{ block.settings.split_heading }}</h2>
+      {%- endunless -%}
+
+      {%- unless block.settings.split_body == blank -%}
+        <div class="sd-testpage__split-body">{{ block.settings.split_body }}</div>
+      {%- endunless -%}
+
+      {%- if block.settings.split_cta_label != blank and block.settings.split_cta_url != blank -%}
+        <a
+          href="{{ block.settings.split_cta_url }}"
+          class="sd-testpage__btn sd-testpage__btn--primary"
+          aria-label="{{ block.settings.split_cta_label }}"
+        >
+          {{ block.settings.split_cta_label }}
+        </a>
+      {%- endif -%}
+    </div>
+
+  </div>
+</section>
