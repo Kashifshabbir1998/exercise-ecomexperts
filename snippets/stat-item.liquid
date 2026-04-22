@@ -1,0 +1,23 @@
+{%- comment -%}
+  Stat Item Snippet
+  Usage: {% render 'stat-item', block: block %}
+  Expected variables:
+    - block: section block of type 'stat_item'
+      - block.settings.stat_number {String} e.g. "75,900+"
+      - block.settings.stat_label  {String} e.g. "5-star reviews"
+{%- endcomment -%}
+
+{%- unless block.settings.stat_number == blank and block.settings.stat_label == blank -%}
+  <div
+    class="sd-testpage__stat-item"
+    {% if block.shopify_attributes %}{{ block.shopify_attributes }}{% endif %}
+    data-animate
+  >
+    {%- unless block.settings.stat_number == blank -%}
+      <span class="sd-testpage__stat-number">{{ block.settings.stat_number }}</span>
+    {%- endunless -%}
+    {%- unless block.settings.stat_label == blank -%}
+      <span class="sd-testpage__stat-label">{{ block.settings.stat_label }}</span>
+    {%- endunless -%}
+  </div>
+{%- endunless -%}
