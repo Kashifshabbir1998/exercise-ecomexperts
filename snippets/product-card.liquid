@@ -1,0 +1,137 @@
+{%- comment -%}
+  Product Card Snippet — Product Detail / Mini Miracle Balm Section
+  Usage: {% render 'product-card', featured_product: featured_product, section: section %}
+  Expected variables:
+    - featured_product: {Product} Shopify product object (can be blank)
+    - section:          {Section} parent section object, used for section.id and fallback settings:
+        - section.settings.product_name        {String}
+        - section.settings.product_description {RichText}
+        - section.settings.product_image       {Image}
+        - section.settings.product_price       {String}  fallback price display
+        - section.settings.product_cta_label   {String}  fallback CTA label
+        - section.settings.product_cta_url     {URL}     fallback CTA URL
+  Notes:
+    - Requires metafield custom.swatch_color (color) on Product Variant for swatch colours
+{%- endcomment -%}
+
+<section class="sd-testpage__product-highlight" aria-label="{{ 'sections.product_highlight.label' | t | default: 'Product detail' }}">
+  <div class="sd-testpage__product-highlight-inner">
+
+    <!-- Product image column -->
+    <div class="sd-testpage__product-image-col">
+      {%- if section.settings.product_image != blank -%}
+        {{
+          section.settings.product_image
+          | image_url: width: 800
+          | image_tag:
+            class: 'sd-testpage__product-image',
+            alt: section.settings.product_image.alt | default: section.settings.product_name,
+            width: 560,
+            height: 560,
+            loading: 'lazy'
+        }}
+      {%- elsif featured_product != blank and featured_product.featured_image != blank -%}
+        {{
+          featured_product.featured_image
+          | image_url: width: 800
+          | image_tag:
+            class: 'sd-testpage__product-image',
+            alt: featured_product.featured_image.alt | default: featured_product.title,
+            width: 560,
+            height: 560,
+            loading: 'lazy'
+        }}
+      {%- else -%}
+        <div class="sd-testpage__product-image-placeholder"><!-- PLACEHOLDER: Upload product highlight image --></div>
+      {%- endif -%}
+    </div>
+
+    <!-- Product content column -->
+    <div class="sd-testpage__product-content-col">
+
+      {%- unless section.settings.product_name == blank -%}
+        <h2 class="sd-testpage__product-name">{{ section.settings.product_name }}</h2>
+      {%- endunless -%}
+
+      {%- unless section.settings.product_description == blank -%}
+        <div class="sd-testpage__product-description">{{ section.settings.product_description }}</div>
+      {%- endunless -%}
+
+      {%- if featured_product != blank -%}
+
+        {%- comment -%}
+          Shade swatches from live product variants.
+          Requires metafield: custom.swatch_color on Product Variant.
+          Create in Shopify Admin → Settings → Custom data → Variants.
+        {%- endcomment -%}
+        <div class="sd-testpage__shade-swatches" role="group" aria-label="{{ 'products.product.select_shade' | t | default: 'Select a shade' }}">
+          {%- for variant in featured_product.variants -%}
+            {%- assign is_first = false -%}
+            {%- if forloop.first -%}
+              {%- assign is_first = true -%}
+            {%- endif -%}
+            <button
+              type="button"
+              class="sd-testpage__swatch{% if forloop.first %} sd-testpage__swatch--active{% endif %}"
+              data-variant-id="{{ variant.id }}"
+              style="background-color: {{ variant.metafields.custom.swatch_color | default: '#ccb8a8' }};"
+              aria-label="{{ variant.title }}"
+              aria-pressed="{% if forloop.first %}true{% else %}false{% endif %}"
+              {% unless variant.available %}disabled{% endunless %}
+            ></button>
+          {%- endfor -%}
+        </div>
+
+        <form
+          action="{{ routes.cart_add_url }}"
+          method="post"
+          enctype="multipart/form-data"
+          class="sd-testpage__atc-form"
+          id="atc-form-{{ section.id }}"
+        >
+          <input type="hidden" name="form_type" value="product">
+          <input type="hidden" name="utf8" value="✓">
+          <input
+            type="hidden"
+            name="id"
+            value="{{ featured_product.selected_or_first_available_variant.id }}"
+            data-sd-variant-input
+          >
+
+          <div class="sd-testpage__product-price">
+            {{ featured_product.selected_or_first_available_variant.price | money }}
+          </div>
+
+          <button
+            type="submit"
+            name="add"
+            class="sd-testpage__btn sd-testpage__btn--primary sd-testpage__btn--atc"
+            aria-label="{{ 'products.product.add_to_cart' | t }}"
+            {% unless featured_product.selected_or_first_available_variant.available %}disabled{% endunless %}
+          >
+            {{ 'products.product.add_to_cart' | t }}
+          </button>
+        </form>
+
+      {%- else -%}
+
+        {%- comment -%} Fallback when no product handle is configured {%- endcomment -%}
+        {%- unless section.settings.product_price == blank -%}
+          <div class="sd-testpage__product-price">{{ section.settings.product_price }}</div>
+        {%- endunless -%}
+
+        {%- if section.settings.product_cta_label != blank and section.settings.product_cta_url != blank -%}
+          <a
+            href="{{ section.settings.product_cta_url }}"
+            class="sd-testpage__btn sd-testpage__btn--primary sd-testpage__btn--atc"
+            aria-label="{{ section.settings.product_cta_label }}"
+          >
+            {{ section.settings.product_cta_label }}
+          </a>
+        {%- endif -%}
+
+      {%- endif -%}
+
+    </div>
+  </div>
+</section>
