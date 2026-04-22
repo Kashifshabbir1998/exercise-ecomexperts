@@ -1,0 +1,39 @@
+{%- comment -%}
+  Feature Block Snippet — used for "How It Works" steps
+  Usage: {% render 'feature-block', block: block %}
+  Expected variables:
+    - block: section block of type 'how_step'
+      - block.settings.step_image {Image}
+      - block.settings.step_title {String}
+      - block.settings.step_body  {String}
+    - swiper_slide: {Boolean} optional — adds 'swiper-slide' class when true
+{%- endcomment -%}
+
+<div
+  class="sd-testpage__how-step{% if swiper_slide %} swiper-slide{% endif %}"
+  {% if block.shopify_attributes %}{{ block.shopify_attributes }}{% endif %}
+  {% unless swiper_slide %}data-animate{% endunless %}
+>
+  <div class="sd-testpage__how-step-image-wrap">
+    {%- if block.settings.step_image != blank -%}
+      {{
+        block.settings.step_image
+        | image_url: width: 400
+        | image_tag:
+          class: 'sd-testpage__how-step-image',
+          alt: block.settings.step_image.alt | default: block.settings.step_title,
+          width: 280,
+          height: 280,
+          loading: 'lazy'
+      }}
+    {%- endif -%}
+  </div>
+
+  {%- unless block.settings.step_title == blank -%}
+    <h3 class="sd-testpage__how-step-title">{{ block.settings.step_title }}</h3>
+  {%- endunless -%}
+
+  {%- unless block.settings.step_body == blank -%}
+    <p class="sd-testpage__how-step-body">{{ block.settings.step_body }}</p>
+  {%- endunless -%}
+</div>
