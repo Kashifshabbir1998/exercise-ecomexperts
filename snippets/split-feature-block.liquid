@@ -1,0 +1,56 @@
+{%- comment -%}
+  Split Feature Block Snippet
+  Expected variables:
+    - section_number {String}  : Small label displayed above heading (e.g. "03")
+    - heading        {String}  : Main section heading text
+    - body_text      {String}  : Rich text body copy (HTML)
+    - image          {Image}   : Shopify image object from image_picker
+    - image_alt      {String}  : Alt text for the image
+    - flip_layout    {Boolean} : If true, image on right / text on left
+{%- endcomment -%}
+
+<div class="split-feature-block{% if flip_layout %} split-feature-block--flipped{% endif %}">
+
+  <!-- Image Panel -->
+  <div class="split-feature-block__media">
+    {%- if image != blank -%}
+      {{
+        image
+        | image_url: width: 1200
+        | image_tag:
+          class: 'split-feature-block__image',
+          alt: image_alt,
+          loading: 'lazy',
+          widths: '400, 600, 800, 1000, 1200'
+      }}
+    {%- else -%}
+      <div class="split-feature-block__image-placeholder">
+        {{ 'image' | placeholder_svg_tag: 'split-feature-block__placeholder-svg' }}
+      </div>
+    {%- endif -%}
+  </div>
+
+  <!-- Text Panel -->
+  <div class="split-feature-block__content">
+
+    {%- unless section_number == blank -%}
+      <span class="split-feature-block__section-number" aria-hidden="true">
+        {{ section_number }}
+      </span>
+    {%- endunless -%}
+
+    {%- unless heading == blank -%}
+      <h2 class="split-feature-block__heading">
+        {{ heading }}
+      </h2>
+    {%- endunless -%}
+
+    {%- unless body_text == blank -%}
+      <div class="split-feature-block__body">
+        {{ body_text }}
+      </div>
+    {%- endunless -%}
+
+  </div>
+
+</div>
