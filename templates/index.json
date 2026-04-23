@@ -171,6 +171,7 @@
     },
     "tes1122_qc4CxL": {
       "type": "tes1122",
+      "disabled": true,
       "name": "Alvex Hero Landing",
       "settings": {
         "nav_link_1_label": "Home",
@@ -212,6 +213,23 @@
         "color_accent": "#7c3aed",
         "color_text": "#a89fc2"
       }
+    },
+    "sd_section_MV8Tjw": {
+      "type": "sd-section",
+      "name": "SD - Promo Split Banner",
+      "settings": {
+        "product_image": "shopify://shop_images/Image_Mini_Miracle_Balm_in_Dusty_Rose.png",
+        "eyebrow": "THE 30-SECOND MAKEUP ROUTINE",
+        "heading": "5 reasons busy women are switching to Mini Miracle Balm",
+        "body_text": "<p>You run a packed calendar. Your makeup should keep up. One swipe of sheer, buildable color for cheeks and lips — and you look polished without looking done.</p>",
+        "show_rating": true,
+        "rating_value": 5,
+        "review_text": "75,900+ reviews · #1 bestseller",
+        "button_label": "SHOP MINI MIRACLE BALM",
+        "button_url": "",
+        "padding_top": 0,
+        "padding_bottom": 0
+      }
     }
   },
   "order": [
@@ -219,6 +237,7 @@
     "custom_text_strip_WFcPNX",
     "custom_product_grid_mCGMKY",
     "hero_section_UKyb4j",
-    "tes1122_qc4CxL"
+    "tes1122_qc4CxL",
+    "sd_section_MV8Tjw"
   ]
 }
