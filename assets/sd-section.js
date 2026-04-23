@@ -1,22 +1,18 @@
-class SdSectionElement extends HTMLElement {
-  connectedCallback() {
-    this._init();
+class SdSectionController {
+  constructor(element) {
+    this.el = element;
+    this.init();
   }
 
-  _init() {
-    // Animate content panels into view when they enter the viewport
-    this._setupIntersectionObserver();
-    // Handle CTA link accessibility enhancement
-    this._setupCta();
+  init() {
+    const block = this.el.querySelector('.split-feature-block');
+    if (!block) return;
+    this.observeEntrance(block);
   }
 
-  _setupIntersectionObserver() {
-    const panels = this.querySelectorAll('.sd-section__panel');
-    if (!panels.length) return;
-
+  observeEntrance(block) {
     if (!('IntersectionObserver' in window)) {
-      // Graceful degradation: just make everything visible
-      panels.forEach((panel) => panel.classList.add('sd-section__panel--visible'));
+      block.classList.add('is-visible');
       return;
     }
 
@@ -24,7 +20,7 @@ class SdSectionElement extends HTMLElement {
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
-            entry.target.classList.add('sd-section__panel--visible');
+            entry.target.classList.add('is-visible');
             observer.unobserve(entry.target);
           }
         });
@@ -32,24 +28,11 @@ class SdSectionElement extends HTMLElement {
       { threshold: 0.15 }
     );
 
-    panels.forEach((panel) => observer.observe(panel));
+    observer.observe(block);
     this._observer = observer;
   }
 
-  _setupCta() {
-    const cta = this.querySelector('.sd-section__cta');
-    if (!cta) return;
-
-    // Ensure keyboard focus is visually apparent and the link is operable
-    cta.addEventListener('keydown', (event) => {
-      if (event.key === 'Enter' || event.key === ' ') {
-        event.preventDefault();
-        cta.click();
-      }
-    });
-  }
-
-  disconnectedCallback() {
+  destroy() {
     if (this._observer) {
       this._observer.disconnect();
       this._observer = null;
@@ -57,40 +40,64 @@ class SdSectionElement extends HTMLElement {
   }
 }
 
-// Register custom element only once
-if (!customElements.get('sd-section')) {
-  customElements.define('sd-section', SdSectionElement);
-}
+// Registry to manage instances per section
+const sdSectionInstances = new Map();
 
-// Handle Shopify section editor events
-document.addEventListener('shopify:section:load', (event) => {
-  const sectionEl = event.target;
+function initSdSection(container) {
+  const sectionEl = container.querySelector('sd-section');
   if (!sectionEl) return;
 
-  const sdSection = sectionEl.querySelector('sd-section');
-  if (sdSection) {
-    // Re-initialise after section reload in editor
-    sdSection._init();
+  const sectionId = container.id;
+  if (sdSectionInstances.has(sectionId)) {
+    sdSectionInstances.get(sectionId).destroy();
   }
+
+  const instance = new SdSectionController(sectionEl);
+  sdSectionInstances.set(sectionId, instance);
+}
+
+function destroySdSection(container) {
+  const sectionId = container.id;
+  if (sdSectionInstances.has(sectionId)) {
+    sdSectionInstances.get(sectionId).destroy();
+    sdSectionInstances.delete(sectionId);
+  }
+}
+
+function getContainer(event) {
+  return event.detail && event.detail.sectionId
+    ? document.getElementById('shopify-section-' + event.detail.sectionId)
+    : null;
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  document.querySelectorAll('.sd-section.shopify-section').forEach((container) => {
+    initSdSection(container);
+  });
+});
+
+document.addEventListener('shopify:section:load', (event) => {
+  const container = getContainer(event);
+  if (!container || !container.classList.contains('sd-section')) return;
+  initSdSection(container);
 });
 
 document.addEventListener('shopify:section:unload', (event) => {
-  const sectionEl = event.target;
-  if (!sectionEl) return;
+  const container = getContainer(event);
+  if (!container || !container.classList.contains('sd-section')) return;
+  destroySdSection(container);
+});
 
-  const sdSection = sectionEl.querySelector('sd-section');
-  if (sdSection && sdSection._observer) {
-    sdSection._observer.disconnect();
-    sdSection._observer = null;
-  }
+document.addEventListener('shopify:section:select', (event) => {
+  const container = getContainer(event);
+  if (!container || !container.classList.contains('sd-section')) return;
+  const block = container.querySelector('.split-feature-block');
+  if (block) block.classList.add('is-visible');
 });
 
 document.addEventListener('shopify:block:select', (event) => {
-  const block = event.target;
-  if (!block) return;
-
-  // Bring selected block into view within the editor
-  if (block.scrollIntoView) {
-    block.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-  }
+  const container = getContainer(event);
+  if (!container || !container.classList.contains('sd-section')) return;
+  const block = container.querySelector('.split-feature-block');
+  if (block) block.classList.add('is-visible');
 });
