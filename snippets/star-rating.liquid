@@ -1,0 +1,72 @@
+{%- comment -%}
+  Snippet: star-rating.liquid
+  Description: Renders an accessible star rating graphic (filled, half, and empty stars).
+
+  Expected variables (passed via render tag):
+    - rating:     {Number} The numeric rating value (e.g. 4 or 4.5). Required.
+    - max_rating: {Number} The maximum rating value (e.g. 5). Defaults to 5 if not provided.
+{%- endcomment -%}
+
+{%- liquid
+  assign max_rating = max_rating | default: 5
+  assign rating = rating | default: 0
+  assign rating_integer = rating | floor
+  assign rating_remainder = rating | modulo: 1
+  assign has_half_star = false
+  if rating_remainder >= 0.5
+    assign has_half_star = true
+  endif
+-%}
+
+<div
+  class="sd-section__star-rating star-rating"
+  role="img"
+  aria-label="{{ 'snippets.star_rating.aria_label' | t: rating: rating, max_rating: max_rating }}"
+>
+  {%- for i in (1..max_rating) -%}
+    {%- liquid
+      assign star_class = 'star-rating__star star-rating__star--empty'
+      if i <= rating_integer
+        assign star_class = 'star-rating__star star-rating__star--filled'
+      elsif i == rating_integer | plus: 1 and has_half_star
+        assign star_class = 'star-rating__star star-rating__star--half'
+      endif
+    -%}
+    <span class="{{ star_class }}" aria-hidden="true">
+      {%- if star_class contains 'filled' -%}
+        <svg
+          class="star-rating__icon star-rating__icon--filled"
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 24 24"
+          width="16"
+          height="16"
+          focusable="false"
+        >
+          <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/>
+        </svg>
+      {%- elsif star_class contains 'half' -%}
+        <svg
+          class="star-rating__icon star-rating__icon--half"
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 24 24"
+          width="16"
+          height="16"
+          focusable="false"
+        >
+          <path d="M22 9.24l-7.19-.62L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21 12 17.27V2l2.81 6.62L22 9.24z"/>
+        </svg>
+      {%- else -%}
+        <svg
+          class="star-rating__icon star-rating__icon--empty"
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 24 24"
+          width="16"
+          height="16"
+          focusable="false"
+        >
+          <path d="M22 9.24l-7.19-.62L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21 12 17.27 18.18 21l-1.64-7.03L22 9.24zM12 15.4l-3.76 2.27 1-4.28-3.32-2.88 4.38-.38L12 6.1l1.71 4.04 4.38.38-3.32 2.88 1 4.28L12 15.4z"/>
+        </svg>
+      {%- endif -%}
+    </span>
+  {%- endfor -%}
+</div>
