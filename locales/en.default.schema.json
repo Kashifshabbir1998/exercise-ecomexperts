@@ -1,12 +1,1 @@
-{
-  "sections": {
-    "sd_section": {
-      "rating_aria": "Product rating"
-    }
-  },
-  "snippets": {
-    "star_rating": {
-      "aria_label": "Star rating"
-    }
-  }
-}
+{}
