@@ -537,8 +537,43 @@
       "send_on_label": "Send on (optional)"
     }
   },
-  
+
+
   "sections": {
+    "sd_section": {
+      "name": "Split Feature Block",
+      "settings": {
+        "section_number": {
+          "label": "Section Number Label",
+          "info": "Small label displayed above the heading (e.g. 01, 02, 03)"
+        },
+        "heading": {
+          "label": "Heading"
+        },
+        "body_text": {
+          "label": "Body Copy"
+        },
+        "product_image": {
+          "label": "Product Image"
+        },
+        "image_alt": {
+          "label": "Image Alt Text"
+        },
+        "flip_layout": {
+          "label": "Flip layout (image right, text left)"
+        },
+        "padding_top": {
+          "label": "Padding top"
+        },
+        "padding_bottom": {
+          "label": "Padding bottom"
+        }
+      }
+    }
+  
+},
+  
+  "sections11": {
     "testpage": {
       "products": {
         "product": {
