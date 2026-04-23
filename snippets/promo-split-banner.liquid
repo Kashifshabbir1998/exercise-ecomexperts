@@ -1,0 +1,84 @@
+{%- comment -%}
+  Snippet: promo-split-banner.liquid
+  Description: Two-column promotional section with image left and text/CTA right.
+
+  Expected variables (passed via render tag):
+    - section: {Object} The section object containing all settings
+{%- endcomment -%}
+
+<div class="sd-section__inner">
+
+  <!-- Left Panel: Product Image -->
+  <div class="sd-section__panel sd-section__panel--image">
+    {%- if section.settings.product_image != blank -%}
+      <div class="sd-section__image-wrap">
+        {{ section.settings.product_image
+          | image_url: width: 1100
+          | image_tag:
+            loading: 'eager',
+            fetchpriority: 'high',
+            widths: '375,550,700,900,1100',
+            sizes: '(min-width: 750px) 50vw, 100vw',
+            alt: section.settings.product_image.alt | default: section.settings.heading,
+            class: 'sd-section__image',
+            width: section.settings.product_image.width,
+            height: section.settings.product_image.height
+        }}
+      </div>
+    {%- else -%}
+      <div class="sd-section__image-placeholder">
+        {{ 'product-1' | placeholder_svg_tag: 'sd-section__placeholder-svg' }}
+      </div>
+    {%- endif -%}
+  </div>
+
+  <!-- Right Panel: Text Content -->
+  <div class="sd-section__panel sd-section__panel--content">
+    <div class="sd-section__content-inner">
+
+      <!-- Eyebrow / Label -->
+      {%- unless section.settings.eyebrow == blank -%}
+        <p class="sd-section__eyebrow">{{ section.settings.eyebrow }}</p>
+      {%- endunless -%}
+
+      <!-- Main Heading -->
+      {%- unless section.settings.heading == blank -%}
+        <h2 class="sd-section__heading">{{ section.settings.heading }}</h2>
+      {%- endunless -%}
+
+      <!-- Body Copy -->
+      {%- unless section.settings.body_text == blank -%}
+        <div class="sd-section__body">{{ section.settings.body_text }}</div>
+      {%- endunless -%}
+
+      <!-- Star Rating + Review Count Social Proof -->
+      {%- if section.settings.show_rating -%}
+        <div
+          class="sd-section__social-proof"
+          aria-label="{{ 'sections.sd_section.rating_aria' | t }}"
+        >
+          {% render 'star-rating',
+            rating: section.settings.rating_value,
+            max_rating: 5
+          %}
+          {%- unless section.settings.review_text == blank -%}
+            <span class="sd-section__review-text">{{ section.settings.review_text }}</span>
+          {%- endunless -%}
+        </div>
+      {%- endif -%}
+
+      <!-- CTA Button -->
+      {%- unless section.settings.button_label == blank -%}
+        <a
+          href="{{ section.settings.button_url | default: '#' }}"
+          class="sd-section__cta"
+          aria-label="{{ section.settings.button_label }}"
+        >
+          {{ section.settings.button_label }}
+        </a>
+      {%- endunless -%}
+
+    </div>
+  </div>
+
+</div>
