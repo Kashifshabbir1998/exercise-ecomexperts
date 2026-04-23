@@ -3,7 +3,7 @@
   Description: Renders an accessible star rating graphic (filled, half, and empty stars).
 
   Expected variables (passed via render tag):
-    - rating:      {Number} The numeric rating value (e.g. 4 or 4.5). Required.
+    - rating:     {Number} The numeric rating value (e.g. 4 or 4.5). Required.
     - max_rating: {Number} The maximum rating value (e.g. 5). Defaults to 5 if not provided.
 {%- endcomment -%}
 
@@ -26,17 +26,12 @@
   {%- for i in (1..max_rating) -%}
     {%- liquid
       assign star_class = 'star-rating__star star-rating__star--empty'
-      
-      # Fix: Calculate the 'next' star position outside the conditional tag
-      assign next_star_index = rating_integer | plus: 1
-
       if i <= rating_integer
         assign star_class = 'star-rating__star star-rating__star--filled'
-      elsif i == next_star_index and has_half_star
+      elsif i == rating_integer | plus: 1 and has_half_star
         assign star_class = 'star-rating__star star-rating__star--half'
       endif
     -%}
-
     <span class="{{ star_class }}" aria-hidden="true">
       {%- if star_class contains 'filled' -%}
         <svg
