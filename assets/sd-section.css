@@ -1,0 +1,265 @@
+/* ============================================
+   SD Section — Two-Column Promotional Split
+   ============================================ */
+
+/* Custom Properties */
+.sd-section-wrapper,
+.sd-section {
+  --color-left-bg: #f0eeeb;
+  --color-right-bg: #f5f0e8;
+  --color-heading: #1a1a1a;
+  --color-eyebrow: #1a1a1a;
+  --color-body: #1a1a1a;
+  --color-review: #1a1a1a;
+  --color-star: #1a1a1a;
+  --color-cta-bg: #111111;
+  --color-cta-text: #ffffff;
+  --spacing-top: var(--sd-spacing-top, 0px);
+  --spacing-bottom: var(--sd-spacing-bottom, 0px);
+}
+
+/* Root Section */
+.sd-section {
+  display: block;
+  padding-top: var(--spacing-top);
+  padding-bottom: var(--spacing-bottom);
+  width: 100%;
+  overflow: hidden;
+}
+
+/* Inner wrapper — two columns */
+.sd-section__inner {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  min-height: 560px;
+}
+
+@media (min-width: 750px) {
+  .sd-section__inner {
+    flex-direction: row;
+    min-height: 600px;
+  }
+}
+
+/* ============================================
+   Left Panel — Image
+   ============================================ */
+
+.sd-section__panel--image {
+  background-color: var(--color-left-bg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 100%;
+  overflow: hidden;
+  position: relative;
+  min-height: 360px;
+}
+
+@media (min-width: 750px) {
+  .sd-section__panel--image {
+    flex: 0 0 57%;
+    min-height: 560px;
+  }
+}
+
+.sd-section__image-wrap {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.sd-section__image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+}
+
+.sd-section__image-placeholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--color-left-bg);
+}
+
+.sd-section__placeholder-svg {
+  width: 60%;
+  height: auto;
+  opacity: 0.4;
+}
+
+/* ============================================
+   Right Panel — Content
+   ============================================ */
+
+.sd-section__panel--content {
+  background-color: var(--color-right-bg);
+  display: flex;
+  align-items: center;
+  flex: 1 1 auto;
+  padding: 48px 32px;
+}
+
+@media (min-width: 750px) {
+  .sd-section__panel--content {
+    flex: 0 0 43%;
+    padding: 64px 56px;
+  }
+}
+
+.sd-section__content-inner {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  width: 100%;
+  max-width: 520px;
+}
+
+/* ============================================
+   Eyebrow
+   ============================================ */
+
+.sd-section__eyebrow {
+  font-family: "BaseMono", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-size: 11px;
+  font-weight: 400;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--color-eyebrow);
+  margin: 0 0 18px 0;
+  line-height: 1.4;
+}
+
+/* ============================================
+   Heading
+   ============================================ */
+
+.sd-section__heading {
+  font-family: "Canela", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-size: clamp(32px, 3.5vw, 48px);
+  font-weight: 300;
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+  color: var(--color-heading);
+  margin: 0 0 32px 0;
+  word-break: normal;
+  overflow-wrap: break-word;
+  hyphens: none;
+  white-space: normal;
+}
+
+@media (min-width: 750px) {
+  .sd-section__heading {
+    font-size: clamp(34px, 3vw, 50px);
+  }
+}
+
+/* ============================================
+   Body Text
+   ============================================ */
+
+.sd-section__body {
+  font-family: "Copyright (C) H&Co | typography.com", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.7;
+  color: var(--color-body);
+  margin: 0 0 28px 0;
+}
+
+.sd-section__body p {
+  margin: 0;
+  font-family: inherit;
+  font-size: inherit;
+  font-weight: inherit;
+  line-height: inherit;
+  color: inherit;
+}
+
+/* ============================================
+   Social Proof — Star Rating + Review Text
+   ============================================ */
+
+.sd-section__social-proof {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 0 0 28px 0;
+  flex-wrap: wrap;
+}
+
+/* Star rating snippet styles */
+.sd-section__social-proof .star-rating,
+.sd-section__social-proof [class*="star-rating"] {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+}
+
+.sd-section__social-proof svg,
+.sd-section__social-proof .star {
+  width: 18px;
+  height: 18px;
+  fill: var(--color-star);
+  color: var(--color-star);
+}
+
+.sd-section__review-text {
+  font-family: "Copyright (C) H&Co | typography.com", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  color: var(--color-review);
+  letter-spacing: 0.01em;
+  line-height: 1.4;
+}
+
+/* ============================================
+   CTA Button
+   ============================================ */
+
+.sd-section__cta {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  background-color: var(--color-cta-bg);
+  color: var(--color-cta-text);
+  font-family: "BaseMono", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-size: 12px;
+  font-weight: 400;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  text-decoration: none;
+  padding: 20px 24px;
+  min-height: 56px;
+  cursor: pointer;
+  transition: background-color 0.2s ease, color 0.2s ease;
+  box-sizing: border-box;
+}
+
+.sd-section__cta:hover,
+.sd-section__cta:focus {
+  background-color: #333333;
+  color: var(--color-cta-text);
+  text-decoration: none;
+  outline: none;
+}
+
+.sd-section__cta:focus-visible {
+  outline: 2px solid var(--color-cta-bg);
+  outline-offset: 2px;
+}
+
+/* SHOPIFYDRAFT CSS AUDIT
+   Colors from Figma: #f0eeeb (left panel bg), #f5f0e8 (right panel bg), #1a1a1a (text/eyebrow/heading/body), #111111 (CTA bg), #ffffff (CTA text)
+   Colors inferred:   #333333 (CTA hover state), star color inferred as #1a1a1a from design
+   Fonts from Figma:  "BaseMono" (eyebrow, CTA), "Canela" (heading), "Copyright (C) H&Co | typography.com" (body, review text)
+   Spacing from Figma: panel padding 64px 56px desktop / 48px 32px mobile, heading mb 32px, body mb 28px, social proof mb 28px, eyebrow mb 18px, CTA min-height 56px, gap between stars and review text 10px
+*/
