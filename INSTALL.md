@@ -1,45 +1,59 @@
-## Installation Instructions
+## SD Section Installation
 
-### 1. Add Files to Theme
+Follow these steps to install the SD Section into your Shopify theme:
 
-Copy the following files to your theme directory:
+### 1. Add Files
 
-- `sections/sd-section.liquid` → `sections/sd-section.liquid`
-- `assets/sd-section.js` → `assets/sd-section.js`
-- `assets/sd-section.css` → `assets/sd-section.css`
-- `snippets/promo-split-banner.liquid` → `snippets/promo-split-banner.liquid`
-- `snippets/star-rating.liquid` → `snippets/star-rating.liquid`
+Add the following files to your theme:
 
-### 2. Update Locale Files
+- `sections/sd-section.liquid` — Main section file
+- `assets/sd-section.js` — JavaScript functionality
+- `assets/sd-section.css` — Section styles
+- `snippets/split-feature-block.liquid` — Reusable feature block component
 
-Add the following keys to `locales/en.default.json`:
+### 2. Add Section to Theme
 
+1. In Shopify Admin, go to **Online Store > Themes**
+2. Select your theme and click **Edit code**
+3. Upload all four files to their respective directories
+4. Verify files appear in the correct locations in the code editor
+
+### 3. Add to Page Template (One-Time)
+
+To enable the section on pages:
+
+1. In the code editor, locate your page template file (e.g., `templates/page.json`)
+2. Add the section to your template's section list:
 ```
-"sections": {
-  "sd_section": {
-    "rating_aria": "Product rating"
-  }
-},
-"snippets": {
-  "star_rating": {
-    "aria_label": "Star rating"
-  }
+{
+  "type": "sd-section"
 }
 ```
+3. Save the template
 
-### 3. Add Section to Template
+### 4. Configure in Theme Editor
 
-To make the section available in the Shopify Theme Editor:
+1. Go to **Online Store > Themes > Customize**
+2. Navigate to a page where you added the section
+3. Click the section in the preview to access settings and customize content
 
-1. Open the template file where you want to use this section (e.g., `templates/index.json` for the homepage)
-2. Add a new section block with type `sd-section`
-3. Or add it to `sections/` folder and it will automatically appear in the Theme Editor sidebar
+### 5. Verify
 
-### 4. Verify Installation
+- Check that the section appears correctly on your page
+- Test responsive behavior on mobile and desktop
+- Confirm all assets load without console errors
 
-- Navigate to the Shopify Theme Editor
-- Confirm `sd-section` appears in the section list
-- Test the section renders correctly with the star rating and promotional banner snippets
-- Verify CSS and JavaScript assets load without console errors
+### File Structure Reference
 
-All files are now ready for use.
+```
+theme/
+├── sections/
+│   └── sd-section.liquid
+├── assets/
+│   ├── sd-section.js
+│   └── sd-section.css
+└── snippets/
+    └── split-feature-block.liquid
+```
+
+No additional configuration or dependencies required.
