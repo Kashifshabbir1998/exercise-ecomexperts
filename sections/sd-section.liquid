@@ -1,170 +1,74 @@
 {{ 'sd-section.css' | asset_url | stylesheet_tag }}
 <script src="{{ 'sd-section.js' | asset_url }}" defer></script>
 
-<!-- Two-Column Promotional Split Section -->
+<!-- Google Fonts: Cormorant Garamond, Josefin Sans, Jost -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600;700&family=Josefin+Sans:wght@300;400;600&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+
+<!-- Split Feature Section -->
 <div
   id="shopify-section-{{ section.id }}"
   class="sd-section shopify-section"
   style="--sd-spacing-top: {{ section.settings.padding_top }}px; --sd-spacing-bottom: {{ section.settings.padding_bottom }}px;"
 >
   <sd-section>
-    <div class="sd-section__inner">
-
-      <!-- Left Panel: Product Image -->
-      <div class="sd-section__panel sd-section__panel--image">
-        {%- if section.settings.product_image != blank -%}
-          <div class="sd-section__image-wrap">
-            {{ section.settings.product_image
-              | image_url: width: 1100
-              | image_tag:
-                loading: 'eager',
-                fetchpriority: 'high',
-                widths: '375,550,700,900,1100',
-                sizes: '(min-width: 750px) 50vw, 100vw',
-                alt: section.settings.product_image.alt | default: section.settings.heading,
-                class: 'sd-section__image',
-                width: section.settings.product_image.width,
-                height: section.settings.product_image.height
-            }}
-          </div>
-        {%- else -%}
-          <!-- PLACEHOLDER: Upload a product image via the "Product image" setting -->
-          <div class="sd-section__image-placeholder">
-            {{ 'product-1' | placeholder_svg_tag: 'sd-section__placeholder-svg' }}
-          </div>
-        {%- endif -%}
-      </div>
-
-      <!-- Right Panel: Text Content -->
-      <div class="sd-section__panel sd-section__panel--content">
-        <div class="sd-section__content-inner">
-
-          <!-- Eyebrow / Label -->
-          {%- unless section.settings.eyebrow == blank -%}
-            <p class="sd-section__eyebrow">{{ section.settings.eyebrow }}</p>
-          {%- endunless -%}
-
-          <!-- Main Heading -->
-          {%- unless section.settings.heading == blank -%}
-            <h2 class="sd-section__heading">{{ section.settings.heading }}</h2>
-          {%- endunless -%}
-
-          <!-- Body Copy -->
-          {%- unless section.settings.body_text == blank -%}
-            <div class="sd-section__body">{{ section.settings.body_text }}</div>
-          {%- endunless -%}
-
-          <!-- Star Rating + Review Count Social Proof -->
-          {%- if section.settings.show_rating -%}
-            <div class="sd-section__social-proof" aria-label="{{ 'sections.sd_section.rating_aria' | t }}">
-              {% render 'star-rating',
-                rating: section.settings.rating_value,
-                max_rating: 5
-              %}
-              {%- unless section.settings.review_text == blank -%}
-                <span class="sd-section__review-text">{{ section.settings.review_text }}</span>
-              {%- endunless -%}
-            </div>
-          {%- endif -%}
-
-          <!-- CTA Button -->
-          {%- unless section.settings.button_label == blank -%}
-            <a
-              href="{{ section.settings.button_url | default: '#' }}"
-              class="sd-section__cta"
-              aria-label="{{ section.settings.button_label }}"
-            >
-              {{ section.settings.button_label }}
-            </a>
-          {%- endunless -%}
-
-        </div>
-      </div>
-
-    </div>
+    {% render 'split-feature-block',
+      section_number: section.settings.section_number,
+      heading: section.settings.heading,
+      body_text: section.settings.body_text,
+      image: section.settings.product_image,
+      image_alt: section.settings.image_alt,
+      flip_layout: section.settings.flip_layout
+    %}
   </sd-section>
 </div>
 
 {% schema %}
 {
-  "name": "SD - Promo Split Banner",
-  "tag": "section",
+  "name": "Split Feature Block",
+  "tag": "div",
   "class": "sd-section-wrapper",
   "settings": [
     {
       "type": "header",
-      "content": "SD - Promo Split Banner"
-    },
-    {
-      "type": "header",
-      "content": "Left Panel — Image"
-    },
-    {
-      "type": "image_picker",
-      "id": "product_image",
-      "label": "Product image"
-    },
-    {
-      "type": "header",
-      "content": "Right Panel — Content"
+      "content": "Split Feature Block"
     },
     {
       "type": "text",
-      "id": "eyebrow",
-      "label": "Eyebrow label",
-      "default": "THE 30-SECOND MAKEUP ROUTINE"
+      "id": "section_number",
+      "label": "Section Number Label",
+      "default": "03",
+      "info": "Small label displayed above the heading (e.g. 01, 02, 03)"
     },
     {
       "type": "text",
       "id": "heading",
       "label": "Heading",
-      "default": "5 reasons busy women are switching to Mini Miracle Balm"
+      "default": "CLEAN INGREDIENTS"
     },
     {
       "type": "richtext",
       "id": "body_text",
-      "label": "Body text",
-      "default": "<p>You run a packed calendar. Your makeup should keep up. One swipe of sheer, buildable color for cheeks and lips — and you look polished without looking done.</p>"
+      "label": "Body Copy",
+      "default": "<p>Our formulas are made with clean ingredients you can trust. Free from parabens, sulfates, and synthetic fragrances — every product is designed to work beautifully on every skin tone.</p>"
     },
     {
-      "type": "header",
-      "content": "Social Proof"
+      "type": "image_picker",
+      "id": "product_image",
+      "label": "Product Image"
+    },
+    {
+      "type": "text",
+      "id": "image_alt",
+      "label": "Image Alt Text",
+      "default": "Product image"
     },
     {
       "type": "checkbox",
-      "id": "show_rating",
-      "label": "Show star rating",
-      "default": true
-    },
-    {
-      "type": "range",
-      "id": "rating_value",
-      "label": "Star rating value",
-      "min": 0,
-      "max": 5,
-      "step": 1,
-      "default": 5
-    },
-    {
-      "type": "text",
-      "id": "review_text",
-      "label": "Review count text",
-      "default": "75,900+ reviews · #1 bestseller"
-    },
-    {
-      "type": "header",
-      "content": "CTA Button"
-    },
-    {
-      "type": "text",
-      "id": "button_label",
-      "label": "Button label",
-      "default": "SHOP MINI MIRACLE BALM"
-    },
-    {
-      "type": "url",
-      "id": "button_url",
-      "label": "Button link"
+      "id": "flip_layout",
+      "label": "Flip layout (image right, text left)",
+      "default": false
     },
     {
       "type": "header",
@@ -193,8 +97,8 @@
   ],
   "presets": [
     {
-      "name": "SD - Promo Split Banner",
-      "category": "Promotional"
+      "name": "Split Feature Block",
+      "category": "Custom"
     }
   ]
 }
