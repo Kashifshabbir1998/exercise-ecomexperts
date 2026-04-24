@@ -567,14 +567,8 @@
         },
         "padding_bottom": {
           "label": "Padding bottom"
-        }
-      }
-    }
-  
-},
-  
-  "sections11": {
-    "testpage": {
+        },
+        "testpage": {
       "products": {
         "product": {
           "add_to_cart": "Add to Cart",
@@ -594,7 +588,12 @@
         }
       }
     }
+      }
+    }
+  
 },
+  
+  
   "general": {
     "accessibility": {
       "home": "Home"
