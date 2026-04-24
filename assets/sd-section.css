@@ -1,285 +1,194 @@
-@import url('https://fonts.googleapis.com/css2?family=Josefin%20Sans:wght@300;400;500;600;700&display=swap');
+/* =========================================================
+   sd-section.css — Press Logo Bar
+   ========================================================= */
 
-/* =============================================
-   CSS Custom Properties
-   ============================================= */
-:root {
-  --color-bg-section: #f5f2ee;
-  --color-text-primary: #1a1a1a;
-  --color-text-secondary: #4a4a4a;
-  --color-text-number: #b8a99a;
-  --color-text-heading: #1a1a1a;
-  --color-text-body: #5a5a5a;
-  --color-divider: #d4c9be;
-  --color-image-bg: #e8e2da;
-
-  --font-heading: "Josefin Sans", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-  --font-body: "Josefin Sans", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-  --font-number: "Josefin Sans", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-
-  --spacing-section-v: 80px;
-  --spacing-section-h: 60px;
-  --gap-split: 0px;
+/* Scoped CSS custom properties */
+.sd-section {
+  --sd-color-bg: #ffffff;
+  --sd-color-border: #e8e8e8;
+  --sd-color-eyebrow: #888888;
+  --sd-color-logo-text: #1a1a1a;
+  --sd-color-logo-nyt: #000000;
+  --sd-font-serif: Georgia, 'Times New Roman', serif;
+  --sd-font-sans: 'Helvetica Neue', Arial, sans-serif;
+  --sd-spacing-top: 24px;
+  --sd-spacing-bottom: 24px;
 }
 
-/* =============================================
-   Section Wrapper
-   ============================================= */
-.sd-section-wrapper {
-  width: 100%;
-  background-color: var(--color-bg-section);
-}
-
+/* Section wrapper */
 .sd-section {
   display: block;
-  width: 100%;
-  padding-top: var(--sd-spacing-top, 0px);
-  padding-bottom: var(--sd-spacing-bottom, 0px);
-  background-color: var(--color-bg-section);
-}
-
-sd-section {
-  display: block;
+  background-color: var(--sd-color-bg);
+  border-bottom: 1px solid var(--sd-color-border);
+  padding-top: var(--sd-spacing-top);
+  padding-bottom: var(--sd-spacing-bottom);
   width: 100%;
 }
 
-/* =============================================
-   Split Feature Block
-   ============================================= */
-.split-feature {
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  min-height: 560px;
-  background-color: var(--color-bg-section);
+/* Inner container */
+.sd-section__inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
 }
 
-.split-feature--flipped {
-  flex-direction: column;
-}
-
-/* Image Column */
-.split-feature__image-col {
-  flex: 1;
-  position: relative;
-  background-color: var(--color-image-bg);
-  overflow: hidden;
-  min-height: 360px;
-}
-
-.split-feature__image-col img {
-  display: block;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: center;
-}
-
-.split-feature__image-placeholder {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  height: 100%;
-  min-height: 360px;
-  background-color: var(--color-image-bg);
-}
-
-.split-feature__image-placeholder svg {
-  width: 80px;
-  height: 80px;
-  fill: var(--color-divider);
-  opacity: 0.5;
-}
-
-/* Text Column */
-.split-feature__text-col {
-  flex: 1;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 56px 40px;
-  background-color: var(--color-bg-section);
-}
-
-.split-feature__text-inner {
-  max-width: 460px;
-  width: 100%;
-}
-
-/* Section Number */
-.split-feature__number {
-  display: block;
-  font-family: var(--font-number);
-  font-size: 11px;
-  font-weight: 400;
-  letter-spacing: 0.25em;
-  color: var(--color-text-number);
-  text-transform: uppercase;
-  margin-bottom: 20px;
-}
-
-/* Heading */
-.split-feature__heading {
-  font-family: var(--font-heading);
-  font-size: 28px;
+/* Eyebrow label */
+.sd-section__eyebrow {
+  text-align: center;
+  font-family: var(--sd-font-sans);
+  font-size: 0.6875rem;
   font-weight: 600;
-  letter-spacing: 0.18em;
-  color: var(--color-text-heading);
+  letter-spacing: 0.12em;
   text-transform: uppercase;
-  line-height: 1.2;
-  margin: 0 0 24px 0;
-  padding: 0;
+  color: var(--sd-color-eyebrow);
+  margin: 0 0 1.25rem 0;
 }
 
-/* Divider */
-.split-feature__divider {
+/* =========================================================
+   Desktop: static flex row (6 columns)
+   ========================================================= */
+@media (min-width: 750px) {
+  /* Override Swiper layout on desktop — display as plain flex row */
+  .sd-section__swiper {
+    overflow: visible !important;
+  }
+
+  .sd-section__swiper .swiper-wrapper {
+    display: flex !important;
+    flex-wrap: nowrap;
+    align-items: center;
+    justify-content: center;
+    transform: none !important;
+    width: auto !important;
+    gap: 0;
+  }
+
+  .sd-section__logo-slide {
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+    flex: 1 1 0;
+    width: auto !important;
+    padding: 0.5rem 1.5rem;
+    border-right: 1px solid var(--sd-color-border);
+  }
+
+  .sd-section__logo-slide:last-child {
+    border-right: none;
+  }
+}
+
+/* =========================================================
+   Mobile: Swiper carousel
+   ========================================================= */
+@media (max-width: 749px) {
+  .sd-section__swiper {
+    overflow: hidden;
+  }
+
+  .sd-section__logo-slide {
+    width: auto;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.5rem 1rem;
+  }
+}
+
+/* =========================================================
+   Logo image
+   ========================================================= */
+.sd-section__logo-image-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.sd-section__logo-img {
+  max-height: 36px;
+  width: auto;
+  object-fit: contain;
+  filter: grayscale(100%);
+  opacity: 0.7;
+  transition: opacity 0.2s ease, filter 0.2s ease;
+}
+
+.sd-section__logo-img:hover {
+  opacity: 1;
+  filter: grayscale(0%);
+}
+
+/* =========================================================
+   Text-based logo typography styles
+   ========================================================= */
+.sd-section__logo-text {
   display: block;
-  width: 40px;
-  height: 1px;
-  background-color: var(--color-divider);
-  margin-bottom: 24px;
+  color: var(--sd-color-logo-text);
+  white-space: nowrap;
+  transition: opacity 0.2s ease;
+  opacity: 0.75;
+  line-height: 1;
 }
 
-/* Body Text */
-.split-feature__body {
-  font-family: var(--font-body);
-  font-size: 14px;
+.sd-section__logo-text:hover {
+  opacity: 1;
+}
+
+/* Italic serif — Allure */
+.sd-section__logo-text--italic-serif {
+  font-family: var(--sd-font-serif);
+  font-style: italic;
+  font-weight: 400;
+  font-size: 1.375rem;
+  letter-spacing: 0.01em;
+}
+
+/* Spaced caps — Vogue */
+.sd-section__logo-text--spaced-caps {
+  font-family: var(--sd-font-sans);
+  font-style: normal;
+  font-weight: 400;
+  font-size: 0.9375rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+}
+
+/* Bold serif — The New York Times */
+.sd-section__logo-text--bold-serif {
+  font-family: var(--sd-font-serif);
+  font-style: normal;
+  font-weight: 700;
+  font-size: 1.125rem;
+  letter-spacing: 0.01em;
+  color: var(--sd-color-logo-nyt);
+  opacity: 1;
+}
+
+/* Italic spaced — Glamour */
+.sd-section__logo-text--italic-spaced {
+  font-family: var(--sd-font-serif);
+  font-style: italic;
+  font-weight: 400;
+  font-size: 1.25rem;
+  letter-spacing: 0.08em;
+}
+
+/* Spaced sans — Byrdie */
+.sd-section__logo-text--spaced-sans {
+  font-family: var(--sd-font-sans);
+  font-style: normal;
   font-weight: 300;
-  line-height: 1.85;
-  color: var(--color-text-body);
+  font-size: 0.9375rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+
+/* Italic sans — InStyle */
+.sd-section__logo-text--italic-sans {
+  font-family: var(--sd-font-sans);
+  font-style: italic;
+  font-weight: 400;
+  font-size: 1.125rem;
   letter-spacing: 0.04em;
-  margin: 0;
-  padding: 0;
 }
-
-.split-feature__body p {
-  margin: 0 0 16px 0;
-  padding: 0;
-}
-
-.split-feature__body p:last-child {
-  margin-bottom: 0;
-}
-
-/* =============================================
-   Desktop Layout
-   ============================================= */
-@media screen and (min-width: 750px) {
-  .split-feature {
-    flex-direction: row;
-    min-height: 600px;
-  }
-
-  .split-feature--flipped {
-    flex-direction: row-reverse;
-  }
-
-  .split-feature__image-col {
-    flex: 1 1 50%;
-    min-height: 500px;
-  }
-
-  .split-feature__image-placeholder {
-    min-height: 500px;
-  }
-
-  .split-feature__text-col {
-    flex: 1 1 50%;
-    padding: 72px 64px;
-  }
-
-  .split-feature__heading {
-    font-size: 32px;
-    letter-spacing: 0.2em;
-    margin-bottom: 28px;
-  }
-
-  .split-feature__number {
-    font-size: 11px;
-    margin-bottom: 22px;
-  }
-
-  .split-feature__divider {
-    margin-bottom: 28px;
-  }
-
-  .split-feature__body {
-    font-size: 14px;
-    line-height: 1.9;
-  }
-}
-
-@media screen and (min-width: 1200px) {
-  .split-feature__text-col {
-    padding: 80px 80px;
-  }
-
-  .split-feature__text-inner {
-    max-width: 480px;
-  }
-
-  .split-feature__heading {
-    font-size: 34px;
-  }
-}
-
-/* =============================================
-   Mobile Layout
-   ============================================= */
-@media screen and (max-width: 749px) {
-  .split-feature {
-    flex-direction: column;
-    min-height: unset;
-  }
-
-  .split-feature--flipped {
-    flex-direction: column;
-  }
-
-  .split-feature__image-col {
-    width: 100%;
-    min-height: 300px;
-    order: 0;
-  }
-
-  .split-feature__image-placeholder {
-    min-height: 300px;
-  }
-
-  .split-feature__text-col {
-    width: 100%;
-    padding: 48px 28px;
-    order: 1;
-  }
-
-  .split-feature__text-inner {
-    max-width: 100%;
-  }
-
-  .split-feature__heading {
-    font-size: 24px;
-    letter-spacing: 0.15em;
-    margin-bottom: 20px;
-  }
-
-  .split-feature__number {
-    margin-bottom: 16px;
-  }
-
-  .split-feature__divider {
-    margin-bottom: 20px;
-  }
-
-  .split-feature__body {
-    font-size: 14px;
-    line-height: 1.8;
-  }
-}
-
-/* SHOPIFYDRAFT CSS AUDIT
-   Colors from Figma: #f5f2ee, #1a1a1a, #4a4a4a, #b8a99a, #5a5a5a, #d4c9be, #e8e2da
-   Colors inferred:   All colors inferred from design context (warm neutral/beige palette) as design image was not clearly visible
-   Fonts from Figma:  Josefin Sans (300, 400, 600)
-   Spacing from Figma: padding 56px 40px (mobile), 72px 64px (desktop), 80px 80px (large desktop), gap 0px between columns
-*/
