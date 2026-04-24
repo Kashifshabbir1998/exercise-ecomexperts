@@ -1,50 +1,62 @@
 {%- comment -%}
   Press Logo Bar Snippet
-  Usage: {% render 'press-logo-bar', section: section %}
+  Renders a single press logo block (image or text-based typography logo).
+
   Expected variables:
-    - section: the parent section object; iterates blocks of type 'press_logo'
-      Each press_logo block expects:
-        - block.settings.logo_image {Image}  optional
-        - block.settings.logo_alt   {String} alt text for the image
-        - block.settings.logo_text  {String} text fallback when no image
-    - press_quote: {String} optional pull-quote passed from section settings
+    - block        {Object} - The section block object (required)
+    - publication_name {String} - The name of the publication (from block.settings.publication_name)
+    - logo_image   {Object} - An image object for the logo (from block.settings.logo_image, optional)
+    - logo_link    {String} - A URL to wrap the logo in a link (from block.settings.logo_link, optional)
+    - style        {String} - Typography style class modifier (from block.settings.style)
 {%- endcomment -%}
 
-<section class="sd-testpage__press-bar" aria-label="{{ 'sections.press_bar.label' | t | default: 'Press mentions' }}">
-  <div class="sd-testpage__press-bar-inner">
+{%- liquid
+  assign publication_name = block.settings.publication_name
+  assign logo_image       = block.settings.logo_image
+  assign logo_link        = block.settings.logo_link
+  assign logo_style       = block.settings.style
+-%}
 
-    {%- unless press_quote == blank -%}
-      <blockquote class="sd-testpage__press-quote">
-        <p>"{{ press_quote }}"</p>
-      </blockquote>
-    {%- endunless -%}
+<div class="swiper-slide sd-section__logo-slide" {{ block.shopify_attributes }}>
 
-    <div class="sd-testpage__press-logos" aria-label="{{ 'sections.press_bar.logos_label' | t | default: 'Press outlet logos' }}">
-      {%- for block in section.blocks -%}
-        {%- case block.type -%}
-          {%- when 'press_logo' -%}
-            <div
-              class="sd-testpage__press-logo-item"
-              {{ block.shopify_attributes }}
-            >
-              {%- if block.settings.logo_image != blank -%}
-                {{
-                  block.settings.logo_image
-                  | image_url: width: 200
-                  | image_tag:
-                    class: 'sd-testpage__press-logo-img',
-                    alt: block.settings.logo_alt | default: 'Press logo',
-                    width: 120,
-                    height: 40,
-                    loading: 'lazy'
-                }}
-              {%- elsif block.settings.logo_text != blank -%}
-                <span class="sd-testpage__press-logo-text">{{ block.settings.logo_text }}</span>
-              {%- endif -%}
-            </div>
-        {%- endcase -%}
-      {%- endfor -%}
+  {%- unless logo_link == blank -%}
+    <a
+      href="{{ logo_link }}"
+      class="sd-section__logo-link"
+      aria-label="{{ publication_name | escape }}"
+      target="_blank"
+      rel="noopener noreferrer"
+    >
+  {%- endunless -%}
+
+  {%- if logo_image != blank -%}
+    <div class="sd-section__logo-image-wrap">
+      {{-
+        logo_image
+        | image_url: width: 300
+        | image_tag:
+          loading: 'lazy',
+          widths: '150,300',
+          alt: publication_name,
+          class: 'sd-section__logo-img',
+          width: 150,
+          height: 60
+      -}}
     </div>
+  {%- else -%}
+    {%- unless publication_name == blank -%}
+      <!-- Text-based logo mimicking publication brand typography -->
+      <span
+        class="sd-section__logo-text sd-section__logo-text--{{ logo_style }}"
+        aria-label="{{ publication_name | escape }}"
+      >
+        {{- publication_name -}}
+      </span>
+    {%- endunless -%}
+  {%- endif -%}
 
-  </div>
-</section>
+  {%- unless logo_link == blank -%}
+    </a>
+  {%- endunless -%}
+
+</div>
