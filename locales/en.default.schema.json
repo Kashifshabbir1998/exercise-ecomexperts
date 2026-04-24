@@ -1,21 +1,47 @@
-/*
- * ------------------------------------------------------------
- * IMPORTANT: The contents of this file are auto-generated.
- *
- * This file may be updated by the Shopify admin language editor
- * or related systems. Please exercise caution as any changes
- * made to this file may be overwritten.
- * ------------------------------------------------------------
- */
 {
   "sections": {
     "sd_section": {
-      "rating_aria": "Product rating"
-    }
-  },
-  "snippets": {
-    "star_rating": {
-      "aria_label": "Star rating"
+      "name": "Press Logo Bar",
+      "settings": {
+        "eyebrow_text": {
+          "label": "Eyebrow label",
+          "default": "As Seen In"
+        },
+        "padding_top": {
+          "label": "Padding top"
+        },
+        "padding_bottom": {
+          "label": "Padding bottom"
+        }
+      },
+      "blocks": {
+        "press_logo": {
+          "name": "Publication",
+          "settings": {
+            "publication_name": {
+              "label": "Publication name",
+              "default": "Publication"
+            },
+            "logo_image": {
+              "label": "Logo image (optional)"
+            },
+            "logo_link": {
+              "label": "Link (optional)"
+            },
+            "style": {
+              "label": "Typography style",
+              "options": {
+                "italic_serif": "Italic serif (Allure)",
+                "spaced_caps": "Spaced caps (Vogue)",
+                "bold_serif": "Bold serif (NYT)",
+                "italic_spaced": "Italic spaced (Glamour)",
+                "spaced_sans": "Spaced sans (Byrdie)",
+                "italic_sans": "Italic sans (InStyle)"
+              }
+            }
+          }
+        }
+      }
     }
   }
 }
