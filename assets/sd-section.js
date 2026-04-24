@@ -1,103 +1,103 @@
-class SdSectionController {
-  constructor(element) {
-    this.el = element;
-    this.init();
+class SdSection extends HTMLElement {
+  connectedCallback() {
+    this._swiper = null;
+    this._mobileQuery = window.matchMedia('(max-width: 749px)');
+    this._onMediaChange = this._onMediaChange.bind(this);
+    this._swiperEl = this.querySelector('.sd-section__swiper');
+    if (!this._swiperEl) return;
+    this._mobileQuery.addEventListener('change', this._onMediaChange);
+    this._initIfMobile();
   }
 
-  init() {
-    const block = this.el.querySelector('.split-feature-block');
-    if (!block) return;
-    this.observeEntrance(block);
-  }
-
-  observeEntrance(block) {
-    if (!('IntersectionObserver' in window)) {
-      block.classList.add('is-visible');
-      return;
+  disconnectedCallback() {
+    if (this._mobileQuery) {
+      this._mobileQuery.removeEventListener('change', this._onMediaChange);
     }
+    this._destroySwiper();
+  }
 
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('is-visible');
-            observer.unobserve(entry.target);
-          }
-        });
+  _onMediaChange(e) {
+    if (e.matches) {
+      this._initIfMobile();
+    } else {
+      this._destroySwiper();
+    }
+  }
+
+  _initIfMobile() {
+    if (this._mobileQuery.matches) {
+      this._initSwiper();
+    }
+  }
+
+  _initSwiper() {
+    if (this._swiper) return;
+    if (typeof Swiper === 'undefined') {
+      this._loadSwiper().then(() => this._createSwiper());
+    } else {
+      this._createSwiper();
+    }
+  }
+
+  _loadSwiper() {
+    return new Promise((resolve) => {
+      const existingScript = document.querySelector('script[src*="swiper"]');
+      if (existingScript) {
+        existingScript.addEventListener('load', resolve);
+        return;
+      }
+
+      const link = document.createElement('link');
+      link.rel = 'stylesheet';
+      link.href = 'https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css';
+      document.head.appendChild(link);
+
+      const script = document.createElement('script');
+      script.src = 'https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js';
+      script.onload = resolve;
+      document.head.appendChild(script);
+    });
+  }
+
+  _createSwiper() {
+    if (!this._swiperEl || this._swiper) return;
+
+    this._swiper = new Swiper(this._swiperEl, {
+      slidesPerView: 'auto',
+      spaceBetween: 24,
+      grabCursor: true,
+      freeMode: true,
+      a11y: {
+        enabled: true,
+        prevSlideMessage: 'Previous slide',
+        nextSlideMessage: 'Next slide',
       },
-      { threshold: 0.15 }
-    );
-
-    observer.observe(block);
-    this._observer = observer;
+    });
   }
 
-  destroy() {
-    if (this._observer) {
-      this._observer.disconnect();
-      this._observer = null;
+  _destroySwiper() {
+    if (this._swiper) {
+      this._swiper.destroy(true, true);
+      this._swiper = null;
     }
   }
 }
 
-// Registry to manage instances per section
-const sdSectionInstances = new Map();
-
-function initSdSection(container) {
-  const sectionEl = container.querySelector('sd-section');
-  if (!sectionEl) return;
-
-  const sectionId = container.id;
-  if (sdSectionInstances.has(sectionId)) {
-    sdSectionInstances.get(sectionId).destroy();
-  }
-
-  const instance = new SdSectionController(sectionEl);
-  sdSectionInstances.set(sectionId, instance);
+if (!customElements.get('sd-section')) {
+  customElements.define('sd-section', SdSection);
 }
 
-function destroySdSection(container) {
-  const sectionId = container.id;
-  if (sdSectionInstances.has(sectionId)) {
-    sdSectionInstances.get(sectionId).destroy();
-    sdSectionInstances.delete(sectionId);
-  }
-}
-
-function getContainer(event) {
-  return event.detail && event.detail.sectionId
-    ? document.getElementById('shopify-section-' + event.detail.sectionId)
-    : null;
-}
-
-document.addEventListener('DOMContentLoaded', () => {
-  document.querySelectorAll('.sd-section.shopify-section').forEach((container) => {
-    initSdSection(container);
-  });
-});
-
-document.addEventListener('shopify:section:load', (event) => {
-  const container = getContainer(event);
-  if (!container || !container.classList.contains('sd-section')) return;
-  initSdSection(container);
-});
-
-document.addEventListener('shopify:section:unload', (event) => {
-  const container = getContainer(event);
-  if (!container || !container.classList.contains('sd-section')) return;
-  destroySdSection(container);
-});
-
-document.addEventListener('shopify:section:select', (event) => {
-  const container = getContainer(event);
-  if (!container || !container.classList.contains('sd-section')) return;
-  const block = container.querySelector('.split-feature-block');
-  if (block) block.classList.add('is-visible');
-});
-
+// Handle Shopify customizer block:select to scroll carousel to selected block
 document.addEventListener('shopify:block:select', (event) => {
-  const container = getContainer(event);
-  if (!container || !container.classList.contains('sd-section')) return;
-  const block = container.querySelector('.split-feature-block');
-  if (block) block.classList.add('is-visible');
+  const sdEl = event.target.closest('sd-section');
+  if (!sdEl || !sdEl._swiper) return;
+
+  const slide = event.target.closest('.swiper-slide');
+  if (!slide) return;
+
+  const slides = Array.from(sdEl.querySelectorAll('.swiper-slide'));
+  const index = slides.indexOf(slide);
+  if (index !== -1) {
+    sdEl._swiper.slideTo(index);
+  }
 });
