@@ -8,7 +8,10 @@
  * ------------------------------------------------------------
  */
 {
-  "general1": {
+  "general": {
+    "accessibility": {
+      "home": "Home"
+    },
     "password_page": {
       "login_form_heading": "Enter store using password:",
       "login_password_button": "Enter using password",
@@ -275,7 +278,57 @@
       "subtext": "404"
     }
   },
-  "sections1": {
+  "sections": {
+     "sd_section": {
+      "name": "Split Feature Block",
+      "settings": {
+        "section_number": {
+          "label": "Section Number Label",
+          "info": "Small label displayed above the heading (e.g. 01, 02, 03)"
+        },
+        "heading": {
+          "label": "Heading"
+        },
+        "body_text": {
+          "label": "Body Copy"
+        },
+        "product_image": {
+          "label": "Product Image"
+        },
+        "image_alt": {
+          "label": "Image Alt Text"
+        },
+        "flip_layout": {
+          "label": "Flip layout (image right, text left)"
+        },
+        "padding_top": {
+          "label": "Padding top"
+        },
+        "padding_bottom": {
+          "label": "Padding bottom"
+        },
+        "testpage": {
+      "products": {
+        "product": {
+          "add_to_cart": "Add to Cart",
+          "select_shade": "Select Shade"
+        }
+      },
+      "accessibility": {
+        "star_reviews_info": "Star reviews information"
+      },
+      "sections": {
+        "press_bar": {
+          "label": "Press Bar",
+          "logos_label": "Press Logos"
+        },
+        "product_highlight": {
+          "label": "Product Highlight"
+        }
+      }
+    }
+      }
+    },
     "announcements": {
       "previous_announcement": "Previous announcement",
       "next_announcement": "Next announcement",
@@ -539,66 +592,8 @@
   },
 
 
-  "sections": {
-    "sd_section": {
-      "name": "Split Feature Block",
-      "settings": {
-        "section_number": {
-          "label": "Section Number Label",
-          "info": "Small label displayed above the heading (e.g. 01, 02, 03)"
-        },
-        "heading": {
-          "label": "Heading"
-        },
-        "body_text": {
-          "label": "Body Copy"
-        },
-        "product_image": {
-          "label": "Product Image"
-        },
-        "image_alt": {
-          "label": "Image Alt Text"
-        },
-        "flip_layout": {
-          "label": "Flip layout (image right, text left)"
-        },
-        "padding_top": {
-          "label": "Padding top"
-        },
-        "padding_bottom": {
-          "label": "Padding bottom"
-        },
-        "testpage": {
-      "products": {
-        "product": {
-          "add_to_cart": "Add to Cart",
-          "select_shade": "Select Shade"
-        }
-      },
-      "accessibility": {
-        "star_reviews_info": "Star reviews information"
-      },
-      "sections": {
-        "press_bar": {
-          "label": "Press Bar",
-          "logos_label": "Press Logos"
-        },
-        "product_highlight": {
-          "label": "Product Highlight"
-        }
-      }
-    }
-      }
-    }
-  
-},
   
   
-  "general": {
-    "accessibility": {
-      "home": "Home"
-    }
-  },
   
 
 }
