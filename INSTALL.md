@@ -1,59 +1,32 @@
-## SD Section Installation
+## Installation Instructions
 
-Follow these steps to install the SD Section into your Shopify theme:
-
-### 1. Add Files
+### Step 1: Add Files to Your Theme
 
 Add the following files to your theme:
 
-- `sections/sd-section.liquid` — Main section file
-- `assets/sd-section.js` — JavaScript functionality
-- `assets/sd-section.css` — Section styles
-- `snippets/split-feature-block.liquid` — Reusable feature block component
+1. **sections/sd-section.liquid** — Main section file
+2. **assets/sd-section.js** — JavaScript functionality
+3. **assets/sd-section.css** — Section styles
+4. **snippets/press-logo-bar.liquid** — Reusable logo bar snippet
 
-### 2. Add Section to Theme
+### Step 2: Add Section to Your Theme
 
-1. In Shopify Admin, go to **Online Store > Themes**
-2. Select your theme and click **Edit code**
-3. Upload all four files to their respective directories
-4. Verify files appear in the correct locations in the code editor
+1. In the Shopify admin, go to **Online Store > Themes**
+2. Click **Edit** on your theme
+3. Navigate to a page template (e.g., Homepage, Product, or Collection)
+4. Click **Add section**
+5. Find and select **sd-section** from the section list
+6. Configure the section settings as needed
+7. Save your changes
 
-### 3. Add to Page Template (One-Time)
+### Step 3: Verify Installation
 
-To enable the section on pages:
+- Ensure the section displays correctly on the storefront
+- Check that styles are applied (no unstyled content)
+- Test any interactive features in `sd-section.js`
 
-1. In the code editor, locate your page template file (e.g., `templates/page.json`)
-2. Add the section to your template's section list:
-```
-{
-  "type": "sd-section"
-}
-```
-3. Save the template
+### Notes
 
-### 4. Configure in Theme Editor
-
-1. Go to **Online Store > Themes > Customize**
-2. Navigate to a page where you added the section
-3. Click the section in the preview to access settings and customize content
-
-### 5. Verify
-
-- Check that the section appears correctly on your page
-- Test responsive behavior on mobile and desktop
-- Confirm all assets load without console errors
-
-### File Structure Reference
-
-```
-theme/
-├── sections/
-│   └── sd-section.liquid
-├── assets/
-│   ├── sd-section.js
-│   └── sd-section.css
-└── snippets/
-    └── split-feature-block.liquid
-```
-
-No additional configuration or dependencies required.
+- All files must be placed in their respective directories for proper functioning
+- The `press-logo-bar.liquid` snippet is included within the section
+- Clear your browser cache if styles don't appear immediately
