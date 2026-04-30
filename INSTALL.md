@@ -1,32 +1,30 @@
-## Installation Instructions
+## Install qw111 Section
 
-### Step 1: Add Files to Your Theme
+### File Structure
+Add these files to your theme:
 
-Add the following files to your theme:
+1. **sections/qw111.liquid** — Main product detail section
+2. **assets/qw111.js** — JavaScript functionality for gallery and interactions
+3. **assets/qw111.css** — Section styling
+4. **snippets/product-media-gallery.liquid** — Product image gallery component
+5. **snippets/product-variant-swatches.liquid** — Variant selection swatches
+6. **snippets/product-add-to-cart.liquid** — Add to cart button with inventory handling
+7. **snippets/trust-badges.liquid** — Shipping and returns trust badges
+8. **snippets/ugc-gallery.liquid** — User-generated content gallery carousel
+9. **snippets/review-summary.liquid** — Review rating and count display
 
-1. **sections/sd-section.liquid** — Main section file
-2. **assets/sd-section.js** — JavaScript functionality
-3. **assets/sd-section.css** — Section styles
-4. **snippets/press-logo-bar.liquid** — Reusable logo bar snippet
+### Setup Steps
 
-### Step 2: Add Section to Your Theme
-
-1. In the Shopify admin, go to **Online Store > Themes**
-2. Click **Edit** on your theme
-3. Navigate to a page template (e.g., Homepage, Product, or Collection)
-4. Click **Add section**
-5. Find and select **sd-section** from the section list
-6. Configure the section settings as needed
-7. Save your changes
-
-### Step 3: Verify Installation
-
-- Ensure the section displays correctly on the storefront
-- Check that styles are applied (no unstyled content)
-- Test any interactive features in `sd-section.js`
+1. In your Shopify theme editor, go to **Content > Pages** and select your product detail page template
+2. Add the **qw111** section to the page layout by clicking **Add section** and selecting it
+3. Configure section settings:
+   - Set padding top/bottom values as needed
+   - Enable/disable Shop Pay messaging
+   - Customize trust badge text (free shipping, returns copy)
+   - Set UGC section heading
+4. Save and publish
 
 ### Notes
-
-- All files must be placed in their respective directories for proper functioning
-- The `press-logo-bar.liquid` snippet is included within the section
-- Clear your browser cache if styles don't appear immediately
+- Ensure product data (variants, images, reviews) is populated in your product
+- Review the CSS for color variables and adjust to match your brand
+- Test gallery interactions on mobile and desktop devices
