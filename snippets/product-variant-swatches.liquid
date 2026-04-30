@@ -1,0 +1,105 @@
+{%- comment -%}
+  Snippet: product-variant-swatches
+  Renders color swatch buttons and non-color pill option selectors for the PDP.
+
+  Variables accepted:
+  - product: {Object} Shopify product object (required)
+  - section: {Object} Shopify section object (required)
+  - selected_variant: {Object} Currently selected variant (required)
+{%- endcomment -%}
+
+{%- assign selected_variant = product.selected_or_first_available_variant -%}
+
+{%- comment -%} Color / shade swatches {%- endcomment -%}
+{%- for option in product.options_with_values -%}
+  {%- assign option_name_downcase = option.name | downcase -%}
+  {%- if option_name_downcase == 'color' or option_name_downcase == 'colour' or option_name_downcase == 'shade' -%}
+    {%- assign color_loop_index0 = forloop.index0 -%}
+
+    <div class="sd-qw111__swatches-wrap" data-option-index="{{ forloop.index0 }}">
+
+      <!-- Selected variant label -->
+      <div class="sd-qw111__swatch-label" id="swatch-label-{{ section.id }}">
+        <span class="sd-qw111__swatch-label-name" data-swatch-name>
+          {{- selected_variant.options[forloop.index0] -}}
+        </span>
+        {%- unless section.settings.shade_descriptor == blank -%}
+          <span class="sd-qw111__swatch-label-desc" data-swatch-desc>
+            &nbsp;{{ section.settings.shade_descriptor }}
+          </span>
+        {%- endunless -%}
+      </div>
+
+      <!-- Circular swatch buttons -->
+      <div class="sd-qw111__swatches" role="radiogroup" aria-label="{{ option.name }}">
+        {%- for value in option.values -%}
+          {%- assign swatch_variant = nil -%}
+          {%- for variant in product.variants -%}
+            {%- if variant.options[color_loop_index0] == value -%}
+              {%- assign swatch_variant = variant -%}
+              {%- break -%}
+            {%- endif -%}
+          {%- endfor -%}
+
+          {%- assign value_handle = value | downcase | replace: ' ', '-' -%}
+          {%- assign is_selected = false -%}
+          {%- if selected_variant.options[color_loop_index0] == value -%}
+            {%- assign is_selected = true -%}
+          {%- endif -%}
+          {%- assign is_available = false -%}
+          {%- if swatch_variant != nil -%}
+            {%- if swatch_variant.available -%}
+              {%- assign is_available = true -%}
+            {%- endif -%}
+          {%- endif -%}
+
+          <button
+            type="button"
+            class="sd-qw111__swatch{% if is_selected %} is-selected{% endif %}{% unless is_available %} is-unavailable{% endunless %}"
+            data-variant-id="{{ swatch_variant.id }}"
+            data-swatch-value="{{ value }}"
+            data-option-index="{{ color_loop_index0 }}"
+            aria-label="{{ value }}"
+            aria-pressed="{{ is_selected }}"
+            title="{{ value }}"
+            style="--swatch-handle: {{ value_handle }};"
+          >
+            <span class="sd-qw111__swatch-inner" aria-hidden="true"></span>
+            {%- unless is_available -%}
+              <span class="sd-qw111__swatch-slash" aria-hidden="true"></span>
+            {%- endunless -%}
+          </button>
+        {%- endfor -%}
+      </div>
+    </div>
+
+  {%- endif -%}
+{%- endfor -%}
+
+{%- comment -%} Non-color options rendered as pill buttons {%- endcomment -%}
+{%- for option in product.options_with_values -%}
+  {%- assign option_name_downcase = option.name | downcase -%}
+  {%- unless option_name_downcase == 'color' or option_name_downcase == 'colour' or option_name_downcase == 'shade' -%}
+    {%- assign selected_opt_val = selected_variant.options[forloop.index0] -%}
+    <div class="sd-qw111__option-wrap" data-option-index="{{ forloop.index0 }}">
+      <div class="sd-qw111__option-label">{{ option.name }}</div>
+      <div class="sd-qw111__pills" role="radiogroup" aria-label="{{ option.name }}">
+        {%- for value in option.values -%}
+          {%- assign pill_selected = false -%}
+          {%- if selected_opt_val == value -%}
+            {%- assign pill_selected = true -%}
+          {%- endif -%}
+          <button
+            type="button"
+            class="sd-qw111__pill{% if pill_selected %} is-selected{% endif %}"
+            data-option-index="{{ forloop.index0 }}"
+            data-option-value="{{ value }}"
+            aria-pressed="{{ pill_selected }}"
+          >
+            {{ value }}
+          </button>
+        {%- endfor -%}
+      </div>
+    </div>
+  {%- endunless -%}
+{%- endfor -%}
