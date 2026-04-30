@@ -1,0 +1,53 @@
+{%- comment -%}
+  Snippet: trust-badges
+  Renders free shipping and free returns trust badge items.
+
+  Variables accepted:
+  - section: {Object} Shopify section object with settings:
+      - show_free_shipping: {Boolean}
+      - free_shipping_text: {String}
+      - show_free_returns: {Boolean}
+      - free_returns_text: {String}
+{%- endcomment -%}
+
+<div class="sd-qw111__trust-badges">
+  {%- if section.settings.show_free_shipping -%}
+    <div class="sd-qw111__trust-item">
+      <span class="sd-qw111__trust-icon" aria-hidden="true">
+        <!-- Truck / shipping icon -->
+        <svg width="22" height="18" viewBox="0 0 22 18" fill="none" aria-hidden="true" focusable="false">
+          <path d="M1 1h13v11H1V1z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
+          <path d="M14 5h4l3 4v4h-7V5z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
+          <circle cx="4.5" cy="14.5" r="1.5" stroke="currentColor" stroke-width="1.5"/>
+          <circle cx="17.5" cy="14.5" r="1.5" stroke="currentColor" stroke-width="1.5"/>
+        </svg>
+      </span>
+      <span class="sd-qw111__trust-text">
+        {%- if section.settings.free_shipping_text != blank -%}
+          {{ section.settings.free_shipping_text }}
+        {%- else -%}
+          {{ 'sections.sd_qw111.free_shipping_default' | t }}
+        {%- endif -%}
+      </span>
+    </div>
+  {%- endif -%}
+
+  {%- if section.settings.show_free_returns -%}
+    <div class="sd-qw111__trust-item">
+      <span class="sd-qw111__trust-icon" aria-hidden="true">
+        <!-- Returns / refresh icon -->
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true" focusable="false">
+          <path d="M3 10a7 7 0 1 0 1.5-4.33" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+          <path d="M1 4l3.5 2L8 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </span>
+      <span class="sd-qw111__trust-text">
+        {%- if section.settings.free_returns_text != blank -%}
+          {{ section.settings.free_returns_text }}
+        {%- else -%}
+          {{ 'sections.sd_qw111.free_returns_default' | t }}
+        {%- endif -%}
+      </span>
+    </div>
+  {%- endif -%}
+</div>
