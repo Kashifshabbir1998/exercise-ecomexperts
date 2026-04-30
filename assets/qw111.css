@@ -1,0 +1,809 @@
+/* ============================================================
+   SD QW111 — Lip Recharge PDP Section
+   ============================================================ */
+
+/* ── Custom Properties ── */
+.sd-qw111 {
+  --color-bg: #f5f4f2;
+  --color-white: #ffffff;
+  --color-black: #111111;
+  --color-text-primary: #111111;
+  --color-text-secondary: #444444;
+  --color-text-muted: #666666;
+  --color-atc-bg: #111111;
+  --color-atc-text: #ffffff;
+  --color-atc-divider: #333333;
+  --color-swatch-border: #cccccc;
+  --color-swatch-selected: #111111;
+  --color-swatch-unavailable-slash: #e0e0e0;
+  --color-shop-pay: #5a31f4;
+  --color-trust-icon: #111111;
+  --color-thumb-border-active: #111111;
+  --color-thumb-border: #e0e0e0;
+  --color-ugc-heading: #111111;
+  --color-label-name: #111111;
+  --color-label-desc: #666666;
+  --color-review-link: #111111;
+  --color-star: #111111;
+  --thumb-size: 96px;
+  --main-image-bg: #f0ede8;
+  --atc-height: 56px;
+  --gallery-gap: 12px;
+  --section-gap: 48px;
+}
+
+/* ── Section Root ── */
+.sd-qw111 {
+  padding-top: var(--sd-spacing-top, 40px);
+  padding-bottom: var(--sd-spacing-bottom, 40px);
+  background: var(--color-white);
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.sd-qw111 *,
+.sd-qw111 *::before,
+.sd-qw111 *::after {
+  box-sizing: border-box;
+}
+
+/* ── Layout ── */
+.sd-qw111__layout {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 16px;
+}
+
+@media (min-width: 750px) {
+  .sd-qw111__layout {
+    flex-direction: row;
+    align-items: flex-start;
+    gap: var(--section-gap);
+    padding: 0 32px;
+  }
+}
+
+/* ══════════════════════════════════════
+   LEFT COLUMN — Gallery
+   ══════════════════════════════════════ */
+.sd-qw111__gallery-col {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gallery-gap);
+  width: 100%;
+}
+
+@media (min-width: 750px) {
+  .sd-qw111__gallery-col {
+    flex-direction: row;
+    align-items: flex-start;
+    flex: 0 0 55%;
+    max-width: 55%;
+    gap: var(--gallery-gap);
+  }
+}
+
+/* ── Thumbnail Strip ── */
+.sd-qw111__thumbnails {
+  display: flex;
+  flex-direction: row;
+  gap: 8px;
+  align-items: flex-start;
+  overflow-x: auto;
+}
+
+@media (min-width: 750px) {
+  .sd-qw111__thumbnails {
+    flex-direction: column;
+    overflow-x: unset;
+    overflow-y: auto;
+    max-height: 580px;
+    flex: 0 0 var(--thumb-size);
+    gap: 8px;
+  }
+}
+
+.sd-qw111__thumb-track {
+  display: flex;
+  flex-direction: row;
+  gap: 8px;
+}
+
+@media (min-width: 750px) {
+  .sd-qw111__thumb-track {
+    flex-direction: column;
+  }
+}
+
+/* Swiper overrides for thumb strip */
+.sd-qw111__thumb-track.swiper {
+  overflow: visible;
+}
+
+.sd-qw111__thumb-slide {
+  width: var(--thumb-size) !important;
+  height: var(--thumb-size) !important;
+  flex-shrink: 0;
+}
+
+.sd-qw111__thumb-btn {
+  display: block;
+  width: var(--thumb-size);
+  height: var(--thumb-size);
+  padding: 0;
+  border: 2px solid var(--color-thumb-border);
+  border-radius: 0;
+  background: var(--color-bg);
+  cursor: pointer;
+  overflow: hidden;
+  transition: border-color 0.2s ease;
+  position: relative;
+}
+
+.sd-qw111__thumb-btn img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.sd-qw111__thumb-btn.is-active,
+.sd-qw111__thumb-btn:focus-visible {
+  border-color: var(--color-thumb-border-active);
+  outline: none;
+}
+
+.sd-qw111__thumb-btn:hover {
+  border-color: var(--color-thumb-border-active);
+}
+
+/* Thumb next arrow */
+.sd-qw111__thumb-next {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--color-text-primary);
+  padding: 8px;
+  margin-top: 4px;
+  flex-shrink: 0;
+}
+
+@media (min-width: 750px) {
+  .sd-qw111__thumb-next {
+    display: flex;
+  }
+}
+
+.sd-qw111__thumb-next svg {
+  display: block;
+}
+
+/* ── Main Image ── */
+.sd-qw111__main-image {
+  flex: 1;
+  background: var(--main-image-bg);
+  border-radius: 0;
+  overflow: hidden;
+  aspect-ratio: 5 / 6;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+@media (min-width: 750px) {
+  .sd-qw111__main-image {
+    min-height: 520px;
+    aspect-ratio: unset;
+    height: 580px;
+    flex: 1;
+  }
+}
+
+.sd-qw111__main-img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: center;
+  display: block;
+}
+
+.sd-qw111__main-img-placeholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--main-image-bg);
+}
+
+.sd-qw111__placeholder-svg {
+  width: 60%;
+  height: 60%;
+  opacity: 0.4;
+}
+
+/* ══════════════════════════════════════
+   RIGHT COLUMN — Product Info
+   ══════════════════════════════════════ */
+.sd-qw111__info-col {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: 100%;
+}
+
+@media (min-width: 750px) {
+  .sd-qw111__info-col {
+    flex: 0 0 45%;
+    max-width: 45%;
+    gap: 14px;
+    padding-top: 8px;
+  }
+}
+
+/* ── Product Title ── */
+.sd-qw111__title {
+  font-family: "Arial Black / Helvetica Neue Bold", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-size: 28px;
+  font-weight: 900;
+  line-height: 1.1;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  color: var(--color-text-primary);
+  margin: 0;
+}
+
+@media (min-width: 750px) {
+  .sd-qw111__title {
+    font-size: 32px;
+  }
+}
+
+/* ── Reviews ── */
+.sd-qw111__reviews {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 2px;
+}
+
+/* App-rendered content fallback styles */
+.sd-qw111__reviews .spr-summary-starrating,
+.sd-qw111__reviews [class*="star"],
+.sd-qw111__reviews [class*="rating"] {
+  color: var(--color-star);
+  font-size: 18px;
+}
+
+.sd-qw111__reviews a {
+  font-family: "Helvetica Neue", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-size: 14px;
+  color: var(--color-review-link);
+  text-decoration: underline;
+  font-weight: 400;
+}
+
+/* ── Swatches ── */
+.sd-qw111__swatches-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* Swatch label: "On The Rocks is clear" */
+.sd-qw111__swatch-label {
+  display: flex;
+  align-items: baseline;
+  gap: 0;
+  flex-wrap: wrap;
+  font-family: "Helvetica Neue", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-size: 14px;
+  line-height: 1.4;
+}
+
+.sd-qw111__swatch-label-name {
+  font-weight: 700;
+  color: var(--color-label-name);
+  font-size: 14px;
+}
+
+.sd-qw111__swatch-label-desc {
+  font-weight: 400;
+  color: var(--color-label-desc);
+  font-size: 14px;
+}
+
+/* Swatch container */
+.sd-qw111__swatches {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+}
+
+/* Individual swatch button */
+.sd-qw111__swatch {
+  position: relative;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 2px solid var(--color-swatch-border);
+  padding: 2px;
+  background: none;
+  cursor: pointer;
+  transition: border-color 0.15s ease;
+  overflow: visible;
+  flex-shrink: 0;
+}
+
+.sd-qw111__swatch.is-selected {
+  border-color: var(--color-swatch-selected);
+  border-width: 2px;
+  box-shadow: 0 0 0 1px var(--color-swatch-selected);
+}
+
+.sd-qw111__swatch:focus-visible {
+  outline: 2px solid var(--color-swatch-selected);
+  outline-offset: 2px;
+}
+
+.sd-qw111__swatch-inner {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background-color: var(--swatch-bg, #ccc);
+  overflow: hidden;
+}
+
+/* Swatch color mappings */
+.sd-qw111__swatch[data-swatch-value="On The Rocks"] .sd-qw111__swatch-inner,
+.sd-qw111__swatch[style*="on-the-rocks"] .sd-qw111__swatch-inner {
+  background-color: #f5f4f2;
+  border: 1px solid #ddd;
+}
+
+/* Color background via handle CSS var */
+.sd-qw111__swatch-inner {
+  background-image: none;
+}
+
+/* Unavailable slash overlay */
+.sd-qw111__swatch-slash {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.sd-qw111__swatch-slash::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: -4px;
+  right: -4px;
+  height: 1.5px;
+  background: rgba(100, 100, 100, 0.5);
+  transform: rotate(-45deg);
+  transform-origin: center;
+}
+
+.sd-qw111__swatch.is-unavailable {
+  opacity: 0.7;
+}
+
+/* ── Pill Option Selectors ── */
+.sd-qw111__option-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.sd-qw111__option-label {
+  font-family: "Helvetica Neue", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--color-text-primary);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.sd-qw111__pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.sd-qw111__pill {
+  padding: 8px 16px;
+  border: 1.5px solid var(--color-swatch-border);
+  background: var(--color-white);
+  color: var(--color-text-primary);
+  font-family: "Helvetica Neue", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-size: 13px;
+  cursor: pointer;
+  border-radius: 0;
+  transition: border-color 0.15s ease, background 0.15s ease;
+}
+
+.sd-qw111__pill.is-selected {
+  border-color: var(--color-text-primary);
+  background: var(--color-text-primary);
+  color: var(--color-white);
+}
+
+/* ══════════════════════════════════════
+   ADD TO CART BUTTON
+   ══════════════════════════════════════ */
+.sd-qw111__form {
+  margin: 4px 0;
+}
+
+.sd-qw111__atc-wrap {
+  width: 100%;
+}
+
+.sd-qw111__atc-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: var(--atc-height);
+  background: var(--color-atc-bg);
+  color: var(--color-atc-text);
+  border: none;
+  cursor: pointer;
+  font-family: "Helvetica Neue", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  padding: 0;
+  position: relative;
+  transition: opacity 0.2s ease;
+  overflow: hidden;
+}
+
+.sd-qw111__atc-btn:hover:not(:disabled) {
+  opacity: 0.9;
+}
+
+.sd-qw111__atc-btn:disabled,
+.sd-qw111__atc-btn.is-sold-out {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.sd-qw111__atc-label {
+  flex: 1;
+  text-align: center;
+  padding: 0 20px;
+  font-family: "Helvetica Neue", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+}
+
+/* Divider between label and price */
+.sd-qw111__atc-divider {
+  display: block;
+  width: 1px;
+  height: 28px;
+  background: rgba(255, 255, 255, 0.3);
+  flex-shrink: 0;
+}
+
+/* Price on right side of ATC button */
+.sd-qw111__atc-price {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 20px;
+  font-family: "Helvetica Neue", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-size: 16px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  flex-shrink: 0;
+  white-space: nowrap;
+}
+
+/* Spinner */
+.sd-qw111__atc-spinner {
+  display: none;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.sd-qw111__atc-btn[data-loading] .sd-qw111__atc-spinner {
+  display: block;
+}
+
+.sd-qw111__atc-btn[data-loading] .sd-qw111__atc-label,
+.sd-qw111__atc-btn[data-loading] .sd-qw111__atc-divider,
+.sd-qw111__atc-btn[data-loading] .sd-qw111__atc-price {
+  visibility: hidden;
+}
+
+.sd-qw111__spinner-svg {
+  animation: sd-qw111-spin 0.8s linear infinite;
+}
+
+@keyframes sd-qw111-spin {
+  to { transform: rotate(360deg); }
+}
+
+/* ══════════════════════════════════════
+   SHOP PAY INSTALLMENTS
+   ══════════════════════════════════════ */
+.sd-qw111__shop-pay {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  padding: 2px 0;
+}
+
+.sd-qw111__shop-pay-icon {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.sd-qw111__shop-pay-text {
+  font-family: "Helvetica Neue", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-size: 13px;
+  color: var(--color-text-secondary);
+  line-height: 1.4;
+}
+
+.sd-qw111__shop-pay-text strong {
+  font-weight: 700;
+  color: var(--color-text-primary);
+}
+
+.sd-qw111__shop-pay-link {
+  font-family: "Helvetica Neue", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-size: 13px;
+  color: var(--color-text-primary);
+  text-decoration: underline;
+  white-space: nowrap;
+  font-weight: 600;
+}
+
+/* ══════════════════════════════════════
+   TRUST BADGES
+   ══════════════════════════════════════ */
+.sd-qw111__trust-badges {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 4px 0;
+}
+
+.sd-qw111__trust-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.sd-qw111__trust-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  color: var(--color-trust-icon);
+  width: 24px;
+  height: 24px;
+}
+
+.sd-qw111__trust-icon svg {
+  display: block;
+}
+
+.sd-qw111__trust-text {
+  font-family: "Helvetica Neue", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-size: 13px;
+  color: var(--color-text-secondary);
+  line-height: 1.4;
+}
+
+/* ══════════════════════════════════════
+   AS SEEN ON YOU — UGC Gallery
+   ══════════════════════════════════════ */
+.sd-qw111__ugc {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  margin-top: 8px;
+}
+
+.sd-qw111__ugc-heading {
+  font-family: "Arial Black / Helvetica Neue Bold", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-size: 22px;
+  font-weight: 900;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--color-ugc-heading);
+  margin: 0;
+  line-height: 1.1;
+}
+
+@media (min-width: 750px) {
+  .sd-qw111__ugc-heading {
+    font-size: 24px;
+  }
+}
+
+/* ── UGC Slider ── */
+.sd-qw111__ugc-slider-wrap {
+  position: relative;
+  overflow: hidden;
+}
+
+/* Override swiper default on ugc */
+.sd-qw111__ugc-swiper {
+  overflow: hidden;
+}
+
+/* 3-column visible grid on desktop */
+.sd-qw111__ugc-swiper .swiper-wrapper {
+  display: flex;
+  gap: 0;
+}
+
+.sd-qw111__ugc-slide {
+  flex-shrink: 0;
+  width: calc(100% / 3) !important;
+  padding: 0 4px;
+}
+
+@media (max-width: 749px) {
+  .sd-qw111__ugc-slide {
+    width: 80vw !important;
+  }
+}
+
+.sd-qw111__ugc-item {
+  position: relative;
+  aspect-ratio: 4 / 5;
+  overflow: hidden;
+  border-radius: 0;
+  background: var(--color-bg);
+}
+
+.sd-qw111__ugc-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center top;
+  display: block;
+}
+
+.sd-qw111__ugc-item--placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #e8e6e2;
+}
+
+/* UGC link overlay */
+.sd-qw111__ugc-link {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  display: block;
+}
+
+/* UGC navigation arrows */
+.sd-qw111__ugc-prev,
+.sd-qw111__ugc-next {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 10;
+  width: 36px;
+  height: 36px;
+  background: var(--color-white);
+  border: 1px solid #e0e0e0;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: var(--color-text-primary);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  transition: opacity 0.2s ease;
+}
+
+.sd-qw111__ugc-prev:hover,
+.sd-qw111__ugc-next:hover {
+  opacity: 0.8;
+}
+
+.sd-qw111__ugc-prev {
+  left: 4px;
+}
+
+.sd-qw111__ugc-next {
+  right: 4px;
+}
+
+.sd-qw111__ugc-prev svg,
+.sd-qw111__ugc-next svg {
+  display: block;
+  flex-shrink: 0;
+}
+
+/* UGC empty state */
+.sd-qw111__ugc-empty {
+  height: 60px;
+  background: #f5f5f5;
+  border: 1px dashed #ccc;
+  border-radius: 4px;
+}
+
+/* ══════════════════════════════════════
+   SWATCH COLOR PALETTE — Named values
+   ══════════════════════════════════════ */
+
+/* Map swatch handle CSS var to background colors */
+.sd-qw111__swatch[style*="--swatch-handle: on-the-rocks"] .sd-qw111__swatch-inner { background-color: #f5f4f2; }
+.sd-qw111__swatch[style*="--swatch-handle: sheer-pink"] .sd-qw111__swatch-inner,
+.sd-qw111__swatch[style*="--swatch-handle: pink"] .sd-qw111__swatch-inner { background-color: #f4a7b1; }
+.sd-qw111__swatch[style*="--swatch-handle: rose"] .sd-qw111__swatch-inner { background-color: #d9697c; }
+.sd-qw111__swatch[style*="--swatch-handle: nude"] .sd-qw111__swatch-inner,
+.sd-qw111__swatch[style*="--swatch-handle: beige"] .sd-qw111__swatch-inner { background-color: #c8906a; }
+.sd-qw111__swatch[style*="--swatch-handle: red"] .sd-qw111__swatch-inner { background-color: #c0313a; }
+.sd-qw111__swatch[style*="--swatch-handle: burgundy"] .sd-qw111__swatch-inner { background-color: #7b2030; }
+.sd-qw111__swatch[style*="--swatch-handle: brown"] .sd-qw111__swatch-inner { background-color: #6b3826; }
+.sd-qw111__swatch[style*="--swatch-handle: dark-berry"] .sd-qw111__swatch-inner,
+.sd-qw111__swatch[style*="--swatch-handle: berry"] .sd-qw111__swatch-inner { background-color: #4a1a2e; }
+.sd-qw111__swatch[style*="--swatch-handle: lavender"] .sd-qw111__swatch-inner,
+.sd-qw111__swatch[style*="--swatch-handle: purple"] .sd-qw111__swatch-inner { background-color: #c4aed4; }
+
+/* ══════════════════════════════════════
+   ACCESSIBILITY
+   ══════════════════════════════════════ */
+.sd-qw111__atc-btn:focus-visible,
+.sd-qw111__pill:focus-visible,
+.sd-qw111__swatch:focus-visible,
+.sd-qw111__thumb-btn:focus-visible,
+.sd-qw111__ugc-prev:focus-visible,
+.sd-qw111__ugc-next:focus-visible {
+  outline: 2px solid var(--color-text-primary);
+  outline-offset: 2px;
+}
+
+/* ══════════════════════════════════════
+   RESPONSIVE TWEAKS
+   ══════════════════════════════════════ */
+@media (max-width: 749px) {
+  .sd-qw111__title {
+    font-size: 24px;
+  }
+  .sd-qw111__atc-btn {
+    height: 52px;
+  }
+  .sd-qw111__ugc-heading {
+    font-size: 20px;
+  }
+}
+
+/* SHOPIFYDRAFT CSS AUDIT
+   Colors from Figma: #111111, #f5f4f2, #ffffff, #f0ede8, #5a31f4, #cccccc, #333333, #444444, #666666
+   Colors inferred:   #f4a7b1 (sheer pink swatch), #d9697c (rose swatch), #c8906a (nude swatch), #c0313a (red swatch), #7b2030 (burgundy swatch), #6b3826 (brown swatch), #4a1a2e (dark berry swatch), #c4aed4 (lavender swatch), rgba(255,255,255,0.3) (ATC divider), rgba(100,100,100,0.5) (swatch slash)
+   Fonts from Figma:  "Arial Black / Helvetica Neue Bold" (title, UGC heading), "Helvetica Neue" (body, labels, ATC, trust text)
+   Spacing from Figma: section padding 40px, gallery gap 12px, swatch size 36px, ATC height 56px, thumb size 96px, section gap 48px
+*/
