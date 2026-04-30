@@ -1,0 +1,576 @@
+{{ 'qw111.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'qw111.js' | asset_url }}" defer></script>
+
+<!-- PDP Section: qw111 — Lip Recharge product detail page -->
+<div
+  id="shopify-section-{{ section.id }}"
+  class="sd-qw111 shopify-section"
+  style="--sd-spacing-top: {{ section.settings.padding_top }}px; --sd-spacing-bottom: {{ section.settings.padding_bottom }}px;"
+>
+  <sd-qw111 data-section-id="{{ section.id }}">
+    <div class="sd-qw111__layout">
+
+      <!-- ═══════════════════════════════════════════════
+           LEFT COLUMN: Media Gallery
+           ═══════════════════════════════════════════════ -->
+      <div class="sd-qw111__gallery-col">
+
+        <!-- Vertical Thumbnail Strip -->
+        <div class="sd-qw111__thumbnails" id="thumbnails-{{ section.id }}">
+          <div class="sd-qw111__thumb-track swiper" id="thumb-swiper-{{ section.id }}">
+            <div class="swiper-wrapper">
+              {%- for image in product.images -%}
+                <div class="swiper-slide sd-qw111__thumb-slide">
+                  <button
+                    type="button"
+                    class="sd-qw111__thumb-btn{% if forloop.first %} is-active{% endif %}"
+                    data-image-id="{{ image.id }}"
+                    data-image-index="{{ forloop.index0 }}"
+                    aria-label="{{ 'sections.sd_qw111.thumbnail_label' | t: index: forloop.index }}"
+                    aria-current="{% if forloop.first %}true{% else %}false{% endif %}"
+                  >
+                    {{
+                      image
+                      | image_url: width: 300
+                      | image_tag:
+                        loading: 'lazy',
+                        widths: '150,300',
+                        width: 150,
+                        height: 150,
+                        alt: image.alt | default: product.title
+                    }}
+                  </button>
+                </div>
+              {%- endfor -%}
+            </div>
+          </div>
+
+          <!-- Thumbnail down-arrow pagination -->
+          <button
+            type="button"
+            class="sd-qw111__thumb-next"
+            aria-label="{{ 'sections.sd_qw111.next_image' | t }}"
+          >
+            <svg width="16" height="10" viewBox="0 0 16 10" fill="none" aria-hidden="true" focusable="false">
+              <path d="M1 1L8 8L15 1" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+          </button>
+        </div>
+
+        <!-- Main Image Display -->
+        <div class="sd-qw111__main-image" id="main-image-{{ section.id }}">
+          {%- assign featured = product.selected_or_first_available_variant.image | default: product.featured_image -%}
+          {%- if featured != blank -%}
+            {{
+              featured
+              | image_url: width: 1200
+              | image_tag:
+                loading: 'eager',
+                fetchpriority: 'high',
+                widths: '600,800,1000,1200',
+                sizes: '(min-width: 750px) 55vw, 100vw',
+                width: 800,
+                height: 960,
+                alt: featured.alt | default: product.title,
+                class: 'sd-qw111__main-img',
+                id: 'main-product-image-' | append: section.id,
+                data-current-image-id: featured.id
+            }}
+          {%- else -%}
+            <!-- PLACEHOLDER: Product main image placeholder -->
+            <div class="sd-qw111__main-img-placeholder">
+              {{ 'product-1' | placeholder_svg_tag: 'sd-qw111__placeholder-svg' }}
+            </div>
+          {%- endif -%}
+        </div>
+
+      </div>
+      {%- comment -%} end gallery-col {%- endcomment -%}
+
+      <!-- ═══════════════════════════════════════════════
+           RIGHT COLUMN: Product Info
+           ═══════════════════════════════════════════════ -->
+      <div class="sd-qw111__info-col">
+
+        <!-- Product Title -->
+        <h1 class="sd-qw111__title">{{ product.title }}</h1>
+
+        <!-- Star Rating / Review Summary -->
+        <!-- APP REQUIRED: Reviews App (Okendo / Judge.me / Yotpo / Stamped) — embed review widget via review-summary snippet -->
+        <div class="sd-qw111__reviews" id="reviews-summary-{{ section.id }}">
+          {%- render 'review-summary', product: product -%}
+        </div>
+
+        <!-- ───────────────────────────────────────────
+             Variant Selector: Color Swatches
+             ─────────────────────────────────────────── -->
+        {%- assign selected_variant = product.selected_or_first_available_variant -%}
+        {%- assign color_option_index = nil -%}
+
+        {%- for option in product.options_with_values -%}
+          {%- assign option_name_downcase = option.name | downcase -%}
+          {%- if option_name_downcase == 'color' or option_name_downcase == 'colour' or option_name_downcase == 'shade' -%}
+            {%- assign color_option_index = forloop.index0 -%}
+            {%- assign color_loop_index0 = forloop.index0 -%}
+
+            <div class="sd-qw111__swatches-wrap" data-option-index="{{ forloop.index0 }}">
+
+              <!-- Selected variant label: "On The Rocks is clear" -->
+              <div class="sd-qw111__swatch-label" id="swatch-label-{{ section.id }}">
+                <span class="sd-qw111__swatch-label-name" data-swatch-name>
+                  {{- selected_variant.options[forloop.index0] -}}
+                </span>
+                {%- unless section.settings.shade_descriptor == blank -%}
+                  <span class="sd-qw111__swatch-label-desc" data-swatch-desc>
+                    &nbsp;{{ section.settings.shade_descriptor }}
+                  </span>
+                {%- endunless -%}
+              </div>
+
+              <!-- Circular swatch buttons -->
+              <div class="sd-qw111__swatches" role="radiogroup" aria-label="{{ option.name }}">
+                {%- for value in option.values -%}
+                  {%- assign swatch_variant = nil -%}
+                  {%- for variant in product.variants -%}
+                    {%- if variant.options[color_loop_index0] == value -%}
+                      {%- assign swatch_variant = variant -%}
+                      {%- break -%}
+                    {%- endif -%}
+                  {%- endfor -%}
+
+                  {%- assign value_handle = value | downcase | replace: ' ', '-' -%}
+                  {%- assign is_selected = false -%}
+                  {%- if selected_variant.options[color_loop_index0] == value -%}
+                    {%- assign is_selected = true -%}
+                  {%- endif -%}
+                  {%- assign is_available = false -%}
+                  {%- if swatch_variant != nil -%}
+                    {%- if swatch_variant.available -%}
+                      {%- assign is_available = true -%}
+                    {%- endif -%}
+                  {%- endif -%}
+
+                  <button
+                    type="button"
+                    class="sd-qw111__swatch{% if is_selected %} is-selected{% endif %}{% unless is_available %} is-unavailable{% endunless %}"
+                    data-variant-id="{{ swatch_variant.id }}"
+                    data-swatch-value="{{ value }}"
+                    data-option-index="{{ color_loop_index0 }}"
+                    aria-label="{{ value }}"
+                    aria-pressed="{{ is_selected }}"
+                    title="{{ value }}"
+                    style="--swatch-handle: {{ value_handle }};"
+                  >
+                    <span class="sd-qw111__swatch-inner" aria-hidden="true"></span>
+                    {%- unless is_available -%}
+                      <!-- Diagonal slash for unavailable / clear swatches -->
+                      <span class="sd-qw111__swatch-slash" aria-hidden="true"></span>
+                    {%- endunless -%}
+                  </button>
+                {%- endfor -%}
+              </div>
+            </div>
+
+          {%- endif -%}
+        {%- endfor -%}
+
+        <!-- Non-color option selectors (Size, etc.) rendered as pill buttons -->
+        {%- for option in product.options_with_values -%}
+          {%- assign option_name_downcase = option.name | downcase -%}
+          {%- unless option_name_downcase == 'color' or option_name_downcase == 'colour' or option_name_downcase == 'shade' -%}
+            {%- assign selected_opt_val = selected_variant.options[forloop.index0] -%}
+            <div class="sd-qw111__option-wrap" data-option-index="{{ forloop.index0 }}">
+              <div class="sd-qw111__option-label">{{ option.name }}</div>
+              <div class="sd-qw111__pills" role="radiogroup" aria-label="{{ option.name }}">
+                {%- for value in option.values -%}
+                  {%- assign pill_selected = false -%}
+                  {%- if selected_opt_val == value -%}
+                    {%- assign pill_selected = true -%}
+                  {%- endif -%}
+                  <button
+                    type="button"
+                    class="sd-qw111__pill{% if pill_selected %} is-selected{% endif %}"
+                    data-option-index="{{ forloop.index0 }}"
+                    data-option-value="{{ value }}"
+                    aria-pressed="{{ pill_selected }}"
+                  >
+                    {{ value }}
+                  </button>
+                {%- endfor -%}
+              </div>
+            </div>
+          {%- endunless -%}
+        {%- endfor -%}
+
+        <!-- ───────────────────────────────────────────
+             Product Form: Add to Cart
+             ─────────────────────────────────────────── -->
+        <form
+          action="{{ routes.cart_add_url }}"
+          method="post"
+          enctype="multipart/form-data"
+          id="product-form-{{ section.id }}"
+          class="sd-qw111__form"
+          data-product-id="{{ product.id }}"
+        >
+          <input type="hidden" name="form_type" value="product">
+          <input type="hidden" name="utf8" value="✓">
+          <input
+            type="hidden"
+            name="id"
+            value="{{ product.selected_or_first_available_variant.id }}"
+            id="variant-input-{{ section.id }}"
+            data-variant-input
+          >
+
+          <!-- ATC Button: label on left | divider | price on right -->
+          {%- assign current_variant = product.selected_or_first_available_variant -%}
+          <div class="sd-qw111__atc-wrap">
+            <button
+              type="submit"
+              name="add"
+              class="sd-qw111__atc-btn{% unless current_variant.available %} is-sold-out{% endunless %}"
+              id="atc-btn-{{ section.id }}"
+              aria-label="{{ 'products.product.add_to_cart' | t }}"
+              {% unless current_variant.available %}disabled aria-disabled="true"{% endunless %}
+              data-atc-button
+            >
+              <!-- Loading spinner — inlined SVG, hidden by default, shown via JS during ATC request -->
+              <span class="sd-qw111__atc-spinner" aria-hidden="true" data-atc-spinner>
+                <svg class="sd-qw111__spinner-svg" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" width="20" height="20" aria-hidden="true" focusable="false">
+                  <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-dasharray="31.416" stroke-dashoffset="10"/>
+                </svg>
+              </span>
+
+              <span class="sd-qw111__atc-label" data-atc-label>
+                {%- if current_variant.available -%}
+                  {{ 'products.product.add_to_cart' | t }}
+                {%- else -%}
+                  {{ 'products.product.sold_out' | t }}
+                {%- endif -%}
+              </span>
+
+              <span class="sd-qw111__atc-divider" aria-hidden="true"></span>
+
+              <span class="sd-qw111__atc-price" data-atc-price>
+                {{ current_variant.price | money_without_trailing_zeros }}
+              </span>
+            </button>
+          </div>
+        </form>
+
+        <!-- ───────────────────────────────────────────
+             Shop Pay Installments messaging
+             ─────────────────────────────────────────── -->
+        <!-- APP REQUIRED: Shopify Payments / Shop Pay Installments — native Shopify component -->
+        {%- if section.settings.show_shop_pay -%}
+          <div class="sd-qw111__shop-pay">
+            <span class="sd-qw111__shop-pay-icon" aria-hidden="true">
+              <svg width="52" height="18" viewBox="0 0 52 18" fill="none" aria-hidden="true" focusable="false">
+                <rect width="52" height="18" rx="3" fill="#5A31F4"/>
+                <text x="5" y="13" font-size="8.5" fill="#fff" font-family="Helvetica Neue,Helvetica,Arial,sans-serif" font-weight="600">Shop Pay</text>
+              </svg>
+            </span>
+            <span class="sd-qw111__shop-pay-text">
+              {{ 'sections.sd_qw111.shop_pay_text' | t }}
+            </span>
+            <a
+              href="{{ section.settings.shop_pay_learn_more_url | default: '#' }}"
+              class="sd-qw111__shop-pay-link"
+              aria-label="{{ 'sections.sd_qw111.shop_pay_learn_more_label' | t }}"
+            >
+              {{ 'sections.sd_qw111.shop_pay_learn_more' | t }}
+            </a>
+          </div>
+        {%- endif -%}
+
+        <!-- ───────────────────────────────────────────
+             Trust Badges: Free Shipping + Free Returns
+             ─────────────────────────────────────────── -->
+        <div class="sd-qw111__trust-badges">
+          {%- if section.settings.show_free_shipping -%}
+            <div class="sd-qw111__trust-item">
+              <span class="sd-qw111__trust-icon" aria-hidden="true">
+                <!-- Truck / shipping icon -->
+                <svg width="22" height="18" viewBox="0 0 22 18" fill="none" aria-hidden="true" focusable="false">
+                  <path d="M1 1h13v11H1V1z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
+                  <path d="M14 5h4l3 4v4h-7V5z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
+                  <circle cx="4.5" cy="14.5" r="1.5" stroke="currentColor" stroke-width="1.5"/>
+                  <circle cx="17.5" cy="14.5" r="1.5" stroke="currentColor" stroke-width="1.5"/>
+                </svg>
+              </span>
+              <span class="sd-qw111__trust-text">
+                {%- if section.settings.free_shipping_text != blank -%}
+                  {{ section.settings.free_shipping_text }}
+                {%- else -%}
+                  {{ 'sections.sd_qw111.free_shipping_default' | t }}
+                {%- endif -%}
+              </span>
+            </div>
+          {%- endif -%}
+
+          {%- if section.settings.show_free_returns -%}
+            <div class="sd-qw111__trust-item">
+              <span class="sd-qw111__trust-icon" aria-hidden="true">
+                <!-- Returns / refresh icon -->
+                <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true" focusable="false">
+                  <path d="M3 10a7 7 0 1 0 1.5-4.33" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                  <path d="M1 4l3.5 2L8 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </span>
+              <span class="sd-qw111__trust-text">
+                {%- if section.settings.free_returns_text != blank -%}
+                  {{ section.settings.free_returns_text }}
+                {%- else -%}
+                  {{ 'sections.sd_qw111.free_returns_default' | t }}
+                {%- endif -%}
+              </span>
+            </div>
+          {%- endif -%}
+        </div>
+
+        <!-- ═══════════════════════════════════════════════
+             AS SEEN ON YOU — UGC Gallery
+             ═══════════════════════════════════════════════ -->
+        {%- if section.settings.show_ugc -%}
+          <div class="sd-qw111__ugc" id="ugc-{{ section.id }}">
+
+            <h2 class="sd-qw111__ugc-heading">
+              {%- if section.settings.ugc_heading != blank -%}
+                {{ section.settings.ugc_heading }}
+              {%- else -%}
+                {{ 'sections.sd_qw111.ugc_heading_default' | t }}
+              {%- endif -%}
+            </h2>
+
+            <!-- UGC Swiper slider — populated by ugc_image blocks added in customizer -->
+            {%- assign ugc_blocks = section.blocks | where: 'type', 'ugc_image' -%}
+            {%- if ugc_blocks.size > 0 -%}
+
+              <!-- Swiper CSS loaded from CDN -->
+              <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
+              <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js" defer></script>
+
+              <div class="sd-qw111__ugc-slider-wrap">
+                <div class="swiper sd-qw111__ugc-swiper" id="ugc-swiper-{{ section.id }}">
+                  <div class="swiper-wrapper">
+                    {%- for block in ugc_blocks -%}
+                      <div
+                        class="swiper-slide sd-qw111__ugc-slide"
+                        role="group"
+                        aria-label="{{ 'sections.sd_qw111.slide_label' | t: index: forloop.index, total: ugc_blocks.size }}"
+                        {{ block.shopify_attributes }}
+                      >
+                        {%- if block.settings.image != blank -%}
+                          <div class="sd-qw111__ugc-item">
+                            {{
+                              block.settings.image
+                              | image_url: width: 600
+                              | image_tag:
+                                loading: 'lazy',
+                                widths: '300,400,600',
+                                sizes: '(min-width: 750px) 20vw, 80vw',
+                                width: 400,
+                                height: 480,
+                                alt: block.settings.alt_text | default: product.title
+                            }}
+                            {%- if block.settings.link != blank -%}
+                              <a
+                                href="{{ block.settings.link }}"
+                                class="sd-qw111__ugc-link"
+                                aria-label="{{ 'sections.sd_qw111.ugc_image_link_label' | t }}"
+                              ></a>
+                            {%- endif -%}
+                          </div>
+                        {%- else -%}
+                          <!-- PLACEHOLDER: UGC image block — upload an image in theme customizer -->
+                          <div class="sd-qw111__ugc-item sd-qw111__ugc-item--placeholder">
+                            {{ 'image' | placeholder_svg_tag: 'sd-qw111__placeholder-svg' }}
+                          </div>
+                        {%- endif -%}
+                      </div>
+                    {%- endfor -%}
+                  </div>
+                </div>
+
+                <!-- Swiper navigation arrows -->
+                <button
+                  type="button"
+                  class="sd-qw111__ugc-prev"
+                  id="ugc-prev-{{ section.id }}"
+                  aria-label="{{ 'sections.sd_qw111.previous_slide' | t }}"
+                >
+                  <svg width="10" height="16" viewBox="0 0 10 16" fill="none" aria-hidden="true" focusable="false">
+                    <path d="M8 1L2 8L8 15" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                </button>
+                <button
+                  type="button"
+                  class="sd-qw111__ugc-next"
+                  id="ugc-next-{{ section.id }}"
+                  aria-label="{{ 'sections.sd_qw111.next_slide' | t }}"
+                >
+                  <svg width="10" height="16" viewBox="0 0 10 16" fill="none" aria-hidden="true" focusable="false">
+                    <path d="M2 1L8 8L2 15" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                </button>
+              </div>
+
+            {%- else -%}
+              <!-- APP REQUIRED: UGC Gallery App (Yotpo Visual UGC / Foursixty / Stackla) — or add ugc_image blocks via customizer -->
+              <div class="sd-qw111__ugc-empty">
+                <!-- PLACEHOLDER: Add ugc_image blocks in the theme customizer to populate this gallery -->
+              </div>
+            {%- endif -%}
+
+          </div>
+        {%- endif -%}
+
+      </div>
+      {%- comment -%} end info-col {%- endcomment -%}
+
+    </div>
+    {%- comment -%} end layout {%- endcomment -%}
+  </sd-qw111>
+</div>
+
+{% schema %}
+{
+  "name": "PDP — Lip Recharge",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Product"
+    },
+    {
+      "type": "text",
+      "id": "shade_descriptor",
+      "label": "Shade descriptor suffix",
+      "default": "is clear",
+      "info": "Displayed after the selected shade name, e.g. 'On The Rocks is clear'"
+    },
+    {
+      "type": "header",
+      "content": "Trust Badges"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_free_shipping",
+      "label": "Show free shipping badge",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "free_shipping_text",
+      "label": "Free shipping badge text",
+      "default": "Free shipping on US orders over $55"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_free_returns",
+      "label": "Show free returns badge",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "free_returns_text",
+      "label": "Free returns badge text",
+      "default": "Free & Easy Returns"
+    },
+    {
+      "type": "header",
+      "content": "Shop Pay"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_shop_pay",
+      "label": "Show Shop Pay installments messaging",
+      "default": true
+    },
+    {
+      "type": "url",
+      "id": "shop_pay_learn_more_url",
+      "label": "Shop Pay 'Learn more' URL"
+    },
+    {
+      "type": "header",
+      "content": "UGC Gallery"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_ugc",
+      "label": "Show 'As Seen On You' gallery",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "ugc_heading",
+      "label": "UGC gallery heading",
+      "default": "AS SEEN ON YOU"
+    },
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Padding top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Padding bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "default": 40
+    }
+  ],
+  "blocks": [
+    {
+      "type": "ugc_image",
+      "name": "UGC Image",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        },
+        {
+          "type": "text",
+          "id": "alt_text",
+          "label": "Image alt text",
+          "default": "Customer photo"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Link (optional)"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "PDP — Lip Recharge",
+      "blocks": [
+        { "type": "ugc_image" },
+        { "type": "ugc_image" },
+        { "type": "ugc_image" }
+      ]
+    }
+  ],
+  "enabled_on": {
+    "templates": ["product"]
+  }
+}
+{% endschema %}
