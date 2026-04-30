@@ -1,21 +1,28 @@
-/*
- * ------------------------------------------------------------
- * IMPORTANT: The contents of this file are auto-generated.
- *
- * This file may be updated by the Shopify admin language editor
- * or related systems. Please exercise caution as any changes
- * made to this file may be overwritten.
- * ------------------------------------------------------------
- */
 {
   "sections": {
-    "sd_section": {
-      "rating_aria": "Product rating"
+    "sd_qw111": {
+      "thumbnail_label": "Product image thumbnail",
+      "next_image": "Next image",
+      "shop_pay_text": "Pay in 4 interest-free payments with Shop Pay",
+      "shop_pay_learn_more_label": "Learn more",
+      "shop_pay_learn_more": "Learn more about Shop Pay",
+      "free_shipping_default": "Free shipping on orders over $50",
+      "free_returns_default": "Free returns within 30 days",
+      "ugc_heading_default": "Customer Photos",
+      "slide_label": "Slide",
+      "ugc_image_link_label": "View customer photo",
+      "previous_slide": "Previous slide",
+      "next_slide": "Next slide",
+      "rating_label": "Average rating",
+      "review_count_label": "Reviews",
+      "review_count": "{{ count }} reviews",
+      "no_reviews": "No reviews yet"
     }
   },
-  "snippets": {
-    "star_rating": {
-      "aria_label": "Star rating"
+  "products": {
+    "product": {
+      "add_to_cart": "Add to cart",
+      "sold_out": "Sold out"
     }
   }
 }
