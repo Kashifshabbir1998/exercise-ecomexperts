@@ -1,0 +1,100 @@
+{%- comment -%}
+  Snippet: ugc-gallery
+  Renders the "As Seen On You" UGC image slider for the PDP.
+
+  Variables accepted:
+  - section: {Object} Shopify section object (required)
+  - product: {Object} Shopify product object (required, used for fallback alt text)
+{%- endcomment -%}
+
+{%- if section.settings.show_ugc -%}
+  <div class="sd-qw111__ugc" id="ugc-{{ section.id }}">
+
+    <h2 class="sd-qw111__ugc-heading">
+      {%- if section.settings.ugc_heading != blank -%}
+        {{ section.settings.ugc_heading }}
+      {%- else -%}
+        {{ 'sections.sd_qw111.ugc_heading_default' | t }}
+      {%- endif -%}
+    </h2>
+
+    {%- assign ugc_blocks = section.blocks | where: 'type', 'ugc_image' -%}
+    {%- if ugc_blocks.size > 0 -%}
+
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
+      <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js" defer></script>
+
+      <div class="sd-qw111__ugc-slider-wrap">
+        <div class="swiper sd-qw111__ugc-swiper" id="ugc-swiper-{{ section.id }}">
+          <div class="swiper-wrapper">
+            {%- for block in ugc_blocks -%}
+              <div
+                class="swiper-slide sd-qw111__ugc-slide"
+                role="group"
+                aria-label="{{ 'sections.sd_qw111.slide_label' | t: index: forloop.index, total: ugc_blocks.size }}"
+                {{ block.shopify_attributes }}
+              >
+                {%- if block.settings.image != blank -%}
+                  <div class="sd-qw111__ugc-item">
+                    {{
+                      block.settings.image
+                      | image_url: width: 600
+                      | image_tag:
+                        loading: 'lazy',
+                        widths: '300,400,600',
+                        sizes: '(min-width: 750px) 20vw, 80vw',
+                        width: 400,
+                        height: 480,
+                        alt: block.settings.alt_text | default: product.title
+                    }}
+                    {%- if block.settings.link != blank -%}
+                      <a
+                        href="{{ block.settings.link }}"
+                        class="sd-qw111__ugc-link"
+                        aria-label="{{ 'sections.sd_qw111.ugc_image_link_label' | t }}"
+                      ></a>
+                    {%- endif -%}
+                  </div>
+                {%- else -%}
+                  <!-- PLACEHOLDER: UGC image block — upload an image in theme customizer -->
+                  <div class="sd-qw111__ugc-item sd-qw111__ugc-item--placeholder">
+                    {{ 'image' | placeholder_svg_tag: 'sd-qw111__placeholder-svg' }}
+                  </div>
+                {%- endif -%}
+              </div>
+            {%- endfor -%}
+          </div>
+        </div>
+
+        <!-- Swiper navigation arrows -->
+        <button
+          type="button"
+          class="sd-qw111__ugc-prev"
+          id="ugc-prev-{{ section.id }}"
+          aria-label="{{ 'sections.sd_qw111.previous_slide' | t }}"
+        >
+          <svg width="10" height="16" viewBox="0 0 10 16" fill="none" aria-hidden="true" focusable="false">
+            <path d="M8 1L2 8L8 15" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </button>
+        <button
+          type="button"
+          class="sd-qw111__ugc-next"
+          id="ugc-next-{{ section.id }}"
+          aria-label="{{ 'sections.sd_qw111.next_slide' | t }}"
+        >
+          <svg width="10" height="16" viewBox="0 0 10 16" fill="none" aria-hidden="true" focusable="false">
+            <path d="M2 1L8 8L2 15" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </button>
+      </div>
+
+    {%- else -%}
+      <!-- APP REQUIRED: UGC Gallery App (Yotpo Visual UGC / Foursixty / Stackla) — or add ugc_image blocks via customizer -->
+      <div class="sd-qw111__ugc-empty">
+        <!-- PLACEHOLDER: Add ugc_image blocks in the theme customizer to populate this gallery -->
+      </div>
+    {%- endif -%}
+
+  </div>
+{%- endif -%}
