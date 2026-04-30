@@ -1,0 +1,81 @@
+{%- comment -%}
+  Snippet: product-add-to-cart
+  Renders the product form with Add to Cart button showing inline price.
+
+  Variables accepted:
+  - product: {Object} Shopify product object (required)
+  - section: {Object} Shopify section object (required)
+{%- endcomment -%}
+
+{%- assign current_variant = product.selected_or_first_available_variant -%}
+
+<form
+  action="{{ routes.cart_add_url }}"
+  method="post"
+  enctype="multipart/form-data"
+  id="product-form-{{ section.id }}"
+  class="sd-qw111__form"
+  data-product-id="{{ product.id }}"
+>
+  <input type="hidden" name="form_type" value="product">
+  <input type="hidden" name="utf8" value="✓">
+  <input
+    type="hidden"
+    name="id"
+    value="{{ current_variant.id }}"
+    id="variant-input-{{ section.id }}"
+    data-variant-input
+  >
+
+  <!-- ATC Button: label on left | divider | price on right -->
+  <div class="sd-qw111__atc-wrap">
+    <button
+      type="submit"
+      name="add"
+      class="sd-qw111__atc-btn{% unless current_variant.available %} is-sold-out{% endunless %}"
+      id="atc-btn-{{ section.id }}"
+      aria-label="{{ 'products.product.add_to_cart' | t }}"
+      {% unless current_variant.available %}disabled aria-disabled="true"{% endunless %}
+      data-atc-button
+    >
+      <!-- Loading spinner -->
+      <span class="sd-qw111__atc-spinner" aria-hidden="true" data-atc-spinner>
+        <svg
+          class="sd-qw111__spinner-svg"
+          viewBox="0 0 24 24"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+          width="20"
+          height="20"
+          aria-hidden="true"
+          focusable="false"
+        >
+          <circle
+            cx="12"
+            cy="12"
+            r="10"
+            stroke="currentColor"
+            stroke-width="2.5"
+            stroke-linecap="round"
+            stroke-dasharray="31.416"
+            stroke-dashoffset="10"
+          />
+        </svg>
+      </span>
+
+      <span class="sd-qw111__atc-label" data-atc-label>
+        {%- if current_variant.available -%}
+          {{ 'products.product.add_to_cart' | t }}
+        {%- else -%}
+          {{ 'products.product.sold_out' | t }}
+        {%- endif -%}
+      </span>
+
+      <span class="sd-qw111__atc-divider" aria-hidden="true"></span>
+
+      <span class="sd-qw111__atc-price" data-atc-price>
+        {{ current_variant.price | money_without_trailing_zeros }}
+      </span>
+    </button>
+  </div>
+</form>
