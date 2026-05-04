@@ -1,0 +1,625 @@
+/* ============================================================
+   SD Frame 8234 — Bundle Builder Wizard
+   ============================================================ */
+
+/* Custom properties */
+.sd-frame-8234 {
+  --color-accent: var(--sd-color-accent, #5B3FD9);
+  --color-bg: var(--sd-color-bg, #EEF0F8);
+  --color-card-bg: var(--sd-color-card-bg, #FFFFFF);
+  --color-text: var(--sd-color-text, #1A1A2E);
+  --color-price-original: var(--sd-color-price-original, #E53E3E);
+  --color-border: #D0D5E8;
+  --color-border-active: #5B3FD9;
+  --color-badge-bg: #5B3FD9;
+  --color-badge-text: #FFFFFF;
+  --color-step-label: #6B7280;
+  --color-qty-border: #C8CEDE;
+  --color-qty-bg: #F5F6FA;
+  --color-learn-more: #5B3FD9;
+  --color-next-btn-border: #5B3FD9;
+  --color-next-btn-text: #5B3FD9;
+  --color-next-btn-bg: #FFFFFF;
+  --color-selected-count: #1A1A2E;
+  --radius-card: 12px;
+  --radius-btn: 8px;
+  --radius-step: 12px;
+  --spacing-top: var(--sd-spacing-top, 40px);
+  --spacing-bottom: var(--sd-spacing-bottom, 40px);
+
+  background-color: var(--color-bg);
+  padding-top: var(--spacing-top);
+  padding-bottom: var(--spacing-bottom);
+  font-family: "Gilroy-Regular", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  color: var(--color-text);
+  box-sizing: border-box;
+}
+
+.sd-frame-8234 *,
+.sd-frame-8234 *::before,
+.sd-frame-8234 *::after {
+  box-sizing: border-box;
+}
+
+/* Custom element host */
+sd-frame-8234 {
+  display: block;
+}
+
+/* ── Wizard container ── */
+.sd-frame-8234__wizard {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 0 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* ── Step wrapper ── */
+.sd-frame-8234__step {
+  background-color: var(--color-bg);
+  border-radius: var(--radius-step);
+  overflow: hidden;
+}
+
+/* Active step has a subtle background distinction */
+.sd-frame-8234__step--active {
+  background-color: var(--color-bg);
+}
+
+.sd-frame-8234__step--collapsed {
+  background-color: var(--color-bg);
+}
+
+/* ── Step Header ── */
+.sd-frame-8234__step-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 0 10px;
+  cursor: pointer;
+  user-select: none;
+  outline: none;
+  gap: 12px;
+}
+
+.sd-frame-8234__step-header:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+.sd-frame-8234__step-header-left {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.sd-frame-8234__step-header-right {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.sd-frame-8234__step-label {
+  font-family: "Gilroy-Medium", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  color: var(--color-step-label);
+  text-transform: uppercase;
+}
+
+.sd-frame-8234__step-title-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.sd-frame-8234__step-icon {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.sd-frame-8234__step-icon img {
+  width: 24px;
+  height: 24px;
+  display: block;
+}
+
+.sd-frame-8234__step-heading {
+  font-family: "Gilroy-SemiBold", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-size: 20px;
+  font-weight: normal;
+  line-height: 1.25;
+  color: var(--color-text);
+  margin: 0;
+  padding: 0;
+}
+
+.sd-frame-8234__step-selected-count {
+  font-family: "Gilroy-Medium", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-size: 13px;
+  color: var(--color-selected-count);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  white-space: nowrap;
+}
+
+.sd-frame-8234__step-selected-count--hidden {
+  display: none;
+}
+
+/* ── Chevron ── */
+.sd-frame-8234__chevron {
+  flex-shrink: 0;
+  color: var(--color-text);
+}
+
+/* ── Step Content ── */
+.sd-frame-8234__step-content {
+  padding-bottom: 20px;
+}
+
+.sd-frame-8234__step-content--hidden {
+  display: none;
+}
+
+/* ── Product Grid ──
+   Layout: 2 columns for cards 1–2, 2 columns for cards 3–4,
+   card 5 (5th = Battery Cam Pro) full width
+   We use CSS grid with 2 columns and the 5th card spans full width.
+*/
+.sd-frame-8234__product-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+/* 5th product card spans full width */
+.sd-frame-8234__product-grid .sd-frame-8234__product-card:nth-child(5) {
+  grid-column: 1 / -1;
+}
+
+/* ── Product Card ── */
+.sd-frame-8234__product-card {
+  background-color: var(--color-card-bg);
+  border: 2px solid var(--color-border);
+  border-radius: var(--radius-card);
+  padding: 16px;
+  position: relative;
+  transition: border-color 0.2s ease;
+}
+
+.sd-frame-8234__product-card:hover {
+  border-color: #B0BAD8;
+}
+
+/* Active/selected card gets accent border */
+.sd-frame-8234__product-card--selected,
+.sd-frame-8234__product-card[data-selected="true"] {
+  border-color: var(--color-border-active);
+}
+
+/* ── Save Badge ── */
+.sd-frame-8234__save-badge {
+  position: absolute;
+  top: -1px;
+  left: 16px;
+  background-color: var(--color-badge-bg);
+  color: var(--color-badge-text);
+  font-family: "Gilroy-SemiBold", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-size: 11px;
+  letter-spacing: 0.02em;
+  padding: 3px 10px;
+  border-radius: 0 0 8px 8px;
+  z-index: 1;
+  line-height: 1.4;
+}
+
+/* ── Card Inner ── */
+.sd-frame-8234__card-inner {
+  display: flex;
+  flex-direction: row;
+  gap: 12px;
+  align-items: flex-start;
+}
+
+/* For the full-width 5th card, keep the same row layout */
+.sd-frame-8234__product-card:nth-child(5) .sd-frame-8234__card-inner {
+  flex-direction: row;
+  align-items: flex-start;
+}
+
+/* ── Product Image Wrap ── */
+.sd-frame-8234__product-image-wrap {
+  flex-shrink: 0;
+  width: 90px;
+  height: 90px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.sd-frame-8234__product-image {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+}
+
+.sd-frame-8234__product-image-placeholder {
+  width: 90px;
+  height: 90px;
+  background-color: var(--color-border);
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: "Gilroy-SemiBold", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-size: 28px;
+  color: var(--color-step-label);
+}
+
+/* ── Product Info ── */
+.sd-frame-8234__product-info {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+/* ── Product Title ── */
+.sd-frame-8234__product-title {
+  font-family: "Gilroy-SemiBold", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-size: 15px;
+  font-weight: normal;
+  line-height: 1.3;
+  color: var(--color-text);
+  margin: 0;
+  padding: 0;
+}
+
+/* ── Product Description ── */
+.sd-frame-8234__product-description {
+  font-family: "Gilroy-Regular", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-size: 12px;
+  line-height: 1.5;
+  color: #4A5568;
+  margin: 0;
+  padding: 0;
+}
+
+.sd-frame-8234__learn-more {
+  color: var(--color-learn-more);
+  text-decoration: underline;
+  font-family: "Gilroy-Medium", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-size: 12px;
+  white-space: nowrap;
+}
+
+.sd-frame-8234__learn-more:hover {
+  opacity: 0.8;
+}
+
+/* ── Swatches ── */
+.sd-frame-8234__swatches {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  align-items: center;
+}
+
+.sd-frame-8234__swatch-btn {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  background: var(--color-qty-bg);
+  border: 1.5px solid var(--color-qty-border);
+  border-radius: 20px;
+  padding: 3px 10px 3px 5px;
+  cursor: pointer;
+  font-family: "Gilroy-Medium", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-size: 12px;
+  color: var(--color-text);
+  line-height: 1;
+  transition: border-color 0.15s ease;
+}
+
+.sd-frame-8234__swatch-btn--active {
+  border-color: var(--color-text);
+  background-color: var(--color-card-bg);
+}
+
+.sd-frame-8234__swatch-btn:hover {
+  border-color: var(--color-text);
+}
+
+.sd-frame-8234__swatch-dot {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  display: inline-block;
+  flex-shrink: 0;
+  border: 1px solid rgba(0,0,0,0.15);
+}
+
+/* Swatch dot colors */
+.sd-frame-8234__swatch-dot--white {
+  background-color: #FFFFFF;
+  border-color: #C0C0C0;
+}
+
+.sd-frame-8234__swatch-dot--black {
+  background-color: #1A1A1A;
+}
+
+.sd-frame-8234__swatch-dot--grey,
+.sd-frame-8234__swatch-dot--gray {
+  background-color: #888888;
+}
+
+.sd-frame-8234__swatch-label {
+  font-family: "Gilroy-Medium", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-size: 12px;
+  color: var(--color-text);
+}
+
+/* ── Card Footer ── */
+.sd-frame-8234__card-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin-top: 4px;
+}
+
+/* ── Quantity Stepper ── */
+.sd-frame-8234__quantity-stepper {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  border: 1.5px solid var(--color-qty-border);
+  border-radius: 6px;
+  background-color: var(--color-card-bg);
+  overflow: hidden;
+}
+
+.sd-frame-8234__qty-btn {
+  background: transparent;
+  border: none;
+  padding: 6px 10px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-text);
+  line-height: 1;
+  transition: background-color 0.15s ease;
+}
+
+.sd-frame-8234__qty-btn:hover {
+  background-color: var(--color-qty-bg);
+}
+
+.sd-frame-8234__qty-btn svg {
+  display: block;
+  flex-shrink: 0;
+}
+
+.sd-frame-8234__qty-value {
+  font-family: "Gilroy-Medium", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-size: 14px;
+  color: var(--color-text);
+  min-width: 28px;
+  text-align: center;
+  padding: 0 4px;
+  line-height: 32px;
+  display: inline-block;
+}
+
+/* ── Price Wrap ── */
+.sd-frame-8234__price-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 1px;
+}
+
+.sd-frame-8234__price-original {
+  font-family: "Gilroy-Medium", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-size: 12px;
+  color: var(--color-price-original);
+  line-height: 1.2;
+}
+
+.sd-frame-8234__price-original s {
+  text-decoration: line-through;
+}
+
+.sd-frame-8234__price-sale {
+  font-family: "Gilroy-SemiBold", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-size: 14px;
+  color: var(--color-text);
+  line-height: 1.2;
+}
+
+/* ── CTA Wrap & Next Button ── */
+.sd-frame-8234__step-cta-wrap {
+  display: flex;
+  justify-content: center;
+  margin-top: 8px;
+}
+
+.sd-frame-8234__next-btn {
+  background-color: var(--color-next-btn-bg);
+  border: 2px solid var(--color-next-btn-border);
+  border-radius: 28px;
+  color: var(--color-next-btn-text);
+  font-family: "Gilroy-SemiBold", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-size: 16px;
+  padding: 12px 32px;
+  cursor: pointer;
+  transition: background-color 0.2s ease, color 0.2s ease;
+  white-space: nowrap;
+  line-height: 1.3;
+}
+
+.sd-frame-8234__next-btn:hover {
+  background-color: var(--color-accent);
+  color: #FFFFFF;
+}
+
+.sd-frame-8234__next-btn--primary {
+  background-color: var(--color-accent);
+  color: #FFFFFF;
+  border-color: var(--color-accent);
+}
+
+.sd-frame-8234__next-btn--primary:hover {
+  opacity: 0.9;
+}
+
+/* ── Empty State ── */
+.sd-frame-8234__empty-state,
+.sd-frame-8234__step-placeholder {
+  font-family: "Gilroy-Regular", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-size: 14px;
+  color: var(--color-step-label);
+  text-align: center;
+  padding: 24px 16px;
+  margin: 0;
+}
+
+/* ── Responsive — Mobile ── */
+@media (max-width: 749px) {
+  .sd-frame-8234__wizard {
+    padding: 0 12px;
+    gap: 10px;
+  }
+
+  .sd-frame-8234__product-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+
+  .sd-frame-8234__product-card {
+    padding: 12px;
+  }
+
+  .sd-frame-8234__product-image-wrap {
+    width: 70px;
+    height: 70px;
+  }
+
+  .sd-frame-8234__card-inner {
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .sd-frame-8234__product-title {
+    font-size: 13px;
+    text-align: center;
+  }
+
+  .sd-frame-8234__product-description {
+    font-size: 11px;
+    text-align: center;
+  }
+
+  .sd-frame-8234__swatches {
+    justify-content: center;
+  }
+
+  .sd-frame-8234__card-footer {
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .sd-frame-8234__price-wrap {
+    align-items: center;
+  }
+
+  .sd-frame-8234__step-heading {
+    font-size: 17px;
+  }
+
+  .sd-frame-8234__next-btn {
+    font-size: 14px;
+    padding: 10px 24px;
+  }
+
+  /* On mobile, 5th card still full width */
+  .sd-frame-8234__product-grid .sd-frame-8234__product-card:nth-child(5) {
+    grid-column: 1 / -1;
+  }
+
+  /* 5th card on mobile: keep horizontal layout */
+  .sd-frame-8234__product-card:nth-child(5) .sd-frame-8234__card-inner {
+    flex-direction: row;
+    align-items: flex-start;
+  }
+
+  .sd-frame-8234__product-card:nth-child(5) .sd-frame-8234__product-title {
+    text-align: left;
+  }
+
+  .sd-frame-8234__product-card:nth-child(5) .sd-frame-8234__product-description {
+    text-align: left;
+  }
+
+  .sd-frame-8234__product-card:nth-child(5) .sd-frame-8234__swatches {
+    justify-content: flex-start;
+  }
+
+  .sd-frame-8234__product-card:nth-child(5) .sd-frame-8234__card-footer {
+    flex-direction: row;
+    align-items: center;
+  }
+
+  .sd-frame-8234__product-card:nth-child(5) .sd-frame-8234__price-wrap {
+    align-items: flex-end;
+  }
+}
+
+/* ── Responsive — Desktop ── */
+@media (min-width: 750px) {
+  .sd-frame-8234__wizard {
+    padding: 0 24px;
+  }
+
+  .sd-frame-8234__product-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+  }
+
+  /* 5th product card spans full width */
+  .sd-frame-8234__product-grid .sd-frame-8234__product-card:nth-child(5) {
+    grid-column: 1 / -1;
+  }
+
+  /* On desktop, the full-width 5th card inner keeps row layout */
+  .sd-frame-8234__product-card:nth-child(5) .sd-frame-8234__card-inner {
+    flex-direction: row;
+    align-items: flex-start;
+  }
+
+  .sd-frame-8234__product-image-wrap {
+    width: 110px;
+    height: 110px;
+  }
+}
+
+/* SHOPIFYDRAFT CSS AUDIT
+   Colors from Figma: #5B3FD9, #EEF0F8, #FFFFFF, #1A1A2E, #E53E3E, #D0D5E8
+   Colors inferred:   #6B7280 (step label gray), #4A5568 (description text), #C8CEDE (qty border), #F5F6FA (qty bg), #B0BAD5 (hover border), #888888 (grey swatch), #1A1A1A (black swatch)
+   Fonts from Figma:  Gilroy-SemiBold, Gilroy-Medium, Gilroy-Regular
+   Spacing from Figma: padding 16px card, gap 12-14px grid, 12px wizard padding, border-radius 12px card/step
+*/
