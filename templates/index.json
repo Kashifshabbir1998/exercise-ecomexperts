@@ -343,6 +343,36 @@
         "padding_top": 40,
         "padding_bottom": 40
       }
+    },
+    "sd_frame_8234_yMAM3y": {
+      "type": "sd-frame-8234",
+      "name": "Bundle Builder Wizard",
+      "settings": {
+        "step1_label": "STEP 1 OF 4",
+        "step1_heading": "Choose your cameras",
+        "step1_icon": "shopify://shop_images/Image_Mini_Miracle_Balm_in_Dusty_Rose.png",
+        "step1_collection": "frontpage",
+        "step1_cta_label": "Next: Choose your plan",
+        "step2_label": "STEP 2 OF 4",
+        "step2_heading": "Choose your plan",
+        "step2_cta_label": "Next: Choose your sensors",
+        "step3_label": "STEP 3 OF 4",
+        "step3_heading": "Choose your sensors",
+        "step3_collection": "",
+        "step3_cta_label": "Next: Add extra protection",
+        "step4_label": "STEP 4 OF 4",
+        "step4_heading": "Add extra protection",
+        "step4_collection": "",
+        "step4_cta_label": "Add to cart",
+        "max_products": 6,
+        "color_accent": "#5B3FD9",
+        "color_bg": "#EEF0F8",
+        "color_card_bg": "#FFFFFF",
+        "color_text": "#1A1A2E",
+        "color_price_original": "#E53E3E",
+        "padding_top": 40,
+        "padding_bottom": 40
+      }
     }
   },
   "order": [
@@ -353,6 +383,7 @@
     "tes1122_qc4CxL",
     "sd_section_MV8Tjw",
     "sd_section_zkVE7e",
-    "sd_frame_1736_nw6pAH"
+    "sd_frame_1736_nw6pAH",
+    "sd_frame_8234_yMAM3y"
   ]
 }
