@@ -241,6 +241,108 @@
         "padding_top": 0,
         "padding_bottom": 0
       }
+    },
+    "sd_frame_1736_nw6pAH": {
+      "type": "sd-frame-1736",
+      "blocks": {
+        "product_item_RrtpVB": {
+          "type": "product_item",
+          "settings": {
+            "product": "black-leather-bag",
+            "category_label": "CAMERAS",
+            "default_quantity": 1,
+            "min_quantity": 0,
+            "max_quantity": 10,
+            "force_free": false
+          }
+        },
+        "product_item_cXQHiX": {
+          "type": "product_item",
+          "settings": {
+            "product": "",
+            "category_label": "CAMERAS",
+            "default_quantity": 2,
+            "min_quantity": 0,
+            "max_quantity": 10,
+            "force_free": false
+          }
+        },
+        "product_item_ACfGbC": {
+          "type": "product_item",
+          "settings": {
+            "product": "",
+            "category_label": "SENSORS",
+            "default_quantity": 2,
+            "min_quantity": 0,
+            "max_quantity": 10,
+            "force_free": false
+          }
+        },
+        "product_item_xkAmkL": {
+          "type": "product_item",
+          "settings": {
+            "product": "chequered-red-shirt",
+            "category_label": "SENSORS",
+            "default_quantity": 1,
+            "min_quantity": 0,
+            "max_quantity": 10,
+            "force_free": true
+          }
+        },
+        "product_item_JQRn44": {
+          "type": "product_item",
+          "settings": {
+            "product": "dark-denim-top",
+            "category_label": "ACCESSORIES",
+            "default_quantity": 2,
+            "min_quantity": 0,
+            "max_quantity": 10,
+            "force_free": false
+          }
+        },
+        "plan_row_NL7pzM": {
+          "type": "plan_row",
+          "settings": {
+            "plan_icon": "shopify://shop_images/Image_Mini_Miracle_Balm_in_Dusty_Rose.png",
+            "plan_name": "Cam Unlimited",
+            "plan_compare_price": "$12.99/mo",
+            "plan_price": "$9.99/mo"
+          }
+        },
+        "shipping_row_PHmak6": {
+          "type": "shipping_row",
+          "settings": {
+            "shipping_icon": "shopify://shop_images/Image_Mini_Miracle_Balm_in_Dusty_Rose.png",
+            "shipping_label": "Fast Shipping",
+            "shipping_compare_price": "$5.99"
+          }
+        }
+      },
+      "block_order": [
+        "product_item_RrtpVB",
+        "product_item_cXQHiX",
+        "product_item_ACfGbC",
+        "product_item_xkAmkL",
+        "product_item_JQRn44",
+        "plan_row_NL7pzM",
+        "shipping_row_PHmak6"
+      ],
+      "name": "Bundle Review",
+      "settings": {
+        "label": "REVIEW",
+        "heading": "Your security system",
+        "subheading": "<p>Review your bundle and checkout when ready.</p>",
+        "show_satisfaction_badge": true,
+        "satisfaction_badge_image": "shopify://shop_images/Image_Mini_Miracle_Balm_in_Dusty_Rose.png",
+        "satisfaction_badge_text": "100% Wyze satisfaction guarantee",
+        "show_financing_badge": true,
+        "financing_amount": "$19.19/mo",
+        "savings_prefix": "Congrats! You're saving",
+        "savings_suffix": "on your security bundle!",
+        "show_save_link": true,
+        "padding_top": 40,
+        "padding_bottom": 40
+      }
     }
   },
   "order": [
@@ -250,6 +352,7 @@
     "hero_section_UKyb4j",
     "tes1122_qc4CxL",
     "sd_section_MV8Tjw",
-    "sd_section_zkVE7e"
+    "sd_section_zkVE7e",
+    "sd_frame_1736_nw6pAH"
   ]
 }
