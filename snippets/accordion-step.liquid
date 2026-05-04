@@ -1,0 +1,113 @@
+{%- comment -%}
+  Accordion Step Snippet
+  Used by: sections/sd-frame-8234.liquid — renders a single collapsible wizard step
+
+  Expected variables:
+    - step_number      {Number}  Step number (1–4) (required)
+    - step_total       {Number}  Total number of steps (optional, default 4)
+    - step_id          {String}  Unique step identifier slug e.g. "cameras" (required)
+    - step_label       {String}  Label text e.g. "STEP 1 OF 4" (required)
+    - step_heading     {String}  Heading text e.g. "Choose your cameras" (required)
+    - step_icon        {Object}  Image object for step icon (optional)
+    - step_icon_alt    {String}  Alt text for step icon (optional)
+    - is_active        {Boolean} Whether step starts expanded (optional, default false)
+    - section_id       {String}  Parent section.id for unique IDs (required)
+    - next_step        {Number}  Step number to navigate to on CTA click (optional)
+    - cta_label        {String}  CTA button label text (optional)
+    - is_final_step    {Boolean} If true, renders finalize button instead of next (optional)
+    - step_content     {String}  Inner content HTML — passed via capture before render (optional)
+{%- endcomment -%}
+
+{%- assign total_steps = step_total | default: 4 -%}
+{%- assign step_is_open = is_active | default: false -%}
+{%- assign content_id = 'step-content-' | append: step_number | append: '-' | append: section_id -%}
+
+<div
+  class="sd-frame-8234__step{% if step_is_open %} sd-frame-8234__step--active{% else %} sd-frame-8234__step--collapsed{% endif %}"
+  data-step="{{ step_number }}"
+  data-step-id="{{ step_id }}"
+>
+  <!-- Step Header -->
+  <div
+    class="sd-frame-8234__step-header"
+    data-step-toggle="{{ step_number }}"
+    role="button"
+    aria-expanded="{% if step_is_open %}true{% else %}false{% endif %}"
+    aria-controls="{{ content_id }}"
+    tabindex="0"
+  >
+    <div class="sd-frame-8234__step-header-left">
+      <span class="sd-frame-8234__step-label">{{ step_label }}</span>
+      <div class="sd-frame-8234__step-title-row">
+        {%- if step_icon != blank -%}
+          <span class="sd-frame-8234__step-icon">
+            {{ step_icon | image_url: width: 24 | image_tag:
+              loading: 'lazy',
+              widths: '24,48',
+              alt: step_icon_alt | default: step_heading,
+              width: 24,
+              height: 24
+            }}
+          </span>
+        {%- endif -%}
+        <h2 class="sd-frame-8234__step-heading">{{ step_heading }}</h2>
+      </div>
+    </div>
+
+    <div class="sd-frame-8234__step-header-right">
+      <span
+        class="sd-frame-8234__step-selected-count{% unless step_is_open %} sd-frame-8234__step-selected-count--hidden{% endunless %}"
+        data-selected-count="{{ step_number }}"
+        aria-live="polite"
+      >
+        <span data-count-label="{{ step_number }}">
+          0 {{ 'sections.sd_frame_8234.selected' | t | default: 'selected' }}
+        </span>
+        {%- if step_is_open -%}
+          <svg class="sd-frame-8234__chevron sd-frame-8234__chevron--up" width="12" height="8" viewBox="0 0 12 8" fill="none" aria-hidden="true">
+            <path d="M1 7L6 2L11 7" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+        {%- endif -%}
+      </span>
+      {%- unless step_is_open -%}
+        <svg class="sd-frame-8234__chevron sd-frame-8234__chevron--down" width="12" height="8" viewBox="0 0 12 8" fill="none" aria-hidden="true">
+          <path d="M1 1L6 6L11 1" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+      {%- endunless -%}
+    </div>
+  </div>
+
+  <!-- Step Content -->
+  <div
+    class="sd-frame-8234__step-content{% unless step_is_open %} sd-frame-8234__step-content--hidden{% endunless %}"
+    id="{{ content_id }}"
+    data-step-content="{{ step_number }}"
+    aria-hidden="{% if step_is_open %}false{% else %}true{% endif %}"
+  >
+    {{ step_content }}
+
+    {%- unless cta_label == blank -%}
+      <div class="sd-frame-8234__step-cta-wrap">
+        {%- if is_final_step -%}
+          <button
+            type="button"
+            class="sd-frame-8234__next-btn sd-frame-8234__next-btn--primary"
+            data-finalize="true"
+            aria-label="{{ cta_label }}"
+          >
+            {{ cta_label }}
+          </button>
+        {%- else -%}
+          <button
+            type="button"
+            class="sd-frame-8234__next-btn"
+            data-next-step="{{ next_step }}"
+            aria-label="{{ cta_label }}"
+          >
+            {{ cta_label }}
+          </button>
+        {%- endif -%}
+      </div>
+    {%- endunless -%}
+  </div>
+</div>
