@@ -1,0 +1,53 @@
+{%- comment -%}
+  Bundle Plan Row (e.g. Cam Unlimited subscription)
+  Usage: {% render 'bundle-plan-row', block: block %}
+
+  Expected variables:
+    - block: section block of type 'plan_row'
+      - block.settings.plan_icon          : image
+      - block.settings.plan_name          : string
+      - block.settings.plan_compare_price : string (optional, leave blank to hide)
+      - block.settings.plan_price         : string
+{%- endcomment -%}
+
+<div class="sd-frame-1736__category sd-frame-1736__category--plan" {{ block.shopify_attributes }}>
+
+  <div class="sd-frame-1736__category-label">{{ 'sections.sd_frame_1736.plan_label' | t | upcase }}</div>
+
+  <div class="sd-frame-1736__category-items">
+    <div class="sd-frame-1736__plan-row">
+
+      <!-- Plan Icon -->
+      <div class="sd-frame-1736__plan-icon" aria-hidden="true">
+        {%- if block.settings.plan_icon != blank -%}
+          {{ block.settings.plan_icon | image_url: width: 120 | image_tag:
+            loading: 'lazy',
+            widths: '40,80',
+            sizes: '40px',
+            alt: block.settings.plan_name,
+            class: 'sd-frame-1736__plan-icon-img',
+            width: 40,
+            height: 40
+          }}
+        {%- else -%}
+          <div class="sd-frame-1736__plan-icon-placeholder" aria-hidden="true"></div>
+        {%- endif -%}
+      </div>
+
+      <!-- Plan Info -->
+      <div class="sd-frame-1736__plan-info">
+        <span class="sd-frame-1736__line-name">{{ block.settings.plan_name }}</span>
+      </div>
+
+      <!-- Plan Price -->
+      <div class="sd-frame-1736__line-price">
+        {%- unless block.settings.plan_compare_price == blank -%}
+          <span class="sd-frame-1736__price-compare">{{ block.settings.plan_compare_price }}</span>
+        {%- endunless -%}
+        <span class="sd-frame-1736__price-current">{{ block.settings.plan_price }}</span>
+      </div>
+
+    </div>
+  </div>
+
+</div>
