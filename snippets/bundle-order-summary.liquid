@@ -1,0 +1,100 @@
+{%- comment -%}
+  Bundle Order Summary
+  Usage: {% render 'bundle-order-summary', section: section %}
+
+  Expected variables:
+    - section: the section object
+      - section.settings.show_satisfaction_badge   : boolean
+      - section.settings.satisfaction_badge_image  : image
+      - section.settings.satisfaction_badge_text   : string
+      - section.settings.show_financing_badge      : boolean
+      - section.settings.financing_amount          : string
+      - section.settings.show_save_link            : boolean
+{%- endcomment -%}
+
+<div class="sd-frame-1736__summary" data-sd-summary>
+
+  <!-- Satisfaction Badge -->
+  {%- if section.settings.show_satisfaction_badge -%}
+    <div class="sd-frame-1736__badge-wrap" aria-label="{{ 'sections.sd_frame_1736.satisfaction_badge_aria' | t }}">
+      {%- if section.settings.satisfaction_badge_image != blank -%}
+        {{ section.settings.satisfaction_badge_image | image_url: width: 300 | image_tag:
+          loading: 'lazy',
+          widths: '100,200',
+          sizes: '100px',
+          alt: section.settings.satisfaction_badge_text,
+          class: 'sd-frame-1736__badge-img',
+          width: 100,
+          height: 100
+        }}
+      {%- else -%}
+        <div class="sd-frame-1736__badge-fallback" role="img" aria-label="{{ section.settings.satisfaction_badge_text }}">
+          <span class="sd-frame-1736__badge-text">{{ section.settings.satisfaction_badge_text }}</span>
+        </div>
+      {%- endif -%}
+    </div>
+  {%- endif -%}
+
+  <!-- Financing Badge -->
+  {%- if section.settings.show_financing_badge -%}
+    <div class="sd-frame-1736__financing" aria-live="polite">
+      <span class="sd-frame-1736__financing-badge">
+        {{ 'sections.sd_frame_1736.financing_prefix' | t }}
+        <strong data-sd-financing-amount>{{ section.settings.financing_amount }}</strong>
+        {{ 'sections.sd_frame_1736.financing_suffix' | t }}
+      </span>
+    </div>
+  {%- endif -%}
+
+  <!-- Total Price Row -->
+  <div class="sd-frame-1736__totals">
+    <div class="sd-frame-1736__total-row">
+      <span class="sd-frame-1736__total-label">{{ 'sections.sd_frame_1736.total_label' | t }}</span>
+      <div class="sd-frame-1736__total-prices">
+        <span
+          class="sd-frame-1736__total-compare"
+          data-sd-total-compare
+          aria-label="{{ 'sections.sd_frame_1736.original_price_aria' | t }}"
+        ></span>
+        <span
+          class="sd-frame-1736__total-current"
+          data-sd-total-current
+          aria-live="polite"
+          aria-label="{{ 'sections.sd_frame_1736.discounted_price_aria' | t }}"
+        ></span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Savings Banner -->
+  <div class="sd-frame-1736__savings" data-sd-savings aria-live="polite">
+    {%- comment -%} Populated by JS after totals are calculated {%- endcomment -%}
+  </div>
+
+  <!-- Checkout Button -->
+  <div class="sd-frame-1736__checkout-wrap">
+    <button
+      type="button"
+      class="sd-frame-1736__checkout-btn"
+      data-sd-checkout-btn
+      aria-label="{{ 'sections.sd_frame_1736.checkout_aria' | t }}"
+    >
+      {{ 'sections.sd_frame_1736.checkout_label' | t }}
+    </button>
+  </div>
+
+  <!-- Save System Link -->
+  {%- if section.settings.show_save_link -%}
+    <div class="sd-frame-1736__save-wrap">
+      <button
+        type="button"
+        class="sd-frame-1736__save-link"
+        data-sd-save-bundle
+        aria-label="{{ 'sections.sd_frame_1736.save_system_aria' | t }}"
+      >
+        {{ 'sections.sd_frame_1736.save_system_label' | t }}
+      </button>
+    </div>
+  {%- endif -%}
+
+</div>
