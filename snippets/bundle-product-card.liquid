@@ -1,0 +1,82 @@
+{%- comment -%}
+  Bundle Product Card Snippet
+  Used by: sections/sd-frame-8234.liquid — product grid in each wizard step
+
+  Expected variables:
+    - product        {Object}  Shopify product object (required)
+    - step           {Number}  Step number this card belongs to (required)
+    - max_title_words {Number} Truncate description to N words (optional, default 18)
+{%- endcomment -%}
+
+{%- assign first_variant = product.selected_or_first_available_variant -%}
+{%- assign has_discount = false -%}
+{%- if first_variant.compare_at_price > first_variant.price -%}
+  {%- assign has_discount = true -%}
+  {%- assign save_amount = first_variant.compare_at_price | minus: first_variant.price -%}
+  {%- assign save_percent = save_amount | times: 100 | divided_by: first_variant.compare_at_price -%}
+{%- endif -%}
+
+{%- assign desc_words = max_title_words | default: 18 -%}
+
+<div
+  class="sd-frame-8234__product-card"
+  data-product-id="{{ product.id }}"
+  data-product-handle="{{ product.handle }}"
+  data-step="{{ step }}"
+>
+  {%- if has_discount -%}
+    <div class="sd-frame-8234__save-badge" aria-label="{{ 'sections.sd_frame_8234.save_badge' | t | default: 'Save' }} {{ save_percent }}%">
+      {{ 'sections.sd_frame_8234.save' | t | default: 'Save' }} {{ save_percent }}%
+    </div>
+  {%- endif -%}
+
+  <div class="sd-frame-8234__card-inner">
+    <div class="sd-frame-8234__product-image-wrap">
+      {%- if product.featured_image != blank -%}
+        {{ product.featured_image | image_url: width: 300 | image_tag:
+          loading: 'lazy',
+          widths: '150,200,300',
+          sizes: '(min-width: 750px) 120px, 100px',
+          alt: product.featured_image.alt | default: product.title,
+          class: 'sd-frame-8234__product-image',
+          width: 120,
+          height: 120
+        }}
+      {%- else -%}
+        <div class="sd-frame-8234__product-image-placeholder" aria-hidden="true">
+          {{ product.title | slice: 0 }}
+        </div>
+      {%- endif -%}
+    </div>
+
+    <div class="sd-frame-8234__product-info">
+      <h3 class="sd-frame-8234__product-title">{{ product.title }}</h3>
+
+      {%- unless product.description == blank -%}
+        <p class="sd-frame-8234__product-description">
+          {{ product.description | strip_html | truncatewords: desc_words }}
+          <a
+            href="{{ product.url }}"
+            class="sd-frame-8234__learn-more"
+            aria-label="{{ 'sections.sd_frame_8234.learn_more_about' | t | default: 'Learn more about' }} {{ product.title }}"
+          >{{ 'sections.sd_frame_8234.learn_more' | t | default: 'Learn More' }}</a>
+        </p>
+      {%- endunless -%}
+
+      {%- render 'color-swatch-selector', product: product -%}
+
+      <div class="sd-frame-8234__card-footer">
+        {%- render 'quantity-stepper', product: product -%}
+
+        <div class="sd-frame-8234__price-wrap">
+          {%- if has_discount -%}
+            <span class="sd-frame-8234__price-original">
+              <s>{{ first_variant.compare_at_price | money }}</s>
+            </span>
+          {%- endif -%}
+          <span class="sd-frame-8234__price-sale">{{ first_variant.price | money }}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
