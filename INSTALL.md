@@ -1,24 +1,48 @@
-1. Add the following files to your theme:
-   - `sections/sd-frame-1736.liquid` — Main section file
-   - `assets/sd-frame-1736.js` — Section JavaScript functionality
-   - `assets/sd-frame-1736.css` — Section styles
-   - `snippets/bundle-line-item.liquid` — Bundle item renderer
-   - `snippets/quantity-stepper.liquid` — Quantity increment/decrement component
-   - `snippets/bundle-plan-row.liquid` — Pricing plan row component
-   - `snippets/bundle-order-summary.liquid` — Order summary component
+## Installation Instructions
 
-2. In the Shopify theme editor:
-   - Navigate to **Sales channels > Online Store > Theme > Edit code**
-   - Upload all files to their respective directories
+### 1. Add Files to Your Theme
 
-3. Add the section to your desired page template:
-   - Edit the page template in the theme editor (e.g., `product.json` or `page.json`)
-   - Click **Add section** and select **sd-frame-1736**
-   - Configure section settings as needed (padding, heading, label, etc.)
+Add the following files to your Shopify theme:
 
-4. Customize settings in the theme editor:
-   - Set padding top/bottom values
-   - Configure heading and label text
-   - Adjust bundle product data and pricing options
+**Sections:**
+- `sections/sd-frame-8234.liquid`
 
-The section is now ready to display bundle products with quantity controls, pricing plans, and order summaries.
+**Assets:**
+- `assets/sd-frame-8234.js`
+- `assets/sd-frame-8234.css`
+
+**Snippets:**
+- `snippets/bundle-product-card.liquid`
+- `snippets/quantity-stepper.liquid`
+- `snippets/color-swatch-selector.liquid`
+- `snippets/accordion-step.liquid`
+
+### 2. Add Section to Theme
+
+1. In Shopify Admin, go to **Online Store > Themes**
+2. Click **Edit code** on your active theme
+3. Open the template where you want the section to appear (e.g., `templates/index.json` for homepage)
+4. Add a new section block with type `sd-frame-8234`:
+   ```json
+   {
+     "type": "sd-frame-8234",
+     "settings": {
+       "padding_top": 40,
+       "padding_bottom": 40
+     }
+   }
+   ```
+
+### 3. Configure Settings
+
+After adding the section to your template, customize these optional color and spacing settings in the theme editor:
+- Padding Top/Bottom
+- Accent Color
+- Background Color
+- Card Background Color
+- Text Color
+- Original Price Color
+
+### 4. Verify Installation
+
+Publish your theme and navigate to the page containing the section to confirm it displays correctly.
