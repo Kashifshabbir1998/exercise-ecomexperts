@@ -1,0 +1,754 @@
+{{ 'sd-frame-8234.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'sd-frame-8234.js' | asset_url }}" defer></script>
+
+<!-- Bundle Builder Wizard Section -->
+<div
+  id="shopify-section-{{ section.id }}"
+  class="sd-frame-8234 shopify-section"
+  style="--sd-spacing-top: {{ section.settings.padding_top }}px; --sd-spacing-bottom: {{ section.settings.padding_bottom }}px; --sd-color-accent: {{ section.settings.color_accent }}; --sd-color-bg: {{ section.settings.color_bg }}; --sd-color-card-bg: {{ section.settings.color_card_bg }}; --sd-color-text: {{ section.settings.color_text }}; --sd-color-price-original: {{ section.settings.color_price_original }};"
+>
+  <sd-frame-8234 data-section-id="{{ section.id }}">
+
+    <div class="sd-frame-8234__wizard" id="bundle-wizard-{{ section.id }}">
+
+      {%- comment -%} ===== STEP 1: CHOOSE CAMERAS ===== {%- endcomment -%}
+      <div
+        class="sd-frame-8234__step sd-frame-8234__step--active"
+        data-step="1"
+        data-step-id="cameras"
+      >
+        <div
+          class="sd-frame-8234__step-header"
+          data-step-toggle="1"
+          role="button"
+          aria-expanded="true"
+          aria-controls="step-content-1-{{ section.id }}"
+          tabindex="0"
+        >
+          <div class="sd-frame-8234__step-header-left">
+            <span class="sd-frame-8234__step-label">{{ section.settings.step1_label | default: 'STEP 1 OF 4' }}</span>
+            <div class="sd-frame-8234__step-title-row">
+              {%- if section.settings.step1_icon != blank -%}
+                <span class="sd-frame-8234__step-icon">
+                  {{ section.settings.step1_icon | image_url: width: 24 | image_tag:
+                    loading: 'lazy',
+                    widths: '24,48',
+                    alt: section.settings.step1_heading,
+                    width: 24,
+                    height: 24
+                  }}
+                </span>
+              {%- else -%}
+                <span class="sd-frame-8234__step-icon">
+                  <img src="{{ 'icon-24-cam-livestream.svg' | asset_url }}" alt="" width="24" height="24" loading="lazy">
+                </span>
+              {%- endif -%}
+              <h2 class="sd-frame-8234__step-heading">{{ section.settings.step1_heading | default: 'Choose your cameras' }}</h2>
+            </div>
+          </div>
+          <div class="sd-frame-8234__step-header-right">
+            <span class="sd-frame-8234__step-selected-count" data-selected-count="1" aria-live="polite">
+              <span data-count-label="1">0 {{ 'sections.sd_frame_8234.selected' | t | default: 'selected' }}</span>
+              <svg class="sd-frame-8234__chevron sd-frame-8234__chevron--up" width="12" height="8" viewBox="0 0 12 8" fill="none" aria-hidden="true">
+                <path d="M1 7L6 2L11 7" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+              </svg>
+            </span>
+          </div>
+        </div>
+
+        <div
+          class="sd-frame-8234__step-content"
+          id="step-content-1-{{ section.id }}"
+          data-step-content="1"
+          aria-hidden="false"
+        >
+          {%- assign step1_collection = collections[section.settings.step1_collection] -%}
+          {%- if step1_collection != blank and step1_collection.products_count > 0 -%}
+            <div class="sd-frame-8234__product-grid">
+              {%- for product in step1_collection.products limit: section.settings.max_products -%}
+                {%- assign first_variant = product.selected_or_first_available_variant -%}
+                {%- assign has_discount = false -%}
+                {%- if first_variant.compare_at_price > first_variant.price -%}
+                  {%- assign has_discount = true -%}
+                  {%- assign save_amount = first_variant.compare_at_price | minus: first_variant.price -%}
+                  {%- assign save_percent = save_amount | times: 100 | divided_by: first_variant.compare_at_price -%}
+                {%- endif -%}
+
+                <div
+                  class="sd-frame-8234__product-card"
+                  data-product-id="{{ product.id }}"
+                  data-product-handle="{{ product.handle }}"
+                  data-step="1"
+                >
+                  {%- if has_discount -%}
+                    <div class="sd-frame-8234__save-badge" aria-label="Save {{ save_percent }}%">
+                      Save {{ save_percent }}%
+                    </div>
+                  {%- endif -%}
+
+                  <div class="sd-frame-8234__card-inner">
+                    <div class="sd-frame-8234__product-image-wrap">
+                      {%- if product.featured_image != blank -%}
+                        {{ product.featured_image | image_url: width: 300 | image_tag:
+                          loading: 'lazy',
+                          widths: '150,200,300',
+                          sizes: '(min-width: 750px) 120px, 100px',
+                          alt: product.featured_image.alt | default: product.title,
+                          class: 'sd-frame-8234__product-image',
+                          width: 120,
+                          height: 120
+                        }}
+                      {%- else -%}
+                        <div class="sd-frame-8234__product-image-placeholder">
+                          {{ product.title | slice: 0 }}
+                        </div>
+                      {%- endif -%}
+                    </div>
+
+                    <div class="sd-frame-8234__product-info">
+                      <h3 class="sd-frame-8234__product-title">{{ product.title }}</h3>
+
+                      {%- unless product.description == blank -%}
+                        <p class="sd-frame-8234__product-description">
+                          {{ product.description | strip_html | truncatewords: 18 }}
+                          <a
+                            href="{{ product.url }}"
+                            class="sd-frame-8234__learn-more"
+                            aria-label="Learn more about {{ product.title }}"
+                          >{{ 'sections.sd_frame_8234.learn_more' | t | default: 'Learn More' }}</a>
+                        </p>
+                      {%- endunless -%}
+
+                      {%- comment -%} Color swatch variant selector {%- endcomment -%}
+                      {%- assign color_option = nil -%}
+                      {%- for option in product.options_with_values -%}
+                        {%- assign opt_lower = option.name | downcase -%}
+                        {%- if opt_lower == 'color' or opt_lower == 'colour' -%}
+                          {%- assign color_option = option -%}
+                        {%- endif -%}
+                      {%- endfor -%}
+
+                      {%- if color_option != nil -%}
+                        <div class="sd-frame-8234__swatches" role="group" aria-label="Color options for {{ product.title }}">
+                          {%- for value in color_option.values -%}
+                            {%- assign value_slug = value | downcase | replace: ' ', '-' -%}
+                            <button
+                              type="button"
+                              class="sd-frame-8234__swatch-btn{% if forloop.first %} sd-frame-8234__swatch-btn--active{% endif %}"
+                              data-color="{{ value | escape }}"
+                              data-product-id="{{ product.id }}"
+                              aria-label="{{ value }} color option for {{ product.title }}"
+                              aria-pressed="{% if forloop.first %}true{% else %}false{% endif %}"
+                            >
+                              <span class="sd-frame-8234__swatch-dot sd-frame-8234__swatch-dot--{{ value_slug }}" aria-hidden="true"></span>
+                              <span class="sd-frame-8234__swatch-label">{{ value }}</span>
+                            </button>
+                          {%- endfor -%}
+                        </div>
+                      {%- endif -%}
+
+                      <div class="sd-frame-8234__card-footer">
+                        <div class="sd-frame-8234__quantity-stepper" data-product-id="{{ product.id }}">
+                          <button
+                            type="button"
+                            class="sd-frame-8234__qty-btn sd-frame-8234__qty-btn--minus"
+                            aria-label="Decrease quantity of {{ product.title }}"
+                            data-action="decrement"
+                            data-product-id="{{ product.id }}"
+                          >
+                            <svg width="12" height="2" viewBox="0 0 12 2" fill="none" aria-hidden="true">
+                              <path d="M1 1H11" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                            </svg>
+                          </button>
+                          <span
+                            class="sd-frame-8234__qty-value"
+                            data-qty-display="{{ product.id }}"
+                            aria-live="polite"
+                            aria-label="Quantity"
+                          >0</span>
+                          <button
+                            type="button"
+                            class="sd-frame-8234__qty-btn sd-frame-8234__qty-btn--plus"
+                            aria-label="Increase quantity of {{ product.title }}"
+                            data-action="increment"
+                            data-product-id="{{ product.id }}"
+                          >
+                            <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true">
+                              <path d="M6 1V11M1 6H11" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                            </svg>
+                          </button>
+                        </div>
+
+                        <div class="sd-frame-8234__price-wrap">
+                          {%- if has_discount -%}
+                            <span class="sd-frame-8234__price-original">
+                              <s>{{ first_variant.compare_at_price | money }}</s>
+                            </span>
+                          {%- endif -%}
+                          <span class="sd-frame-8234__price-sale">{{ first_variant.price | money }}</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              {%- endfor -%}
+            </div>
+          {%- else -%}
+            <!-- PLACEHOLDER: Assign a collection in the section settings to display camera products -->
+            <p class="sd-frame-8234__empty-state">{{ 'sections.sd_frame_8234.no_products' | t | default: 'No products found. Please select a collection in the section settings.' }}</p>
+          {%- endif -%}
+
+          <div class="sd-frame-8234__step-cta-wrap">
+            <button
+              type="button"
+              class="sd-frame-8234__next-btn"
+              data-next-step="2"
+              aria-label="{{ section.settings.step1_cta_label | default: 'Next: Choose your plan' }}"
+            >
+              {{ section.settings.step1_cta_label | default: 'Next: Choose your plan' }}
+            </button>
+          </div>
+        </div>
+      </div>
+
+      {%- comment -%} ===== STEP 2: CHOOSE PLAN ===== {%- endcomment -%}
+      <div
+        class="sd-frame-8234__step sd-frame-8234__step--collapsed"
+        data-step="2"
+        data-step-id="plan"
+      >
+        <div
+          class="sd-frame-8234__step-header"
+          data-step-toggle="2"
+          role="button"
+          aria-expanded="false"
+          aria-controls="step-content-2-{{ section.id }}"
+          tabindex="0"
+        >
+          <div class="sd-frame-8234__step-header-left">
+            <span class="sd-frame-8234__step-label">{{ section.settings.step2_label | default: 'STEP 2 OF 4' }}</span>
+            <div class="sd-frame-8234__step-title-row">
+              <h2 class="sd-frame-8234__step-heading">{{ section.settings.step2_heading | default: 'Choose your plan' }}</h2>
+            </div>
+          </div>
+          <div class="sd-frame-8234__step-header-right">
+            <span class="sd-frame-8234__step-selected-count sd-frame-8234__step-selected-count--hidden" data-selected-count="2" aria-live="polite">
+              <span data-count-label="2">0 {{ 'sections.sd_frame_8234.selected' | t | default: 'selected' }}</span>
+            </span>
+            <svg class="sd-frame-8234__chevron sd-frame-8234__chevron--down" width="12" height="8" viewBox="0 0 12 8" fill="none" aria-hidden="true">
+              <path d="M1 1L6 6L11 1" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+          </div>
+        </div>
+
+        <div
+          class="sd-frame-8234__step-content sd-frame-8234__step-content--hidden"
+          id="step-content-2-{{ section.id }}"
+          data-step-content="2"
+          aria-hidden="true"
+        >
+          <!-- PLACEHOLDER: Step 2 plan selection content -->
+          <p class="sd-frame-8234__step-placeholder">{{ 'sections.sd_frame_8234.plan_placeholder' | t | default: 'Plan selection content goes here.' }}</p>
+          <div class="sd-frame-8234__step-cta-wrap">
+            <button
+              type="button"
+              class="sd-frame-8234__next-btn"
+              data-next-step="3"
+              aria-label="{{ section.settings.step2_cta_label | default: 'Next: Choose your sensors' }}"
+            >
+              {{ section.settings.step2_cta_label | default: 'Next: Choose your sensors' }}
+            </button>
+          </div>
+        </div>
+      </div>
+
+      {%- comment -%} ===== STEP 3: CHOOSE SENSORS ===== {%- endcomment -%}
+      <div
+        class="sd-frame-8234__step sd-frame-8234__step--collapsed"
+        data-step="3"
+        data-step-id="sensors"
+      >
+        <div
+          class="sd-frame-8234__step-header"
+          data-step-toggle="3"
+          role="button"
+          aria-expanded="false"
+          aria-controls="step-content-3-{{ section.id }}"
+          tabindex="0"
+        >
+          <div class="sd-frame-8234__step-header-left">
+            <span class="sd-frame-8234__step-label">{{ section.settings.step3_label | default: 'STEP 3 OF 4' }}</span>
+            <div class="sd-frame-8234__step-title-row">
+              <h2 class="sd-frame-8234__step-heading">{{ section.settings.step3_heading | default: 'Choose your sensors' }}</h2>
+            </div>
+          </div>
+          <div class="sd-frame-8234__step-header-right">
+            <span class="sd-frame-8234__step-selected-count sd-frame-8234__step-selected-count--hidden" data-selected-count="3" aria-live="polite">
+              <span data-count-label="3">0 {{ 'sections.sd_frame_8234.selected' | t | default: 'selected' }}</span>
+            </span>
+            <svg class="sd-frame-8234__chevron sd-frame-8234__chevron--down" width="12" height="8" viewBox="0 0 12 8" fill="none" aria-hidden="true">
+              <path d="M1 1L6 6L11 1" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+          </div>
+        </div>
+
+        <div
+          class="sd-frame-8234__step-content sd-frame-8234__step-content--hidden"
+          id="step-content-3-{{ section.id }}"
+          data-step-content="3"
+          aria-hidden="true"
+        >
+          {%- assign step3_collection = collections[section.settings.step3_collection] -%}
+          {%- if step3_collection != blank and step3_collection.products_count > 0 -%}
+            <div class="sd-frame-8234__product-grid">
+              {%- for product in step3_collection.products limit: section.settings.max_products -%}
+                {%- assign first_variant = product.selected_or_first_available_variant -%}
+                {%- assign has_discount = false -%}
+                {%- if first_variant.compare_at_price > first_variant.price -%}
+                  {%- assign has_discount = true -%}
+                  {%- assign save_amount = first_variant.compare_at_price | minus: first_variant.price -%}
+                  {%- assign save_percent = save_amount | times: 100 | divided_by: first_variant.compare_at_price -%}
+                {%- endif -%}
+                <div
+                  class="sd-frame-8234__product-card"
+                  data-product-id="{{ product.id }}"
+                  data-product-handle="{{ product.handle }}"
+                  data-step="3"
+                >
+                  {%- if has_discount -%}
+                    <div class="sd-frame-8234__save-badge">Save {{ save_percent }}%</div>
+                  {%- endif -%}
+                  <div class="sd-frame-8234__card-inner">
+                    <div class="sd-frame-8234__product-image-wrap">
+                      {%- if product.featured_image != blank -%}
+                        {{ product.featured_image | image_url: width: 300 | image_tag:
+                          loading: 'lazy',
+                          widths: '150,200,300',
+                          sizes: '(min-width: 750px) 120px, 100px',
+                          alt: product.featured_image.alt | default: product.title,
+                          class: 'sd-frame-8234__product-image',
+                          width: 120,
+                          height: 120
+                        }}
+                      {%- else -%}
+                        <div class="sd-frame-8234__product-image-placeholder">{{ product.title | slice: 0 }}</div>
+                      {%- endif -%}
+                    </div>
+                    <div class="sd-frame-8234__product-info">
+                      <h3 class="sd-frame-8234__product-title">{{ product.title }}</h3>
+                      {%- unless product.description == blank -%}
+                        <p class="sd-frame-8234__product-description">
+                          {{ product.description | strip_html | truncatewords: 18 }}
+                          <a href="{{ product.url }}" class="sd-frame-8234__learn-more" aria-label="Learn more about {{ product.title }}">{{ 'sections.sd_frame_8234.learn_more' | t | default: 'Learn More' }}</a>
+                        </p>
+                      {%- endunless -%}
+                      {%- assign color_option = nil -%}
+                      {%- for option in product.options_with_values -%}
+                        {%- assign opt_lower = option.name | downcase -%}
+                        {%- if opt_lower == 'color' or opt_lower == 'colour' -%}
+                          {%- assign color_option = option -%}
+                        {%- endif -%}
+                      {%- endfor -%}
+                      {%- if color_option != nil -%}
+                        <div class="sd-frame-8234__swatches" role="group" aria-label="Color options for {{ product.title }}">
+                          {%- for value in color_option.values -%}
+                            {%- assign value_slug = value | downcase | replace: ' ', '-' -%}
+                            <button
+                              type="button"
+                              class="sd-frame-8234__swatch-btn{% if forloop.first %} sd-frame-8234__swatch-btn--active{% endif %}"
+                              data-color="{{ value | escape }}"
+                              data-product-id="{{ product.id }}"
+                              aria-label="{{ value }} color"
+                              aria-pressed="{% if forloop.first %}true{% else %}false{% endif %}"
+                            >
+                              <span class="sd-frame-8234__swatch-dot sd-frame-8234__swatch-dot--{{ value_slug }}" aria-hidden="true"></span>
+                              <span class="sd-frame-8234__swatch-label">{{ value }}</span>
+                            </button>
+                          {%- endfor -%}
+                        </div>
+                      {%- endif -%}
+                      <div class="sd-frame-8234__card-footer">
+                        <div class="sd-frame-8234__quantity-stepper" data-product-id="{{ product.id }}">
+                          <button type="button" class="sd-frame-8234__qty-btn sd-frame-8234__qty-btn--minus" aria-label="Decrease quantity of {{ product.title }}" data-action="decrement" data-product-id="{{ product.id }}">
+                            <svg width="12" height="2" viewBox="0 0 12 2" fill="none" aria-hidden="true"><path d="M1 1H11" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+                          </button>
+                          <span class="sd-frame-8234__qty-value" data-qty-display="{{ product.id }}" aria-live="polite" aria-label="Quantity">0</span>
+                          <button type="button" class="sd-frame-8234__qty-btn sd-frame-8234__qty-btn--plus" aria-label="Increase quantity of {{ product.title }}" data-action="increment" data-product-id="{{ product.id }}">
+                            <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M6 1V11M1 6H11" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+                          </button>
+                        </div>
+                        <div class="sd-frame-8234__price-wrap">
+                          {%- if has_discount -%}
+                            <span class="sd-frame-8234__price-original"><s>{{ first_variant.compare_at_price | money }}</s></span>
+                          {%- endif -%}
+                          <span class="sd-frame-8234__price-sale">{{ first_variant.price | money }}</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              {%- endfor -%}
+            </div>
+          {%- else -%}
+            <!-- PLACEHOLDER: Assign a collection in the section settings for Step 3 sensors -->
+            <p class="sd-frame-8234__empty-state">{{ 'sections.sd_frame_8234.no_products' | t | default: 'No products found. Please select a collection in the section settings.' }}</p>
+          {%- endif -%}
+          <div class="sd-frame-8234__step-cta-wrap">
+            <button
+              type="button"
+              class="sd-frame-8234__next-btn"
+              data-next-step="4"
+              aria-label="{{ section.settings.step3_cta_label | default: 'Next: Add extra protection' }}"
+            >
+              {{ section.settings.step3_cta_label | default: 'Next: Add extra protection' }}
+            </button>
+          </div>
+        </div>
+      </div>
+
+      {%- comment -%} ===== STEP 4: EXTRA PROTECTION ===== {%- endcomment -%}
+      <div
+        class="sd-frame-8234__step sd-frame-8234__step--collapsed"
+        data-step="4"
+        data-step-id="protection"
+      >
+        <div
+          class="sd-frame-8234__step-header"
+          data-step-toggle="4"
+          role="button"
+          aria-expanded="false"
+          aria-controls="step-content-4-{{ section.id }}"
+          tabindex="0"
+        >
+          <div class="sd-frame-8234__step-header-left">
+            <span class="sd-frame-8234__step-label">{{ section.settings.step4_label | default: 'STEP 4 OF 4' }}</span>
+            <div class="sd-frame-8234__step-title-row">
+              <h2 class="sd-frame-8234__step-heading">{{ section.settings.step4_heading | default: 'Add extra protection' }}</h2>
+            </div>
+          </div>
+          <div class="sd-frame-8234__step-header-right">
+            <span class="sd-frame-8234__step-selected-count sd-frame-8234__step-selected-count--hidden" data-selected-count="4" aria-live="polite">
+              <span data-count-label="4">0 {{ 'sections.sd_frame_8234.selected' | t | default: 'selected' }}</span>
+            </span>
+            <svg class="sd-frame-8234__chevron sd-frame-8234__chevron--down" width="12" height="8" viewBox="0 0 12 8" fill="none" aria-hidden="true">
+              <path d="M1 1L6 6L11 1" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+          </div>
+        </div>
+
+        <div
+          class="sd-frame-8234__step-content sd-frame-8234__step-content--hidden"
+          id="step-content-4-{{ section.id }}"
+          data-step-content="4"
+          aria-hidden="true"
+        >
+          {%- assign step4_collection = collections[section.settings.step4_collection] -%}
+          {%- if step4_collection != blank and step4_collection.products_count > 0 -%}
+            <div class="sd-frame-8234__product-grid">
+              {%- for product in step4_collection.products limit: section.settings.max_products -%}
+                {%- assign first_variant = product.selected_or_first_available_variant -%}
+                {%- assign has_discount = false -%}
+                {%- if first_variant.compare_at_price > first_variant.price -%}
+                  {%- assign has_discount = true -%}
+                  {%- assign save_amount = first_variant.compare_at_price | minus: first_variant.price -%}
+                  {%- assign save_percent = save_amount | times: 100 | divided_by: first_variant.compare_at_price -%}
+                {%- endif -%}
+                <div
+                  class="sd-frame-8234__product-card"
+                  data-product-id="{{ product.id }}"
+                  data-product-handle="{{ product.handle }}"
+                  data-step="4"
+                >
+                  {%- if has_discount -%}
+                    <div class="sd-frame-8234__save-badge">Save {{ save_percent }}%</div>
+                  {%- endif -%}
+                  <div class="sd-frame-8234__card-inner">
+                    <div class="sd-frame-8234__product-image-wrap">
+                      {%- if product.featured_image != blank -%}
+                        {{ product.featured_image | image_url: width: 300 | image_tag:
+                          loading: 'lazy',
+                          widths: '150,200,300',
+                          sizes: '(min-width: 750px) 120px, 100px',
+                          alt: product.featured_image.alt | default: product.title,
+                          class: 'sd-frame-8234__product-image',
+                          width: 120,
+                          height: 120
+                        }}
+                      {%- else -%}
+                        <div class="sd-frame-8234__product-image-placeholder">{{ product.title | slice: 0 }}</div>
+                      {%- endif -%}
+                    </div>
+                    <div class="sd-frame-8234__product-info">
+                      <h3 class="sd-frame-8234__product-title">{{ product.title }}</h3>
+                      {%- unless product.description == blank -%}
+                        <p class="sd-frame-8234__product-description">
+                          {{ product.description | strip_html | truncatewords: 18 }}
+                          <a href="{{ product.url }}" class="sd-frame-8234__learn-more" aria-label="Learn more about {{ product.title }}">{{ 'sections.sd_frame_8234.learn_more' | t | default: 'Learn More' }}</a>
+                        </p>
+                      {%- endunless -%}
+                      {%- assign color_option = nil -%}
+                      {%- for option in product.options_with_values -%}
+                        {%- assign opt_lower = option.name | downcase -%}
+                        {%- if opt_lower == 'color' or opt_lower == 'colour' -%}
+                          {%- assign color_option = option -%}
+                        {%- endif -%}
+                      {%- endfor -%}
+                      {%- if color_option != nil -%}
+                        <div class="sd-frame-8234__swatches" role="group" aria-label="Color options for {{ product.title }}">
+                          {%- for value in color_option.values -%}
+                            {%- assign value_slug = value | downcase | replace: ' ', '-' -%}
+                            <button
+                              type="button"
+                              class="sd-frame-8234__swatch-btn{% if forloop.first %} sd-frame-8234__swatch-btn--active{% endif %}"
+                              data-color="{{ value | escape }}"
+                              data-product-id="{{ product.id }}"
+                              aria-label="{{ value }} color"
+                              aria-pressed="{% if forloop.first %}true{% else %}false{% endif %}"
+                            >
+                              <span class="sd-frame-8234__swatch-dot sd-frame-8234__swatch-dot--{{ value_slug }}" aria-hidden="true"></span>
+                              <span class="sd-frame-8234__swatch-label">{{ value }}</span>
+                            </button>
+                          {%- endfor -%}
+                        </div>
+                      {%- endif -%}
+                      <div class="sd-frame-8234__card-footer">
+                        <div class="sd-frame-8234__quantity-stepper" data-product-id="{{ product.id }}">
+                          <button type="button" class="sd-frame-8234__qty-btn sd-frame-8234__qty-btn--minus" aria-label="Decrease quantity of {{ product.title }}" data-action="decrement" data-product-id="{{ product.id }}">
+                            <svg width="12" height="2" viewBox="0 0 12 2" fill="none" aria-hidden="true"><path d="M1 1H11" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+                          </button>
+                          <span class="sd-frame-8234__qty-value" data-qty-display="{{ product.id }}" aria-live="polite" aria-label="Quantity">0</span>
+                          <button type="button" class="sd-frame-8234__qty-btn sd-frame-8234__qty-btn--plus" aria-label="Increase quantity of {{ product.title }}" data-action="increment" data-product-id="{{ product.id }}">
+                            <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M6 1V11M1 6H11" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+                          </button>
+                        </div>
+                        <div class="sd-frame-8234__price-wrap">
+                          {%- if has_discount -%}
+                            <span class="sd-frame-8234__price-original"><s>{{ first_variant.compare_at_price | money }}</s></span>
+                          {%- endif -%}
+                          <span class="sd-frame-8234__price-sale">{{ first_variant.price | money }}</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              {%- endfor -%}
+            </div>
+          {%- else -%}
+            <!-- PLACEHOLDER: Assign a collection in the section settings for Step 4 extra protection -->
+            <p class="sd-frame-8234__empty-state">{{ 'sections.sd_frame_8234.no_products' | t | default: 'No products found. Please select a collection in the section settings.' }}</p>
+          {%- endif -%}
+          <div class="sd-frame-8234__step-cta-wrap">
+            <button
+              type="button"
+              class="sd-frame-8234__next-btn sd-frame-8234__next-btn--primary"
+              data-finalize="true"
+              aria-label="{{ section.settings.step4_cta_label | default: 'Add to cart' }}"
+            >
+              {{ section.settings.step4_cta_label | default: 'Add to cart' }}
+            </button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </sd-frame-8234>
+</div>
+
+{% schema %}
+{
+  "name": "Bundle Builder Wizard",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Bundle Builder Wizard"
+    },
+    {
+      "type": "header",
+      "content": "Step 1 — Cameras"
+    },
+    {
+      "type": "text",
+      "id": "step1_label",
+      "label": "Step 1 label",
+      "default": "STEP 1 OF 4"
+    },
+    {
+      "type": "text",
+      "id": "step1_heading",
+      "label": "Step 1 heading",
+      "default": "Choose your cameras"
+    },
+    {
+      "type": "image_picker",
+      "id": "step1_icon",
+      "label": "Step 1 icon (optional)"
+    },
+    {
+      "type": "collection",
+      "id": "step1_collection",
+      "label": "Step 1 collection (cameras)"
+    },
+    {
+      "type": "text",
+      "id": "step1_cta_label",
+      "label": "Step 1 next button label",
+      "default": "Next: Choose your plan"
+    },
+    {
+      "type": "header",
+      "content": "Step 2 — Plan"
+    },
+    {
+      "type": "text",
+      "id": "step2_label",
+      "label": "Step 2 label",
+      "default": "STEP 2 OF 4"
+    },
+    {
+      "type": "text",
+      "id": "step2_heading",
+      "label": "Step 2 heading",
+      "default": "Choose your plan"
+    },
+    {
+      "type": "text",
+      "id": "step2_cta_label",
+      "label": "Step 2 next button label",
+      "default": "Next: Choose your sensors"
+    },
+    {
+      "type": "header",
+      "content": "Step 3 — Sensors"
+    },
+    {
+      "type": "text",
+      "id": "step3_label",
+      "label": "Step 3 label",
+      "default": "STEP 3 OF 4"
+    },
+    {
+      "type": "text",
+      "id": "step3_heading",
+      "label": "Step 3 heading",
+      "default": "Choose your sensors"
+    },
+    {
+      "type": "collection",
+      "id": "step3_collection",
+      "label": "Step 3 collection (sensors)"
+    },
+    {
+      "type": "text",
+      "id": "step3_cta_label",
+      "label": "Step 3 next button label",
+      "default": "Next: Add extra protection"
+    },
+    {
+      "type": "header",
+      "content": "Step 4 — Extra Protection"
+    },
+    {
+      "type": "text",
+      "id": "step4_label",
+      "label": "Step 4 label",
+      "default": "STEP 4 OF 4"
+    },
+    {
+      "type": "text",
+      "id": "step4_heading",
+      "label": "Step 4 heading",
+      "default": "Add extra protection"
+    },
+    {
+      "type": "collection",
+      "id": "step4_collection",
+      "label": "Step 4 collection (extra protection)"
+    },
+    {
+      "type": "text",
+      "id": "step4_cta_label",
+      "label": "Step 4 final button label",
+      "default": "Add to cart"
+    },
+    {
+      "type": "header",
+      "content": "Product Display"
+    },
+    {
+      "type": "range",
+      "id": "max_products",
+      "label": "Max products per step",
+      "min": 2,
+      "max": 12,
+      "step": 1,
+      "default": 6
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "color_accent",
+      "label": "Accent color",
+      "default": "#5B3FD9"
+    },
+    {
+      "type": "color",
+      "id": "color_bg",
+      "label": "Section background",
+      "default": "#EEF0F8"
+    },
+    {
+      "type": "color",
+      "id": "color_card_bg",
+      "label": "Card background",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "color_text",
+      "label": "Primary text color",
+      "default": "#1A1A2E"
+    },
+    {
+      "type": "color",
+      "id": "color_price_original",
+      "label": "Original price (strikethrough) color",
+      "default": "#E53E3E"
+    },
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Padding top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Padding bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "default": 40
+    }
+  ],
+  "presets": [
+    {
+      "name": "Bundle Builder Wizard",
+      "category": "Custom"
+    }
+  ]
+}
+{% endschema %}
