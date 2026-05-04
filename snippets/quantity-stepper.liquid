@@ -1,0 +1,39 @@
+{%- comment -%}
+  Quantity Stepper ( −/+ controls )
+  Usage: {% render 'quantity-stepper', default_qty: default_qty, min_qty: min_qty, max_qty: max_qty, product_title: product_title %}
+
+  Expected variables:
+    - default_qty   : integer — starting value
+    - min_qty       : integer — minimum allowed value
+    - max_qty       : integer — maximum allowed value
+    - product_title : string  — used in aria-label for the input
+{%- endcomment -%}
+
+<button
+  type="button"
+  class="sd-frame-1736__qty-btn sd-frame-1736__qty-btn--minus"
+  data-sd-qty-minus
+  aria-label="{{ 'sections.sd_frame_1736.decrease_quantity' | t }}"
+>
+  <span aria-hidden="true">&#8722;</span>
+</button>
+
+<input
+  type="number"
+  class="sd-frame-1736__qty-input"
+  data-sd-qty-input
+  value="{{ default_qty }}"
+  min="{{ min_qty }}"
+  max="{{ max_qty }}"
+  aria-label="{{ 'sections.sd_frame_1736.quantity_label' | t }}: {{ product_title }}"
+  readonly
+>
+
+<button
+  type="button"
+  class="sd-frame-1736__qty-btn sd-frame-1736__qty-btn--plus"
+  data-sd-qty-plus
+  aria-label="{{ 'sections.sd_frame_1736.increase_quantity' | t }}"
+>
+  <span aria-hidden="true">&#43;</span>
+</button>
