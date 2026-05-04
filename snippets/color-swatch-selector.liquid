@@ -1,0 +1,43 @@
+{%- comment -%}
+  Color Swatch Selector Snippet
+  Used by: snippets/bundle-product-card.liquid — renders color variant swatch buttons
+
+  Expected variables:
+    - product  {Object}  Shopify product object (required)
+{%- endcomment -%}
+
+{%- assign color_option = nil -%}
+{%- for option in product.options_with_values -%}
+  {%- assign opt_lower = option.name | downcase -%}
+  {%- if opt_lower == 'color' or opt_lower == 'colour' -%}
+    {%- assign color_option = option -%}
+    {%- break -%}
+  {%- endif -%}
+{%- endfor -%}
+
+{%- if color_option != nil -%}
+  <div
+    class="sd-frame-8234__swatches"
+    role="group"
+    aria-label="{{ 'sections.sd_frame_8234.color_options_for' | t | default: 'Color options for' }} {{ product.title }}"
+  >
+    {%- for value in color_option.values -%}
+      {%- assign value_slug = value | downcase | replace: ' ', '-' -%}
+      {%- assign is_first = forloop.first -%}
+      <button
+        type="button"
+        class="sd-frame-8234__swatch-btn{% if is_first %} sd-frame-8234__swatch-btn--active{% endif %}"
+        data-color="{{ value | escape }}"
+        data-product-id="{{ product.id }}"
+        aria-label="{{ value }} {{ 'sections.sd_frame_8234.color_option' | t | default: 'color option for' }} {{ product.title }}"
+        aria-pressed="{% if is_first %}true{% else %}false{% endif %}"
+      >
+        <span
+          class="sd-frame-8234__swatch-dot sd-frame-8234__swatch-dot--{{ value_slug }}"
+          aria-hidden="true"
+        ></span>
+        <span class="sd-frame-8234__swatch-label">{{ value }}</span>
+      </button>
+    {%- endfor -%}
+  </div>
+{%- endif -%}
