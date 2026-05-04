@@ -1,0 +1,84 @@
+{%- comment -%}
+  Bundle Line Item Row
+  Usage: {% render 'bundle-line-item', block: block %}
+
+  Expected variables:
+    - block: section block of type 'product_item'
+      - block.settings.product        : product object
+      - block.settings.category_label : string
+      - block.settings.default_quantity: integer
+      - block.settings.min_quantity   : integer
+      - block.settings.max_quantity   : integer
+      - block.settings.force_free     : boolean
+{%- endcomment -%}
+
+{%- assign bp = block.settings.product -%}
+{%- if bp != blank -%}
+  {%- assign bv = bp.selected_or_first_available_variant -%}
+  {%- assign default_qty = block.settings.default_quantity | default: 1 -%}
+  {%- assign min_qty = block.settings.min_quantity | default: 0 -%}
+  {%- assign max_qty = block.settings.max_quantity | default: 10 -%}
+  {%- assign is_free = block.settings.force_free -%}
+
+  <div
+    class="sd-frame-1736__line-item"
+    data-sd-line-item
+    data-variant-id="{{ bv.id }}"
+    data-product-id="{{ bp.id }}"
+    data-product-handle="{{ bp.handle }}"
+    data-default-qty="{{ default_qty }}"
+    data-compare-price="{{ bv.compare_at_price }}"
+    data-price="{{ bv.price }}"
+    data-is-free="{{ is_free }}"
+    {{ block.shopify_attributes }}
+  >
+
+    <!-- Thumbnail -->
+    <div class="sd-frame-1736__line-thumb">
+      {%- if bp.featured_image != blank -%}
+        {{ bp.featured_image | image_url: width: 300 | image_tag:
+          loading: 'lazy',
+          widths: '60,120,180',
+          sizes: '60px',
+          alt: bp.title,
+          class: 'sd-frame-1736__thumb-img',
+          width: 60,
+          height: 60
+        }}
+      {%- else -%}
+        <div class="sd-frame-1736__thumb-placeholder" aria-hidden="true"></div>
+      {%- endif -%}
+    </div>
+
+    <!-- Product Info -->
+    <div class="sd-frame-1736__line-info">
+      <span class="sd-frame-1736__line-name">{{ bp.title }}</span>
+    </div>
+
+    <!-- Quantity Stepper -->
+    <div class="sd-frame-1736__line-qty">
+      {%- render 'quantity-stepper',
+        default_qty: default_qty,
+        min_qty: min_qty,
+        max_qty: max_qty,
+        product_title: bp.title
+      -%}
+    </div>
+
+    <!-- Price -->
+    <div class="sd-frame-1736__line-price">
+      {%- if is_free -%}
+        {%- if bv.compare_at_price > 0 -%}
+          <span class="sd-frame-1736__price-compare">{{ bv.compare_at_price | money }}</span>
+        {%- endif -%}
+        <span class="sd-frame-1736__price-current sd-frame-1736__price-current--free">{{ 'sections.sd_frame_1736.free' | t }}</span>
+      {%- else -%}
+        {%- if bv.compare_at_price > bv.price -%}
+          <span class="sd-frame-1736__price-compare">{{ bv.compare_at_price | money }}</span>
+        {%- endif -%}
+        <span class="sd-frame-1736__price-current" data-sd-line-price data-unit-price="{{ bv.price }}">{{ bv.price | money }}</span>
+      {%- endif -%}
+    </div>
+
+  </div>
+{%- endif -%}
