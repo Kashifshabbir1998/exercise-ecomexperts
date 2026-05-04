@@ -17,6 +17,23 @@
       "review_count_label": "Reviews",
       "review_count": "{{ count }} reviews",
       "no_reviews": "No reviews yet"
+    },
+    "sd_frame_1736": {
+      "decrease_quantity": "Decrease quantity",
+      "quantity_label": "Quantity",
+      "increase_quantity": "Increase quantity",
+      "free": "Free",
+      "plan_label": "Plan",
+      "satisfaction_badge_aria": "Satisfaction guaranteed badge",
+      "financing_prefix": "from",
+      "financing_suffix": "per month",
+      "total_label": "Total",
+      "original_price_aria": "Original price",
+      "discounted_price_aria": "Discounted price",
+      "checkout_aria": "Proceed to checkout",
+      "checkout_label": "Checkout",
+      "save_system_aria": "Amount you save with this bundle",
+      "save_system_label": "You save"
     }
   },
   "products": {
