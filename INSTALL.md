@@ -1,30 +1,24 @@
-## Install qw111 Section
+1. Add the following files to your theme:
+   - `sections/sd-frame-1736.liquid` — Main section file
+   - `assets/sd-frame-1736.js` — Section JavaScript functionality
+   - `assets/sd-frame-1736.css` — Section styles
+   - `snippets/bundle-line-item.liquid` — Bundle item renderer
+   - `snippets/quantity-stepper.liquid` — Quantity increment/decrement component
+   - `snippets/bundle-plan-row.liquid` — Pricing plan row component
+   - `snippets/bundle-order-summary.liquid` — Order summary component
 
-### File Structure
-Add these files to your theme:
+2. In the Shopify theme editor:
+   - Navigate to **Sales channels > Online Store > Theme > Edit code**
+   - Upload all files to their respective directories
 
-1. **sections/qw111.liquid** — Main product detail section
-2. **assets/qw111.js** — JavaScript functionality for gallery and interactions
-3. **assets/qw111.css** — Section styling
-4. **snippets/product-media-gallery.liquid** — Product image gallery component
-5. **snippets/product-variant-swatches.liquid** — Variant selection swatches
-6. **snippets/product-add-to-cart.liquid** — Add to cart button with inventory handling
-7. **snippets/trust-badges.liquid** — Shipping and returns trust badges
-8. **snippets/ugc-gallery.liquid** — User-generated content gallery carousel
-9. **snippets/review-summary.liquid** — Review rating and count display
+3. Add the section to your desired page template:
+   - Edit the page template in the theme editor (e.g., `product.json` or `page.json`)
+   - Click **Add section** and select **sd-frame-1736**
+   - Configure section settings as needed (padding, heading, label, etc.)
 
-### Setup Steps
+4. Customize settings in the theme editor:
+   - Set padding top/bottom values
+   - Configure heading and label text
+   - Adjust bundle product data and pricing options
 
-1. In your Shopify theme editor, go to **Content > Pages** and select your product detail page template
-2. Add the **qw111** section to the page layout by clicking **Add section** and selecting it
-3. Configure section settings:
-   - Set padding top/bottom values as needed
-   - Enable/disable Shop Pay messaging
-   - Customize trust badge text (free shipping, returns copy)
-   - Set UGC section heading
-4. Save and publish
-
-### Notes
-- Ensure product data (variants, images, reviews) is populated in your product
-- Review the CSS for color variables and adjust to match your brand
-- Test gallery interactions on mobile and desktop devices
+The section is now ready to display bundle products with quantity controls, pricing plans, and order summaries.
