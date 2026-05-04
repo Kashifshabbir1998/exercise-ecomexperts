@@ -1,0 +1,597 @@
+{{ 'sd-frame-1736.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'sd-frame-1736.js' | asset_url }}" defer></script>
+
+<!-- sd-frame-1736: Bundle Review Section -->
+<div
+  id="shopify-section-{{ section.id }}"
+  class="sd-frame-1736 shopify-section"
+  style="--sd-spacing-top: {{ section.settings.padding_top }}px; --sd-spacing-bottom: {{ section.settings.padding_bottom }}px;"
+>
+  <sd-frame-1736 data-section-id="{{ section.id }}">
+
+    <div class="sd-frame-1736__inner">
+
+      <!-- Section Header -->
+      <div class="sd-frame-1736__header">
+        {%- unless section.settings.label == blank -%}
+          <span class="sd-frame-1736__label">{{ section.settings.label }}</span>
+        {%- endunless -%}
+        {%- unless section.settings.heading == blank -%}
+          <h2 class="sd-frame-1736__heading">{{ section.settings.heading }}</h2>
+        {%- endunless -%}
+        {%- unless section.settings.subheading == blank -%}
+          <p class="sd-frame-1736__subheading">{{ section.settings.subheading }}</p>
+        {%- endunless -%}
+      </div>
+
+      <!-- Bundle Product Groups (blocks drive category groups) -->
+      <div class="sd-frame-1736__bundle" data-sd-bundle>
+
+        {%- comment -%} Group blocks by category and render line items {%- endcomment -%}
+        {%- assign categories_rendered = '' -%}
+
+        {%- for block in section.blocks -%}
+          {%- case block.type -%}
+
+            {%- when 'product_item' -%}
+              {%- assign cat_key = block.settings.category_label | handleize -%}
+              {%- assign already = categories_rendered | split: ',' -%}
+              {%- assign cat_rendered = false -%}
+              {%- for c in already -%}
+                {%- if c == cat_key -%}
+                  {%- assign cat_rendered = true -%}
+                {%- endif -%}
+              {%- endfor -%}
+
+              {%- unless cat_rendered -%}
+                {%- comment -%} Open a new category group {%- endcomment -%}
+                {%- if categories_rendered != '' -%}
+                  </div>{%- comment -%}close previous category__items{%- endcomment -%}
+                  </div>{%- comment -%}close previous category{%- endcomment -%}
+                {%- endif -%}
+                <div class="sd-frame-1736__category" data-category="{{ cat_key }}">
+                  {%- unless block.settings.category_label == blank -%}
+                    <div class="sd-frame-1736__category-label">{{ block.settings.category_label | upcase }}</div>
+                  {%- endunless -%}
+                  <div class="sd-frame-1736__category-items">
+                {%- assign categories_rendered = categories_rendered | append: cat_key | append: ',' -%}
+              {%- endunless -%}
+
+              {%- comment -%} Render the product line item inline {%- endcomment -%}
+              {%- assign bp = block.settings.product -%}
+              {%- if bp != blank -%}
+                {%- assign bv = bp.selected_or_first_available_variant -%}
+                {%- assign default_qty = block.settings.default_quantity | default: 1 -%}
+                {%- assign is_free = block.settings.force_free -%}
+                <div
+                  class="sd-frame-1736__line-item"
+                  data-sd-line-item
+                  data-variant-id="{{ bv.id }}"
+                  data-product-id="{{ bp.id }}"
+                  data-product-handle="{{ bp.handle }}"
+                  data-default-qty="{{ default_qty }}"
+                  data-compare-price="{{ bv.compare_at_price }}"
+                  data-price="{{ bv.price }}"
+                  data-is-free="{{ is_free }}"
+                  {{ block.shopify_attributes }}
+                >
+                  <!-- Thumbnail -->
+                  <div class="sd-frame-1736__line-thumb">
+                    {%- if bp.featured_image != blank -%}
+                      {{ bp.featured_image | image_url: width: 300 | image_tag:
+                        loading: 'lazy',
+                        widths: '60,120,180',
+                        sizes: '60px',
+                        alt: bp.title,
+                        class: 'sd-frame-1736__thumb-img',
+                        width: 60,
+                        height: 60
+                      }}
+                    {%- else -%}
+                      <div class="sd-frame-1736__thumb-placeholder" aria-hidden="true"></div>
+                    {%- endif -%}
+                  </div>
+
+                  <!-- Product Info -->
+                  <div class="sd-frame-1736__line-info">
+                    <span class="sd-frame-1736__line-name">{{ bp.title }}</span>
+                  </div>
+
+                  <!-- Quantity Stepper -->
+                  <div class="sd-frame-1736__line-qty">
+                    <button
+                      type="button"
+                      class="sd-frame-1736__qty-btn sd-frame-1736__qty-btn--minus"
+                      data-sd-qty-minus
+                      aria-label="{{ 'sections.sd_frame_1736.decrease_quantity' | t }}"
+                    >
+                      <span aria-hidden="true">&#8722;</span>
+                    </button>
+                    <input
+                      type="number"
+                      class="sd-frame-1736__qty-input"
+                      data-sd-qty-input
+                      value="{{ default_qty }}"
+                      min="{{ block.settings.min_quantity | default: 0 }}"
+                      max="{{ block.settings.max_quantity | default: 10 }}"
+                      aria-label="{{ 'sections.sd_frame_1736.quantity_label' | t }}: {{ bp.title }}"
+                      readonly
+                    >
+                    <button
+                      type="button"
+                      class="sd-frame-1736__qty-btn sd-frame-1736__qty-btn--plus"
+                      data-sd-qty-plus
+                      aria-label="{{ 'sections.sd_frame_1736.increase_quantity' | t }}"
+                    >
+                      <span aria-hidden="true">&#43;</span>
+                    </button>
+                  </div>
+
+                  <!-- Price -->
+                  <div class="sd-frame-1736__line-price">
+                    {%- if is_free -%}
+                      {%- if bv.compare_at_price > 0 -%}
+                        <span class="sd-frame-1736__price-compare">{{ bv.compare_at_price | money }}</span>
+                      {%- endif -%}
+                      <span class="sd-frame-1736__price-current sd-frame-1736__price-current--free">{{ 'sections.sd_frame_1736.free' | t }}</span>
+                    {%- else -%}
+                      {%- if bv.compare_at_price > bv.price -%}
+                        <span class="sd-frame-1736__price-compare">{{ bv.compare_at_price | money }}</span>
+                      {%- endif -%}
+                      <span class="sd-frame-1736__price-current" data-sd-line-price data-unit-price="{{ bv.price }}">{{ bv.price | money }}</span>
+                    {%- endif -%}
+                  </div>
+
+                </div>{%- comment -%} /.sd-frame-1736__line-item {%- endcomment -%}
+              {%- endif -%}
+
+            {%- when 'plan_row' -%}
+              {%- comment -%} Close any open category group before plan row {%- endcomment -%}
+              {%- if categories_rendered != '' -%}
+                  </div>{%- comment -%}close category__items{%- endcomment -%}
+                </div>{%- comment -%}close category{%- endcomment -%}
+                {%- assign categories_rendered = '' -%}
+              {%- endif -%}
+              <div class="sd-frame-1736__category sd-frame-1736__category--plan" {{ block.shopify_attributes }}>
+                <div class="sd-frame-1736__category-label">{{ 'sections.sd_frame_1736.plan_label' | t | upcase }}</div>
+                <div class="sd-frame-1736__category-items">
+                  <div class="sd-frame-1736__plan-row">
+                    <!-- Plan Icon -->
+                    <div class="sd-frame-1736__plan-icon" aria-hidden="true">
+                      {%- if block.settings.plan_icon != blank -%}
+                        {{ block.settings.plan_icon | image_url: width: 120 | image_tag:
+                          loading: 'lazy',
+                          widths: '40,80',
+                          sizes: '40px',
+                          alt: block.settings.plan_name,
+                          class: 'sd-frame-1736__plan-icon-img',
+                          width: 40,
+                          height: 40
+                        }}
+                      {%- else -%}
+                        <div class="sd-frame-1736__plan-icon-placeholder" aria-hidden="true"></div>
+                      {%- endif -%}
+                    </div>
+                    <!-- Plan Info -->
+                    <div class="sd-frame-1736__plan-info">
+                      <span class="sd-frame-1736__line-name">{{ block.settings.plan_name }}</span>
+                    </div>
+                    <!-- Plan Price -->
+                    <div class="sd-frame-1736__line-price">
+                      {%- unless block.settings.plan_compare_price == blank -%}
+                        <span class="sd-frame-1736__price-compare">{{ block.settings.plan_compare_price }}</span>
+                      {%- endunless -%}
+                      <span class="sd-frame-1736__price-current">{{ block.settings.plan_price }}</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+            {%- when 'shipping_row' -%}
+              {%- comment -%} Close any open category group before shipping row {%- endcomment -%}
+              {%- if categories_rendered != '' -%}
+                  </div>
+                </div>
+                {%- assign categories_rendered = '' -%}
+              {%- endif -%}
+              <div class="sd-frame-1736__shipping-row" {{ block.shopify_attributes }}>
+                <div class="sd-frame-1736__shipping-icon" aria-hidden="true">
+                  {%- if block.settings.shipping_icon != blank -%}
+                    {{ block.settings.shipping_icon | image_url: width: 120 | image_tag:
+                      loading: 'lazy',
+                      widths: '40,80',
+                      sizes: '40px',
+                      alt: '',
+                      class: 'sd-frame-1736__shipping-icon-img',
+                      width: 40,
+                      height: 40
+                    }}
+                  {%- else -%}
+                    <div class="sd-frame-1736__shipping-icon-placeholder" aria-hidden="true"></div>
+                  {%- endif -%}
+                </div>
+                <div class="sd-frame-1736__shipping-info">
+                  <span class="sd-frame-1736__line-name">{{ block.settings.shipping_label }}</span>
+                </div>
+                <div class="sd-frame-1736__line-price">
+                  {%- unless block.settings.shipping_compare_price == blank -%}
+                    <span class="sd-frame-1736__price-compare">{{ block.settings.shipping_compare_price }}</span>
+                  {%- endunless -%}
+                  <span class="sd-frame-1736__price-current sd-frame-1736__price-current--free">{{ 'sections.sd_frame_1736.free' | t }}</span>
+                </div>
+              </div>
+
+          {%- endcase -%}
+        {%- endfor -%}
+
+        {%- comment -%} Close the last open category group {%- endcomment -%}
+        {%- if categories_rendered != '' -%}
+            </div>
+          </div>
+        {%- endif -%}
+
+      </div>{%- comment -%} /.sd-frame-1736__bundle {%- endcomment -%}
+
+      <!-- Divider -->
+      <div class="sd-frame-1736__divider" aria-hidden="true"></div>
+
+      <!-- Order Summary -->
+      <div class="sd-frame-1736__summary" data-sd-summary>
+
+        <!-- Satisfaction Badge -->
+        {%- if section.settings.show_satisfaction_badge -%}
+          <div class="sd-frame-1736__badge-wrap" aria-label="{{ 'sections.sd_frame_1736.satisfaction_badge_aria' | t }}">
+            {%- if section.settings.satisfaction_badge_image != blank -%}
+              {{ section.settings.satisfaction_badge_image | image_url: width: 300 | image_tag:
+                loading: 'lazy',
+                widths: '100,200',
+                sizes: '100px',
+                alt: section.settings.satisfaction_badge_text,
+                class: 'sd-frame-1736__badge-img',
+                width: 100,
+                height: 100
+              }}
+            {%- else -%}
+              <div class="sd-frame-1736__badge-fallback" role="img" aria-label="{{ section.settings.satisfaction_badge_text }}">
+                <span class="sd-frame-1736__badge-text">{{ section.settings.satisfaction_badge_text }}</span>
+              </div>
+            {%- endif -%}
+          </div>
+        {%- endif -%}
+
+        <!-- Financing Badge -->
+        {%- if section.settings.show_financing_badge -%}
+          <div class="sd-frame-1736__financing" aria-live="polite">
+            <span class="sd-frame-1736__financing-badge">
+              {{ 'sections.sd_frame_1736.financing_prefix' | t }}
+              <strong data-sd-financing-amount>{{ section.settings.financing_amount }}</strong>
+              {{ 'sections.sd_frame_1736.financing_suffix' | t }}
+            </span>
+          </div>
+        {%- endif -%}
+
+        <!-- Total Price Row -->
+        <div class="sd-frame-1736__totals">
+          <div class="sd-frame-1736__total-row">
+            <span class="sd-frame-1736__total-label">{{ 'sections.sd_frame_1736.total_label' | t }}</span>
+            <div class="sd-frame-1736__total-prices">
+              <span class="sd-frame-1736__total-compare" data-sd-total-compare aria-label="{{ 'sections.sd_frame_1736.original_price_aria' | t }}"></span>
+              <span class="sd-frame-1736__total-current" data-sd-total-current aria-live="polite" aria-label="{{ 'sections.sd_frame_1736.discounted_price_aria' | t }}"></span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Savings Banner -->
+        <div class="sd-frame-1736__savings" data-sd-savings aria-live="polite">
+          {%- comment -%} Populated by JS after totals are calculated {%- endcomment -%}
+        </div>
+
+        <!-- Checkout Button -->
+        <div class="sd-frame-1736__checkout-wrap">
+          <button
+            type="button"
+            class="sd-frame-1736__checkout-btn"
+            data-sd-checkout-btn
+            aria-label="{{ 'sections.sd_frame_1736.checkout_aria' | t }}"
+          >
+            {{ 'sections.sd_frame_1736.checkout_label' | t }}
+          </button>
+        </div>
+
+        <!-- Save System Link -->
+        {%- if section.settings.show_save_link -%}
+          <div class="sd-frame-1736__save-wrap">
+            <button
+              type="button"
+              class="sd-frame-1736__save-link"
+              data-sd-save-bundle
+              aria-label="{{ 'sections.sd_frame_1736.save_system_aria' | t }}"
+            >
+              {{ 'sections.sd_frame_1736.save_system_label' | t }}
+            </button>
+          </div>
+        {%- endif -%}
+
+      </div>{%- comment -%} /.sd-frame-1736__summary {%- endcomment -%}
+
+    </div>{%- comment -%} /.sd-frame-1736__inner {%- endcomment -%}
+
+  </sd-frame-1736>
+</div>
+
+{% schema %}
+{
+  "name": "Bundle Review",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Section Header"
+    },
+    {
+      "type": "text",
+      "id": "label",
+      "label": "Eyebrow Label",
+      "default": "REVIEW"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Your security system"
+    },
+    {
+      "type": "richtext",
+      "id": "subheading",
+      "label": "Subheading",
+      "default": "<p>Review your bundle and checkout when ready.</p>"
+    },
+    {
+      "type": "header",
+      "content": "Satisfaction Badge"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_satisfaction_badge",
+      "label": "Show satisfaction badge",
+      "default": true
+    },
+    {
+      "type": "image_picker",
+      "id": "satisfaction_badge_image",
+      "label": "Badge image"
+    },
+    {
+      "type": "text",
+      "id": "satisfaction_badge_text",
+      "label": "Badge text (alt/fallback)",
+      "default": "100% Wyze satisfaction guarantee"
+    },
+    {
+      "type": "header",
+      "content": "Financing Badge"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_financing_badge",
+      "label": "Show financing badge",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "financing_amount",
+      "label": "Monthly financing amount",
+      "default": "$19.19/mo"
+    },
+    {
+      "type": "header",
+      "content": "Order Summary"
+    },
+    {
+      "type": "text",
+      "id": "savings_prefix",
+      "label": "Savings message prefix",
+      "default": "Congrats! You're saving"
+    },
+    {
+      "type": "text",
+      "id": "savings_suffix",
+      "label": "Savings message suffix",
+      "default": "on your security bundle!"
+    },
+    {
+      "type": "header",
+      "content": "Save Link"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_save_link",
+      "label": "Show 'Save my system for later' link",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Padding top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Padding bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "default": 40
+    }
+  ],
+  "blocks": [
+    {
+      "type": "product_item",
+      "name": "Product Item",
+      "settings": [
+        {
+          "type": "product",
+          "id": "product",
+          "label": "Product"
+        },
+        {
+          "type": "text",
+          "id": "category_label",
+          "label": "Category label",
+          "info": "Used to group items (e.g. CAMERAS, SENSORS). Items with matching labels are grouped together.",
+          "default": "CAMERAS"
+        },
+        {
+          "type": "range",
+          "id": "default_quantity",
+          "label": "Default quantity",
+          "min": 0,
+          "max": 10,
+          "step": 1,
+          "default": 1
+        },
+        {
+          "type": "range",
+          "id": "min_quantity",
+          "label": "Minimum quantity",
+          "min": 0,
+          "max": 10,
+          "step": 1,
+          "default": 0
+        },
+        {
+          "type": "range",
+          "id": "max_quantity",
+          "label": "Maximum quantity",
+          "min": 1,
+          "max": 20,
+          "step": 1,
+          "default": 10
+        },
+        {
+          "type": "checkbox",
+          "id": "force_free",
+          "label": "Show as FREE",
+          "default": false
+        }
+      ]
+    },
+    {
+      "type": "plan_row",
+      "name": "Plan Row",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "plan_icon",
+          "label": "Plan icon"
+        },
+        {
+          "type": "text",
+          "id": "plan_name",
+          "label": "Plan name",
+          "default": "Cam Unlimited"
+        },
+        {
+          "type": "text",
+          "id": "plan_compare_price",
+          "label": "Compare at price",
+          "default": "$12.99/mo",
+          "info": "Displayed with strikethrough. Leave blank to hide."
+        },
+        {
+          "type": "text",
+          "id": "plan_price",
+          "label": "Discounted price",
+          "default": "$9.99/mo"
+        }
+      ]
+    },
+    {
+      "type": "shipping_row",
+      "name": "Shipping Row",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "shipping_icon",
+          "label": "Shipping icon"
+        },
+        {
+          "type": "text",
+          "id": "shipping_label",
+          "label": "Shipping label",
+          "default": "Fast Shipping"
+        },
+        {
+          "type": "text",
+          "id": "shipping_compare_price",
+          "label": "Compare at price",
+          "default": "$5.99",
+          "info": "Displayed with strikethrough. Leave blank to hide."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Bundle Review",
+      "blocks": [
+        {
+          "type": "product_item",
+          "settings": {
+            "category_label": "CAMERAS",
+            "default_quantity": 1
+          }
+        },
+        {
+          "type": "product_item",
+          "settings": {
+            "category_label": "CAMERAS",
+            "default_quantity": 2
+          }
+        },
+        {
+          "type": "product_item",
+          "settings": {
+            "category_label": "SENSORS",
+            "default_quantity": 2
+          }
+        },
+        {
+          "type": "product_item",
+          "settings": {
+            "category_label": "SENSORS",
+            "default_quantity": 1,
+            "force_free": true
+          }
+        },
+        {
+          "type": "product_item",
+          "settings": {
+            "category_label": "ACCESSORIES",
+            "default_quantity": 2
+          }
+        },
+        {
+          "type": "plan_row"
+        },
+        {
+          "type": "shipping_row"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
