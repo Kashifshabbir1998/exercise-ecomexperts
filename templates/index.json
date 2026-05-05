@@ -261,6 +261,61 @@
         "padding_top": 40,
         "padding_bottom": 40
       }
+    },
+    "ttt_bb_herooo_4G87Ye": {
+      "type": "ttt-bb-herooo",
+      "blocks": {
+        "nav_link_XUdRLm": {
+          "type": "nav_link",
+          "settings": {
+            "nav_label": "Home",
+            "nav_url": "",
+            "is_active": true
+          }
+        },
+        "nav_link_Ti3azm": {
+          "type": "nav_link",
+          "settings": {
+            "nav_label": "Shop",
+            "nav_url": "",
+            "is_active": false
+          }
+        },
+        "nav_link_iwYADq": {
+          "type": "nav_link",
+          "settings": {
+            "nav_label": "Contact",
+            "nav_url": "",
+            "is_active": false
+          }
+        }
+      },
+      "block_order": [
+        "nav_link_XUdRLm",
+        "nav_link_Ti3azm",
+        "nav_link_iwYADq"
+      ],
+      "name": "Hero — Lingerie Banner",
+      "settings": {
+        "logo_alt": "Brand Logo",
+        "logo_text": "LOGO TEXT HERE",
+        "logo_slogan": "SLOGAN HERE",
+        "hero_eyebrow": "TIMELESS BEAUTY INSIDE OUT",
+        "hero_headline": "LINGERIE FOR EVERY BODY",
+        "cta_label": "Shop Now",
+        "cta_url": "",
+        "collage_image_1": "shopify://shop_images/city-woman-fashion_925x_2x_e91139c3-68ff-49da-98c9-5a56a049fb30.jpg",
+        "collage_image_1_alt": "Lifestyle photo 1",
+        "collage_image_2": "shopify://shop_images/autumn-photographer-taking-picture_925x_1619bf60-7f6c-4f08-8201-9e5f62349789.jpg",
+        "collage_image_2_alt": "Lifestyle photo 2",
+        "collage_image_3": "shopify://shop_images/striped-blouse-fashion_925x_1a1ff947-7950-4779-91a0-6583c619c0e5.jpg",
+        "collage_image_3_alt": "Lifestyle photo 3",
+        "collage_image_4": "shopify://shop_images/leather-jacket-and-tea_925x_2490cde1-7e61-4151-9a65-de8a763bc701.jpg",
+        "collage_image_4_alt": "Lifestyle photo 4",
+        "show_decorative_frame": true,
+        "padding_top": 0,
+        "padding_bottom": 0
+      }
     }
   },
   "order": [
@@ -269,6 +324,7 @@
     "custom_product_grid_mCGMKY",
     "hero_section_UKyb4j",
     "tes1122_qc4CxL",
-    "ggggg_gg_peKjKR"
+    "ggggg_gg_peKjKR",
+    "ttt_bb_herooo_4G87Ye"
   ]
 }
