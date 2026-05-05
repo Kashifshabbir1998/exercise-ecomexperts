@@ -1,0 +1,103 @@
+{%- comment -%}
+  Bundle Step Accordion Snippet
+  Usage: {% render 'bundle-step-accordion', step_number: step_number, step_key: step_key, step_title: step_title, step_icon: step_icon, section_id: section_id, is_active: is_active, is_last: is_last %}
+
+  Expected variables:
+    - step_number: {Number} The step number (1, 2, 3, 4)
+    - step_key: {String} The step identifier (cameras, plan, sensors, protection)
+    - step_title: {String} The step heading text
+    - step_icon: {Object} Optional image object for the step icon
+    - section_id: {String} The section ID
+    - is_active: {Boolean} Whether this step is the currently active/open step
+    - is_last: {Boolean} Whether this is the final step in the accordion
+    - cta_label: {String} The CTA button label for this step
+    - next_step: {Number} The next step number to open when CTA is clicked
+    - selected_label: {String} Label suffix for the selected count badge (e.g. "selected")
+    - show_selected_badge: {Boolean} Whether to show the selected count badge in header
+{%- endcomment -%}
+
+{%- liquid
+  assign aria_expanded = 'false'
+  assign step_state_class = 'sd-frame-8234__step--collapsed'
+  assign body_hidden = true
+  if is_active
+    assign aria_expanded = 'true'
+    assign step_state_class = 'sd-frame-8234__step--active'
+    assign body_hidden = false
+  endif
+  assign last_class = ''
+  if is_last
+    assign last_class = ' sd-frame-8234__step--last'
+  endif
+-%}
+
+<div
+  class="sd-frame-8234__step {{ step_state_class }}{{ last_class }}"
+  data-step="{{ step_number }}"
+  data-step-key="{{ step_key }}"
+  id="sd-step-{{ step_key }}-{{ section_id }}"
+>
+  <div
+    class="sd-frame-8234__step-header"
+    role="button"
+    tabindex="0"
+    aria-expanded="{{ aria_expanded }}"
+    aria-controls="sd-step-{{ step_key }}-body-{{ section_id }}"
+  >
+    <div class="sd-frame-8234__step-header-left">
+      <span class="sd-frame-8234__step-icon sd-frame-8234__step-icon--svg" aria-hidden="true">
+        {%- if step_icon != blank -%}
+          {{ step_icon | image_url: width: 28 | image_tag: loading: 'lazy', widths: '28,56', alt: '' }}
+        {%- else -%}
+          <svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="11" cy="11" r="9" stroke="#5B5FCF" stroke-width="1.5"/>
+            <text x="11" y="15" text-anchor="middle" font-size="10" fill="#5B5FCF" font-family="sans-serif">{{ step_number }}</text>
+          </svg>
+        {%- endif -%}
+      </span>
+      <h2 class="sd-frame-8234__step-title">{{ step_title }}</h2>
+    </div>
+    <div class="sd-frame-8234__step-header-right">
+      {%- if show_selected_badge -%}
+        <span class="sd-frame-8234__step-selected-badge" data-selected-badge="{{ step_key }}" aria-live="polite">
+          <span data-selected-count="{{ step_key }}">0</span>&nbsp;{{ selected_label }}
+          <svg class="sd-frame-8234__badge-arrow" width="10" height="7" viewBox="0 0 10 7" fill="none" aria-hidden="true">
+            <path d="M9 6L5 2L1 6" stroke="#5B5FCF" stroke-width="1.5" stroke-linecap="round"/>
+          </svg>
+        </span>
+      {%- endif -%}
+      <svg
+        class="sd-frame-8234__step-chevron{% unless is_active %} sd-frame-8234__step-chevron--down{% endunless %}"
+        width="14"
+        height="9"
+        viewBox="0 0 14 9"
+        fill="none"
+        aria-hidden="true"
+      >
+        <path d="M1 1L7 7L13 1" stroke="#5B5FCF" stroke-width="1.8" stroke-linecap="round"/>
+      </svg>
+    </div>
+  </div>
+
+  <div
+    class="sd-frame-8234__step-body"
+    id="sd-step-{{ step_key }}-body-{{ section_id }}"
+    data-step-body="{{ step_key }}"
+    {% if body_hidden %}hidden{% endif %}
+  >
+    {{ content }}
+
+    {%- unless is_last -%}
+      <div class="sd-frame-8234__step-cta">
+        <button
+          type="button"
+          class="sd-frame-8234__next-btn"
+          data-next-step="{{ next_step }}"
+          aria-label="{{ cta_label | escape }}"
+        >
+          {{ cta_label }}
+        </button>
+      </div>
+    {%- endunless -%}
+  </div>
+</div>
