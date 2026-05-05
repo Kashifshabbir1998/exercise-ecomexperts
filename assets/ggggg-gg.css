@@ -1,0 +1,611 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap');
+
+/* ── Custom properties ── */
+.sd-bundle-builder {
+  --sd-color-bg: #f0f2f8;
+  --sd-color-surface: #ffffff;
+  --sd-color-border: #d8dce8;
+  --sd-color-text-primary: #1a1a2e;
+  --sd-color-text-secondary: #5a5e72;
+  --sd-color-text-muted: #8a8fa8;
+  --sd-color-accent: #4b4acf;
+  --sd-color-accent-light: #ededfa;
+  --sd-color-badge-bg: #4b4acf;
+  --sd-color-badge-text: #ffffff;
+  --sd-color-price-compare: #c0392b;
+  --sd-color-price-current: #1a1a2e;
+  --sd-color-pill-border: #d0d3e8;
+  --sd-color-pill-active-border: #4b4acf;
+  --sd-color-pill-active-bg: #ededfa;
+  --sd-color-qty-btn-bg: #f0f2f8;
+  --sd-color-qty-btn-border: #d0d3e8;
+  --sd-color-next-btn-border: #4b4acf;
+  --sd-color-next-btn-text: #4b4acf;
+  --sd-color-next-btn-hover-bg: #4b4acf;
+  --sd-color-next-btn-hover-text: #ffffff;
+  --sd-color-step-card-border: #d8dce8;
+  --sd-color-step-card-border-active: #4b4acf;
+  --sd-color-tracker-text: #8a8fa8;
+  --sd-color-learn-more: #4b4acf;
+  --sd-radius-card: 10px;
+  --sd-radius-pill: 20px;
+  --sd-radius-badge: 20px;
+  --sd-radius-btn: 8px;
+  --sd-radius-qty: 6px;
+
+  font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  background-color: var(--sd-color-bg);
+  padding-top: var(--sd-spacing-top, 40px);
+  padding-bottom: var(--sd-spacing-bottom, 40px);
+  box-sizing: border-box;
+}
+
+.sd-bundle-builder *,
+.sd-bundle-builder *::before,
+.sd-bundle-builder *::after {
+  box-sizing: border-box;
+}
+
+/* ── Custom element host ── */
+sd-bundle-builder {
+  display: block;
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 0 16px;
+}
+
+/* ── Divider ── */
+.sd-bundle-builder__divider {
+  border: none;
+  border-top: 1px solid var(--sd-color-border);
+  margin: 0;
+}
+
+/* ── Step wrapper ── */
+.sd-bundle-builder__step {
+  background-color: var(--sd-color-bg);
+  padding: 20px 0 24px;
+}
+
+/* ── Step tracker label ── */
+.sd-bundle-builder__step-tracker {
+  font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--sd-color-tracker-text);
+  margin-bottom: 10px;
+}
+
+.sd-bundle-builder__step-tracker--inactive {
+  color: var(--sd-color-text-muted);
+}
+
+/* ── Step header ── */
+.sd-bundle-builder__step-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  cursor: pointer;
+}
+
+.sd-bundle-builder__step-title-group {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* ── Step icon ── */
+.sd-bundle-builder__step-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 32px;
+  height: 32px;
+}
+
+.sd-bundle-builder__step-icon img {
+  width: 28px;
+  height: 28px;
+  object-fit: contain;
+}
+
+/* ── Step heading ── */
+.sd-bundle-builder__step-heading {
+  font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--sd-color-text-primary);
+  margin: 0;
+  line-height: 1.2;
+}
+
+/* ── Selected count badge / toggle (step 1) ── */
+.sd-bundle-builder__selected-count {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--sd-color-accent);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.sd-bundle-builder__selected-count span[data-selected-count] {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--sd-color-accent);
+}
+
+/* ── Toggle arrow ── */
+.sd-bundle-builder__toggle-arrow {
+  font-size: 10px;
+  color: var(--sd-color-accent);
+  display: inline-block;
+}
+
+.sd-bundle-builder__toggle-arrow--up {
+  color: var(--sd-color-accent);
+}
+
+/* ── Toggle button (collapsed steps 2, 3, 4) ── */
+.sd-bundle-builder__toggle-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 4px;
+  flex-shrink: 0;
+  color: var(--sd-color-text-primary);
+}
+
+.sd-bundle-builder__toggle-btn .sd-bundle-builder__toggle-arrow {
+  font-size: 12px;
+  color: var(--sd-color-text-primary);
+}
+
+/* ── Step content ── */
+.sd-bundle-builder__step-content {
+  margin-top: 20px;
+}
+
+.sd-bundle-builder__step-content--hidden {
+  display: none;
+}
+
+/* ── Products grid ── */
+.sd-bundle-builder__products-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+
+@media (max-width: 749px) {
+  .sd-bundle-builder__products-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ── Product card ── */
+.sd-bundle-builder__product-card {
+  position: relative;
+  background-color: var(--sd-color-surface);
+  border: 1.5px solid var(--sd-color-step-card-border);
+  border-radius: var(--sd-radius-card);
+  padding: 14px 14px 14px 14px;
+  display: grid;
+  grid-template-columns: 90px 1fr;
+  grid-template-rows: auto 1fr;
+  gap: 0 12px;
+  align-items: start;
+  transition: border-color 0.2s ease;
+}
+
+.sd-bundle-builder__product-card:hover {
+  border-color: var(--sd-color-step-card-border-active);
+}
+
+/* Card with qty > 0 gets accent border — controlled via JS data attribute or class */
+.sd-bundle-builder__product-card--selected {
+  border-color: var(--sd-color-step-card-border-active);
+}
+
+/* ── Save badge ── */
+.sd-bundle-builder__save-badge {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  background-color: var(--sd-color-badge-bg);
+  color: var(--sd-color-badge-text);
+  font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-size: 11px;
+  font-weight: 600;
+  padding: 4px 10px;
+  border-radius: var(--sd-radius-badge);
+  line-height: 1.2;
+  z-index: 1;
+  white-space: nowrap;
+}
+
+/* ── Card image wrap ── */
+.sd-bundle-builder__card-image-wrap {
+  grid-column: 1;
+  grid-row: 1 / 3;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-top: 28px;
+  width: 90px;
+  height: 100%;
+  min-height: 80px;
+}
+
+.sd-bundle-builder__card-image {
+  width: 80px;
+  height: 80px;
+  object-fit: contain;
+  display: block;
+}
+
+/* ── Card body ── */
+.sd-bundle-builder__card-body {
+  grid-column: 2;
+  grid-row: 1 / 3;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+/* ── Card title ── */
+.sd-bundle-builder__card-title {
+  font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--sd-color-text-primary);
+  margin: 0;
+  line-height: 1.3;
+}
+
+/* ── Card description ── */
+.sd-bundle-builder__card-desc {
+  font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-size: 12.5px;
+  font-weight: 400;
+  color: var(--sd-color-text-secondary);
+  margin: 0;
+  line-height: 1.5;
+}
+
+/* ── Learn more link ── */
+.sd-bundle-builder__learn-more {
+  color: var(--sd-color-learn-more);
+  font-size: 12.5px;
+  font-weight: 500;
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 2px;
+  margin-left: 2px;
+  transition: opacity 0.15s;
+}
+
+.sd-bundle-builder__learn-more:hover {
+  opacity: 0.75;
+}
+
+/* ── Variant pills ── */
+.sd-bundle-builder__variant-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  align-items: center;
+}
+
+.sd-bundle-builder__variant-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 4px 10px 4px 6px;
+  background-color: var(--sd-color-surface);
+  border: 1.5px solid var(--sd-color-pill-border);
+  border-radius: var(--sd-radius-pill);
+  cursor: pointer;
+  font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-size: 12px;
+  font-weight: 400;
+  color: var(--sd-color-text-primary);
+  transition: border-color 0.15s, background-color 0.15s;
+  white-space: nowrap;
+}
+
+.sd-bundle-builder__variant-pill--active {
+  border-color: var(--sd-color-pill-active-border);
+  background-color: var(--sd-color-pill-active-bg);
+  font-weight: 500;
+}
+
+.sd-bundle-builder__variant-pill:hover:not(.sd-bundle-builder__variant-pill--active) {
+  border-color: #a0a4c0;
+}
+
+.sd-bundle-builder__pill-img {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  object-fit: cover;
+  display: block;
+  flex-shrink: 0;
+}
+
+.sd-bundle-builder__pill-label {
+  font-size: 12px;
+  line-height: 1;
+}
+
+/* ── Card footer: qty + price ── */
+.sd-bundle-builder__card-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin-top: 6px;
+  flex-wrap: wrap;
+}
+
+/* ── Quantity stepper ── */
+.sd-bundle-builder__qty-stepper {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  border: 1.5px solid var(--sd-color-qty-btn-border);
+  border-radius: var(--sd-radius-qty);
+  overflow: hidden;
+  background-color: var(--sd-color-surface);
+}
+
+.sd-bundle-builder__qty-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  background-color: var(--sd-color-surface);
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 400;
+  color: var(--sd-color-text-primary);
+  padding: 0;
+  transition: background-color 0.15s;
+  line-height: 1;
+  flex-shrink: 0;
+}
+
+.sd-bundle-builder__qty-btn:hover {
+  background-color: var(--sd-color-qty-btn-bg);
+}
+
+.sd-bundle-builder__qty-btn--minus {
+  border-right: 1px solid var(--sd-color-qty-btn-border);
+}
+
+.sd-bundle-builder__qty-btn--plus {
+  border-left: 1px solid var(--sd-color-qty-btn-border);
+}
+
+.sd-bundle-builder__qty-input {
+  width: 36px;
+  height: 30px;
+  border: none;
+  text-align: center;
+  font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  color: var(--sd-color-text-primary);
+  background-color: var(--sd-color-surface);
+  padding: 0;
+  -moz-appearance: textfield;
+  appearance: textfield;
+}
+
+.sd-bundle-builder__qty-input::-webkit-outer-spin-button,
+.sd-bundle-builder__qty-input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* ── Price display ── */
+.sd-bundle-builder__price {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 1px;
+}
+
+.sd-bundle-builder__price-compare {
+  font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-size: 12.5px;
+  font-weight: 400;
+  color: var(--sd-color-price-compare);
+  text-decoration: line-through;
+  line-height: 1.3;
+}
+
+.sd-bundle-builder__price-current {
+  font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--sd-color-price-current);
+  line-height: 1.3;
+}
+
+/* ── Step actions / Next button ── */
+.sd-bundle-builder__step-actions {
+  display: flex;
+  justify-content: center;
+  margin-top: 24px;
+}
+
+.sd-bundle-builder__next-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 14px 40px;
+  background-color: transparent;
+  border: 2px solid var(--sd-color-next-btn-border);
+  border-radius: var(--sd-radius-btn);
+  font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--sd-color-next-btn-text);
+  cursor: pointer;
+  transition: background-color 0.2s ease, color 0.2s ease;
+  letter-spacing: 0.01em;
+  min-width: 260px;
+}
+
+.sd-bundle-builder__next-btn:hover {
+  background-color: var(--sd-color-next-btn-hover-bg);
+  color: var(--sd-color-next-btn-hover-text);
+}
+
+/* ── Add to cart button ── */
+.sd-bundle-builder__add-to-cart-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 14px 40px;
+  background-color: var(--sd-color-accent);
+  border: 2px solid var(--sd-color-accent);
+  border-radius: var(--sd-radius-btn);
+  font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-size: 16px;
+  font-weight: 600;
+  color: #ffffff;
+  cursor: pointer;
+  transition: opacity 0.2s ease;
+  letter-spacing: 0.01em;
+  min-width: 260px;
+}
+
+.sd-bundle-builder__add-to-cart-btn:hover {
+  opacity: 0.88;
+}
+
+/* ── Placeholder text ── */
+.sd-bundle-builder__placeholder-text {
+  font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-size: 14px;
+  color: var(--sd-color-text-muted);
+  text-align: center;
+  padding: 16px 0;
+  margin: 0;
+}
+
+/* ── Cart form (visually hidden) ── */
+.sd-bundle-builder__cart-form {
+  display: none;
+  visibility: hidden;
+}
+
+/* ── Live region (visually hidden) ── */
+.sd-bundle-builder__live-region {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+/* ── 5th product card centred in a 2-col grid ── */
+@media (min-width: 750px) {
+  .sd-bundle-builder__products-grid > .sd-bundle-builder__product-card:last-child:nth-child(odd) {
+    grid-column: 1 / 2;
+    justify-self: center;
+    width: 100%;
+    max-width: 100%;
+  }
+
+  /* If last child is truly lone in its row (5th of 5) */
+  .sd-bundle-builder__products-grid > .sd-bundle-builder__product-card:nth-child(5):last-child {
+    grid-column: 1 / 3;
+    max-width: calc(50% - 7px);
+    justify-self: center;
+  }
+}
+
+/* ── Responsive tweaks ── */
+@media (max-width: 749px) {
+  .sd-bundle-builder__step-heading {
+    font-size: 18px;
+  }
+
+  .sd-bundle-builder__product-card {
+    grid-template-columns: 80px 1fr;
+  }
+
+  .sd-bundle-builder__card-image-wrap {
+    width: 80px;
+  }
+
+  .sd-bundle-builder__card-image {
+    width: 70px;
+    height: 70px;
+  }
+
+  .sd-bundle-builder__next-btn,
+  .sd-bundle-builder__add-to-cart-btn {
+    width: 100%;
+    min-width: 0;
+  }
+}
+
+/* ── Dark mode ── */
+@media (prefers-color-scheme: dark) {
+  .sd-bundle-builder {
+    --sd-color-bg: #12131f;
+    --sd-color-surface: #1e1f30;
+    --sd-color-border: #2e3048;
+    --sd-color-text-primary: #e8e9f4;
+    --sd-color-text-secondary: #9a9db8;
+    --sd-color-text-muted: #6a6e8a;
+    --sd-color-accent: #7070e8;
+    --sd-color-accent-light: #2a2a50;
+    --sd-color-badge-bg: #5050d0;
+    --sd-color-badge-text: #ffffff;
+    --sd-color-price-compare: #e07070;
+    --sd-color-price-current: #e8e9f4;
+    --sd-color-pill-border: #3a3d58;
+    --sd-color-pill-active-border: #7070e8;
+    --sd-color-pill-active-bg: #2a2a50;
+    --sd-color-qty-btn-bg: #2a2b40;
+    --sd-color-qty-btn-border: #3a3d58;
+    --sd-color-next-btn-border: #7070e8;
+    --sd-color-next-btn-text: #7070e8;
+    --sd-color-next-btn-hover-bg: #7070e8;
+    --sd-color-next-btn-hover-text: #ffffff;
+    --sd-color-step-card-border: #2e3048;
+    --sd-color-step-card-border-active: #7070e8;
+    --sd-color-tracker-text: #6a6e8a;
+    --sd-color-learn-more: #7070e8;
+  }
+}
+
+/* SHOPIFYDRAFT CSS AUDIT
+   Colors from Figma: #f0f2f8 (section bg), #ffffff (card surface), #d8dce8 (border), #1a1a2e (text primary), #5a5e72 (text secondary), #8a8fa8 (text muted), #4b4acf (accent/purple), #ededfa (accent light), #c0392b (compare price red)
+   Colors inferred:   #d0d3e8 (pill border, qty border — slightly lighter than main border), #2e3048 (dark mode border)
+   Fonts from Figma:  Inter (weights 400, 500, 600, 700)
+   Spacing from Figma: card padding 14px, grid gap 14px, section padding 20px top/24px bottom per step, badge padding 4px 10px, pill padding 4px 10px 4px 6px, next btn padding 14px 40px
+*/
