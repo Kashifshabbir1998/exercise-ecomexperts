@@ -214,162 +214,50 @@
         "color_text": "#a89fc2"
       }
     },
-    "sd_section_MV8Tjw": {
-      "type": "sd-section",
-      "name": "SD - Promo Split Banner",
-      "settings": {
-        "section_number": "03",
-        "heading": "5 reasons busy women are switching to Mini Miracle Balm",
-        "body_text": "<p>You run a packed calendar. Your makeup should keep up. One swipe of sheer, buildable color for cheeks and lips — and you look polished without looking done.</p>",
-        "product_image": "shopify://shop_images/Image_Mini_Miracle_Balm_in_Dusty_Rose.png",
-        "image_alt": "Product image",
-        "flip_layout": false,
-        "padding_top": 0,
-        "padding_bottom": 0
-      }
-    },
-    "sd_section_zkVE7e": {
-      "type": "sd-section",
-      "name": "Split Feature Block",
-      "settings": {
-        "section_number": "03",
-        "heading": "CLEAN INGREDIENTS",
-        "body_text": "<p>Our formulas are made with clean ingredients you can trust. Free from parabens, sulfates, and synthetic fragrances — every product is designed to work beautifully on every skin tone.</p>",
-        "product_image": "shopify://shop_images/Image_Mini_Miracle_Balm_in_Dusty_Rose.png",
-        "image_alt": "Product image",
-        "flip_layout": false,
-        "padding_top": 0,
-        "padding_bottom": 0
-      }
-    },
-    "sd_frame_1736_nw6pAH": {
-      "type": "sd-frame-1736",
+    "ggggg_gg_peKjKR": {
+      "type": "ggggg-gg",
       "blocks": {
-        "product_item_RrtpVB": {
-          "type": "product_item",
+        "camera_product_L3mzKa": {
+          "type": "camera_product",
           "settings": {
             "product": "black-leather-bag",
-            "category_label": "CAMERAS",
-            "default_quantity": 1,
-            "min_quantity": 0,
-            "max_quantity": 10,
-            "force_free": false
+            "learn_more_url": ""
           }
         },
-        "product_item_cXQHiX": {
-          "type": "product_item",
-          "settings": {
-            "product": "",
-            "category_label": "CAMERAS",
-            "default_quantity": 2,
-            "min_quantity": 0,
-            "max_quantity": 10,
-            "force_free": false
-          }
-        },
-        "product_item_ACfGbC": {
-          "type": "product_item",
-          "settings": {
-            "product": "",
-            "category_label": "SENSORS",
-            "default_quantity": 2,
-            "min_quantity": 0,
-            "max_quantity": 10,
-            "force_free": false
-          }
-        },
-        "product_item_xkAmkL": {
-          "type": "product_item",
+        "camera_product_WMxgx3": {
+          "type": "camera_product",
           "settings": {
             "product": "chequered-red-shirt",
-            "category_label": "SENSORS",
-            "default_quantity": 1,
-            "min_quantity": 0,
-            "max_quantity": 10,
-            "force_free": true
+            "learn_more_url": ""
           }
         },
-        "product_item_JQRn44": {
-          "type": "product_item",
+        "camera_product_NHYV9b": {
+          "type": "camera_product",
           "settings": {
-            "product": "dark-denim-top",
-            "category_label": "ACCESSORIES",
-            "default_quantity": 2,
-            "min_quantity": 0,
-            "max_quantity": 10,
-            "force_free": false
-          }
-        },
-        "plan_row_NL7pzM": {
-          "type": "plan_row",
-          "settings": {
-            "plan_icon": "shopify://shop_images/Image_Mini_Miracle_Balm_in_Dusty_Rose.png",
-            "plan_name": "Cam Unlimited",
-            "plan_compare_price": "$12.99/mo",
-            "plan_price": "$9.99/mo"
-          }
-        },
-        "shipping_row_PHmak6": {
-          "type": "shipping_row",
-          "settings": {
-            "shipping_icon": "shopify://shop_images/Image_Mini_Miracle_Balm_in_Dusty_Rose.png",
-            "shipping_label": "Fast Shipping",
-            "shipping_compare_price": "$5.99"
+            "product": "",
+            "learn_more_url": ""
           }
         }
       },
       "block_order": [
-        "product_item_RrtpVB",
-        "product_item_cXQHiX",
-        "product_item_ACfGbC",
-        "product_item_xkAmkL",
-        "product_item_JQRn44",
-        "plan_row_NL7pzM",
-        "shipping_row_PHmak6"
+        "camera_product_L3mzKa",
+        "camera_product_WMxgx3",
+        "camera_product_NHYV9b"
       ],
-      "name": "Bundle Review",
+      "name": "Bundle Builder",
       "settings": {
-        "label": "REVIEW",
-        "heading": "Your security system",
-        "subheading": "<p>Review your bundle and checkout when ready.</p>",
-        "show_satisfaction_badge": true,
-        "satisfaction_badge_image": "shopify://shop_images/Image_Mini_Miracle_Balm_in_Dusty_Rose.png",
-        "satisfaction_badge_text": "100% Wyze satisfaction guarantee",
-        "show_financing_badge": true,
-        "financing_amount": "$19.19/mo",
-        "savings_prefix": "Congrats! You're saving",
-        "savings_suffix": "on your security bundle!",
-        "show_save_link": true,
-        "padding_top": 40,
-        "padding_bottom": 40
-      }
-    },
-    "sd_frame_8234_yMAM3y": {
-      "type": "sd-frame-8234",
-      "name": "Bundle Builder Wizard",
-      "settings": {
-        "step1_label": "STEP 1 OF 4",
+        "step1_tracker_label": "STEP 1 OF 4",
         "step1_heading": "Choose your cameras",
-        "step1_icon": "shopify://shop_images/Image_Mini_Miracle_Balm_in_Dusty_Rose.png",
-        "step1_collection": "frontpage",
         "step1_cta_label": "Next: Choose your plan",
-        "step2_label": "STEP 2 OF 4",
+        "step2_tracker_label": "STEP 2 OF 4",
         "step2_heading": "Choose your plan",
         "step2_cta_label": "Next: Choose your sensors",
-        "step3_label": "STEP 3 OF 4",
+        "step3_tracker_label": "STEP 3 OF 4",
         "step3_heading": "Choose your sensors",
-        "step3_collection": "",
         "step3_cta_label": "Next: Add extra protection",
-        "step4_label": "STEP 4 OF 4",
+        "step4_tracker_label": "STEP 4 OF 4",
         "step4_heading": "Add extra protection",
-        "step4_collection": "",
-        "step4_cta_label": "Add to cart",
-        "max_products": 6,
-        "color_accent": "#5B3FD9",
-        "color_bg": "#EEF0F8",
-        "color_card_bg": "#FFFFFF",
-        "color_text": "#1A1A2E",
-        "color_price_original": "#E53E3E",
+        "add_to_cart_label": "Add Bundle to Cart",
         "padding_top": 40,
         "padding_bottom": 40
       }
@@ -381,9 +269,6 @@
     "custom_product_grid_mCGMKY",
     "hero_section_UKyb4j",
     "tes1122_qc4CxL",
-    "sd_section_MV8Tjw",
-    "sd_section_zkVE7e",
-    "sd_frame_1736_nw6pAH",
-    "sd_frame_8234_yMAM3y"
+    "ggggg_gg_peKjKR"
   ]
 }
