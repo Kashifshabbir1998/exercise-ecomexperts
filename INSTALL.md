@@ -1,39 +1,35 @@
-## Installation Instructions for sd-frame-8234 Section
+## Installation Instructions for ggggg-gg Section
 
 ### Step 1: Add Files to Theme
 Copy the following files to your Shopify theme:
 
-- `sections/sd-frame-8234.liquid` → `sections/`
-- `assets/sd-frame-8234.js` → `assets/`
-- `assets/sd-frame-8234.css` → `assets/`
-- `snippets/bundle-product-card.liquid` → `snippets/`
-- `snippets/bundle-step-accordion.liquid` → `snippets/`
-- `snippets/quantity-stepper.liquid` → `snippets/`
-- `snippets/variant-pills.liquid` → `snippets/`
+- **sections/ggggg-gg.liquid** → `sections/` directory
+- **assets/ggggg-gg.js** → `assets/` directory
+- **assets/ggggg-gg.css** → `assets/` directory
+- **snippets/bundle-product-card.liquid** → `snippets/` directory
+- **snippets/quantity-stepper.liquid** → `snippets/` directory
+- **snippets/bundle-step-accordion.liquid** → `snippets/` directory
+- **snippets/variant-pills.liquid** → `snippets/` directory
 
-### Step 2: Add Section to Page Template
-1. In the Shopify Admin, go to **Online Store > Themes**
-2. Click **Edit** on your active theme
-3. Open the page template where you want to add the section (e.g., `index.json`)
-4. Click **Add section**
-5. Find and select **sd-frame-8234** from the section list
-6. Configure the section settings as needed:
-   - Padding top/bottom
-   - Progress label text
-   - Bundle step content and products
+### Step 2: Add Section to Page
+1. In your Shopify Admin, go to **Online Store > Pages**
+2. Select or create the page where you want the bundle builder
+3. Click **Add block**
+4. Find and select **ggggg-gg** from the section list
+5. Configure settings:
+   - Adjust padding (top/bottom) as needed
+   - Customize step labels (Step 1 tracker label, etc.)
+   - Configure any product or pricing settings
+6. Save your changes
 
-### Step 3: Configure Section Settings
-Customize the following in the theme editor:
-- Progress bar label text
-- Step titles and descriptions
-- Product selections for each bundle step
-- Spacing and styling options
+### Step 3: Verify Assets Load
+- Check that `ggggg-gg.css` and `ggggg-gg.js` load without errors in browser DevTools
+- Confirm the bundle builder displays correctly on your page
 
 ### Notes
-- This is a multi-step bundle builder section with product selection
-- Ensure all snippet files are present for proper functionality
-- The section uses CSS custom properties for dynamic spacing
-- JavaScript is required for interactivity (loads with `defer` attribute)
+- This section uses Web Components (`<sd-bundle-builder>`)
+- All dependent snippets must be installed for full functionality
+- CSS and JS files are automatically loaded via the section's `stylesheet_tag` and `script` tags
 
 ## Google Fonts Installation (REQUIRED)
 
