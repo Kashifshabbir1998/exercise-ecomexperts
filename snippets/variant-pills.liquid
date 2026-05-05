@@ -1,107 +1,58 @@
 {%- comment -%}
-  Variant Pills Snippet — renders clickable option pills for product variant selection
-  Usage: {% render 'variant-pills', product: product, selected_variant: selected_variant, step_key: step_key, section_id: section_id, card_id: card_id %}
-
-  Expected variables:
-    - product: {Object} The Shopify product object
-    - selected_variant: {Object} The currently selected or first available variant
-    - step_key: {String} The step identifier (cameras, plan, sensors, protection)
-    - section_id: {String} The section ID
-    - card_id: {String} A unique identifier for this card instance
+  Variant Pills Snippet — Color variant selector pills for bundle product cards
+  Required variables:
+    - bprod    {Object} — The Shopify product object
+    - block    {Object} — The Shopify block object (provides block.id)
+    - bvariant {Object} — The selected/first available variant (used to detect current selection)
 {%- endcomment -%}
 
-{%- unless product.options == blank or product.variants.size <= 1 -%}
+{%- comment -%} Find the color option index {%- endcomment -%}
+{%- assign color_idx = nil -%}
+{%- for opt in bprod.options_with_values -%}
+  {%- assign opt_lc = opt.name | downcase -%}
+  {%- if opt_lc == 'color' or opt_lc == 'colour' -%}
+    {%- assign color_idx = forloop.index0 -%}
+  {%- endif -%}
+{%- endfor -%}
+
+{%- if color_idx != nil -%}
   <div
-    class="variant-pills"
-    data-variant-pills
-    data-product-id="{{ product.id }}"
-    data-step-key="{{ step_key }}"
-    aria-label="{{ 'products.product.product_options' | t }}"
+    class="sd-bundle-builder__variant-pills"
+    role="group"
+    aria-label="Color options for {{ bprod.title | escape }}"
+    data-variant-pills="{{ block.id }}"
   >
-    {%- for option in product.options_with_values -%}
-      {%- liquid
-        assign option_index = forloop.index0
-        assign option_name_downcase = option.name | downcase
-        assign is_color = false
-        if option_name_downcase == 'color' or option_name_downcase == 'colour'
-          assign is_color = true
-        endif
-      -%}
-
-      <fieldset
-        class="variant-pills__fieldset"
-        data-option-index="{{ option_index }}"
-      >
-        <legend class="variant-pills__legend">
-          {{ option.name | escape }}
-          <span class="variant-pills__selected-value" data-selected-option="{{ option_index }}">
-            {%- for opt_val in selected_variant.options -%}
-              {%- if forloop.index0 == option_index -%}{{ opt_val | escape }}{%- endif -%}
-            {%- endfor -%}
-          </span>
-        </legend>
-
-        <div class="variant-pills__options{% if is_color %} variant-pills__options--color{% endif %}">
-          {%- for value in option.values -%}
-            {%- liquid
-              assign is_selected = false
-              for opt_val in selected_variant.options
-                if forloop.index0 == option_index and opt_val == value
-                  assign is_selected = true
-                endif
-              endfor
-
-              assign pill_id = 'pill-' | append: card_id | append: '-' | append: option_index | append: '-' | append: forloop.index0
-
-              assign value_downcase = value | downcase | replace: ' ', '-'
-
-              assign option_available = false
-              for variant in product.variants
-                if option_index == 0 and variant.option1 == value
-                  if variant.available
-                    assign option_available = true
-                  endif
-                elsif option_index == 1 and variant.option2 == value
-                  if variant.available
-                    assign option_available = true
-                  endif
-                elsif option_index == 2 and variant.option3 == value
-                  if variant.available
-                    assign option_available = true
-                  endif
-                endif
-              endfor
-            -%}
-
-            <div class="variant-pills__item{% if is_color %} variant-pills__item--color{% endif %}">
-              <input
-                type="radio"
-                class="variant-pills__input"
-                id="{{ pill_id }}"
-                name="option-{{ card_id }}-{{ option_index }}"
-                value="{{ value | escape }}"
-                data-option-index="{{ option_index }}"
-                data-option-value="{{ value | escape }}"
-                data-product-id="{{ product.id }}"
-                data-step-key="{{ step_key }}"
-                {% if is_selected %}checked{% endif %}
-                {% unless option_available %}data-unavailable="true"{% endunless %}
-                aria-label="{{ value | escape }}{% unless option_available %} — {{ 'products.product.sold_out' | t }}{% endunless %}"
-              >
-              <label
-                class="variant-pills__label{% if is_color %} variant-pills__label--color{% endif %}{% unless option_available %} variant-pills__label--unavailable{% endunless %}"
-                for="{{ pill_id }}"
-                {% if is_color %}style="--swatch-color: {{ value_downcase }}"{% endif %}
-                title="{{ value | escape }}{% unless option_available %} — {{ 'products.product.sold_out' | t }}{% endunless %}"
-              >
-                {%- unless is_color -%}
-                  {{ value | escape }}
-                {%- endunless -%}
-              </label>
-            </div>
-          {%- endfor -%}
-        </div>
-      </fieldset>
+    {%- assign seen_colors = '' -%}
+    {%- for vnt in bprod.variants -%}
+      {%- assign vnt_color = vnt.options[color_idx] -%}
+      {%- unless seen_colors contains vnt_color -%}
+        {%- assign seen_colors = seen_colors | append: vnt_color | append: '|' -%}
+        {%- assign pill_alt = vnt.title | escape -%}
+        {%- assign is_first_pill = false -%}
+        {%- if forloop.first -%}
+          {%- assign is_first_pill = true -%}
+        {%- endif -%}
+        <button
+          type="button"
+          class="sd-bundle-builder__variant-pill{% if is_first_pill %} sd-bundle-builder__variant-pill--active{% endif %}"
+          data-variant-id="{{ vnt.id }}"
+          data-block-id="{{ block.id }}"
+          data-color="{{ vnt_color | escape }}"
+          data-price="{{ vnt.price }}"
+          aria-label="{{ vnt_color }}"
+          aria-pressed="{% if is_first_pill %}true{% else %}false{% endif %}"
+        >
+          {%- if vnt.image != blank -%}
+            {{ vnt.image | image_url: width: 24 | image_tag:
+              loading: 'lazy',
+              widths: '24,48',
+              alt: pill_alt,
+              class: 'sd-bundle-builder__pill-img'
+            }}
+          {%- endif -%}
+          <span class="sd-bundle-builder__pill-label">{{ vnt_color }}</span>
+        </button>
+      {%- endunless -%}
     {%- endfor -%}
   </div>
-{%- endunless -%}
+{%- endif -%}
