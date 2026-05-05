@@ -1,0 +1,347 @@
+{{ 'ttt-bb-herooo.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'ttt-bb-herooo.js' | asset_url }}" defer></script>
+
+<!-- Google Fonts: Playfair Display + Montserrat -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800;900&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+<div
+  id="shopify-section-{{ section.id }}"
+  class="sd-ttt-bb-herooo shopify-section"
+  style="--sd-spacing-top: {{ section.settings.padding_top }}px; --sd-spacing-bottom: {{ section.settings.padding_bottom }}px;"
+>
+  <sd-ttt-bb-herooo>
+
+    <!-- ============================================================
+         HEADER / NAVIGATION BAR
+    ============================================================ -->
+    <header class="sd-ttt-bb-herooo__header" role="banner">
+
+      <!-- Logo Block -->
+      <div class="sd-ttt-bb-herooo__logo-block">
+        {% unless section.settings.logo_image == blank %}
+          {%- assign logo_alt = section.settings.logo_alt | default: shop.name | escape -%}
+          <a href="{{ routes.root_url }}" class="sd-ttt-bb-herooo__logo-link" aria-label="{{ shop.name }}">
+            {{ section.settings.logo_image | image_url: width: 120 | image_tag: loading: 'eager', widths: '60,80,120', sizes: '120px', alt: logo_alt, class: 'sd-ttt-bb-herooo__logo-img', width: 120, height: 120 }}
+          </a>
+        {% else %}
+          <!-- PLACEHOLDER: Upload a logo image in section settings -->
+          <a href="{{ routes.root_url }}" class="sd-ttt-bb-herooo__logo-link sd-ttt-bb-herooo__logo-link--placeholder" aria-label="{{ shop.name }}">
+            <div class="sd-ttt-bb-herooo__logo-placeholder-icon" aria-hidden="true">
+              <svg viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg" width="80" height="80">
+                <circle cx="40" cy="40" r="38" stroke="#2C2416" stroke-width="2"/>
+                <path d="M40 20 C30 28, 20 36, 28 44 C36 52, 44 40, 40 48 C36 56, 28 52, 32 44 C36 36, 48 36, 52 44" stroke="#2C2416" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+              </svg>
+            </div>
+          </a>
+        {% endunless %}
+
+        <div class="sd-ttt-bb-herooo__logo-text-block">
+          <a href="{{ routes.root_url }}" class="sd-ttt-bb-herooo__logo-name">
+            {{ section.settings.logo_text | default: 'LOGO TEXT HERE' }}
+          </a>
+          {% unless section.settings.logo_slogan == blank %}
+            <span class="sd-ttt-bb-herooo__logo-slogan">{{ section.settings.logo_slogan }}</span>
+          {% endunless %}
+        </div>
+      </div>
+
+      <!-- Navigation Links -->
+      <nav class="sd-ttt-bb-herooo__nav" aria-label="Main navigation">
+        <ul class="sd-ttt-bb-herooo__nav-list" role="list">
+          {%- for block in section.blocks -%}
+            {%- case block.type -%}
+              {%- when 'nav_link' -%}
+                <li class="sd-ttt-bb-herooo__nav-item" {{ block.shopify_attributes }}>
+                  {%- assign nav_url = block.settings.nav_url | default: routes.root_url -%}
+                  <a
+                    href="{{ nav_url }}"
+                    class="sd-ttt-bb-herooo__nav-link{% if block.settings.is_active %} sd-ttt-bb-herooo__nav-link--active{% endif %}"
+                    {% if block.settings.is_active %}aria-current="page"{% endif %}
+                  >
+                    {{ block.settings.nav_label | default: 'Link' }}
+                  </a>
+                </li>
+            {%- endcase -%}
+          {%- endfor -%}
+        </ul>
+      </nav>
+
+    </header>
+    <!-- /HEADER -->
+
+    <!-- ============================================================
+         HERO SECTION — Two-column layout
+         Left: image collage | Right: text + CTA
+    ============================================================ -->
+    <section class="sd-ttt-bb-herooo__hero" aria-label="{{ section.settings.hero_headline | default: 'Hero' }}">
+
+      <!-- LEFT COLUMN: Image Collage -->
+      <div class="sd-ttt-bb-herooo__collage-wrapper">
+        {% render 'sd-snip-hero-collage',
+          image_1: section.settings.collage_image_1,
+          image_2: section.settings.collage_image_2,
+          image_3: section.settings.collage_image_3,
+          image_4: section.settings.collage_image_4,
+          image_1_alt: section.settings.collage_image_1_alt,
+          image_2_alt: section.settings.collage_image_2_alt,
+          image_3_alt: section.settings.collage_image_3_alt,
+          image_4_alt: section.settings.collage_image_4_alt,
+          show_frame: section.settings.show_decorative_frame
+        %}
+      </div>
+
+      <!-- RIGHT COLUMN: Headline + CTA -->
+      <div class="sd-ttt-bb-herooo__hero-content">
+
+        <!-- Eyebrow text -->
+        {% unless section.settings.hero_eyebrow == blank %}
+          <p class="sd-ttt-bb-herooo__eyebrow" data-animate>
+            {{ section.settings.hero_eyebrow }}
+          </p>
+        {% endunless %}
+
+        <!-- Main headline -->
+        {% unless section.settings.hero_headline == blank %}
+          <h1 class="sd-ttt-bb-herooo__headline" data-animate>
+            {{ section.settings.hero_headline }}
+          </h1>
+        {% endunless %}
+
+        <!-- CTA Button -->
+        {% unless section.settings.cta_label == blank %}
+          <div class="sd-ttt-bb-herooo__cta-wrapper" data-animate>
+            <a
+              href="{{ section.settings.cta_url | default: routes.root_url }}"
+              class="sd-ttt-bb-herooo__cta-btn"
+              aria-label="{{ section.settings.cta_label }}"
+            >
+              {{ section.settings.cta_label }}
+            </a>
+          </div>
+        {% endunless %}
+
+      </div>
+      <!-- /RIGHT COLUMN -->
+
+    </section>
+    <!-- /HERO SECTION -->
+
+  </sd-ttt-bb-herooo>
+</div>
+
+{% schema %}
+{
+  "name": "Hero — Lingerie Banner",
+  "tag": "div",
+  "class": "section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Logo & Brand"
+    },
+    {
+      "type": "image_picker",
+      "id": "logo_image",
+      "label": "Logo Image",
+      "info": "Recommended: circular ornamental logo, 120×120px, transparent PNG"
+    },
+    {
+      "type": "text",
+      "id": "logo_alt",
+      "label": "Logo Alt Text",
+      "placeholder": "e.g. Brand name ornamental crest",
+      "default": "Brand Logo"
+    },
+    {
+      "type": "text",
+      "id": "logo_text",
+      "label": "Logo Brand Name",
+      "placeholder": "e.g. LOGO TEXT HERE",
+      "default": "LOGO TEXT HERE"
+    },
+    {
+      "type": "text",
+      "id": "logo_slogan",
+      "label": "Logo Slogan",
+      "placeholder": "e.g. SLOGAN HERE",
+      "default": "SLOGAN HERE"
+    },
+    {
+      "type": "header",
+      "content": "Hero Text"
+    },
+    {
+      "type": "text",
+      "id": "hero_eyebrow",
+      "label": "Eyebrow Text",
+      "placeholder": "e.g. TIMELESS BEAUTY INSIDE OUT",
+      "default": "TIMELESS BEAUTY INSIDE OUT"
+    },
+    {
+      "type": "text",
+      "id": "hero_headline",
+      "label": "Hero Headline",
+      "placeholder": "e.g. LINGERIE FOR EVERY BODY",
+      "default": "LINGERIE FOR EVERY BODY"
+    },
+    {
+      "type": "header",
+      "content": "CTA Button"
+    },
+    {
+      "type": "text",
+      "id": "cta_label",
+      "label": "Button Label",
+      "placeholder": "e.g. Shop Now",
+      "default": "Shop Now"
+    },
+    {
+      "type": "url",
+      "id": "cta_url",
+      "label": "Button Link",
+      "info": "Link to your shop, collection, or any page"
+    },
+    {
+      "type": "header",
+      "content": "Image Collage — Upload 4 Photos"
+    },
+    {
+      "type": "image_picker",
+      "id": "collage_image_1",
+      "label": "Collage Image 1 (Top Left)"
+    },
+    {
+      "type": "text",
+      "id": "collage_image_1_alt",
+      "label": "Image 1 Alt Text",
+      "placeholder": "Describe the image for accessibility",
+      "default": "Lifestyle photo 1"
+    },
+    {
+      "type": "image_picker",
+      "id": "collage_image_2",
+      "label": "Collage Image 2 (Top Right — with frame)"
+    },
+    {
+      "type": "text",
+      "id": "collage_image_2_alt",
+      "label": "Image 2 Alt Text",
+      "placeholder": "Describe the image for accessibility",
+      "default": "Lifestyle photo 2"
+    },
+    {
+      "type": "image_picker",
+      "id": "collage_image_3",
+      "label": "Collage Image 3 (Bottom Left)"
+    },
+    {
+      "type": "text",
+      "id": "collage_image_3_alt",
+      "label": "Image 3 Alt Text",
+      "placeholder": "Describe the image for accessibility",
+      "default": "Lifestyle photo 3"
+    },
+    {
+      "type": "image_picker",
+      "id": "collage_image_4",
+      "label": "Collage Image 4 (Bottom Right)"
+    },
+    {
+      "type": "text",
+      "id": "collage_image_4_alt",
+      "label": "Image 4 Alt Text",
+      "placeholder": "Describe the image for accessibility",
+      "default": "Lifestyle photo 4"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_decorative_frame",
+      "label": "Show Decorative Frame on Image 2",
+      "default": true,
+      "info": "Displays a rectangular border overlay on the top-right image, as seen in the design"
+    },
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Padding top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Padding bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "default": 0
+    }
+  ],
+  "blocks": [
+    {
+      "type": "nav_link",
+      "name": "Navigation Link",
+      "limit": 6,
+      "settings": [
+        {
+          "type": "text",
+          "id": "nav_label",
+          "label": "Link Label",
+          "placeholder": "e.g. Home",
+          "default": "Home"
+        },
+        {
+          "type": "url",
+          "id": "nav_url",
+          "label": "Link URL"
+        },
+        {
+          "type": "checkbox",
+          "id": "is_active",
+          "label": "Mark as Active (underlined)",
+          "default": false,
+          "info": "Shows this link with an underline to indicate the current page"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Hero — Lingerie Banner",
+      "blocks": [
+        {
+          "type": "nav_link",
+          "settings": {
+            "nav_label": "Home",
+            "is_active": true
+          }
+        },
+        {
+          "type": "nav_link",
+          "settings": {
+            "nav_label": "Shop",
+            "is_active": false
+          }
+        },
+        {
+          "type": "nav_link",
+          "settings": {
+            "nav_label": "Contact",
+            "is_active": false
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
