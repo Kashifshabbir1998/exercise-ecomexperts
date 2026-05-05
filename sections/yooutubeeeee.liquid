@@ -1,0 +1,520 @@
+{{ 'yooutubeeeee.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'yooutubeeeee.js' | asset_url }}" defer></script>
+
+<div
+  id="shopify-section-{{ section.id }}"
+  class="sd-yooutubeeeee shopify-section"
+  style="--sd-spacing-top: {{ section.settings.padding_top }}px; --sd-spacing-bottom: {{ section.settings.padding_bottom }}px;"
+>
+  <sd-yooutubeeeee data-section-id="{{ section.id }}">
+
+    <!-- Category Filter Pills Bar -->
+    {%- if section.settings.show_filter_pills -%}
+      <div class="sd-yooutubeeeee__filter-bar" aria-label="Content category filters">
+        <div class="sd-yooutubeeeee__filter-swiper swiper" id="filter-swiper-{{ section.id }}">
+          <div class="swiper-wrapper">
+            {%- for block in section.blocks -%}
+              {%- if block.type == 'filter_pill' -%}
+                <div class="swiper-slide sd-yooutubeeeee__filter-slide" {{ block.shopify_attributes }}>
+                  <button
+                    type="button"
+                    class="sd-yooutubeeeee__filter-pill{% if forloop.first %} sd-yooutubeeeee__filter-pill--active{% endif %}"
+                    data-filter-pill
+                    aria-pressed="{% if forloop.first %}true{% else %}false{% endif %}"
+                  >
+                    {{ block.settings.label | default: 'Filter' }}
+                  </button>
+                </div>
+              {%- endif -%}
+            {%- endfor -%}
+          </div>
+          <div class="sd-yooutubeeeee__filter-prev" aria-label="Previous filters" role="button" tabindex="0">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/></svg>
+          </div>
+          <div class="sd-yooutubeeeee__filter-next" aria-label="Next filters" role="button" tabindex="0">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/></svg>
+          </div>
+        </div>
+      </div>
+    {%- endif -%}
+
+    <!-- Main Content Area -->
+    <div class="sd-yooutubeeeee__content">
+
+      <!-- Video Grid -->
+      {%- assign has_video_cards = false -%}
+      {%- for block in section.blocks -%}
+        {%- if block.type == 'video_card' -%}
+          {%- assign has_video_cards = true -%}
+        {%- endif -%}
+      {%- endfor -%}
+
+      {%- if has_video_cards -%}
+        <div class="sd-yooutubeeeee__video-grid" role="list" aria-label="{{ section.settings.grid_aria_label | default: 'Videos' }}">
+          {%- for block in section.blocks -%}
+            {%- if block.type == 'video_card' -%}
+              {%- assign card_image = block.settings.thumbnail -%}
+              {%- assign channel_avatar = block.settings.channel_avatar -%}
+              {%- assign video_title_escaped = block.settings.video_title | escape -%}
+              {%- assign channel_name_escaped = block.settings.channel_name | escape -%}
+
+              <div class="sd-yooutubeeeee__video-card" role="listitem" {{ block.shopify_attributes }}>
+
+                <!-- Thumbnail -->
+                <a
+                  href="{{ block.settings.video_url | default: '#' }}"
+                  class="sd-yooutubeeeee__thumbnail-link"
+                  aria-label="{{ video_title_escaped }}"
+                  {% unless block.settings.video_url == blank %}target="_blank" rel="noopener noreferrer"{% endunless %}
+                >
+                  <div class="sd-yooutubeeeee__thumbnail-wrapper">
+                    {%- unless card_image == blank -%}
+                      {{ card_image | image_url: width: 800 | image_tag:
+                        loading: 'lazy',
+                        widths: '300,400,600,800',
+                        sizes: '(min-width: 990px) 33vw, (min-width: 750px) 50vw, 100vw',
+                        class: 'sd-yooutubeeeee__thumbnail-img',
+                        alt: video_title_escaped,
+                        width: 640,
+                        height: 360
+                      }}
+                    {%- else -%}
+                      <div class="sd-yooutubeeeee__thumbnail-placeholder" aria-hidden="true">
+                        <svg viewBox="0 0 48 48" fill="currentColor" aria-hidden="true" width="48" height="48"><path d="M24 4C12.954 4 4 12.954 4 24s8.954 20 20 20 20-8.954 20-20S35.046 4 24 4zm-4 28.5v-17l12 8.5-12 8.5z"/></svg>
+                      </div>
+                    {%- endunless -%}
+                    {%- unless block.settings.duration == blank -%}
+                      <span class="sd-yooutubeeeee__duration" aria-label="Video duration {{ block.settings.duration }}">
+                        {{ block.settings.duration }}
+                      </span>
+                    {%- endunless -%}
+                  </div>
+                </a>
+
+                <!-- Card Meta Row -->
+                <div class="sd-yooutubeeeee__card-meta">
+
+                  <!-- Channel Avatar -->
+                  <div class="sd-yooutubeeeee__channel-avatar-wrap">
+                    <a
+                      href="{{ block.settings.channel_url | default: '#' }}"
+                      class="sd-yooutubeeeee__channel-avatar-link"
+                      aria-label="{{ channel_name_escaped }} channel"
+                    >
+                      {%- unless channel_avatar == blank -%}
+                        {%- assign avatar_alt = channel_name_escaped -%}
+                        {{ channel_avatar | image_url: width: 80 | image_tag:
+                          loading: 'lazy',
+                          widths: '40,80',
+                          class: 'sd-yooutubeeeee__channel-avatar',
+                          alt: avatar_alt,
+                          width: 36,
+                          height: 36
+                        }}
+                      {%- else -%}
+                        <div class="sd-yooutubeeeee__channel-avatar-placeholder" aria-hidden="true">
+                          <svg viewBox="0 0 24 24" fill="currentColor" width="24" height="24" aria-hidden="true"><path d="M12 12c2.7 0 4.8-2.1 4.8-4.8S14.7 2.4 12 2.4 7.2 4.5 7.2 7.2 9.3 12 12 12zm0 2.4c-3.2 0-9.6 1.6-9.6 4.8v2.4h19.2v-2.4c0-3.2-6.4-4.8-9.6-4.8z"/></svg>
+                        </div>
+                      {%- endunless -%}
+                    </a>
+                  </div>
+
+                  <!-- Card Info -->
+                  <div class="sd-yooutubeeeee__card-info">
+                    <div class="sd-yooutubeeeee__card-title-row">
+                      <a
+                        href="{{ block.settings.video_url | default: '#' }}"
+                        class="sd-yooutubeeeee__card-title-link"
+                        {% unless block.settings.video_url == blank %}target="_blank" rel="noopener noreferrer"{% endunless %}
+                        tabindex="-1"
+                        aria-hidden="true"
+                      >
+                        <h3 class="sd-yooutubeeeee__card-title">{{ block.settings.video_title | default: 'Video Title' }}</h3>
+                      </a>
+                      <button
+                        type="button"
+                        class="sd-yooutubeeeee__more-btn"
+                        aria-label="More options for {{ video_title_escaped }}"
+                        data-more-menu
+                      >
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/></svg>
+                      </button>
+                    </div>
+                    {%- unless block.settings.channel_name == blank -%}
+                      <a
+                        href="{{ block.settings.channel_url | default: '#' }}"
+                        class="sd-yooutubeeeee__channel-name"
+                        aria-label="{{ channel_name_escaped }} channel page"
+                      >
+                        {{ block.settings.channel_name }}
+                      </a>
+                    {%- endunless -%}
+                    <div class="sd-yooutubeeeee__card-stats">
+                      {%- unless block.settings.view_count == blank -%}
+                        <span class="sd-yooutubeeeee__view-count">{{ block.settings.view_count }}</span>
+                      {%- endunless -%}
+                      {%- unless block.settings.view_count == blank or block.settings.upload_date == blank -%}
+                        <span class="sd-yooutubeeeee__stat-sep" aria-hidden="true">•</span>
+                      {%- endunless -%}
+                      {%- unless block.settings.upload_date == blank -%}
+                        <span class="sd-yooutubeeeee__upload-date">{{ block.settings.upload_date }}</span>
+                      {%- endunless -%}
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+            {%- endif -%}
+          {%- endfor -%}
+        </div>
+      {%- endif -%}
+
+      <!-- Shorts Section -->
+      {%- assign has_shorts = false -%}
+      {%- for block in section.blocks -%}
+        {%- if block.type == 'shorts_card' -%}
+          {%- assign has_shorts = true -%}
+        {%- endif -%}
+      {%- endfor -%}
+
+      {%- if has_shorts -%}
+        <div class="sd-yooutubeeeee__shorts-section">
+
+          <!-- Shorts Section Header -->
+          <div class="sd-yooutubeeeee__shorts-header">
+            <div class="sd-yooutubeeeee__shorts-title-group">
+              <span class="sd-yooutubeeeee__shorts-logo" aria-hidden="true">
+                <svg viewBox="0 0 90 90" fill="none" width="28" height="28">
+                  <rect width="90" height="90" rx="20" fill="#FF0000"/>
+                  <path d="M54.39 26.49a13.51 13.51 0 0 0-13.06 1.01L28.6 35.74A13.51 13.51 0 0 0 22 47.05v.9A13.51 13.51 0 0 0 28.6 59.26l12.73 8.24a13.51 13.51 0 0 0 20.76-11.4V33.9a13.51 13.51 0 0 0-7.7-7.41z" fill="#FF0000"/>
+                  <path d="M56.1 34.49 42.7 42.9a4.5 4.5 0 0 0 0 7.68l13.4 8.43A4.5 4.5 0 0 0 63 55.1V37.38a4.5 4.5 0 0 0-6.9-2.89z" fill="#fff"/>
+                </svg>
+              </span>
+              <h2 class="sd-yooutubeeeee__shorts-heading">{{ section.settings.shorts_heading | default: 'Shorts' }}</h2>
+            </div>
+            <button type="button" class="sd-yooutubeeeee__shorts-more-btn" aria-label="More Shorts options">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/></svg>
+            </button>
+          </div>
+
+          <!-- Shorts Cards Grid -->
+          <div class="sd-yooutubeeeee__shorts-grid" role="list" aria-label="{{ section.settings.shorts_heading | default: 'Shorts' }}">
+            {%- for block in section.blocks -%}
+              {%- if block.type == 'shorts_card' -%}
+                {%- assign short_thumb = block.settings.thumbnail -%}
+                {%- assign short_title_escaped = block.settings.video_title | escape -%}
+                {%- assign short_views_escaped = block.settings.view_count | escape -%}
+
+                <div class="sd-yooutubeeeee__short-card" role="listitem" {{ block.shopify_attributes }}>
+                  <a
+                    href="{{ block.settings.video_url | default: '#' }}"
+                    class="sd-yooutubeeeee__short-thumb-link"
+                    aria-label="{{ short_title_escaped }}"
+                    {% unless block.settings.video_url == blank %}target="_blank" rel="noopener noreferrer"{% endunless %}
+                  >
+                    <div class="sd-yooutubeeeee__short-thumb-wrapper">
+                      {%- unless short_thumb == blank -%}
+                        {{ short_thumb | image_url: width: 400 | image_tag:
+                          loading: 'lazy',
+                          widths: '200,300,400',
+                          sizes: '(min-width: 990px) 15vw, 33vw',
+                          class: 'sd-yooutubeeeee__short-thumb-img',
+                          alt: short_title_escaped,
+                          width: 200,
+                          height: 356
+                        }}
+                      {%- else -%}
+                        <div class="sd-yooutubeeeee__short-thumb-placeholder" aria-hidden="true"></div>
+                      {%- endunless -%}
+                      {%- unless block.settings.duration == blank -%}
+                        <span class="sd-yooutubeeeee__duration sd-yooutubeeeee__duration--short" aria-label="Duration {{ block.settings.duration }}">
+                          {{ block.settings.duration }}
+                        </span>
+                      {%- endunless -%}
+                    </div>
+                  </a>
+                  <div class="sd-yooutubeeeee__short-info">
+                    <a
+                      href="{{ block.settings.video_url | default: '#' }}"
+                      class="sd-yooutubeeeee__short-title-link"
+                      {% unless block.settings.video_url == blank %}target="_blank" rel="noopener noreferrer"{% endunless %}
+                    >
+                      <p class="sd-yooutubeeeee__short-title">{{ block.settings.video_title | default: 'Short Title' }}</p>
+                    </a>
+                    {%- unless block.settings.view_count == blank -%}
+                      <p class="sd-yooutubeeeee__short-views">{{ block.settings.view_count }}</p>
+                    {%- endunless -%}
+                  </div>
+                </div>
+
+              {%- endif -%}
+            {%- endfor -%}
+          </div>
+        </div>
+      {%- endif -%}
+
+    </div><!-- /.sd-yooutubeeeee__content -->
+
+  </sd-yooutubeeeee>
+</div>
+
+{% schema %}
+{
+  "name": "YouTube-Style Video Feed",
+  "tag": "section",
+  "class": "sd-yooutubeeeee-section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Section Settings"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_filter_pills",
+      "label": "Show Category Filter Pills",
+      "default": true,
+      "info": "Displays the horizontal scrollable filter chips above the video grid"
+    },
+    {
+      "type": "text",
+      "id": "grid_aria_label",
+      "label": "Video Grid Accessibility Label",
+      "default": "Videos",
+      "placeholder": "e.g. Featured Videos",
+      "info": "Screen reader label for the main video grid region"
+    },
+    {
+      "type": "header",
+      "content": "Shorts Section"
+    },
+    {
+      "type": "text",
+      "id": "shorts_heading",
+      "label": "Shorts Section Heading",
+      "default": "Shorts",
+      "placeholder": "e.g. Shorts"
+    },
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Padding top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Padding bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "default": 40
+    }
+  ],
+  "blocks": [
+    {
+      "type": "filter_pill",
+      "name": "Filter Pill",
+      "settings": [
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Filter Label",
+          "default": "All",
+          "placeholder": "e.g. AI, Podcasts, Live"
+        }
+      ]
+    },
+    {
+      "type": "video_card",
+      "name": "Video Card",
+      "settings": [
+        {
+          "type": "header",
+          "content": "Video Details"
+        },
+        {
+          "type": "image_picker",
+          "id": "thumbnail",
+          "label": "Video Thumbnail Image"
+        },
+        {
+          "type": "text",
+          "id": "duration",
+          "label": "Video Duration",
+          "default": "18:54",
+          "placeholder": "e.g. 18:54",
+          "info": "Displayed as a badge on the bottom-right corner of the thumbnail"
+        },
+        {
+          "type": "url",
+          "id": "video_url",
+          "label": "Video Link URL",
+          "info": "Where this card links to when clicked"
+        },
+        {
+          "type": "textarea",
+          "id": "video_title",
+          "label": "Video Title",
+          "default": "Sam Altman's Latest Move Will Destroy The Smartphone Industry (+18 AI Updates)",
+          "placeholder": "e.g. Sam Altman's Latest Move..."
+        },
+        {
+          "type": "header",
+          "content": "Channel Info"
+        },
+        {
+          "type": "image_picker",
+          "id": "channel_avatar",
+          "label": "Channel Avatar Image",
+          "info": "Small circular avatar shown beside the video title"
+        },
+        {
+          "type": "text",
+          "id": "channel_name",
+          "label": "Channel Name",
+          "default": "Vaibhav Sisinty",
+          "placeholder": "e.g. Vaibhav Sisinty"
+        },
+        {
+          "type": "url",
+          "id": "channel_url",
+          "label": "Channel Link URL",
+          "info": "Optional — links the channel name and avatar"
+        },
+        {
+          "type": "header",
+          "content": "Stats"
+        },
+        {
+          "type": "text",
+          "id": "view_count",
+          "label": "View Count",
+          "default": "48K views",
+          "placeholder": "e.g. 48K views"
+        },
+        {
+          "type": "text",
+          "id": "upload_date",
+          "label": "Upload Date",
+          "default": "1 day ago",
+          "placeholder": "e.g. 1 day ago"
+        }
+      ]
+    },
+    {
+      "type": "shorts_card",
+      "name": "Shorts Card",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "thumbnail",
+          "label": "Short Thumbnail Image",
+          "info": "Portrait/vertical aspect ratio (9:16) recommended"
+        },
+        {
+          "type": "text",
+          "id": "duration",
+          "label": "Short Duration",
+          "placeholder": "e.g. 0:59"
+        },
+        {
+          "type": "url",
+          "id": "video_url",
+          "label": "Short Link URL"
+        },
+        {
+          "type": "text",
+          "id": "video_title",
+          "label": "Short Title",
+          "default": "Short Title",
+          "placeholder": "e.g. Mind-blowing fact"
+        },
+        {
+          "type": "text",
+          "id": "view_count",
+          "label": "View Count",
+          "placeholder": "e.g. 1.2M views"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "YouTube-Style Video Feed",
+      "blocks": [
+        { "type": "filter_pill", "settings": { "label": "All" } },
+        { "type": "filter_pill", "settings": { "label": "AI" } },
+        { "type": "filter_pill", "settings": { "label": "Podcasts" } },
+        { "type": "filter_pill", "settings": { "label": "Deadlifts" } },
+        { "type": "filter_pill", "settings": { "label": "Apple" } },
+        { "type": "filter_pill", "settings": { "label": "Electric vehicles" } },
+        { "type": "filter_pill", "settings": { "label": "Live" } },
+        { "type": "filter_pill", "settings": { "label": "Calories" } },
+        { "type": "filter_pill", "settings": { "label": "Recently uploaded" } },
+        { "type": "filter_pill", "settings": { "label": "New to you" } },
+        {
+          "type": "video_card",
+          "settings": {
+            "video_title": "Sam Altman's Latest Move Will Destroy The Smartphone Industry (+18 AI Updates)",
+            "channel_name": "Vaibhav Sisinty",
+            "view_count": "48K views",
+            "upload_date": "1 day ago",
+            "duration": "18:54"
+          }
+        },
+        {
+          "type": "video_card",
+          "settings": {
+            "video_title": "Taha X Ali Marwatt Ft. Irongear",
+            "channel_name": "Taha Chaudhary",
+            "view_count": "17K views",
+            "upload_date": "4 days ago",
+            "duration": "16:05"
+          }
+        },
+        {
+          "type": "shorts_card",
+          "settings": {
+            "video_title": "Mind-blowing AI fact",
+            "view_count": "1.2M views",
+            "duration": "0:58"
+          }
+        },
+        {
+          "type": "shorts_card",
+          "settings": {
+            "video_title": "The future of smartphones",
+            "view_count": "890K views",
+            "duration": "0:45"
+          }
+        },
+        {
+          "type": "shorts_card",
+          "settings": {
+            "video_title": "Electric vehicle range explained",
+            "view_count": "2.1M views",
+            "duration": "0:59"
+          }
+        },
+        {
+          "type": "shorts_card",
+          "settings": {
+            "video_title": "Deadlift form tips",
+            "view_count": "500K views",
+            "duration": "0:52"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
