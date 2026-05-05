@@ -1,0 +1,135 @@
+{%- comment -%}
+  Snippet: sd-snip-video-card.liquid
+  Description: Renders a single YouTube-style video card for the sd-yooutubeeeee section.
+
+  Expected variables:
+    - block            {Object}  - The Shopify block object (for shopify_attributes)
+    - thumbnail        {Image}   - Block image object for the video thumbnail
+    - channel_avatar   {Image}   - Block image object for the channel avatar
+    - video_title      {String}  - Title text for the video
+    - video_url        {String}  - URL the card/thumbnail links to
+    - channel_name     {String}  - Channel display name
+    - channel_url      {String}  - URL for the channel avatar/name link
+    - view_count       {String}  - Formatted view count string (e.g. "48K views")
+    - upload_date      {String}  - Relative upload date string (e.g. "1 day ago")
+    - duration         {String}  - Video duration badge string (e.g. "18:54")
+{%- endcomment -%}
+
+{%- assign video_title_escaped = video_title | escape -%}
+{%- assign channel_name_escaped = channel_name | escape -%}
+{%- assign card_href = video_url | default: '#' -%}
+{%- assign channel_href = channel_url | default: '#' -%}
+
+<div class="sd-yooutubeeeee__video-card" role="listitem" {{ block.shopify_attributes }}>
+
+  <!-- Thumbnail -->
+  <a
+    href="{{ card_href }}"
+    class="sd-yooutubeeeee__thumbnail-link"
+    aria-label="{{ video_title_escaped }}"
+    {% unless video_url == blank %}target="_blank" rel="noopener noreferrer"{% endunless %}
+  >
+    <div class="sd-yooutubeeeee__thumbnail-wrapper">
+      {%- unless thumbnail == blank -%}
+        {{ thumbnail | image_url: width: 800 | image_tag:
+          loading: 'lazy',
+          widths: '300,400,600,800',
+          sizes: '(min-width: 990px) 33vw, (min-width: 750px) 50vw, 100vw',
+          class: 'sd-yooutubeeeee__thumbnail-img',
+          alt: video_title_escaped,
+          width: 640,
+          height: 360
+        }}
+      {%- else -%}
+        <div class="sd-yooutubeeeee__thumbnail-placeholder" aria-hidden="true">
+          <svg viewBox="0 0 48 48" fill="currentColor" aria-hidden="true" width="48" height="48">
+            <path d="M24 4C12.954 4 4 12.954 4 24s8.954 20 20 20 20-8.954 20-20S35.046 4 24 4zm-4 28.5v-17l12 8.5-12 8.5z"/>
+          </svg>
+        </div>
+      {%- endunless -%}
+      {%- unless duration == blank -%}
+        <span class="sd-yooutubeeeee__duration" aria-label="Video duration {{ duration }}">
+          {{ duration }}
+        </span>
+      {%- endunless -%}
+    </div>
+  </a>
+
+  <!-- Card Meta Row -->
+  <div class="sd-yooutubeeeee__card-meta">
+
+    <!-- Channel Avatar -->
+    <div class="sd-yooutubeeeee__channel-avatar-wrap">
+      <a
+        href="{{ channel_href }}"
+        class="sd-yooutubeeeee__channel-avatar-link"
+        aria-label="{{ channel_name_escaped }} channel"
+      >
+        {%- unless channel_avatar == blank -%}
+          {{ channel_avatar | image_url: width: 80 | image_tag:
+            loading: 'lazy',
+            widths: '40,80',
+            class: 'sd-yooutubeeeee__channel-avatar',
+            alt: channel_name_escaped,
+            width: 36,
+            height: 36
+          }}
+        {%- else -%}
+          <div class="sd-yooutubeeeee__channel-avatar-placeholder" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="currentColor" width="24" height="24" aria-hidden="true">
+              <path d="M12 12c2.7 0 4.8-2.1 4.8-4.8S14.7 2.4 12 2.4 7.2 4.5 7.2 7.2 9.3 12 12 12zm0 2.4c-3.2 0-9.6 1.6-9.6 4.8v2.4h19.2v-2.4c0-3.2-6.4-4.8-9.6-4.8z"/>
+            </svg>
+          </div>
+        {%- endunless -%}
+      </a>
+    </div>
+
+    <!-- Card Info -->
+    <div class="sd-yooutubeeeee__card-info">
+      <div class="sd-yooutubeeeee__card-title-row">
+        <a
+          href="{{ card_href }}"
+          class="sd-yooutubeeeee__card-title-link"
+          {% unless video_url == blank %}target="_blank" rel="noopener noreferrer"{% endunless %}
+          tabindex="-1"
+          aria-hidden="true"
+        >
+          <h3 class="sd-yooutubeeeee__card-title">{{ video_title | default: 'Video Title' }}</h3>
+        </a>
+        <button
+          type="button"
+          class="sd-yooutubeeeee__more-btn"
+          aria-label="More options for {{ video_title_escaped }}"
+          data-more-menu
+        >
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+            <path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/>
+          </svg>
+        </button>
+      </div>
+
+      {%- unless channel_name == blank -%}
+        <a
+          href="{{ channel_href }}"
+          class="sd-yooutubeeeee__channel-name"
+          aria-label="{{ channel_name_escaped }} channel page"
+        >
+          {{ channel_name }}
+        </a>
+      {%- endunless -%}
+
+      <div class="sd-yooutubeeeee__card-stats">
+        {%- unless view_count == blank -%}
+          <span class="sd-yooutubeeeee__view-count">{{ view_count }}</span>
+        {%- endunless -%}
+        {%- unless view_count == blank or upload_date == blank -%}
+          <span class="sd-yooutubeeeee__stat-sep" aria-hidden="true">•</span>
+        {%- endunless -%}
+        {%- unless upload_date == blank -%}
+          <span class="sd-yooutubeeeee__upload-date">{{ upload_date }}</span>
+        {%- endunless -%}
+      </div>
+    </div>
+
+  </div>
+</div>
