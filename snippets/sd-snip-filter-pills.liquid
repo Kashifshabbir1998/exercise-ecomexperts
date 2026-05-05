@@ -1,0 +1,57 @@
+{%- comment -%}
+  Snippet: sd-snip-filter-pills.liquid
+  Description: Renders the horizontal scrollable category filter pills bar for the sd-yooutubeeeee section.
+               Uses Swiper for overflow scrolling with prev/next arrow navigation.
+
+  Expected variables:
+    - section          {Object}  - The Shopify section object (used for section.id and section.blocks)
+    - show_filter_pills {Boolean} - Whether to render the filter bar at all (section.settings.show_filter_pills)
+{%- endcomment -%}
+
+{%- if show_filter_pills -%}
+  <div class="sd-yooutubeeeee__filter-bar" aria-label="Content category filters">
+    <div
+      class="sd-yooutubeeeee__filter-swiper swiper"
+      id="filter-swiper-{{ section.id }}"
+    >
+      <div class="swiper-wrapper">
+        {%- for block in section.blocks -%}
+          {%- if block.type == 'filter_pill' -%}
+            <div class="swiper-slide sd-yooutubeeeee__filter-slide" {{ block.shopify_attributes }}>
+              <button
+                type="button"
+                class="sd-yooutubeeeee__filter-pill{% if forloop.first %} sd-yooutubeeeee__filter-pill--active{% endif %}"
+                data-filter-pill
+                aria-pressed="{% if forloop.first %}true{% else %}false{% endif %}"
+              >
+                {{ block.settings.label | default: 'Filter' }}
+              </button>
+            </div>
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+
+      <div
+        class="sd-yooutubeeeee__filter-prev"
+        aria-label="Previous filters"
+        role="button"
+        tabindex="0"
+      >
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+          <path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/>
+        </svg>
+      </div>
+
+      <div
+        class="sd-yooutubeeeee__filter-next"
+        aria-label="Next filters"
+        role="button"
+        tabindex="0"
+      >
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+          <path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/>
+        </svg>
+      </div>
+    </div>
+  </div>
+{%- endif -%}
