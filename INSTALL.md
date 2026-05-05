@@ -1,51 +1,55 @@
-## Installation: ttt-bb-herooo Section
+## Installation Instructions
 
-### Files to Add
+### 1. Add Files to Theme
 
-1. **sections/ttt-bb-herooo.liquid**
-   - Add the main section file to your theme's `sections` folder
+Add the following files to your Shopify theme:
 
-2. **assets/ttt-bb-herooo.css**
-   - Add stylesheet to your theme's `assets` folder
+**Sections:**
+- `sections/yooutubeeeee.liquid`
 
-3. **assets/ttt-bb-herooo.js**
-   - Add JavaScript file to your theme's `assets` folder
+**Assets:**
+- `assets/yooutubeeeee.js`
+- `assets/yooutubeeeee.css`
 
-4. **snippets/sd-snip-hero-collage.liquid**
-   - Add snippet to your theme's `snippets` folder
+**Snippets:**
+- `snippets/sd-snip-video-card.liquid`
+- `snippets/sd-snip-filter-pills.liquid`
 
-### Setup Steps
+### 2. Add Section to Page Template
 
-1. **Add Section to Theme**
-   - Go to **Shopify Admin > Sales Channels > Online Store > Themes**
-   - Click **Edit code** on your theme
-   - Verify all four files are in their correct locations (sections, assets, snippets)
+1. In the Shopify theme editor, navigate to **Pages** and open the page where you want to add the section
+2. Click **Add section**
+3. Find and select **Yooutubeeeee** from the section list
+4. Configure section settings:
+   - Toggle **Show Filter Pills** to enable/disable category filters
+   - Adjust **Padding Top** and **Padding Bottom** for spacing
+5. Add filter pill blocks by clicking **Add block** and selecting **Filter Pill**
+6. For each filter pill block, enter the category name
+7. Click **Save**
 
-2. **Add Section to Page**
-   - In theme editor, navigate to any page template where you want to use this section
-   - Click **Add section**
-   - Search for and select **ttt-bb-herooo**
-   - Configure section settings (padding, content, etc.)
+### 3. Verify Installation
 
-3. **Verify Google Fonts**
-   - The section loads Playfair Display and Montserrat fonts from Google Fonts
-   - No additional font setup required
+- Confirm the section displays correctly on your page
+- Test filter functionality by clicking category pills
+- Verify responsive behavior on mobile devices
+- Check that video cards render properly with the filter system
 
 ### Notes
-- Ensure all file names match exactly (case-sensitive)
-- The section uses custom CSS variables for spacing control
-- JavaScript defers for optimal page load performance
+
+- The section requires Swiper.js for carousel functionality (included in assets)
+- All styling is scoped to `.sd-yooutubeeeee` class to avoid conflicts
+- JavaScript uses custom element `<sd-yooutubeeeee>` for encapsulation
 
 ## Google Fonts Installation (REQUIRED)
 
-The generated CSS references these Google Fonts: **Playfair Display, Montserrat, Montserrat**
+The generated CSS references these Google Fonts: **Roboto**
 
 Add these two tags to `layout/theme.liquid`, inside the `<head>` tag, before the closing `</head>`:
 
 ```html
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display&family=Montserrat&family=Montserrat&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
 ```
 
 Without these tags, the fonts will not load and the design will fall back to system fonts.
