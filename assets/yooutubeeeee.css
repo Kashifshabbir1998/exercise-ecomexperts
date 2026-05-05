@@ -1,0 +1,616 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;600;700&display=swap');
+
+/* ============================================================
+   CUSTOM PROPERTIES
+   ============================================================ */
+.sd-yooutubeeeee {
+  /* Brand colors */
+  --sd-color-bg: #ffffff;
+  --sd-color-text-primary: #0f0f0f;
+  --sd-color-text-secondary: #606060;
+  --sd-color-text-link: #0f0f0f;
+  --sd-color-pill-bg-active: #0f0f0f;
+  --sd-color-pill-text-active: #ffffff;
+  --sd-color-pill-bg: #f2f2f2;
+  --sd-color-pill-text: #0f0f0f;
+  --sd-color-pill-border: #e5e5e5;
+  --sd-color-duration-bg: rgba(0, 0, 0, 0.8);
+  --sd-color-duration-text: #ffffff;
+  --sd-color-avatar-bg: #e5e5e5;
+  --sd-color-thumbnail-placeholder: #e5e5e5;
+  --sd-color-shorts-logo: #ff0000;
+  --sd-color-icon: #606060;
+  --sd-color-icon-hover: #0f0f0f;
+  --sd-color-border: #e5e5e5;
+  --sd-color-card-hover: #f9f9f9;
+
+  /* Spacing */
+  --sd-gap-grid: 16px;
+  --sd-gap-grid-row: 40px;
+  --sd-filter-bar-height: 56px;
+  --sd-pill-padding-x: 12px;
+  --sd-pill-padding-y: 6px;
+  --sd-pill-border-radius: 8px;
+  --sd-card-meta-gap: 12px;
+  --sd-avatar-size: 36px;
+  --sd-content-padding-x: 16px;
+
+  /* Typography */
+  --sd-font: "Roboto", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+
+  /* Section spacing from Liquid */
+  padding-top: var(--sd-spacing-top, 0px);
+  padding-bottom: var(--sd-spacing-bottom, 40px);
+
+  background-color: var(--sd-color-bg);
+  font-family: var(--sd-font);
+  color: var(--sd-color-text-primary);
+  box-sizing: border-box;
+}
+
+.sd-yooutubeeeee *,
+.sd-yooutubeeeee *::before,
+.sd-yooutubeeeee *::after {
+  box-sizing: border-box;
+}
+
+/* ============================================================
+   FILTER BAR
+   ============================================================ */
+.sd-yooutubeeeee__filter-bar {
+  position: relative;
+  width: 100%;
+  padding: 12px var(--sd-content-padding-x);
+  background-color: var(--sd-color-bg);
+  border-bottom: 1px solid var(--sd-color-border);
+  overflow: hidden;
+}
+
+.sd-yooutubeeeee__filter-swiper {
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  position: relative;
+}
+
+.swiper-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  overflow-x: auto;
+  scroll-behavior: smooth;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  padding: 2px 0;
+}
+
+.swiper-wrapper::-webkit-scrollbar {
+  display: none;
+}
+
+.sd-yooutubeeeee__filter-slide {
+  flex-shrink: 0;
+}
+
+.sd-yooutubeeeee__filter-pill {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--sd-pill-padding-y) var(--sd-pill-padding-x);
+  border-radius: var(--sd-pill-border-radius);
+  border: 1px solid var(--sd-color-pill-border);
+  background-color: var(--sd-color-pill-bg);
+  color: var(--sd-color-pill-text);
+  font-family: var(--sd-font);
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.4;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background-color 0.1s ease, color 0.1s ease;
+  outline: none;
+  appearance: none;
+  -webkit-appearance: none;
+}
+
+.sd-yooutubeeeee__filter-pill:hover {
+  background-color: #e5e5e5;
+}
+
+.sd-yooutubeeeee__filter-pill--active {
+  background-color: var(--sd-color-pill-bg-active);
+  color: var(--sd-color-pill-text-active);
+  border-color: var(--sd-color-pill-bg-active);
+}
+
+.sd-yooutubeeeee__filter-pill--active:hover {
+  background-color: #272727;
+}
+
+.sd-yooutubeeeee__filter-prev,
+.sd-yooutubeeeee__filter-next {
+  display: none;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 2;
+  width: 32px;
+  height: 32px;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--sd-color-bg);
+  border-radius: 50%;
+  cursor: pointer;
+  color: var(--sd-color-text-primary);
+  box-shadow: 0 0 6px rgba(0, 0, 0, 0.15);
+}
+
+.sd-yooutubeeeee__filter-prev {
+  left: 0;
+}
+
+.sd-yooutubeeeee__filter-next {
+  right: 0;
+}
+
+/* ============================================================
+   MAIN CONTENT
+   ============================================================ */
+.sd-yooutubeeeee__content {
+  padding: 24px var(--sd-content-padding-x) 0;
+}
+
+/* ============================================================
+   VIDEO GRID
+   ============================================================ */
+.sd-yooutubeeeee__video-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--sd-gap-grid-row) var(--sd-gap-grid);
+  margin-bottom: 40px;
+}
+
+@media (min-width: 600px) {
+  .sd-yooutubeeeee__video-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 990px) {
+  .sd-yooutubeeeee__video-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (min-width: 1280px) {
+  .sd-yooutubeeeee__video-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+/* ============================================================
+   VIDEO CARD
+   ============================================================ */
+.sd-yooutubeeeee__video-card {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  background-color: transparent;
+  border-radius: 0;
+  cursor: pointer;
+}
+
+.sd-yooutubeeeee__video-card:hover .sd-yooutubeeeee__thumbnail-img {
+  border-radius: 12px;
+}
+
+/* Thumbnail link */
+.sd-yooutubeeeee__thumbnail-link {
+  display: block;
+  text-decoration: none;
+}
+
+/* Thumbnail wrapper */
+.sd-yooutubeeeee__thumbnail-wrapper {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  border-radius: 12px;
+  overflow: hidden;
+  background-color: var(--sd-color-thumbnail-placeholder);
+}
+
+.sd-yooutubeeeee__thumbnail-img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 12px;
+  transition: border-radius 0.1s ease;
+}
+
+/* Thumbnail placeholder */
+.sd-yooutubeeeee__thumbnail-placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  background-color: var(--sd-color-thumbnail-placeholder);
+  color: #909090;
+}
+
+/* Duration badge */
+.sd-yooutubeeeee__duration {
+  position: absolute;
+  bottom: 4px;
+  right: 4px;
+  background-color: var(--sd-color-duration-bg);
+  color: var(--sd-color-duration-text);
+  font-family: var(--sd-font);
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 1;
+  padding: 3px 4px;
+  border-radius: 4px;
+  letter-spacing: 0.02em;
+  pointer-events: none;
+  user-select: none;
+}
+
+/* ============================================================
+   CARD META ROW (avatar + info)
+   ============================================================ */
+.sd-yooutubeeeee__card-meta {
+  display: flex;
+  flex-direction: row;
+  gap: var(--sd-card-meta-gap);
+  align-items: flex-start;
+}
+
+/* Channel avatar wrap */
+.sd-yooutubeeeee__channel-avatar-wrap {
+  flex-shrink: 0;
+}
+
+.sd-yooutubeeeee__channel-avatar-link {
+  display: block;
+  text-decoration: none;
+}
+
+.sd-yooutubeeeee__channel-avatar {
+  width: var(--sd-avatar-size);
+  height: var(--sd-avatar-size);
+  border-radius: 50%;
+  object-fit: cover;
+  display: block;
+}
+
+.sd-yooutubeeeee__channel-avatar-placeholder {
+  width: var(--sd-avatar-size);
+  height: var(--sd-avatar-size);
+  border-radius: 50%;
+  background-color: var(--sd-color-avatar-bg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #909090;
+}
+
+/* Card info */
+.sd-yooutubeeeee__card-info {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+/* Card title row */
+.sd-yooutubeeeee__card-title-row {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  gap: 4px;
+  justify-content: space-between;
+}
+
+.sd-yooutubeeeee__card-title-link {
+  text-decoration: none;
+  color: inherit;
+  flex: 1;
+  min-width: 0;
+}
+
+.sd-yooutubeeeee__card-title {
+  font-family: var(--sd-font);
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.4;
+  color: var(--sd-color-text-primary);
+  margin: 0;
+  padding: 0;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  letter-spacing: 0;
+}
+
+/* More options button */
+.sd-yooutubeeeee__more-btn {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  border: none;
+  background: transparent;
+  border-radius: 50%;
+  cursor: pointer;
+  color: var(--sd-color-icon);
+  transition: background-color 0.15s ease, color 0.15s ease;
+  outline: none;
+  appearance: none;
+  -webkit-appearance: none;
+  margin-top: -4px;
+  margin-right: -6px;
+  opacity: 0;
+}
+
+.sd-yooutubeeeee__video-card:hover .sd-yooutubeeeee__more-btn {
+  opacity: 1;
+}
+
+.sd-yooutubeeeee__more-btn:hover {
+  background-color: rgba(0, 0, 0, 0.08);
+  color: var(--sd-color-icon-hover);
+}
+
+/* Channel name */
+.sd-yooutubeeeee__channel-name {
+  display: block;
+  font-family: var(--sd-font);
+  font-size: 13px;
+  font-weight: 400;
+  color: var(--sd-color-text-secondary);
+  text-decoration: none;
+  line-height: 1.4;
+  margin-top: 4px;
+}
+
+.sd-yooutubeeeee__channel-name:hover {
+  color: var(--sd-color-text-primary);
+}
+
+/* Card stats */
+.sd-yooutubeeeee__card-stats {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  flex-wrap: wrap;
+}
+
+.sd-yooutubeeeee__view-count,
+.sd-yooutubeeeee__upload-date {
+  font-family: var(--sd-font);
+  font-size: 13px;
+  font-weight: 400;
+  color: var(--sd-color-text-secondary);
+  line-height: 1.4;
+}
+
+.sd-yooutubeeeee__stat-sep {
+  font-size: 13px;
+  color: var(--sd-color-text-secondary);
+  line-height: 1.4;
+}
+
+/* ============================================================
+   SHORTS SECTION
+   ============================================================ */
+.sd-yooutubeeeee__shorts-section {
+  margin-top: 8px;
+  padding-top: 8px;
+}
+
+/* Shorts header */
+.sd-yooutubeeeee__shorts-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+
+.sd-yooutubeeeee__shorts-title-group {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.sd-yooutubeeeee__shorts-logo {
+  display: inline-flex;
+  align-items: center;
+  color: var(--sd-color-shorts-logo);
+  flex-shrink: 0;
+}
+
+.sd-yooutubeeeee__shorts-logo svg {
+  display: block;
+}
+
+.sd-yooutubeeeee__shorts-heading {
+  font-family: var(--sd-font);
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--sd-color-text-primary);
+  margin: 0;
+  padding: 0;
+  line-height: 1.2;
+  letter-spacing: -0.2px;
+}
+
+.sd-yooutubeeeee__shorts-more-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  padding: 0;
+  border: none;
+  background: transparent;
+  border-radius: 50%;
+  cursor: pointer;
+  color: var(--sd-color-icon);
+  transition: background-color 0.15s ease;
+  outline: none;
+  appearance: none;
+  -webkit-appearance: none;
+}
+
+.sd-yooutubeeeee__shorts-more-btn:hover {
+  background-color: rgba(0, 0, 0, 0.08);
+  color: var(--sd-color-icon-hover);
+}
+
+/* Shorts grid */
+.sd-yooutubeeeee__shorts-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--sd-gap-grid);
+}
+
+@media (min-width: 600px) {
+  .sd-yooutubeeeee__shorts-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (min-width: 750px) {
+  .sd-yooutubeeeee__shorts-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+@media (min-width: 990px) {
+  .sd-yooutubeeeee__shorts-grid {
+    grid-template-columns: repeat(5, 1fr);
+  }
+}
+
+@media (min-width: 1280px) {
+  .sd-yooutubeeeee__shorts-grid {
+    grid-template-columns: repeat(6, 1fr);
+  }
+}
+
+/* Short card */
+.sd-yooutubeeeee__short-card {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  cursor: pointer;
+}
+
+.sd-yooutubeeeee__short-thumb-link {
+  display: block;
+  text-decoration: none;
+}
+
+.sd-yooutubeeeee__short-thumb-wrapper {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 9 / 16;
+  border-radius: 12px;
+  overflow: hidden;
+  background-color: var(--sd-color-thumbnail-placeholder);
+}
+
+.sd-yooutubeeeee__short-thumb-img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 12px;
+}
+
+.sd-yooutubeeeee__short-thumb-placeholder {
+  width: 100%;
+  height: 100%;
+  background-color: var(--sd-color-thumbnail-placeholder);
+}
+
+/* Duration on shorts */
+.sd-yooutubeeeee__duration--short {
+  bottom: 8px;
+  right: 8px;
+}
+
+/* Short info */
+.sd-yooutubeeeee__short-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.sd-yooutubeeeee__short-title-link {
+  text-decoration: none;
+  color: inherit;
+}
+
+.sd-yooutubeeeee__short-title {
+  font-family: var(--sd-font);
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--sd-color-text-primary);
+  margin: 0;
+  padding: 0;
+  line-height: 1.4;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.sd-yooutubeeeee__short-views {
+  font-family: var(--sd-font);
+  font-size: 13px;
+  font-weight: 400;
+  color: var(--sd-color-text-secondary);
+  margin: 0;
+  padding: 0;
+  line-height: 1.4;
+}
+
+/* ============================================================
+   DARK MODE OVERRIDES
+   ============================================================ */
+@media (prefers-color-scheme: dark) {
+  .sd-yooutubeeeee {
+    --sd-color-bg: #0f0f0f;
+    --sd-color-text-primary: #f1f1f1;
+    --sd-color-text-secondary: #aaaaaa;
+    --sd-color-text-link: #f1f1f1;
+    --sd-color-pill-bg-active: #f1f1f1;
+    --sd-color-pill-text-active: #0f0f0f;
+    --sd-color-pill-bg: #272727;
+    --sd-color-pill-text: #f1f1f1;
+    --sd-color-pill-border: #3f3f3f;
+    --sd-color-duration-bg: rgba(0, 0, 0, 0.85);
+    --sd-color-duration-text: #ffffff;
+    --sd-color-avatar-bg: #3f3f3f;
+    --sd-color-thumbnail-placeholder: #272727;
+    --sd-color-border: #3f3f3f;
+    --sd-color-icon: #aaaaaa;
+    --sd-color-icon-hover: #f1f1f1;
+  }
+}
+
+/* SHOPIFYDRAFT CSS AUDIT
+   Colors from Figma: #0f0f0f, #ffffff, #f2f2f2, #606060, #e5e5e5, #ff0000, rgba(0,0,0,0.8)
+   Colors inferred:   #272727 (dark pill hover), #909090 (placeholder icon), rgba(0,0,0,0.08) (button hover bg)
+   Fonts from Figma:  Roboto (300, 400, 500, 700)
+   Spacing from Figma: 16px grid gap, 40px row gap, 12px card-meta gap, 36px avatar size, 12px pill padding-x, 6px pill padding-y, 8px border-radius pills, 12px thumbnail border-radius, 24px content top padding
+*/
