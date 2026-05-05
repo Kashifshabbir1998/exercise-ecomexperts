@@ -1,0 +1,609 @@
+{{ 'ggggg-gg.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'ggggg-gg.js' | asset_url }}" defer></script>
+
+<!-- Bundle Builder Section -->
+<div
+  id="shopify-section-{{ section.id }}"
+  class="sd-bundle-builder shopify-section"
+  style="--sd-spacing-top: {{ section.settings.padding_top }}px; --sd-spacing-bottom: {{ section.settings.padding_bottom }}px;"
+>
+  <sd-bundle-builder data-section-id="{{ section.id }}">
+
+    {%- comment -%} ── STEP 1: CHOOSE YOUR CAMERAS ── {%- endcomment -%}
+    <div
+      class="sd-bundle-builder__step sd-bundle-builder__step--open"
+      data-step="1"
+      data-step-open="true"
+    >
+      <!-- Step tracker label -->
+      <div class="sd-bundle-builder__step-tracker">
+        {{ section.settings.step1_tracker_label | default: 'STEP 1 OF 4' }}
+      </div>
+
+      <div class="sd-bundle-builder__step-header sd-bundle-builder__step-header--open">
+        <div class="sd-bundle-builder__step-title-group">
+          <!-- Camera icon -->
+          <div class="sd-bundle-builder__step-icon" aria-hidden="true">
+            {%- if section.settings.step1_icon != blank -%}
+              {%- assign s1_icon_alt = '' -%}
+              {{ section.settings.step1_icon | image_url: width: 40 | image_tag: loading: 'lazy', widths: '40,80', alt: s1_icon_alt }}
+            {%- else -%}
+              <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <rect x="1" y="5" width="18" height="13" rx="2" stroke="#1a1a2e" stroke-width="1.5"/>
+                <path d="M19 10l6-4v12l-6-4V10z" stroke="#1a1a2e" stroke-width="1.5" stroke-linejoin="round"/>
+                <circle cx="9" cy="11.5" r="2.5" stroke="#1a1a2e" stroke-width="1.25"/>
+              </svg>
+            {%- endif -%}
+          </div>
+          <h2 class="sd-bundle-builder__step-heading">
+            {{ section.settings.step1_heading | default: 'Choose your cameras' }}
+          </h2>
+        </div>
+
+        <!-- Selected count badge + toggle -->
+        <button
+          type="button"
+          class="sd-bundle-builder__selected-count"
+          data-step-toggle="1"
+          aria-expanded="true"
+          aria-label="Toggle step 1 – cameras"
+        >
+          <span data-selected-count="1">0 selected</span>
+          <span class="sd-bundle-builder__toggle-arrow sd-bundle-builder__toggle-arrow--up" aria-hidden="true">&#9650;</span>
+        </button>
+      </div>
+
+      <!-- Step 1 product grid -->
+      <div class="sd-bundle-builder__step-content" data-step-content="1">
+        <div class="sd-bundle-builder__products-grid">
+
+          {%- for block in section.blocks -%}
+            {%- if block.type == 'camera_product' -%}
+              {%- assign bprod = block.settings.product -%}
+              {%- if bprod != blank -%}
+                {%- assign bvariant = bprod.selected_or_first_available_variant -%}
+                {%- assign b_has_compare = false -%}
+                {%- if bvariant.compare_at_price > bvariant.price -%}
+                  {%- assign b_has_compare = true -%}
+                {%- endif -%}
+                {%- assign b_save_pct = 0 -%}
+                {%- if b_has_compare -%}
+                  {%- assign b_price_diff = bvariant.compare_at_price | minus: bvariant.price -%}
+                  {%- assign b_save_pct = b_price_diff | times: 100 | divided_by: bvariant.compare_at_price -%}
+                {%- endif -%}
+
+                <div
+                  class="sd-bundle-builder__product-card"
+                  data-block-id="{{ block.id }}"
+                  data-product-id="{{ bprod.id }}"
+                  data-step="1"
+                  {{ block.shopify_attributes }}
+                >
+                  <!-- Save badge -->
+                  {%- if b_has_compare and b_save_pct > 0 -%}
+                    <div class="sd-bundle-builder__save-badge">
+                      Save {{ b_save_pct }}%
+                    </div>
+                  {%- endif -%}
+
+                  <!-- Product image -->
+                  <div class="sd-bundle-builder__card-image-wrap">
+                    {%- if bprod.featured_image != blank -%}
+                      {%- assign card_img_alt = bprod.featured_image.alt | default: bprod.title | escape -%}
+                      {{ bprod.featured_image | image_url: width: 300 | image_tag:
+                        loading: 'lazy',
+                        widths: '150,300',
+                        alt: card_img_alt,
+                        class: 'sd-bundle-builder__card-image'
+                      }}
+                    {%- endif -%}
+                  </div>
+
+                  <!-- Card body -->
+                  <div class="sd-bundle-builder__card-body">
+                    <h3 class="sd-bundle-builder__card-title">{{ bprod.title }}</h3>
+
+                    {%- unless bprod.description == blank -%}
+                      <p class="sd-bundle-builder__card-desc">
+                        {{ bprod.description | strip_html | truncate: 80 }}
+                        {%- if block.settings.learn_more_url != blank -%}
+                          <a
+                            href="{{ block.settings.learn_more_url }}"
+                            class="sd-bundle-builder__learn-more"
+                            aria-label="Learn more about {{ bprod.title | escape }}"
+                          >Learn More</a>
+                        {%- else -%}
+                          <a
+                            href="{{ bprod.url }}"
+                            class="sd-bundle-builder__learn-more"
+                            aria-label="Learn more about {{ bprod.title | escape }}"
+                          >Learn More</a>
+                        {%- endif -%}
+                      </p>
+                    {%- endunless -%}
+
+                    <!-- Color variant pills -->
+                    {%- assign color_idx = nil -%}
+                    {%- for opt in bprod.options_with_values -%}
+                      {%- assign opt_lc = opt.name | downcase -%}
+                      {%- if opt_lc == 'color' or opt_lc == 'colour' -%}
+                        {%- assign color_idx = forloop.index0 -%}
+                      {%- endif -%}
+                    {%- endfor -%}
+
+                    {%- if color_idx != nil -%}
+                      <div
+                        class="sd-bundle-builder__variant-pills"
+                        role="group"
+                        aria-label="Color options for {{ bprod.title | escape }}"
+                        data-variant-pills="{{ block.id }}"
+                      >
+                        {%- assign seen_colors = '' -%}
+                        {%- for vnt in bprod.variants -%}
+                          {%- assign vnt_color = vnt.options[color_idx] -%}
+                          {%- unless seen_colors contains vnt_color -%}
+                            {%- assign seen_colors = seen_colors | append: vnt_color | append: '|' -%}
+                            {%- assign pill_alt = vnt.title | escape -%}
+                            <button
+                              type="button"
+                              class="sd-bundle-builder__variant-pill{% if forloop.first %} sd-bundle-builder__variant-pill--active{% endif %}"
+                              data-variant-id="{{ vnt.id }}"
+                              data-block-id="{{ block.id }}"
+                              data-color="{{ vnt_color | escape }}"
+                              data-price="{{ vnt.price }}"
+                              aria-label="{{ vnt_color }}"
+                              aria-pressed="{% if forloop.first %}true{% else %}false{% endif %}"
+                            >
+                              {%- if vnt.image != blank -%}
+                                {{ vnt.image | image_url: width: 24 | image_tag:
+                                  loading: 'lazy',
+                                  widths: '24,48',
+                                  alt: pill_alt,
+                                  class: 'sd-bundle-builder__pill-img'
+                                }}
+                              {%- endif -%}
+                              <span class="sd-bundle-builder__pill-label">{{ vnt_color }}</span>
+                            </button>
+                          {%- endunless -%}
+                        {%- endfor -%}
+                      </div>
+                    {%- endif -%}
+
+                    <!-- Quantity stepper + price row -->
+                    <div class="sd-bundle-builder__card-footer">
+                      <div
+                        class="sd-bundle-builder__qty-stepper"
+                        data-qty-stepper="{{ block.id }}"
+                      >
+                        <button
+                          type="button"
+                          class="sd-bundle-builder__qty-btn sd-bundle-builder__qty-btn--minus"
+                          data-qty-minus="{{ block.id }}"
+                          aria-label="Decrease quantity of {{ bprod.title | escape }}"
+                        >&#8722;</button>
+                        <input
+                          type="number"
+                          class="sd-bundle-builder__qty-input"
+                          value="0"
+                          min="0"
+                          max="10"
+                          data-qty-input="{{ block.id }}"
+                          data-product-id="{{ bprod.id }}"
+                          data-variant-id="{{ bvariant.id }}"
+                          data-price="{{ bvariant.price }}"
+                          aria-label="Quantity for {{ bprod.title | escape }}"
+                          readonly
+                        >
+                        <button
+                          type="button"
+                          class="sd-bundle-builder__qty-btn sd-bundle-builder__qty-btn--plus"
+                          data-qty-plus="{{ block.id }}"
+                          aria-label="Increase quantity of {{ bprod.title | escape }}"
+                        >&#43;</button>
+                      </div>
+
+                      <!-- Price display -->
+                      <div class="sd-bundle-builder__price" data-price-display="{{ block.id }}">
+                        {%- if b_has_compare -%}
+                          <span class="sd-bundle-builder__price-compare">
+                            {{ bvariant.compare_at_price | money }}
+                          </span>
+                        {%- endif -%}
+                        <span class="sd-bundle-builder__price-current">
+                          {{ bvariant.price | money }}
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+              {%- endif -%}
+            {%- endif -%}
+          {%- endfor -%}
+
+        </div>
+
+        <!-- Step 1 next CTA -->
+        <div class="sd-bundle-builder__step-actions">
+          <button
+            type="button"
+            class="sd-bundle-builder__next-btn"
+            data-next-step="1"
+            aria-label="{{ section.settings.step1_cta_label | default: 'Next: Choose your plan' }}"
+          >
+            {{ section.settings.step1_cta_label | default: 'Next: Choose your plan' }}
+          </button>
+        </div>
+
+      </div>
+    </div>
+
+    <hr class="sd-bundle-builder__divider">
+
+    {%- comment -%} ── STEP 2: CHOOSE YOUR PLAN ── {%- endcomment -%}
+    <div
+      class="sd-bundle-builder__step"
+      data-step="2"
+      data-step-open="false"
+    >
+      <div class="sd-bundle-builder__step-tracker sd-bundle-builder__step-tracker--inactive">
+        {{ section.settings.step2_tracker_label | default: 'STEP 2 OF 4' }}
+      </div>
+
+      <div class="sd-bundle-builder__step-header">
+        <div class="sd-bundle-builder__step-title-group">
+          <div class="sd-bundle-builder__step-icon" aria-hidden="true">
+            {%- if section.settings.step2_icon != blank -%}
+              {%- assign s2_icon_alt = '' -%}
+              {{ section.settings.step2_icon | image_url: width: 40 | image_tag: loading: 'lazy', widths: '40,80', alt: s2_icon_alt }}
+            {%- else -%}
+              <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <path d="M14 2L4 7v7c0 5.25 4.27 10.17 10 11.37C19.73 24.17 24 19.25 24 14V7L14 2z" stroke="#1a1a2e" stroke-width="1.5" stroke-linejoin="round"/>
+              </svg>
+            {%- endif -%}
+          </div>
+          <h2 class="sd-bundle-builder__step-heading">
+            {{ section.settings.step2_heading | default: 'Choose your plan' }}
+          </h2>
+        </div>
+        <button
+          type="button"
+          class="sd-bundle-builder__toggle-btn"
+          data-step-toggle="2"
+          aria-expanded="false"
+          aria-label="Toggle step 2 – plan"
+        >
+          <span class="sd-bundle-builder__toggle-arrow" aria-hidden="true">&#9660;</span>
+        </button>
+      </div>
+
+      <div class="sd-bundle-builder__step-content sd-bundle-builder__step-content--hidden" data-step-content="2">
+        <!-- PLACEHOLDER: Step 2 plan selection rows — wire to plan blocks when available -->
+        <p class="sd-bundle-builder__placeholder-text">Plan selection coming soon.</p>
+
+        <div class="sd-bundle-builder__step-actions">
+          <button
+            type="button"
+            class="sd-bundle-builder__next-btn"
+            data-next-step="2"
+            aria-label="{{ section.settings.step2_cta_label | default: 'Next: Choose your sensors' }}"
+          >
+            {{ section.settings.step2_cta_label | default: 'Next: Choose your sensors' }}
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <hr class="sd-bundle-builder__divider">
+
+    {%- comment -%} ── STEP 3: CHOOSE YOUR SENSORS ── {%- endcomment -%}
+    <div
+      class="sd-bundle-builder__step"
+      data-step="3"
+      data-step-open="false"
+    >
+      <div class="sd-bundle-builder__step-tracker sd-bundle-builder__step-tracker--inactive">
+        {{ section.settings.step3_tracker_label | default: 'STEP 3 OF 4' }}
+      </div>
+
+      <div class="sd-bundle-builder__step-header">
+        <div class="sd-bundle-builder__step-title-group">
+          <div class="sd-bundle-builder__step-icon" aria-hidden="true">
+            {%- if section.settings.step3_icon != blank -%}
+              {%- assign s3_icon_alt = '' -%}
+              {{ section.settings.step3_icon | image_url: width: 40 | image_tag: loading: 'lazy', widths: '40,80', alt: s3_icon_alt }}
+            {%- else -%}
+              <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <rect x="3" y="8" width="10" height="14" rx="1.5" stroke="#1a1a2e" stroke-width="1.5"/>
+                <rect x="15" y="3" width="10" height="8" rx="1.5" stroke="#1a1a2e" stroke-width="1.5"/>
+                <rect x="15" y="14" width="10" height="8" rx="1.5" stroke="#1a1a2e" stroke-width="1.5"/>
+              </svg>
+            {%- endif -%}
+          </div>
+          <h2 class="sd-bundle-builder__step-heading">
+            {{ section.settings.step3_heading | default: 'Choose your sensors' }}
+          </h2>
+        </div>
+        <button
+          type="button"
+          class="sd-bundle-builder__toggle-btn"
+          data-step-toggle="3"
+          aria-expanded="false"
+          aria-label="Toggle step 3 – sensors"
+        >
+          <span class="sd-bundle-builder__toggle-arrow" aria-hidden="true">&#9660;</span>
+        </button>
+      </div>
+
+      <div class="sd-bundle-builder__step-content sd-bundle-builder__step-content--hidden" data-step-content="3">
+        <!-- PLACEHOLDER: Step 3 sensor selection — extend with sensor_product blocks -->
+        <p class="sd-bundle-builder__placeholder-text">Sensor selection coming soon.</p>
+
+        <div class="sd-bundle-builder__step-actions">
+          <button
+            type="button"
+            class="sd-bundle-builder__next-btn"
+            data-next-step="3"
+            aria-label="{{ section.settings.step3_cta_label | default: 'Next: Add extra protection' }}"
+          >
+            {{ section.settings.step3_cta_label | default: 'Next: Add extra protection' }}
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <hr class="sd-bundle-builder__divider">
+
+    {%- comment -%} ── STEP 4: ADD EXTRA PROTECTION ── {%- endcomment -%}
+    <div
+      class="sd-bundle-builder__step"
+      data-step="4"
+      data-step-open="false"
+    >
+      <div class="sd-bundle-builder__step-tracker sd-bundle-builder__step-tracker--inactive">
+        {{ section.settings.step4_tracker_label | default: 'STEP 4 OF 4' }}
+      </div>
+
+      <div class="sd-bundle-builder__step-header">
+        <div class="sd-bundle-builder__step-title-group">
+          <div class="sd-bundle-builder__step-icon" aria-hidden="true">
+            {%- if section.settings.step4_icon != blank -%}
+              {%- assign s4_icon_alt = '' -%}
+              {{ section.settings.step4_icon | image_url: width: 40 | image_tag: loading: 'lazy', widths: '40,80', alt: s4_icon_alt }}
+            {%- else -%}
+              <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <circle cx="8" cy="8" r="3" stroke="#1a1a2e" stroke-width="1.25"/>
+                <circle cx="20" cy="8" r="3" stroke="#1a1a2e" stroke-width="1.25"/>
+                <circle cx="8" cy="20" r="3" stroke="#1a1a2e" stroke-width="1.25"/>
+                <circle cx="20" cy="20" r="3" stroke="#1a1a2e" stroke-width="1.25"/>
+                <circle cx="14" cy="14" r="3" stroke="#1a1a2e" stroke-width="1.25"/>
+              </svg>
+            {%- endif -%}
+          </div>
+          <h2 class="sd-bundle-builder__step-heading">
+            {{ section.settings.step4_heading | default: 'Add extra protection' }}
+          </h2>
+        </div>
+        <button
+          type="button"
+          class="sd-bundle-builder__toggle-btn"
+          data-step-toggle="4"
+          aria-expanded="false"
+          aria-label="Toggle step 4 – extra protection"
+        >
+          <span class="sd-bundle-builder__toggle-arrow" aria-hidden="true">&#9660;</span>
+        </button>
+      </div>
+
+      <div class="sd-bundle-builder__step-content sd-bundle-builder__step-content--hidden" data-step-content="4">
+        <!-- PLACEHOLDER: Step 4 extra protection options -->
+        <p class="sd-bundle-builder__placeholder-text">Extra protection options coming soon.</p>
+
+        <div class="sd-bundle-builder__step-actions">
+          <button
+            type="button"
+            class="sd-bundle-builder__add-to-cart-btn"
+            data-add-to-cart
+            aria-label="{{ section.settings.add_to_cart_label | default: 'Add Bundle to Cart' }}"
+          >
+            {{ section.settings.add_to_cart_label | default: 'Add Bundle to Cart' }}
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Hidden bundle cart form — JS populates and submits -->
+    <form
+      id="bundle-cart-form-{{ section.id }}"
+      action="{{ routes.cart_add_url }}"
+      method="post"
+      enctype="multipart/form-data"
+      class="sd-bundle-builder__cart-form"
+      aria-hidden="true"
+    >
+      <input type="hidden" name="form_type" value="product">
+      <input type="hidden" name="utf8" value="&#x2713;">
+      <!-- JS dynamically appends id[] and quantity[] hidden inputs before submit -->
+    </form>
+
+    <!-- aria-live region for feedback messages -->
+    <div
+      class="sd-bundle-builder__live-region"
+      aria-live="polite"
+      aria-atomic="true"
+      data-live-region="{{ section.id }}"
+    ></div>
+
+  </sd-bundle-builder>
+</div>
+
+{% schema %}
+{
+  "name": "Bundle Builder",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Step 1 — Cameras"
+    },
+    {
+      "type": "text",
+      "id": "step1_tracker_label",
+      "label": "Step 1 tracker label",
+      "default": "STEP 1 OF 4"
+    },
+    {
+      "type": "image_picker",
+      "id": "step1_icon",
+      "label": "Step 1 icon (optional)"
+    },
+    {
+      "type": "text",
+      "id": "step1_heading",
+      "label": "Step 1 heading",
+      "default": "Choose your cameras"
+    },
+    {
+      "type": "text",
+      "id": "step1_cta_label",
+      "label": "Step 1 next button label",
+      "default": "Next: Choose your plan"
+    },
+    {
+      "type": "header",
+      "content": "Step 2 — Plan"
+    },
+    {
+      "type": "text",
+      "id": "step2_tracker_label",
+      "label": "Step 2 tracker label",
+      "default": "STEP 2 OF 4"
+    },
+    {
+      "type": "image_picker",
+      "id": "step2_icon",
+      "label": "Step 2 icon (optional)"
+    },
+    {
+      "type": "text",
+      "id": "step2_heading",
+      "label": "Step 2 heading",
+      "default": "Choose your plan"
+    },
+    {
+      "type": "text",
+      "id": "step2_cta_label",
+      "label": "Step 2 next button label",
+      "default": "Next: Choose your sensors"
+    },
+    {
+      "type": "header",
+      "content": "Step 3 — Sensors"
+    },
+    {
+      "type": "text",
+      "id": "step3_tracker_label",
+      "label": "Step 3 tracker label",
+      "default": "STEP 3 OF 4"
+    },
+    {
+      "type": "image_picker",
+      "id": "step3_icon",
+      "label": "Step 3 icon (optional)"
+    },
+    {
+      "type": "text",
+      "id": "step3_heading",
+      "label": "Step 3 heading",
+      "default": "Choose your sensors"
+    },
+    {
+      "type": "text",
+      "id": "step3_cta_label",
+      "label": "Step 3 next button label",
+      "default": "Next: Add extra protection"
+    },
+    {
+      "type": "header",
+      "content": "Step 4 — Extra Protection"
+    },
+    {
+      "type": "text",
+      "id": "step4_tracker_label",
+      "label": "Step 4 tracker label",
+      "default": "STEP 4 OF 4"
+    },
+    {
+      "type": "image_picker",
+      "id": "step4_icon",
+      "label": "Step 4 icon (optional)"
+    },
+    {
+      "type": "text",
+      "id": "step4_heading",
+      "label": "Step 4 heading",
+      "default": "Add extra protection"
+    },
+    {
+      "type": "text",
+      "id": "add_to_cart_label",
+      "label": "Add to cart button label",
+      "default": "Add Bundle to Cart"
+    },
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Padding top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Padding bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "default": 40
+    }
+  ],
+  "blocks": [
+    {
+      "type": "camera_product",
+      "name": "Camera Product",
+      "limit": 10,
+      "settings": [
+        {
+          "type": "product",
+          "id": "product",
+          "label": "Product"
+        },
+        {
+          "type": "url",
+          "id": "learn_more_url",
+          "label": "Learn More URL (optional)"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Bundle Builder",
+      "blocks": [
+        { "type": "camera_product" },
+        { "type": "camera_product" },
+        { "type": "camera_product" }
+      ]
+    }
+  ]
+}
+{% endschema %}
