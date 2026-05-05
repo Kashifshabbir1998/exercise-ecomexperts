@@ -244,6 +244,7 @@
         "camera_product_WMxgx3",
         "camera_product_NHYV9b"
       ],
+      "disabled": true,
       "name": "Bundle Builder",
       "settings": {
         "step1_tracker_label": "STEP 1 OF 4",
@@ -295,6 +296,7 @@
         "nav_link_Ti3azm",
         "nav_link_iwYADq"
       ],
+      "disabled": true,
       "name": "Hero — Lingerie Banner",
       "settings": {
         "logo_alt": "Brand Logo",
@@ -316,6 +318,157 @@
         "padding_top": 0,
         "padding_bottom": 0
       }
+    },
+    "yooutubeeeee_KQazrP": {
+      "type": "yooutubeeeee",
+      "blocks": {
+        "filter_pill_AaQepU": {
+          "type": "filter_pill",
+          "settings": {
+            "label": "All"
+          }
+        },
+        "filter_pill_gxhnJk": {
+          "type": "filter_pill",
+          "settings": {
+            "label": "AI"
+          }
+        },
+        "filter_pill_wFQtMz": {
+          "type": "filter_pill",
+          "settings": {
+            "label": "Podcasts"
+          }
+        },
+        "filter_pill_Gw6nMg": {
+          "type": "filter_pill",
+          "settings": {
+            "label": "Deadlifts"
+          }
+        },
+        "filter_pill_btVfrA": {
+          "type": "filter_pill",
+          "settings": {
+            "label": "Apple"
+          }
+        },
+        "filter_pill_6RyBGW": {
+          "type": "filter_pill",
+          "settings": {
+            "label": "Electric vehicles"
+          }
+        },
+        "filter_pill_JGz7gV": {
+          "type": "filter_pill",
+          "settings": {
+            "label": "Live"
+          }
+        },
+        "filter_pill_6JyQxX": {
+          "type": "filter_pill",
+          "settings": {
+            "label": "Calories"
+          }
+        },
+        "filter_pill_K3bwpY": {
+          "type": "filter_pill",
+          "settings": {
+            "label": "Recently uploaded"
+          }
+        },
+        "filter_pill_d3F4Tp": {
+          "type": "filter_pill",
+          "settings": {
+            "label": "New to you"
+          }
+        },
+        "video_card_i8c67x": {
+          "type": "video_card",
+          "settings": {
+            "duration": "18:54",
+            "video_url": "",
+            "video_title": "Sam Altman's Latest Move Will Destroy The Smartphone Industry (+18 AI Updates)",
+            "channel_name": "Vaibhav Sisinty",
+            "channel_url": "",
+            "view_count": "48K views",
+            "upload_date": "1 day ago"
+          }
+        },
+        "video_card_enGbNH": {
+          "type": "video_card",
+          "settings": {
+            "duration": "16:05",
+            "video_url": "",
+            "video_title": "Taha X Ali Marwatt Ft. Irongear",
+            "channel_name": "Taha Chaudhary",
+            "channel_url": "",
+            "view_count": "17K views",
+            "upload_date": "4 days ago"
+          }
+        },
+        "shorts_card_43winC": {
+          "type": "shorts_card",
+          "settings": {
+            "duration": "0:58",
+            "video_url": "",
+            "video_title": "Mind-blowing AI fact",
+            "view_count": "1.2M views"
+          }
+        },
+        "shorts_card_wtyCcJ": {
+          "type": "shorts_card",
+          "settings": {
+            "duration": "0:45",
+            "video_url": "",
+            "video_title": "The future of smartphones",
+            "view_count": "890K views"
+          }
+        },
+        "shorts_card_QBehJd": {
+          "type": "shorts_card",
+          "settings": {
+            "duration": "0:59",
+            "video_url": "",
+            "video_title": "Electric vehicle range explained",
+            "view_count": "2.1M views"
+          }
+        },
+        "shorts_card_XRAHxp": {
+          "type": "shorts_card",
+          "settings": {
+            "duration": "0:52",
+            "video_url": "",
+            "video_title": "Deadlift form tips",
+            "view_count": "500K views"
+          }
+        }
+      },
+      "block_order": [
+        "filter_pill_AaQepU",
+        "filter_pill_gxhnJk",
+        "filter_pill_wFQtMz",
+        "filter_pill_Gw6nMg",
+        "filter_pill_btVfrA",
+        "filter_pill_6RyBGW",
+        "filter_pill_JGz7gV",
+        "filter_pill_6JyQxX",
+        "filter_pill_K3bwpY",
+        "filter_pill_d3F4Tp",
+        "video_card_i8c67x",
+        "video_card_enGbNH",
+        "shorts_card_43winC",
+        "shorts_card_wtyCcJ",
+        "shorts_card_QBehJd",
+        "shorts_card_XRAHxp"
+      ],
+      "name": "YouTube-Style Video Feed",
+      "settings": {
+        "show_filter_pills": true,
+        "grid_aria_label": "Videos",
+        "shorts_heading": "Shorts",
+        "padding_top": 0,
+        "padding_bottom": 40
+      }
     }
   },
   "order": [
@@ -325,6 +478,7 @@
     "hero_section_UKyb4j",
     "tes1122_qc4CxL",
     "ggggg_gg_peKjKR",
-    "ttt_bb_herooo_4G87Ye"
+    "ttt_bb_herooo_4G87Ye",
+    "yooutubeeeee_KQazrP"
   ]
 }
