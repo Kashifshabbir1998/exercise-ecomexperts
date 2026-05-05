@@ -1,65 +1,40 @@
 {%- comment -%}
   Quantity Stepper Snippet
-  Usage: {% render 'quantity-stepper', product: product, variant: variant, step_key: step_key, card_id: card_id %}
-
-  Expected variables:
-    - product: {Object} The Shopify product object
-    - variant: {Object} The selected variant object
-    - step_key: {String} The step identifier (cameras, plan, sensors, protection)
-    - card_id: {String} A unique identifier for this card instance
+  Required variables:
+    - block    {Object} — The Shopify block object (provides block.id)
+    - bprod    {Object} — The Shopify product object (provides bprod.title, bprod.id)
+    - bvariant {Object} — The selected/first available variant (provides bvariant.id, bvariant.price)
 {%- endcomment -%}
 
-{%- liquid
-  assign stepper_min = 0
-  assign stepper_max = 10
-  assign stepper_default = 0
-  assign input_id = 'qty-' | append: card_id
--%}
-
 <div
-  class="quantity-stepper"
-  data-quantity-stepper
-  data-product-id="{{ product.id }}"
-  data-variant-id="{{ variant.id }}"
-  data-step-key="{{ step_key }}"
-  aria-label="{{ 'products.product.quantity.label' | t }}: {{ product.title | escape }}"
+  class="sd-bundle-builder__qty-stepper"
+  data-qty-stepper="{{ block.id }}"
 >
   <button
     type="button"
-    class="quantity-stepper__btn quantity-stepper__btn--minus"
-    data-qty-minus
-    aria-label="{{ 'products.product.quantity.decrease' | t }}: {{ product.title | escape }}"
-    {%- if stepper_default <= stepper_min %} disabled aria-disabled="true"{% endif %}
-  >
-    <svg width="14" height="2" viewBox="0 0 14 2" fill="none" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
-      <path d="M1 1H13" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-    </svg>
-  </button>
+    class="sd-bundle-builder__qty-btn sd-bundle-builder__qty-btn--minus"
+    data-qty-minus="{{ block.id }}"
+    aria-label="Decrease quantity of {{ bprod.title | escape }}"
+  >&#8722;</button>
 
   <input
     type="number"
-    id="{{ input_id }}"
-    class="quantity-stepper__input"
-    name="quantity"
-    value="{{ stepper_default }}"
-    min="{{ stepper_min }}"
-    max="{{ stepper_max }}"
-    aria-label="{{ 'products.product.quantity.label' | t }}: {{ product.title | escape }}"
-    data-qty-input
-    data-product-id="{{ product.id }}"
-    data-step-key="{{ step_key }}"
-    inputmode="numeric"
-    pattern="[0-9]*"
+    class="sd-bundle-builder__qty-input"
+    value="0"
+    min="0"
+    max="10"
+    data-qty-input="{{ block.id }}"
+    data-product-id="{{ bprod.id }}"
+    data-variant-id="{{ bvariant.id }}"
+    data-price="{{ bvariant.price }}"
+    aria-label="Quantity for {{ bprod.title | escape }}"
+    readonly
   >
 
   <button
     type="button"
-    class="quantity-stepper__btn quantity-stepper__btn--plus"
-    data-qty-plus
-    aria-label="{{ 'products.product.quantity.increase' | t }}: {{ product.title | escape }}"
-  >
-    <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
-      <path d="M7 1V13M1 7H13" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-    </svg>
-  </button>
+    class="sd-bundle-builder__qty-btn sd-bundle-builder__qty-btn--plus"
+    data-qty-plus="{{ block.id }}"
+    aria-label="Increase quantity of {{ bprod.title | escape }}"
+  >&#43;</button>
 </div>
