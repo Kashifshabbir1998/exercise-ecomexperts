@@ -461,6 +461,7 @@
         "shorts_card_QBehJd",
         "shorts_card_XRAHxp"
       ],
+      "disabled": true,
       "name": "YouTube-Style Video Feed",
       "settings": {
         "show_filter_pills": true,
@@ -468,6 +469,25 @@
         "shorts_heading": "Shorts",
         "padding_top": 0,
         "padding_bottom": 40
+      }
+    },
+    "sd_section_PLri9g": {
+      "type": "sd-section",
+      "name": "Two-Panel Hero",
+      "settings": {
+        "product_image_alt": "Jones Road Mini Miracle Balm",
+        "left_panel_bg": "#f0efed",
+        "eyebrow": "THE 30-SECOND MAKEUP ROUTINE",
+        "heading": "5 reasons busy women are switching to Mini Miracle Balm",
+        "body_copy": "<p>You run a packed calendar. Your makeup should keep up. One swipe of sheer, buildable color for cheeks and lips — and you look polished without looking done.</p>",
+        "right_panel_bg": "#f5ede0",
+        "star_rating": 5,
+        "review_count": "75,900+",
+        "badge_text": "#1 bestseller",
+        "cta_label": "SHOP MINI MIRACLE BALM",
+        "cta_url": "",
+        "padding_top": 0,
+        "padding_bottom": 0
       }
     }
   },
@@ -479,6 +499,7 @@
     "tes1122_qc4CxL",
     "ggggg_gg_peKjKR",
     "ttt_bb_herooo_4G87Ye",
-    "yooutubeeeee_KQazrP"
+    "yooutubeeeee_KQazrP",
+    "sd_section_PLri9g"
   ]
 }
