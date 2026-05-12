@@ -1,0 +1,93 @@
+{%- comment -%}
+  Snippet: sd-snip-two-panel-hero
+  Description: Two-panel hero layout — left product image, right text content with CTA.
+  Expected variables:
+    - product_image {image} — Shopify image object for the left panel
+    - product_image_alt {string} — alt text for the product image
+    - left_panel_bg {string} — CSS color value for left panel background
+    - right_panel_bg {string} — CSS color value for right panel background
+    - eyebrow {string} — small label above the heading
+    - heading {string} — main headline text
+    - body_copy {string} — rich text / HTML body content
+    - star_rating {number} — integer 0–5
+    - review_count {string} — e.g. "75,900+"
+    - badge_text {string} — e.g. "#1 bestseller"
+    - cta_label {string} — button label text
+    - cta_url {string} — button href URL
+{%- endcomment -%}
+
+<div class="sd-section__grid">
+
+  <!-- LEFT PANEL: Product Image -->
+  <div class="sd-section__left-panel">
+    <div class="sd-section__image-wrap">
+      {%- if product_image != blank -%}
+        {%- assign img_alt = product_image_alt | default: heading | escape -%}
+        {{ product_image | image_url: width: 1200 | image_tag:
+          loading: 'eager',
+          fetchpriority: 'high',
+          widths: '400,600,800,1000,1200',
+          sizes: '(min-width: 750px) 50vw, 100vw',
+          alt: img_alt,
+          class: 'sd-section__product-image',
+          width: 1200,
+          height: 900
+        }}
+      {%- else -%}
+        <img
+          src="{{ '4f5cde8fc7eec6018c84bf23227042c143d86bd4.webp' | asset_url }}"
+          alt="{{ product_image_alt | default: 'Product image' }}"
+          loading="eager"
+          fetchpriority="high"
+          width="1200"
+          height="900"
+          class="sd-section__product-image"
+        >
+      {%- endif -%}
+    </div>
+  </div>
+
+  <!-- RIGHT PANEL: Text Content -->
+  <div class="sd-section__right-panel">
+    <div class="sd-section__content">
+
+      <!-- Eyebrow label -->
+      {%- unless eyebrow == blank -%}
+        <p class="sd-section__eyebrow">{{ eyebrow }}</p>
+      {%- endunless -%}
+
+      <!-- Main heading -->
+      {%- unless heading == blank -%}
+        <h2 class="sd-section__heading">{{ heading }}</h2>
+      {%- endunless -%}
+
+      <!-- Body copy -->
+      {%- unless body_copy == blank -%}
+        <div class="sd-section__body">{{ body_copy }}</div>
+      {%- endunless -%}
+
+      <!-- Star rating + review count -->
+      <div class="sd-section__reviews">
+        {% render 'sd-snip-star-rating',
+          rating: star_rating,
+          review_count: review_count,
+          badge_text: badge_text
+        %}
+      </div>
+
+      <!-- CTA Button -->
+      {%- unless cta_label == blank -%}
+        <a
+          href="{{ cta_url | default: '#' }}"
+          class="sd-section__cta"
+          aria-label="{{ cta_label }}"
+        >
+          {{ cta_label }}
+        </a>
+      {%- endunless -%}
+
+    </div>
+  </div>
+  <!-- END RIGHT PANEL -->
+
+</div>
