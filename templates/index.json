@@ -475,6 +475,7 @@
       "type": "sd-section",
       "name": "Two-Panel Hero",
       "settings": {
+        "product_image": "shopify://shop_images/Image_Mini_Miracle_Balm_in_Dusty_Rose.png",
         "product_image_alt": "Jones Road Mini Miracle Balm",
         "left_panel_bg": "#f0efed",
         "eyebrow": "THE 30-SECOND MAKEUP ROUTINE",
