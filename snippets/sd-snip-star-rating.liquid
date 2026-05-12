@@ -1,0 +1,53 @@
+{%- comment -%}
+  Snippet: sd-snip-star-rating
+  Description: Renders filled/empty star icons, a review count string, and an optional badge label.
+  Expected variables:
+    - rating {number} — integer 0–5, number of filled stars
+    - review_count {string} — display string e.g. "75,900+"
+    - badge_text {string} — short badge label e.g. "#1 bestseller"
+{%- endcomment -%}
+
+{%- assign max_stars = 5 -%}
+{%- assign filled_stars = rating | default: 0 | at_most: max_stars | at_least: 0 | floor -%}
+{%- assign empty_stars = max_stars | minus: filled_stars -%}
+
+<div class="sd-star-rating" role="img" aria-label="{{ filled_stars }} out of {{ max_stars }} stars">
+
+  <span class="sd-star-rating__stars" aria-hidden="true">
+    {%- for i in (1..filled_stars) -%}
+      <svg
+        class="sd-star-rating__star sd-star-rating__star--filled"
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 20 20"
+        width="16"
+        height="16"
+        focusable="false"
+      >
+        <path d="M10 1l2.63 5.33L18 7.27l-4 3.9.94 5.5L10 14.1l-4.94 2.57L6 11.17l-4-3.9 5.37-.94L10 1z"/>
+      </svg>
+    {%- endfor -%}
+    {%- if empty_stars > 0 -%}
+      {%- for i in (1..empty_stars) -%}
+        <svg
+          class="sd-star-rating__star sd-star-rating__star--empty"
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 20 20"
+          width="16"
+          height="16"
+          focusable="false"
+        >
+          <path d="M10 1l2.63 5.33L18 7.27l-4 3.9.94 5.5L10 14.1l-4.94 2.57L6 11.17l-4-3.9 5.37-.94L10 1z"/>
+        </svg>
+      {%- endfor -%}
+    {%- endif -%}
+  </span>
+
+  {%- unless review_count == blank -%}
+    <span class="sd-star-rating__count">{{ review_count }}</span>
+  {%- endunless -%}
+
+  {%- unless badge_text == blank -%}
+    <span class="sd-star-rating__badge">{{ badge_text }}</span>
+  {%- endunless -%}
+
+</div>
