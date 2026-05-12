@@ -1,194 +1,274 @@
-/* =========================================================
-   sd-section.css — Press Logo Bar
-   ========================================================= */
+/* ============================================
+   SD Section — Two-Panel Hero
+   ============================================ */
 
-/* Scoped CSS custom properties */
+/* --- Custom Properties --- */
 .sd-section {
-  --sd-color-bg: #ffffff;
-  --sd-color-border: #e8e8e8;
-  --sd-color-eyebrow: #888888;
-  --sd-color-logo-text: #1a1a1a;
-  --sd-color-logo-nyt: #000000;
-  --sd-font-serif: Georgia, 'Times New Roman', serif;
-  --sd-font-sans: 'Helvetica Neue', Arial, sans-serif;
-  --sd-spacing-top: 24px;
-  --sd-spacing-bottom: 24px;
+  --sd-color-left-bg: var(--sd-left-bg, #f0efed);
+  --sd-color-right-bg: var(--sd-right-bg, #f5ede0);
+  --sd-color-eyebrow: #1a1a1a;
+  --sd-color-heading: #111111;
+  --sd-color-body: #333333;
+  --sd-color-review-text: #333333;
+  --sd-color-stars: #111111;
+  --sd-color-cta-bg: #111111;
+  --sd-color-cta-text: #ffffff;
+  --sd-color-cta-hover-bg: #2a2a2a;
+  --sd-font-eyebrow-size: 11px;
+  --sd-font-eyebrow-spacing: 0.18em;
+  --sd-font-heading-size: 52px;
+  --sd-font-heading-lh: 1.08;
+  --sd-font-body-size: 16px;
+  --sd-font-body-lh: 1.65;
+  --sd-font-review-size: 14px;
+  --sd-font-cta-size: 12px;
+  --sd-font-cta-spacing: 0.14em;
+  --sd-panel-min-height: 540px;
+
+  display: block;
+  width: 100%;
+  padding-top: var(--sd-spacing-top, 0px);
+  padding-bottom: var(--sd-spacing-bottom, 0px);
+  box-sizing: border-box;
 }
 
-/* Section wrapper */
-.sd-section {
+/* --- Web Custom Element wrapper --- */
+sd-section-hero {
   display: block;
-  background-color: var(--sd-color-bg);
-  border-bottom: 1px solid var(--sd-color-border);
-  padding-top: var(--sd-spacing-top);
-  padding-bottom: var(--sd-spacing-bottom);
   width: 100%;
 }
 
-/* Inner container */
-.sd-section__inner {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 1.5rem;
+/* --- Grid Layout --- */
+.sd-section__grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  width: 100%;
+  min-height: var(--sd-panel-min-height);
 }
 
-/* Eyebrow label */
-.sd-section__eyebrow {
-  text-align: center;
-  font-family: var(--sd-font-sans);
-  font-size: 0.6875rem;
-  font-weight: 600;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--sd-color-eyebrow);
-  margin: 0 0 1.25rem 0;
-}
-
-/* =========================================================
-   Desktop: static flex row (6 columns)
-   ========================================================= */
 @media (min-width: 750px) {
-  /* Override Swiper layout on desktop — display as plain flex row */
-  .sd-section__swiper {
-    overflow: visible !important;
-  }
-
-  .sd-section__swiper .swiper-wrapper {
-    display: flex !important;
-    flex-wrap: nowrap;
-    align-items: center;
-    justify-content: center;
-    transform: none !important;
-    width: auto !important;
-    gap: 0;
-  }
-
-  .sd-section__logo-slide {
-    display: flex !important;
-    align-items: center;
-    justify-content: center;
-    flex: 1 1 0;
-    width: auto !important;
-    padding: 0.5rem 1.5rem;
-    border-right: 1px solid var(--sd-color-border);
-  }
-
-  .sd-section__logo-slide:last-child {
-    border-right: none;
+  .sd-section__grid {
+    grid-template-columns: 58% 42%;
+    min-height: 580px;
   }
 }
 
-/* =========================================================
-   Mobile: Swiper carousel
-   ========================================================= */
-@media (max-width: 749px) {
-  .sd-section__swiper {
-    overflow: hidden;
-  }
-
-  .sd-section__logo-slide {
-    width: auto;
-    flex-shrink: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 0.5rem 1rem;
-  }
-}
-
-/* =========================================================
-   Logo image
-   ========================================================= */
-.sd-section__logo-image-wrap {
+/* ============================================
+   LEFT PANEL
+   ============================================ */
+.sd-section__left-panel {
+  background-color: var(--sd-color-left-bg);
   display: flex;
   align-items: center;
   justify-content: center;
+  overflow: hidden;
+  position: relative;
+  min-height: 360px;
 }
 
-.sd-section__logo-img {
-  max-height: 36px;
-  width: auto;
-  object-fit: contain;
-  filter: grayscale(100%);
-  opacity: 0.7;
-  transition: opacity 0.2s ease, filter 0.2s ease;
+@media (min-width: 750px) {
+  .sd-section__left-panel {
+    min-height: var(--sd-panel-min-height);
+  }
 }
 
-.sd-section__logo-img:hover {
-  opacity: 1;
-  filter: grayscale(0%);
+.sd-section__image-wrap {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 32px;
+  box-sizing: border-box;
 }
 
-/* =========================================================
-   Text-based logo typography styles
-   ========================================================= */
-.sd-section__logo-text {
+@media (min-width: 750px) {
+  .sd-section__image-wrap {
+    padding: 60px 48px;
+  }
+}
+
+.sd-section__product-image {
   display: block;
-  color: var(--sd-color-logo-text);
-  white-space: nowrap;
-  transition: opacity 0.2s ease;
-  opacity: 0.75;
-  line-height: 1;
+  width: 100%;
+  max-width: 520px;
+  height: auto;
+  object-fit: contain;
+  object-position: center;
 }
 
-.sd-section__logo-text:hover {
-  opacity: 1;
+/* ============================================
+   RIGHT PANEL
+   ============================================ */
+.sd-section__right-panel {
+  background-color: var(--sd-color-right-bg);
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  padding: 48px 32px 52px;
+  box-sizing: border-box;
 }
 
-/* Italic serif — Allure */
-.sd-section__logo-text--italic-serif {
-  font-family: var(--sd-font-serif);
-  font-style: italic;
+@media (min-width: 750px) {
+  .sd-section__right-panel {
+    align-items: flex-start;
+    padding: 64px 52px 64px 56px;
+  }
+}
+
+.sd-section__content {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  width: 100%;
+  max-width: 520px;
+}
+
+/* ============================================
+   EYEBROW
+   ============================================ */
+.sd-section__eyebrow {
+  font-family: "Sans-serif spaced uppercase", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-size: var(--sd-font-eyebrow-size);
   font-weight: 400;
-  font-size: 1.375rem;
+  letter-spacing: var(--sd-font-eyebrow-spacing);
+  text-transform: uppercase;
+  color: var(--sd-color-eyebrow);
+  margin: 0 0 20px 0;
+  line-height: 1.4;
+}
+
+/* ============================================
+   HEADING
+   ============================================ */
+.sd-section__heading {
+  font-family: "Serif (appears to be a high-contrast editorial serif)", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-size: 38px;
+  font-weight: 400;
+  line-height: var(--sd-font-heading-lh);
+  color: var(--sd-color-heading);
+  margin: 0 0 40px 0;
+  letter-spacing: -0.01em;
+}
+
+@media (min-width: 750px) {
+  .sd-section__heading {
+    font-size: var(--sd-font-heading-size);
+    margin: 0 0 44px 0;
+  }
+}
+
+/* ============================================
+   BODY COPY
+   ============================================ */
+.sd-section__body {
+  font-family: "Sans-serif (clean, light weight)", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-size: var(--sd-font-body-size);
+  font-weight: 400;
+  line-height: var(--sd-font-body-lh);
+  color: var(--sd-color-body);
+  margin: 0 0 28px 0;
+}
+
+.sd-section__body p {
+  margin: 0;
+  padding: 0;
+}
+
+.sd-section__body p + p {
+  margin-top: 1em;
+}
+
+/* ============================================
+   REVIEWS
+   ============================================ */
+.sd-section__reviews {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 0 0 32px 0;
+}
+
+/* Star rating snippet — scoped styles for rendered snip */
+.sd-section__reviews .sd-star-rating,
+.sd-section__reviews [class*="star-rating"] {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  color: var(--sd-color-stars);
+  font-size: 16px;
+}
+
+.sd-section__reviews .sd-review-text,
+.sd-section__reviews [class*="review-text"],
+.sd-section__reviews [class*="review-count"] {
+  font-family: "Sans-serif (clean, light weight)", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-size: var(--sd-font-review-size);
+  font-weight: 400;
+  color: var(--sd-color-review-text);
   letter-spacing: 0.01em;
 }
 
-/* Spaced caps — Vogue */
-.sd-section__logo-text--spaced-caps {
-  font-family: var(--sd-font-sans);
-  font-style: normal;
-  font-weight: 400;
-  font-size: 0.9375rem;
-  letter-spacing: 0.25em;
+/* ============================================
+   CTA BUTTON
+   ============================================ */
+.sd-section__cta {
+  display: inline-block;
+  width: 100%;
+  padding: 18px 28px;
+  background-color: var(--sd-color-cta-bg);
+  color: var(--sd-color-cta-text);
+  font-family: "Sans-serif spaced uppercase", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-size: var(--sd-font-cta-size);
+  font-weight: 500;
+  letter-spacing: var(--sd-font-cta-spacing);
   text-transform: uppercase;
+  text-align: center;
+  text-decoration: none;
+  box-sizing: border-box;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  border: none;
+  outline: none;
+  line-height: 1.4;
 }
 
-/* Bold serif — The New York Times */
-.sd-section__logo-text--bold-serif {
-  font-family: var(--sd-font-serif);
-  font-style: normal;
-  font-weight: 700;
-  font-size: 1.125rem;
-  letter-spacing: 0.01em;
-  color: var(--sd-color-logo-nyt);
-  opacity: 1;
+.sd-section__cta:hover,
+.sd-section__cta:focus {
+  background-color: var(--sd-color-cta-hover-bg);
+  color: var(--sd-color-cta-text);
+  text-decoration: none;
 }
 
-/* Italic spaced — Glamour */
-.sd-section__logo-text--italic-spaced {
-  font-family: var(--sd-font-serif);
-  font-style: italic;
-  font-weight: 400;
-  font-size: 1.25rem;
-  letter-spacing: 0.08em;
+@media (min-width: 750px) {
+  .sd-section__cta {
+    font-size: 12px;
+    padding: 18px 32px;
+  }
 }
 
-/* Spaced sans — Byrdie */
-.sd-section__logo-text--spaced-sans {
-  font-family: var(--sd-font-sans);
-  font-style: normal;
-  font-weight: 300;
-  font-size: 0.9375rem;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
+/* ============================================
+   DARK MODE OVERRIDE
+   ============================================ */
+@media (prefers-color-scheme: dark) {
+  .sd-section {
+    --sd-color-left-bg: #2a2926;
+    --sd-color-right-bg: #2e2720;
+    --sd-color-eyebrow: #c8c4be;
+    --sd-color-heading: #f0ede8;
+    --sd-color-body: #c0bbb4;
+    --sd-color-review-text: #c0bbb4;
+    --sd-color-stars: #f0ede8;
+    --sd-color-cta-bg: #f0ede8;
+    --sd-color-cta-text: #111111;
+    --sd-color-cta-hover-bg: #d6d1ca;
+  }
 }
 
-/* Italic sans — InStyle */
-.sd-section__logo-text--italic-sans {
-  font-family: var(--sd-font-sans);
-  font-style: italic;
-  font-weight: 400;
-  font-size: 1.125rem;
-  letter-spacing: 0.04em;
-}
+/* SHOPIFYDRAFT CSS AUDIT
+   Colors from Figma: #f0efed (left panel bg), #f5ede0 (right panel bg), #111111 (heading), #333333 (body text), #1a1a1a (eyebrow), #ffffff (CTA text), #111111 (CTA bg)
+   Colors inferred:   #2a2a2a (CTA hover bg), star color #111111, review text #333333
+   Fonts from Figma:  Serif editorial (heading), Sans-serif clean light (body/reviews), Sans-serif spaced uppercase (eyebrow/CTA)
+   Spacing from Figma: eyebrow margin-bottom ~20px, heading margin-bottom ~40-44px, body margin-bottom ~28px, reviews margin-bottom ~32px, right panel padding 64px 52px 64px 56px desktop, CTA padding 18px 32px
+*/
