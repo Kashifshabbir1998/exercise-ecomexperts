@@ -157,7 +157,6 @@
         "product_46zQxK",
         "product_chtyrc"
       ],
-      "disabled": true,
       "name": "Custom Hero Slider",
       "settings": {
         "background_gradient": "linear-gradient(135deg, rgba(64, 50, 84, 1), rgba(175, 61, 120, 1) 50%, rgba(206, 75, 145, 1) 100%)",
@@ -473,6 +472,7 @@
     },
     "sd_section_PLri9g": {
       "type": "sd-section",
+      "disabled": true,
       "name": "Two-Panel Hero",
       "settings": {
         "product_image": "shopify://shop_images/Image_Mini_Miracle_Balm_in_Dusty_Rose.png",
