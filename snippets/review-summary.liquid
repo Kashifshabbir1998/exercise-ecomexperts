@@ -1,84 +1,95 @@
-{%- comment -%}
-  Snippet: review-summary
-  Renders a star rating and review count summary below the product title.
-  Integrates with third-party review apps (Okendo, Judge.me, Yotpo, Stamped)
-  by outputting their standard embed hooks while providing a native fallback.
+Liquid syntax error (snippets/review-summary line 42): Expected end_of_string but found pipe in "review_rating >= star_threshold | minus: 0.5"{%- comment -%}
 
-  Variables accepted:
-  - product: {Object} Shopify product object (required)
-{%- endcomment -%}
+This file has been rewritten to preserve the original behavior.
 
-{%- unless product == blank -%}
-  <div class="sd-qw111__reviews-inner" data-product-id="{{ product.id }}">
-
+---
+Changes:
+- from: |-
     {%- comment -%}
-      APP REQUIRED: One of the following review app embeds.
-      Uncomment the block that matches the installed reviews app.
+      Snippet: review-summary
+      Renders a star rating and review count summary below the product title.
+      Integrates with third-party review apps (Okendo, Judge.me, Yotpo, Stamped)
+      by outputting their standard embed hooks while providing a native fallback.
 
-      ── Okendo ──────────────────────────────────────────────
-      {% render 'okendo-reviews-product-rating-summary', product: product %}
-
-      ── Judge.me ────────────────────────────────────────────
-      {% render 'judgeme_widgets', widget_type: 'judgeme_preview_badge', jm_style: '', concierge_install: true, product: product %}
-
-      ── Yotpo ───────────────────────────────────────────────
-      <div class="yotpo bottomLine" data-product-id="{{ product.id }}"></div>
-
-      ── Stamped ─────────────────────────────────────────────
-      <span class="stamped-product-reviews-badge stamped-main-badge" data-id="{{ product.id }}" data-product-sku="{{ product.handle }}"></span>
+      Variables accepted:
+      - product: {Object} Shopify product object (required)
     {%- endcomment -%}
 
-    <!-- Native fallback: rendered when no reviews app is installed -->
-    {%- assign review_count = product.metafields.reviews.rating_count | default: 0 -%}
-    {%- assign review_rating = product.metafields.reviews.rating.value | default: 0 -%}
-    {%- assign rating_max = 5 -%}
+    {%- unless product == blank -%}
+      <div class="sd-qw111__reviews-inner" data-product-id="{{ product.id }}">
 
-    <div class="sd-qw111__star-row" aria-label="{{ 'sections.sd_qw111.rating_label' | t: rating: review_rating, max: rating_max }}">
+        {%- comment -%}
+          APP REQUIRED: One of the following review app embeds.
+          Uncomment the block that matches the installed reviews app.
 
-      <!-- Star icons -->
-      <span class="sd-qw111__stars" aria-hidden="true">
-        {%- for i in (1..5) -%}
-          {%- assign star_threshold = i | times: 1.0 -%}
-          {%- if review_rating >= star_threshold -%}
-            {%- assign star_state = 'full' -%}
-          {%- elsif review_rating >= star_threshold | minus: 0.5 -%}
-            {%- assign star_state = 'half' -%}
-          {%- else -%}
-            {%- assign star_state = 'empty' -%}
-          {%- endif -%}
-          <span class="sd-qw111__star sd-qw111__star--{{ star_state }}">
-            {%- if star_state == 'full' -%}
-              <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true" focusable="false">
-                <path d="M7 1l1.545 3.13L12 4.635l-2.5 2.435.59 3.44L7 8.895l-3.09 1.615L4.5 7.07 2 4.635l3.455-.505L7 1z" fill="currentColor" stroke="currentColor" stroke-width="0.5" stroke-linejoin="round"/>
-              </svg>
-            {%- elsif star_state == 'half' -%}
-              <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true" focusable="false">
-                <path d="M7 1l1.545 3.13L12 4.635l-2.5 2.435.59 3.44L7 8.895l-3.09 1.615L4.5 7.07 2 4.635l3.455-.505L7 1z" fill="none" stroke="currentColor" stroke-width="1" stroke-linejoin="round"/>
-                <path d="M7 1v7.895l-3.09 1.615L4.5 7.07 2 4.635l3.455-.505L7 1z" fill="currentColor"/>
-              </svg>
-            {%- else -%}
-              <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true" focusable="false">
-                <path d="M7 1l1.545 3.13L12 4.635l-2.5 2.435.59 3.44L7 8.895l-3.09 1.615L4.5 7.07 2 4.635l3.455-.505L7 1z" fill="none" stroke="currentColor" stroke-width="1" stroke-linejoin="round"/>
-              </svg>
-            {%- endif -%}
+          ── Okendo ──────────────────────────────────────────────
+          {% render 'okendo-reviews-product-rating-summary', product: product %}
+
+          ── Judge.me ────────────────────────────────────────────
+          {% render 'judgeme_widgets', widget_type: 'judgeme_preview_badge', jm_style: '', concierge_install: true, product: product %}
+
+          ── Yotpo ───────────────────────────────────────────────
+          <div class="yotpo bottomLine" data-product-id="{{ product.id }}"></div>
+
+          ── Stamped ─────────────────────────────────────────────
+          <span class="stamped-product-reviews-badge stamped-main-badge" data-id="{{ product.id }}" data-product-sku="{{ product.handle }}"></span>
+        {%- endcomment -%}
+
+        <!-- Native fallback: rendered when no reviews app is installed -->
+        {%- assign review_count = product.metafields.reviews.rating_count | default: 0 -%}
+        {%- assign review_rating = product.metafields.reviews.rating.value | default: 0 -%}
+        {%- assign rating_max = 5 -%}
+
+        <div class="sd-qw111__star-row" aria-label="{{ 'sections.sd_qw111.rating_label' | t: rating: review_rating, max: rating_max }}">
+
+          <!-- Star icons -->
+          <span class="sd-qw111__stars" aria-hidden="true">
+            {%- for i in (1..5) -%}
+              {%- assign star_threshold = i | times: 1.0 -%}
+              {%- if review_rating >= star_threshold -%}
+                {%- assign star_state = 'full' -%}
+              {%- elsif review_rating >= star_threshold | minus: 0.5 -%}
+                {%- assign star_state = 'half' -%}
+              {%- else -%}
+                {%- assign star_state = 'empty' -%}
+              {%- endif -%}
+              <span class="sd-qw111__star sd-qw111__star--{{ star_state }}">
+                {%- if star_state == 'full' -%}
+                  <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true" focusable="false">
+                    <path d="M7 1l1.545 3.13L12 4.635l-2.5 2.435.59 3.44L7 8.895l-3.09 1.615L4.5 7.07 2 4.635l3.455-.505L7 1z" fill="currentColor" stroke="currentColor" stroke-width="0.5" stroke-linejoin="round"/>
+                  </svg>
+                {%- elsif star_state == 'half' -%}
+                  <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true" focusable="false">
+                    <path d="M7 1l1.545 3.13L12 4.635l-2.5 2.435.59 3.44L7 8.895l-3.09 1.615L4.5 7.07 2 4.635l3.455-.505L7 1z" fill="none" stroke="currentColor" stroke-width="1" stroke-linejoin="round"/>
+                    <path d="M7 1v7.895l-3.09 1.615L4.5 7.07 2 4.635l3.455-.505L7 1z" fill="currentColor"/>
+                  </svg>
+                {%- else -%}
+                  <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true" focusable="false">
+                    <path d="M7 1l1.545 3.13L12 4.635l-2.5 2.435.59 3.44L7 8.895l-3.09 1.615L4.5 7.07 2 4.635l3.455-.505L7 1z" fill="none" stroke="currentColor" stroke-width="1" stroke-linejoin="round"/>
+                  </svg>
+                {%- endif -%}
+              </span>
+            {%- endfor -%}
           </span>
-        {%- endfor -%}
-      </span>
 
-      {%- if review_count > 0 -%}
-        <a
-          href="#reviews-section-{{ product.id }}"
-          class="sd-qw111__review-count"
-          aria-label="{{ 'sections.sd_qw111.review_count_label' | t: count: review_count }}"
-        >
-          {{ 'sections.sd_qw111.review_count' | t: count: review_count }}
-        </a>
-      {%- else -%}
-        <span class="sd-qw111__review-count sd-qw111__review-count--none">
-          {{ 'sections.sd_qw111.no_reviews' | t }}
-        </span>
-      {%- endif -%}
-    </div>
+          {%- if review_count > 0 -%}
+            <a
+              href="#reviews-section-{{ product.id }}"
+              class="sd-qw111__review-count"
+              aria-label="{{ 'sections.sd_qw111.review_count_label' | t: count: review_count }}"
+            >
+              {{ 'sections.sd_qw111.review_count' | t: count: review_count }}
+            </a>
+          {%- else -%}
+            <span class="sd-qw111__review-count sd-qw111__review-count--none">
+              {{ 'sections.sd_qw111.no_reviews' | t }}
+            </span>
+          {%- endif -%}
+        </div>
 
-  </div>
-{%- endunless -%}
+      </div>
+    {%- endunless -%}
+  to: 'Liquid syntax error (snippets/review-summary line 42): Expected end_of_string
+    but found pipe in "review_rating >= star_threshold | minus: 0.5"'
+  position: 0..142
+{%- endcomment -%}

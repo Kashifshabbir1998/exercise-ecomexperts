@@ -1,85 +1,177 @@
-{%- comment -%}
-  Bundle Product Card Snippet
-  Required variables:
-    - block        {Object}  — The Shopify block object (provides block.id, block.settings, block.shopify_attributes)
-    - bprod        {Object}  — The Shopify product object
-    - bvariant     {Object}  — The selected/first available variant
-    - b_has_compare {Boolean} — Whether the variant has a compare-at price
-    - b_save_pct   {Number}  — Calculated save percentage (0 if no compare price)
-{%- endcomment -%}
-
-{%- if bprod != blank -%}
-  <div
-    class="sd-bundle-builder__product-card"
-    data-block-id="{{ block.id }}"
-    data-product-id="{{ bprod.id }}"
-    data-step="1"
-    {{ block.shopify_attributes }}
-  >
-
-    <!-- Save badge -->
-    {%- if b_has_compare and b_save_pct > 0 -%}
-      <div class="sd-bundle-builder__save-badge">
-        Save {{ b_save_pct }}%
-      </div>
-    {%- endif -%}
-
-    <!-- Product image -->
-    <div class="sd-bundle-builder__card-image-wrap">
-      {%- if bprod.featured_image != blank -%}
-        {%- assign card_img_alt = bprod.featured_image.alt | default: bprod.title | escape -%}
-        {{ bprod.featured_image | image_url: width: 300 | image_tag:
+{% raw %}Liquid syntax error (snippets/bundle-product-card line 51): Expected end_of_string but found comma in "{{
+        card_product.featured_media
+        | image_url: width: 400
+        | image_tag:
           loading: 'lazy',
-          widths: '150,300',
-          alt: card_img_alt,
-          class: 'sd-bundle-builder__card-image'
-        }}
-      {%- endif -%}
-    </div>
+          widths: '200,400,600',
+          alt: card_product.featured_media.alt | default: card_product.title | escape,
+          class: 'bundle-product-card__img'
+      }}"{% endraw %}{%- comment -%}
 
-    <!-- Card body -->
-    <div class="sd-bundle-builder__card-body">
-      <h3 class="sd-bundle-builder__card-title">{{ bprod.title }}</h3>
+This file has been rewritten to preserve the original behavior.
 
-      {%- unless bprod.description == blank -%}
-        <p class="sd-bundle-builder__card-desc">
-          {{ bprod.description | strip_html | truncate: 80 }}
-          {%- if block.settings.learn_more_url != blank -%}
-            <a
-              href="{{ block.settings.learn_more_url }}"
-              class="sd-bundle-builder__learn-more"
-              aria-label="Learn more about {{ bprod.title | escape }}"
-            >Learn More</a>
-          {%- else -%}
-            <a
-              href="{{ bprod.url }}"
-              class="sd-bundle-builder__learn-more"
-              aria-label="Learn more about {{ bprod.title | escape }}"
-            >Learn More</a>
-          {%- endif -%}
-        </p>
+---
+Changes:
+- from: |-
+    {%- comment -%}
+      Bundle Product Card Snippet
+      Usage: {% render 'bundle-product-card', block: block, product: product, selected_variant: selected_variant, step_key: step_key, section_id: section_id %}
+
+      Expected variables:
+        - block: {Object} The section block object
+        - product: {Object} The Shopify product object
+        - selected_variant: {Object} The selected or first available variant
+        - step_key: {String} The step identifier (cameras, plan, sensors, protection)
+        - section_id: {String} The section ID
+    {%- endcomment -%}
+
+    {%- liquid
+      assign card_product = product
+      assign card_variant = selected_variant
+      assign block_settings = block.settings
+      assign has_multiple_variants = false
+      if card_product.variants.size > 1
+        assign has_multiple_variants = true
+      endif
+      assign description_text = block_settings.description_override
+      if description_text == blank
+        assign description_text = card_product.description | strip_html | truncate: 120
+      endif
+      assign learn_more_url = block_settings.learn_more_url
+      assign learn_more_label = block_settings.learn_more_label
+      assign sale_badge_text = block_settings.sale_badge_text
+      assign card_id = card_product.id | append: '-' | append: section_id
+    -%}
+
+    <div
+      class="bundle-product-card"
+      data-bundle-card
+      data-step-key="{{ step_key }}"
+      data-product-id="{{ card_product.id }}"
+      data-variant-id="{{ card_variant.id }}"
+      data-price="{{ card_variant.price }}"
+      data-product-handle="{{ card_product.handle }}"
+      aria-label="{{ card_product.title | escape }}"
+    >
+
+      {%- unless sale_badge_text == blank -%}
+        <div class="bundle-product-card__badge" aria-label="{{ sale_badge_text | escape }}">
+          {{ sale_badge_text }}
+        </div>
       {%- endunless -%}
 
-      <!-- Color variant pills -->
-      {%- render 'variant-pills', bprod: bprod, block: block, bvariant: bvariant -%}
+      <!-- Product Image -->
+      <div class="bundle-product-card__media">
+        {%- if card_product.featured_media != blank -%}
+          {{
+            card_product.featured_media
+            | image_url: width: 400
+            | image_tag:
+              loading: 'lazy',
+              widths: '200,400,600',
+              alt: card_product.featured_media.alt | default: card_product.title | escape,
+              class: 'bundle-product-card__img'
+          }}
+        {%- else -%}
+          <div class="bundle-product-card__img-placeholder" aria-hidden="true">
+            <svg width="60" height="60" viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <rect width="60" height="60" rx="8" fill="#F0F0F4"/>
+              <path d="M20 40L30 25L37 34L42 28L50 40H20Z" fill="#C8C8D8"/>
+              <circle cx="23" cy="26" r="4" fill="#C8C8D8"/>
+            </svg>
+          </div>
+        {%- endif -%}
+      </div>
 
-      <!-- Quantity stepper + price row -->
-      <div class="sd-bundle-builder__card-footer">
-        {%- render 'quantity-stepper', block: block, bprod: bprod, bvariant: bvariant -%}
+      <!-- Product Info -->
+      <div class="bundle-product-card__info">
+        <h3 class="bundle-product-card__title">{{ card_product.title | escape }}</h3>
 
-        <!-- Price display -->
-        <div class="sd-bundle-builder__price" data-price-display="{{ block.id }}">
-          {%- if b_has_compare -%}
-            <span class="sd-bundle-builder__price-compare">
-              {{ bvariant.compare_at_price | money }}
+        {%- unless description_text == blank -%}
+          <p class="bundle-product-card__description">{{ description_text }}</p>
+        {%- endunless -%}
+
+        <!-- Variant Pills (color/option selector) -->
+        {%- if has_multiple_variants -%}
+          {% render 'variant-pills',
+            product: card_product,
+            selected_variant: card_variant,
+            step_key: step_key,
+            section_id: section_id,
+            card_id: card_id
+          %}
+        {%- endif -%}
+
+        <!-- Price -->
+        <div class="bundle-product-card__price" aria-label="{{ 'products.product.price.regular_price' | t }}">
+          {%- if card_variant.compare_at_price > card_variant.price -%}
+            <span class="bundle-product-card__price-compare">
+              <s>{{ card_variant.compare_at_price | money }}</s>
+            </span>
+            <span class="bundle-product-card__price-current bundle-product-card__price-current--sale" data-variant-price>
+              {{ card_variant.price | money }}
+            </span>
+          {%- else -%}
+            <span class="bundle-product-card__price-current" data-variant-price>
+              {{ card_variant.price | money }}
             </span>
           {%- endif -%}
-          <span class="sd-bundle-builder__price-current">
-            {{ bvariant.price | money }}
-          </span>
+        </div>
+
+        <!-- Quantity Stepper -->
+        <div class="bundle-product-card__quantity">
+          {% render 'quantity-stepper',
+            product: card_product,
+            variant: card_variant,
+            step_key: step_key,
+            card_id: card_id
+          %}
+        </div>
+
+        <!-- Select / Deselect Toggle -->
+        <div class="bundle-product-card__actions">
+          <button
+            type="button"
+            class="bundle-product-card__select-btn"
+            data-select-btn
+            data-product-id="{{ card_product.id }}"
+            data-step-key="{{ step_key }}"
+            aria-pressed="false"
+            aria-label="{{ 'products.product.add_to_cart' | t }}: {{ card_product.title | escape }}"
+          >
+            <span class="bundle-product-card__select-btn-label" data-select-label>{{ 'products.product.add_to_cart' | t }}</span>
+            <span class="bundle-product-card__select-btn-icon" aria-hidden="true">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M2.5 8L6.5 12L13.5 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </span>
+          </button>
+
+          {%- unless learn_more_url == blank or learn_more_label == blank -%}
+            <a
+              class="bundle-product-card__learn-more"
+              href="{{ learn_more_url }}"
+              aria-label="{{ learn_more_label | escape }}: {{ card_product.title | escape }}"
+            >
+              {{ learn_more_label | escape }}
+              <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
+                <path d="M2 10L10 2M10 2H4M10 2V8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </a>
+          {%- endunless -%}
         </div>
       </div>
 
     </div>
-  </div>
-{%- endif -%}
+  to: |-
+    {% raw %}Liquid syntax error (snippets/bundle-product-card line 51): Expected end_of_string but found comma in "{{
+            card_product.featured_media
+            | image_url: width: 400
+            | image_tag:
+              loading: 'lazy',
+              widths: '200,400,600',
+              alt: card_product.featured_media.alt | default: card_product.title | escape,
+              class: 'bundle-product-card__img'
+          }}"{% endraw %}
+  position: 0..416
+{%- endcomment -%}
